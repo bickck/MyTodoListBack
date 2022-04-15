@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.domain.UserEntity;
 import com.todo.list.service.user.UserService;
 
 @RestController
 public class UserController {
 
 	private static final String SEESION_NAME = "username";
+	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
 	private UserService userService;
 
 	@Autowired
@@ -31,21 +33,5 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@PostMapping("/account/login")
-	public ResponseEntity loginRequest(@RequestBody UserDTO userDTO, HttpSession httpSession) {
-
-		if(httpSession.getAttribute(SEESION_NAME).equals(null)) {
-			userService.userLogin(userDTO);
-		}
-		
-		return new ResponseEntity("hi", HttpStatus.OK);
-	}
-
-	@ResponseBody
-	@PostMapping("/account/register")
-	public ResponseEntity<String> registerRequest(@RequestBody UserDTO userDTO) {
-
-		userService.userSave(userDTO);
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
+	
 }
