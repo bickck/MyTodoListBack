@@ -29,10 +29,13 @@ public class UserUtil {
 
 	public boolean isUsernameDuplicatedCheck(String username) {
 		UserEntity user = userRepository.findByUsername(username);
-		if (user == null) {
-			return false;
-		}
+
+		return (user == null) ? true : false;
+	}
+	
+	public boolean isPasswordValidCheck(String password) {
 		return true;
 	}
-
+	
+	
 }

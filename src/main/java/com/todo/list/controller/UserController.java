@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.service.user.UserService;
+import com.todo.list.service.util.UserUtil;
 
 @RestController
 public class UserController {
@@ -29,9 +30,28 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
+	private UserUtil userUtil;
+
+	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
-	
+	@PostMapping("/validation/username")
+	public String validUsernameCheck(String username) {
+
+		if (userUtil.isUsernameDuplicatedCheck(username)) {
+			return "unvalid";
+		}
+
+		return "valid";
+	}
+
+	@PostMapping("/validation/password")
+	public String validPasswordCheck(String password) {
+
+		
+
+		return "valid";
+	}
 }
