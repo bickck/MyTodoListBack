@@ -31,16 +31,15 @@ public class AccountController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity loginRequest(@RequestBody UserDTO userDTO, HttpSession httpSession) {
+	public String loginRequest(@RequestBody UserDTO userDTO, HttpSession httpSession) {
 
 		if (httpSession.getAttribute(SEESION_NAME).equals(null)) {
 			UserEntity userEntity = userService.userLogin(userDTO);
 			httpSession.setAttribute(SEESION_NAME, userEntity);
 
-			return new ResponseEntity<UserDTO>(HttpStatus.OK);
 		}
 
-		return new ResponseEntity("hi", HttpStatus.OK);
+		return "redirect:http://127.0.0.1:5501/test2.html";
 	}
 
 	@PostMapping("/register")
@@ -49,9 +48,4 @@ public class AccountController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/account/isCheckAccount", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String isAccountCheck(UserDTO userDTO) {
-		
-		return "";
-	}
 }
