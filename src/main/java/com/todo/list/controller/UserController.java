@@ -1,15 +1,27 @@
 package com.todo.list.controller;
 
+import java.util.Enumeration;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.todo.list.controller.dto.LoginUserDTO;
+import com.todo.list.domain.UserEntity;
+import com.todo.list.security.JwtLoginToken;
 import com.todo.list.service.user.UserService;
 import com.todo.list.service.util.UserUtil;
+
+import io.jsonwebtoken.Claims;
 
 @RestController
 public class UserController {
@@ -19,28 +31,36 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private UserUtil userUtil;
+	private JwtLoginToken jwtLoginToken;
 
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
-	@PostMapping("/validation/username")
-	public String validUsernameCheck(String username) {
+	@PostMapping("/get/user")
+	public ResponseEntity<LoginUserDTO> getUser(HttpServletRequest httpServletRequest) {
 
-		if (userUtil.isUsernameDuplicatedCheck(username)) {
-			return "unvalid";
+		String authorization = httpServletRequest.getHeader("authorization");
+
+		if (authorization != null) {
+			String username = jwtLoginToken.getUsername(authorization);
+			UserEntity userinfo = userService.getUser(username);
+
+			return new ResponseEntity<LoginUserDTO>(new LoginUserDTO(userinfo), HttpStatus.OK);
 		}
 
-		return "valid";
+		return new ResponseEntity<LoginUserDTO>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 	}
 
-	@PostMapping("/validation/password")
-	public String validPasswordCheck(String password) {
+	@PostMapping("get/valid")
+	public Claims getValid(HttpServletRequest httpServletRequest) {
 
-		
+		Enumeration<String> s = httpServletRequest.getHeaderNames();
+		String authorization = httpServletRequest.getHeader("authorization");
 
-		return "valid";
+		Claims body = jwtLoginToken.getUser(authorization);
+
+		return body;
 	}
 }

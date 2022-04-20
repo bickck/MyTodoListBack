@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.domain.ImageEntity;
-import com.todo.list.security.LoginResponseToken;
+import com.todo.list.security.JwtLoginToken;
 
 @ResponseBody
 @RestController
@@ -31,14 +31,14 @@ import com.todo.list.security.LoginResponseToken;
 public class APITest {
 	private UserDTO user = new UserDTO("1234", "567898");
 
-	@GetMapping("/set")
-	public String setSessionTest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-			HttpSession httpSession) {
-
-		LoginResponseToken loginResponseToken = new LoginResponseToken();
-
-		return loginResponseToken.token(user);
-	}
+//	@GetMapping("/set")
+//	public String setSessionTest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+//			HttpSession httpSession) {
+//
+//		JwtLoginToken loginResponseToken = new JwtLoginToken();
+//
+//		return loginResponseToken.makeToken(user);
+//	}
 
 	@GetMapping("/get")
 	public String getSessionTest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,

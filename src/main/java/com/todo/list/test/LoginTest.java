@@ -66,5 +66,10 @@ public class LoginTest {
 		}
 		return "success";
 	}
+	
+	@PostMapping("/sessionTest")
+	public void sessionTest(HttpSession httpSession) {
+		
+	}
 
 }

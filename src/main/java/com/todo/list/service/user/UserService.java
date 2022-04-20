@@ -1,5 +1,7 @@
 package com.todo.list.service.user;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,15 @@ public class UserService {
 	@Autowired
 	private UserUtil userUtil;
 
+	@PostConstruct
+	public void init() {
+		userRepository.save(new UserEntity("1234", "1234"));
+		userRepository.save(new UserEntity("user1234", "password1234"));
+		userRepository.save(new UserEntity("user2345", "password4141"));
+		userRepository.save(new UserEntity("user4444", "password23231"));
+		userRepository.save(new UserEntity("user2222", "passwordafeee"));
+	}
+
 	public void userSave(UserDTO userDTO) {
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
@@ -32,13 +43,17 @@ public class UserService {
 //			String passwordEncode = userUtil.passwordEncoding(password);
 			userRepository.save(new UserEntity(username, password));
 		} else {
-			// 중복 예외 발생
-			// trows 중복 코드 발생
+			throw new IllegalAccessError();
 		}
 	}
 
 	public UserEntity userLogin(UserDTO userDTO) {
 
 		return userRepository.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+	}
+
+	public UserEntity getUser(String username) {
+
+		return userRepository.findByUsername(username);
 	}
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,9 +40,8 @@ public class AdminController {
 
 	// Save Image
 	@PostMapping("/save/backGroundImage")
-	public String saveBackGroundImages(@RequestPart MultipartFile multipartFile) {
+	public String saveBackGroundImages(@RequestParam MultipartFile multipartFile) {
 		backGroundImageService.save(multipartFile);
-
 		return "saveSuccess";
 	}
 

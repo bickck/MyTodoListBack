@@ -1,5 +1,7 @@
 package com.todo.list.service.util;
 
+import javax.servlet.http.Cookie;
+
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -32,10 +34,39 @@ public class UserUtil {
 
 		return (user == null) ? true : false;
 	}
-	
+
 	public boolean isPasswordValidCheck(String password) {
 		return true;
 	}
-	
-	
+
+	public boolean isFindCookie(Cookie[] cookies, String target) {
+		int i = 0;
+		if (cookies.length == 0)
+			return false;
+
+		while (i < cookies.length) {
+			Cookie cookie = cookies[i];
+			if (target.equals(cookie.getName())) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	public int findCookieIndex(Cookie[] cookies, String target) {
+
+		int i = 0;
+		if (cookies.length == 0)
+			return -1;
+
+		while (i < cookies.length) {
+			Cookie cookie = cookies[i];
+			if (target.equals(cookie.getName())) {
+				return i;
+			}
+
+		}
+		return -1;
+	}
 }

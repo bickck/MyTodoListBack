@@ -38,10 +38,4 @@ public class MainController {
 		return null;
 	}
 
-	@ResponseBody
-	@GetMapping("/api/test")
-	public String test() {
-		quoteService.saveTest();
-		return "테스트 명언 생성";
-	}
 }
