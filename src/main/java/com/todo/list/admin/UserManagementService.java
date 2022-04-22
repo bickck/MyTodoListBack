@@ -1,4 +1,4 @@
-package com.todo.list.service.user;
+package com.todo.list.admin;
 
 public class UserManagementService {
 

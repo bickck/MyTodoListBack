@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.repository.UserRepository;
-import com.todo.list.service.util.UserUtil;
+import com.todo.list.util.UserUtil;
 
 /**
  * @author DongHyeon_kim
@@ -47,13 +47,17 @@ public class UserService {
 		}
 	}
 
+//	public UserEntity userUpdate() {
+//		return null;
+//	}
+
+	public void userDelete() {
+
+	}
+
 	public UserEntity userLogin(UserDTO userDTO) {
 
 		return userRepository.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
 	}
 
-	public UserEntity getUser(String username) {
-
-		return userRepository.findByUsername(username);
-	}
 }

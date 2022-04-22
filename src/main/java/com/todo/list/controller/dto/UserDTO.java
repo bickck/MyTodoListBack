@@ -1,13 +1,13 @@
 package com.todo.list.controller.dto;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class UserDTO {
 
-
 	@NotEmpty
 	private String username;
-	
+
 	@NotEmpty
 	private String password;
 
@@ -15,7 +15,7 @@ public class UserDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(String username, String password) {
+	public UserDTO(@NotNull String username, @NotNull String password) {
 		super();
 		this.username = username;
 		this.password = password;

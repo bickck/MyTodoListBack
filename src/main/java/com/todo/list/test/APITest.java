@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.todo.list.controller.dto.UserDTO;
-import com.todo.list.domain.ImageEntity;
+import com.todo.list.domain.base.ImageEntity;
 import com.todo.list.security.JwtLoginToken;
 
 @ResponseBody

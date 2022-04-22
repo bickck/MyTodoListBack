@@ -1,4 +1,4 @@
-package com.todo.list.service.util;
+package com.todo.list.util;
 
 import javax.servlet.http.Cookie;
 

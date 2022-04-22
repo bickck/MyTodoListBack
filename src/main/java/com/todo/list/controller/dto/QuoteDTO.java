@@ -1,13 +1,15 @@
 package com.todo.list.controller.dto;
 
-import com.todo.list.domain.QuetoEntity;
+import javax.validation.constraints.NotNull;
+
+import com.todo.list.domain.base.DefaultQuoteEntity;
 
 import lombok.Data;
 import lombok.Getter;
 
-
 public class QuoteDTO {
 
+	
 	private Long id;
 	private String quote;
 	private String author;
@@ -16,19 +18,19 @@ public class QuoteDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuoteDTO(String quote, String author) {
+	public QuoteDTO(@NotNull String quote, @NotNull String author) {
 		super();
 		this.quote = quote;
 		this.author = author;
 	}
 
-	public QuoteDTO(Long id, QuetoEntity quote) {
+	public QuoteDTO(@NotNull Long id, @NotNull DefaultQuoteEntity quote) {
 		this.id = id;
 		this.quote = quote.getQueto();
 		this.author = quote.getAuthor();
 	}
 
-	public QuoteDTO(QuetoEntity queto) {
+	public QuoteDTO(@NotNull DefaultQuoteEntity queto) {
 		this.id = queto.getId();
 		this.quote = queto.getQueto();
 		this.author = queto.getAuthor();

@@ -1,4 +1,4 @@
-package com.todo.list.domain;
+package com.todo.list.domain.base;
 
 import java.sql.Timestamp;
 
@@ -12,8 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
 
-@Entity
-public class QuetoEntity {
+@Entity(name="DEFAULTQUOTE")
+public class DefaultQuoteEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +29,17 @@ public class QuetoEntity {
 	@Column(name = "CREATEDATE")
 	private Timestamp createDate;
 
-	public QuetoEntity() {
+	public DefaultQuoteEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuetoEntity(String queto, String author) {
+	public DefaultQuoteEntity(String queto, String author) {
 		super();
 		this.queto = queto;
 		this.author = author;
 	}
 
-	public QuetoEntity(QuoteDTO quetoDTO) {
+	public DefaultQuoteEntity(QuoteDTO quetoDTO) {
 		this.queto = quetoDTO.getQueto();
 		this.author = quetoDTO.getAuthor();
 	}

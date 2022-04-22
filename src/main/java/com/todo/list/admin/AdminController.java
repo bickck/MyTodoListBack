@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.service.image.BackGroundImageService;
-import com.todo.list.service.queto.QuetoManagementService;
 
 /**
  * @author DongHyeon_kim

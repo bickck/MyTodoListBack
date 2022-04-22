@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.todo.list.domain.QuetoEntity;
-import com.todo.list.repository.QuoteRepository;
+import com.todo.list.domain.base.DefaultQuoteEntity;
+import com.todo.list.repository.DefaultQuoteRepository;
 
 @Service
-public class QuetoService {
+public class DefaultQuetoService {
 
 	@Autowired
-	private QuoteRepository quetoRepository;
+	private DefaultQuoteRepository quetoRepository;
 
 	@Transactional(readOnly = true)
-	public List<QuetoEntity> getQuotes() {
+	public List<DefaultQuoteEntity> getQuotes() {
 		return quetoRepository.findAll();
 	}
 }

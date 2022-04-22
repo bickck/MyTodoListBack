@@ -23,7 +23,7 @@ import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.security.JwtLoginToken;
 import com.todo.list.service.user.UserService;
-import com.todo.list.service.util.UserUtil;
+import com.todo.list.util.UserUtil;
 
 @RestController
 @RequestMapping(value = "/account")

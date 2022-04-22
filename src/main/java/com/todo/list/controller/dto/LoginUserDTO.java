@@ -1,5 +1,7 @@
 package com.todo.list.controller.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.todo.list.domain.UserEntity;
 
 public class LoginUserDTO {
@@ -7,12 +9,12 @@ public class LoginUserDTO {
 	private Long id;
 	private String username;
 
-	public LoginUserDTO(UserEntity userEntity) {
+	public LoginUserDTO(@NotNull UserEntity userEntity) {
 		this.id = userEntity.getId();
 		this.username = userEntity.getUsername();
 	}
 
-	public LoginUserDTO(Long id, String username) {
+	public LoginUserDTO(@NotNull Long id, @NotNull String username) {
 		super();
 		this.id = id;
 		this.username = username;

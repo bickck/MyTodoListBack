@@ -2,16 +2,19 @@ package com.todo.list.domain;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity
+@Entity(name = "USER")
 public class UserEntity {
 
 	@Id
@@ -28,17 +31,23 @@ public class UserEntity {
 	@CreationTimestamp
 	private Timestamp date;
 
+	@OneToMany(mappedBy = "username")
+	private List<UserQuoteEntity> quotes;
+
+	@OneToMany(mappedBy = "user")
+	private List<UserTodoEntity> todos;
+
 	public UserEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserEntity(String username, String password) {
+	public UserEntity(@NotNull String username, @NotNull String password) {
 		super();
 		this.username = username;
 		this.password = password;
 	}
 
-	public UserEntity(Long id, String username, String password, Timestamp date) {
+	public UserEntity(@NotNull Long id, @NotNull String username, @NotNull String password, @NotNull Timestamp date) {
 		super();
 		this.id = id;
 		this.username = username;

@@ -1,4 +1,4 @@
-package com.todo.list.domain;
+package com.todo.list.domain.base;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity
+@Entity(name="IMAGE")
 public class ImageEntity {
 
 	@Id
