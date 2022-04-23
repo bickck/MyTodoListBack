@@ -3,6 +3,7 @@ package com.todo.list.util;
 import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,16 +19,15 @@ import com.todo.list.repository.UserRepository;
 @Component
 public class UserUtil {
 
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 	@Autowired
 	private UserRepository userRepository;
 
-//	public String passwordEncoding(String password) {
-//		//String encodePassword = bCryptPasswordEncoder.encode(password);
-//		return encodePassword;
-//	}
+	public String passwordEncoding(String password) {
+		String encodePassword = bCryptPasswordEncoder.encode(password);
+		return encodePassword;
+	}
 
 	public boolean isUsernameDuplicatedCheck(String username) {
 		UserEntity user = userRepository.findByUsername(username);

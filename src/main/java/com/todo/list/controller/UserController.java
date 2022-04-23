@@ -14,9 +14,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.LoginUserDTO;
@@ -29,6 +31,7 @@ import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
 
 import io.jsonwebtoken.Claims;
+import lombok.extern.java.Log;
 
 /**
  * 
@@ -36,6 +39,7 @@ import io.jsonwebtoken.Claims;
  * 
  */
 @RestController
+@RequestMapping(value = "/user")
 public class UserController {
 
 	private static final String SEESION_NAME = "username";
@@ -142,7 +146,7 @@ public class UserController {
 //		return "Test Success";
 //	}
 
-	@PostMapping("get/valid")
+	@PostMapping("/get/valid")
 	public Claims getValid(HttpServletRequest httpServletRequest) {
 
 		Enumeration<String> s = httpServletRequest.getHeaderNames();

@@ -38,10 +38,9 @@ public class UserService {
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
 
-		System.out.println("UserService" + userDTO.toString());
 		if (userUtil.isUsernameDuplicatedCheck(username)) {
-//			String passwordEncode = userUtil.passwordEncoding(password);
-			userRepository.save(new UserEntity(username, password));
+			String passwordEncode = userUtil.passwordEncoding(password);
+			userRepository.save(new UserEntity(username, passwordEncode));
 		} else {
 			throw new IllegalAccessError();
 		}
@@ -51,8 +50,8 @@ public class UserService {
 //		return null;
 //	}
 
-	public void userDelete() {
-
+	public void userDelete(UserDTO userDTO) {
+		userRepository.deleteByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
 	}
 
 	public UserEntity userLogin(UserDTO userDTO) {
