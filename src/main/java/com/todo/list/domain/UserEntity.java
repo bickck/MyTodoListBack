@@ -47,6 +47,12 @@ public class UserEntity {
 		this.password = password;
 	}
 
+	public UserEntity(Long id, @NotNull String username, @NotNull String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
 	public UserEntity(@NotNull Long id, @NotNull String username, @NotNull String password, @NotNull Timestamp date) {
 		super();
 		this.id = id;

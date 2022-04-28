@@ -21,7 +21,7 @@ import org.springframework.web.util.CookieGenerator;
 
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.domain.UserEntity;
-import com.todo.list.security.JwtLoginToken;
+import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
 
@@ -38,7 +38,7 @@ public class AccountController {
 	private UserUtil userUtil;
 
 	@Autowired
-	private JwtLoginToken jwtLoginToken;
+	private AuthenticationJwtToken jwtLoginToken;
 
 	@Autowired
 	public AccountController(UserService userService) {

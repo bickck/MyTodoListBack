@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.domain.UserQuoteEntity;
 import com.todo.list.repository.UserImageRepository;
@@ -21,11 +22,11 @@ public class UserApiService {
 	private UserQuoteRepository userQuoteRepository;
 
 	@Autowired
-	private UserImageRepository userImageRepository;	
+	private UserImageRepository userImageRepository;
 
-	public UserEntity getUserApi(String username) {
+	public UserEntity getUserApi(UserTokenDTO username) {
 
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsername(username.getUsername());
 	}
 
 	public UserQuoteEntity getUserquote(UserDTO userDTO) {

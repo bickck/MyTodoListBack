@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -21,25 +22,28 @@ import lombok.extern.slf4j.Slf4j;
 public class UserApiFilter implements Filter {
 
 	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
+		Filter.super.init(filterConfig);
+	}
+
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		
-		
-		System.out.println("UserApiFilter in");
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authorization = httpServletRequest.getHeader("authorization");
 
 		if (authorization == null) {
-			System.out.println("authorizaion is null");
 			throw new IllegalAccessError();
 		} else {
-			System.out.println(authorization);
 			chain.doFilter(request, response);
 		}
-		System.out.println("UserApiFilter out~");
-
 	}
 
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		Filter.super.destroy();
+	}
 }

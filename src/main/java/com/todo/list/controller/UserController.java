@@ -1,5 +1,6 @@
 package com.todo.list.controller;
 
+import java.sql.Date;
 import java.util.Enumeration;
 
 import javax.servlet.http.Cookie;
@@ -23,12 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.LoginUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.domain.UserEntity;
-import com.todo.list.security.JwtLoginToken;
+import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
+import com.todo.list.util.aop.TokenValidator;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;
@@ -39,7 +43,7 @@ import lombok.extern.java.Log;
  * 
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/user/manage")
 public class UserController {
 
 	private static final String SEESION_NAME = "username";
@@ -50,7 +54,7 @@ public class UserController {
 	private UserQuoteService userQuoteService;
 
 	@Autowired
-	private JwtLoginToken jwtLoginToken;
+	private AuthenticationJwtToken jwtLoginToken;
 
 	@Autowired
 	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService) {
@@ -59,52 +63,78 @@ public class UserController {
 		this.userQuoteService = userQuoteService;
 	}
 
-	@PostMapping("/get/user")
-	public ResponseEntity<LoginUserDTO> getUser(HttpServletRequest httpServletRequest) {
+	@PostMapping("/user")
+	public ResponseEntity<LoginUserDTO> getUser(@TokenValidator UserTokenDTO tokenDTO) {
 
-		String authorization = httpServletRequest.getHeader("authorization");
+		UserEntity userinfo = userApiService.getUserApi(tokenDTO);
 
-		if (authorization != null) {
-			String username = jwtLoginToken.getUsername(authorization);
-			UserEntity userinfo = userApiService.getUserApi(username);
+		return new ResponseEntity<LoginUserDTO>(HttpStatus.OK);
 
-			return new ResponseEntity<LoginUserDTO>(new LoginUserDTO(userinfo), HttpStatus.OK);
-		}
-
-		return new ResponseEntity<LoginUserDTO>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 	}
 
 	@PostMapping("/quote/save")
-	public ResponseEntity savetQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+	public ResponseEntity savetUserQuote(@RequestBody QuoteDTO quoteDTO, @TokenValidator UserTokenDTO tokenDTO) {
+
+		UserEntity user = userApiService.getUserApi(tokenDTO);
 		userQuoteService.quoteInsert(quoteDTO, null);
-
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		if (authorization != null) {
-			String username = jwtLoginToken.getUsername(authorization);
-			UserEntity userinfo = userApiService.getUserApi(username);
-
-			return new ResponseEntity<LoginUserDTO>(new LoginUserDTO(userinfo), HttpStatus.OK);
-		}
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/quote/update")
-	public ResponseEntity updateQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+	public ResponseEntity updateUserQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+
+		String authorization = httpServletRequest.getHeader("authorization");
+
+		String username = jwtLoginToken.getUsername(authorization);
+		userQuoteService.quoteUpdate(quoteDTO);
+
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@PostMapping("/quote/delete")
+	public ResponseEntity deleteUserQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
 
 		String authorization = httpServletRequest.getHeader("authorization");
 
 		if (authorization != null) {
 			String username = jwtLoginToken.getUsername(authorization);
-			userQuoteService.quoteUpdate(quoteDTO);
+			userQuoteService.quoteDelete(quoteDTO);
 
 		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/quote/delete")
-	public ResponseEntity deleteQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+	@PostMapping("/background/save")
+	public ResponseEntity saveUserBackGroundImg(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+
+		String authorization = httpServletRequest.getHeader("authorization");
+
+		if (authorization != null) {
+			String username = jwtLoginToken.getUsername(authorization);
+			userQuoteService.quoteDelete(quoteDTO);
+
+		}
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@PostMapping("/background/update")
+	public ResponseEntity updateUserBackGroundImg(@RequestBody QuoteDTO quoteDTO,
+			HttpServletRequest httpServletRequest) {
+
+		String authorization = httpServletRequest.getHeader("authorization");
+
+		if (authorization != null) {
+			String username = jwtLoginToken.getUsername(authorization);
+			userQuoteService.quoteDelete(quoteDTO);
+
+		}
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@PostMapping("/background/delete")
+	public ResponseEntity deleteUserBackGroundImg(@RequestBody QuoteDTO quoteDTO,
+			HttpServletRequest httpServletRequest) {
 		userQuoteService.quoteDelete(quoteDTO);
 		String authorization = httpServletRequest.getHeader("authorization");
 
@@ -115,36 +145,6 @@ public class UserController {
 		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
-//
-//	@PostMapping("/get/")
-//	public String getQuote() {
-//		return "Test Success";
-//	}
-
-	@PostMapping("/get/quote/{id}")
-	public String getQuote(@PathVariable Long id) {
-		return "Test Success";
-	}
-
-	@PostMapping("/get/background")
-	public String getBackGround() {
-		return "Test Success";
-	}
-
-	@PostMapping("/get/background/{id}")
-	public String getBackGround(@PathVariable Long id) {
-		return "Test Success";
-	}
-
-	@PostMapping("/get/todo")
-	public String getTodo(@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-		return "Test Success";
-	}
-
-//	@PostMapping("/get/todo/{id}")
-//	public String getTodo(@PathVariable Long id) {
-//		return "Test Success";
-//	}
 
 	@PostMapping("/get/valid")
 	public Claims getValid(HttpServletRequest httpServletRequest) {
