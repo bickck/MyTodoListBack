@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.LoginUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
@@ -72,7 +74,8 @@ public class UserController {
 
 	}
 
-	@PostMapping("/quote/save")
+	// save = 1, update = 2, delete = 3
+	@PostMapping("/quote/1")
 	public ResponseEntity savetUserQuote(@RequestBody QuoteDTO quoteDTO, @TokenValidator UserTokenDTO tokenDTO) {
 
 		UserEntity user = userApiService.getUserApi(tokenDTO);
@@ -81,79 +84,33 @@ public class UserController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/quote/update")
-	public ResponseEntity updateUserQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+	@PostMapping("/quote/3/{id}")
+	public ResponseEntity deleteUserQuote(@PathVariable Long id, @TokenValidator UserTokenDTO tokenDTO) {
 
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		String username = jwtLoginToken.getUsername(authorization);
-		userQuoteService.quoteUpdate(quoteDTO);
+		userQuoteService.quoteDelete(id);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/quote/delete")
-	public ResponseEntity deleteUserQuote(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+	@PostMapping("/background/1")
+	public ResponseEntity saveUserBackGroundImg(MultipartFile multipartFile) {
+		Resource resource = multipartFile.getResource();
+		String path = multipartFile.getName();
+		String originFileName = multipartFile.getOriginalFilename();
 
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		if (authorization != null) {
-			String username = jwtLoginToken.getUsername(authorization);
-			userQuoteService.quoteDelete(quoteDTO);
-
-		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/background/save")
-	public ResponseEntity saveUserBackGroundImg(@RequestBody QuoteDTO quoteDTO, HttpServletRequest httpServletRequest) {
+	@PostMapping("/background/2/{id}")
+	public ResponseEntity updateUserBackGroundImg(@PathVariable Long id) {
 
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		if (authorization != null) {
-			String username = jwtLoginToken.getUsername(authorization);
-			userQuoteService.quoteDelete(quoteDTO);
-
-		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/background/update")
-	public ResponseEntity updateUserBackGroundImg(@RequestBody QuoteDTO quoteDTO,
-			HttpServletRequest httpServletRequest) {
+	@PostMapping("/background/3/{id}")
+	public ResponseEntity deleteUserBackGroundImg(@PathVariable Long id) {
 
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		if (authorization != null) {
-			String username = jwtLoginToken.getUsername(authorization);
-			userQuoteService.quoteDelete(quoteDTO);
-
-		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/background/delete")
-	public ResponseEntity deleteUserBackGroundImg(@RequestBody QuoteDTO quoteDTO,
-			HttpServletRequest httpServletRequest) {
-		userQuoteService.quoteDelete(quoteDTO);
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		if (authorization != null) {
-			String username = jwtLoginToken.getUsername(authorization);
-			userQuoteService.quoteDelete(quoteDTO);
-
-		}
-		return new ResponseEntity(HttpStatus.OK);
-	}
-
-	@PostMapping("/get/valid")
-	public Claims getValid(HttpServletRequest httpServletRequest) {
-
-		Enumeration<String> s = httpServletRequest.getHeaderNames();
-		String authorization = httpServletRequest.getHeader("authorization");
-
-		Claims body = jwtLoginToken.getUser(authorization);
-
-		return body;
-	}
 }

@@ -1,7 +1,10 @@
 package com.todo.list.service.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
@@ -24,20 +27,30 @@ public class UserApiService {
 	@Autowired
 	private UserImageRepository userImageRepository;
 
+	@Transactional(readOnly = true)
 	public UserEntity getUserApi(UserTokenDTO username) {
 
 		return userRepository.findByUsername(username.getUsername());
 	}
 
-	public UserQuoteEntity getUserquote(UserDTO userDTO) {
-		return new UserQuoteEntity();
+	@Transactional(readOnly = true)
+	public List<UserQuoteEntity> getUserquotes(UserTokenDTO userDTO) {
+		String username = userDTO.getUsername();
+
+		return userQuoteRepository.findByUsername(username);
 	}
 
-	public void getUserBackGround(UserDTO userDTO) {
+	@Transactional(readOnly = true)
+	public void getUserBackGround(UserTokenDTO userDTO) {
 
 	}
 
-	public void getUserToDoList(UserDTO userDTO) {
+	@Transactional(readOnly = true)
+	public void getUserToDoList(UserTokenDTO userDTO) {
 
+	}
+	
+	public void userQuotes(UserTokenDTO userDTO) {
+		
 	}
 }

@@ -19,8 +19,8 @@ public class DefaultQuoteEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "QUETO")
-	private String queto;
+	@Column(name = "QUOTE")
+	private String quote;
 
 	@Column(name = "AUTHOR")
 	private String author;
@@ -33,15 +33,15 @@ public class DefaultQuoteEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DefaultQuoteEntity(String queto, String author) {
+	public DefaultQuoteEntity(String quote, String author) {
 		super();
-		this.queto = queto;
+		this.quote = quote;
 		this.author = author;
 	}
 
-	public DefaultQuoteEntity(QuoteDTO quetoDTO) {
-		this.queto = quetoDTO.getQueto();
-		this.author = quetoDTO.getAuthor();
+	public DefaultQuoteEntity(QuoteDTO quoteDTO) {
+		this.quote = quoteDTO.getQueto();
+		this.author = quoteDTO.getAuthor();
 	}
 
 	public Long getId() {
@@ -52,12 +52,12 @@ public class DefaultQuoteEntity {
 		this.id = id;
 	}
 
-	public String getQueto() {
-		return queto;
+	public String getQuote() {
+		return quote;
 	}
 
-	public void setQueto(String queto) {
-		this.queto = queto;
+	public void setQuote(String quote) {
+		this.quote = quote;
 	}
 
 	public String getAuthor() {

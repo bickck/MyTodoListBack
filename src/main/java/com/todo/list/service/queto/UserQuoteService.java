@@ -19,14 +19,12 @@ public class UserQuoteService {
 	private UserQuoteRepository userQuoteRepository;
 
 	public void quoteInsert(QuoteDTO quoteDTO, UserEntity username) {
-		userQuoteRepository.save(new UserQuoteEntity(username, quoteDTO.getQueto(), quoteDTO.getAuthor()));
+		userQuoteRepository
+				.saveAndFlush(new UserQuoteEntity(username.getUsername(), quoteDTO.getQueto(), quoteDTO.getAuthor()));
 	}
 
-	public void quoteDelete(QuoteDTO quoteDTO) {
-
+	public void quoteDelete(Long id) {
+		userQuoteRepository.deleteById(id);
 	}
 
-	public void quoteUpdate(QuoteDTO quoteDTO) {
-
-	}
 }

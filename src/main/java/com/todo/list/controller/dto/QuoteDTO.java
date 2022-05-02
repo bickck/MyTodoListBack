@@ -25,13 +25,13 @@ public class QuoteDTO {
 
 	public QuoteDTO(@NotNull Long id, @NotNull DefaultQuoteEntity quote) {
 		this.id = id;
-		this.quote = quote.getQueto();
+		this.quote = quote.getQuote();
 		this.author = quote.getAuthor();
 	}
 
 	public QuoteDTO(@NotNull DefaultQuoteEntity queto) {
 		this.id = queto.getId();
-		this.quote = queto.getQueto();
+		this.quote = queto.getQuote();
 		this.author = queto.getAuthor();
 	}
 

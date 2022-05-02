@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.todo.list.controller.dto.QuoteDTO;
+
 @Entity(name = "USERQUOTE")
 public class UserQuoteEntity {
 
@@ -20,7 +22,7 @@ public class UserQuoteEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USERNAME")
+	@Column(name = "USER")
 	private String username;
 
 	@Column(name = "QUETO")
@@ -32,16 +34,23 @@ public class UserQuoteEntity {
 	@CreationTimestamp
 	@Column(name = "CREATEDATE")
 	private Timestamp createDate;
-	
+
 	public UserQuoteEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserQuoteEntity(@NotNull UserEntity username, String queto, String author) {
+	public UserQuoteEntity(@NotNull String user, @NotNull String queto, @NotNull String author) {
 		super();
-		this.username = username.getUsername();
+		this.username = user;
 		this.queto = queto;
 		this.author = author;
+	}
+
+	public UserQuoteEntity(@NotNull String user, @NotNull QuoteDTO quoteDTO) {
+		super();
+		this.username = user;
+		this.queto = quoteDTO.getQueto();
+		this.author = quoteDTO.getAuthor();
 	}
 
 	public Long getId() {
@@ -50,6 +59,14 @@ public class UserQuoteEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUser() {
+		return username;
+	}
+
+	public void setUser(String user) {
+		this.username = user;
 	}
 
 	public String getQueto() {

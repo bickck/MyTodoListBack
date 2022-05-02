@@ -39,14 +39,9 @@ public class UserAop {
 	public void cut() {
 	}
 
-	@Pointcut("execution(* com.todo.list.controller.TestController..*(.., @TokenValidator (*), ..))")
-	public void cut2() {
-	}
-
 	@Around(value = "cut()")
 	public Object test(ProceedingJoinPoint joinPoint) throws Throwable {
 
-//		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 
@@ -63,35 +58,4 @@ public class UserAop {
 		return joinPoint.proceed(args);
 	}
 
-	@Around(value = "cut2()")
-	public Object test2(ProceedingJoinPoint joinPoint) throws Throwable {
-
-//		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-				.getRequest();
-
-		String token = httpServletRequest.getHeader("authorization");
-		authenticationJwtToken.getUserTokenDTO(token);
-
-//		Object[] args = joinPoint.getArgs();
-//
-//		for (int i = 0; i < args.length; i++) {
-//			logger.info("args = {}", args[i]);
-//		}
-
-		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
-			if (data instanceof UserTokenDTO) {
-				data = authenticationJwtToken.getUserTokenDTO(token);
-			}
-			return data;
-		}).toArray();
-
-		return joinPoint.proceed(args);
-	}
-
-//	@Before(value = "")
-//	public Object annotationTest(ProceedingJoinPoint joinPoint) throws Throwable {
-//		return joinPoint;
-//		
-//	}
 }

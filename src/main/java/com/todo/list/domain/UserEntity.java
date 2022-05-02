@@ -4,15 +4,20 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.todo.list.controller.dto.QuoteDTO;
 
 @Entity(name = "USER")
 public class UserEntity {
@@ -31,10 +36,10 @@ public class UserEntity {
 	@CreationTimestamp
 	private Timestamp date;
 
-	@OneToMany(mappedBy = "username")
+	@OneToMany(mappedBy = "username", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<UserQuoteEntity> quotes;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserTodoEntity> todos;
 
 	public UserEntity() {
@@ -91,6 +96,22 @@ public class UserEntity {
 
 	public void setDate(Timestamp date) {
 		this.date = date;
+	}
+
+	public List<UserQuoteEntity> getQuotes() {
+		return quotes;
+	}
+
+	public void setQuotes(List<UserQuoteEntity> quotes) {
+		this.quotes = quotes;
+	}
+
+	public List<UserTodoEntity> getTodos() {
+		return todos;
+	}
+
+	public void setTodos(List<UserTodoEntity> todos) {
+		this.todos = todos;
 	}
 
 }
