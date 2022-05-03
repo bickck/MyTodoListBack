@@ -14,8 +14,13 @@ public class BackGroundImageService {
 	private ImageRepository imageRepository;
 	
 	public String save(MultipartFile multipartFile) {
+		imageRepository.save(null);
 		return null;
+	}
+	
+	public void delete(Long id) {
 		
+		imageRepository.deleteById(id);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.todo.list.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Enumeration;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +34,8 @@ import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.api.UserApiService;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.UserBackGroundImgService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
@@ -54,15 +59,18 @@ public class UserController {
 	private UserService userService;
 	private UserApiService userApiService;
 	private UserQuoteService userQuoteService;
+	private ImageUploadService imageUploadService;
 
 	@Autowired
 	private AuthenticationJwtToken jwtLoginToken;
 
 	@Autowired
-	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService) {
+	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService,
+			ImageUploadService imageUploadService) {
 		this.userService = userService;
 		this.userApiService = userApiService;
 		this.userQuoteService = userQuoteService;
+		this.imageUploadService = imageUploadService;
 	}
 
 	@PostMapping("/user")
@@ -93,10 +101,11 @@ public class UserController {
 	}
 
 	@PostMapping("/background/1")
-	public ResponseEntity saveUserBackGroundImg(MultipartFile multipartFile) {
-		Resource resource = multipartFile.getResource();
-		String path = multipartFile.getName();
-		String originFileName = multipartFile.getOriginalFilename();
+	public ResponseEntity saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
+			@RequestParam(name = "fileName") String fileName, @TokenValidator UserTokenDTO tokenDTO)
+			throws IOException {
+
+		imageUploadService.saveImageInDir(multipartFile, tokenDTO.getUsername(), fileName);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
@@ -109,6 +118,24 @@ public class UserController {
 
 	@PostMapping("/background/3/{id}")
 	public ResponseEntity deleteUserBackGroundImg(@PathVariable Long id) {
+
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@PostMapping("/todo/1/")
+	public ResponseEntity saveUserTodo(@PathVariable Long id) {
+
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@PostMapping("/todo/2/{id}")
+	public ResponseEntity updateUserTodo(@PathVariable Long id) {
+
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@PostMapping("/todo/3/{id}")
+	public ResponseEntity deleteUserTodo(@PathVariable Long id) {
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
