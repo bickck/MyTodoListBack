@@ -1,6 +1,7 @@
 package com.todo.list.service.image;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -20,13 +21,13 @@ import com.todo.list.domain.UserBackGroundImageEntity;
 @Service
 public class ImageUploadService {
 
-	private static final String defaultLocation = "E:\\img";
+	private static final String defaultLocation = "E:\\img" + File.separator;
 
 	@Autowired
 	private UserBackGroundImgService backGroundImgService;
 
 	public void saveImageInDir(MultipartFile multipartFile, String username, String fileName) {
-		String location = defaultLocation + File.separator + username;
+		String location = defaultLocation + username;
 		Path path = Paths.get(location);
 		String originalName = multipartFile.getOriginalFilename();
 		long fileSize = multipartFile.getSize();
@@ -52,4 +53,41 @@ public class ImageUploadService {
 
 	}
 
+	public void findUserBackGroundImage(Long imageId, String username) {
+		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(imageId);
+
+		File file = new File(defaultLocation + username + File.separator + backGroundImageEntity.getOriginName());
+		try {
+			File destFile = file.getCanonicalFile();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public String userBackGroundDelete(Long id) {
+
+		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.userImgDelete(id);
+		File file = new File(defaultLocation + backGroundImageEntity.getUser() + File.separator
+				+ backGroundImageEntity.getOriginName());
+
+		try {
+			if (file.exists()) {
+				if (file.delete()) {
+					System.out.println("삭제 성공");
+				} else {
+
+				}
+
+			} else {
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return "";
+	}
 }

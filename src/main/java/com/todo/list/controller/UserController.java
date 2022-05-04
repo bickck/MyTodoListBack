@@ -118,7 +118,8 @@ public class UserController {
 
 	@PostMapping("/background/3/{id}")
 	public ResponseEntity deleteUserBackGroundImg(@PathVariable Long id) {
-
+		imageUploadService.userBackGroundDelete(id);
+		
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

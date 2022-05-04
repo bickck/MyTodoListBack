@@ -28,11 +28,16 @@ public class UserBackGroundImgService {
 
 	@Transactional
 	public void userImageSave(UserBackGroundImageEntity backGroundImageEntity) {
-
 		imageRepository.save(backGroundImageEntity);
 	}
 
-	public void userImgDelete() {
+	public UserBackGroundImageEntity userImgDelete(Long id) {
+		UserBackGroundImageEntity  backGroundImageEntity = imageRepository.getById(id);
+		imageRepository.deleteById(id);
+		return backGroundImageEntity;
+	}
 
+	public UserBackGroundImageEntity findById(long id) {
+		return imageRepository.findById(id).get();
 	}
 }

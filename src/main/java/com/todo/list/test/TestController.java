@@ -20,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
@@ -74,7 +77,7 @@ public class TestController {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
-	
+
 	@Autowired
 	private ImageUploadService imageUploadService;
 
@@ -127,6 +130,38 @@ public class TestController {
 		imageUploadService.saveImageInDir(multipartFile, "username", "yadong");
 
 		return "success";
+	}
+
+	@PostMapping("/img/remove/test")
+	public String remove() throws Exception {
+		long id = 1;
+		imageUploadService.userBackGroundDelete(id);
+
+		return "success";
+	}
+
+	@GetMapping("/img/find/test")
+	public String imgFindTest() throws Exception {
+		long id = 1;
+		imageUploadService.findUserBackGroundImage(id, "username");
+
+		return "success";
+	}
+
+	@GetMapping(value = "/get/img")
+	public ResponseEntity<Resource> getImage() {
+		String defaultLocation = "E:\\img" + File.separator;
+		String imgName = "8b956be74df2ac6c6c8d79d6046de6d577c0185816904f6ebc629382503e9a39.jpg";
+		File file = new File(defaultLocation + "username" + File.separator + imgName);
+		HttpHeaders headers = new HttpHeaders();
+		Path path = Paths.get(file.getPath());
+		try {
+			headers.add("Content-Type", Files.probeContentType(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(new FileSystemResource(file), headers, HttpStatus.OK);
 	}
 
 	@PostMapping("/create/test")
