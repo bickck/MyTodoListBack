@@ -39,9 +39,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.domain.UserBackGroundImageEntity;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.domain.UserQuoteEntity;
 import com.todo.list.domain.base.DefaultQuoteEntity;
+import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.security.AuthenticationJwtToken;
@@ -81,6 +83,9 @@ public class TestController {
 	@Autowired
 	private ImageUploadService imageUploadService;
 
+	@Autowired
+	private UserImageRepository imageRepository;
+
 	private UserTokenDTO dto;
 	private UserDTO dto2;
 	private QuoteDTO dto3;
@@ -94,6 +99,7 @@ public class TestController {
 		dto2 = new UserDTO("1234", "134");
 		dto3 = new QuoteDTO("quoteTest", "quoteTest");
 		UserEntity userEntity = userApiService.getUserApi(dto);
+		initImage();
 
 	}
 
@@ -148,7 +154,15 @@ public class TestController {
 		return "success";
 	}
 
-	@GetMapping(value = "/get/img")
+	@GetMapping("/img/list/test")
+	public String imgListTest() throws Exception {
+		long id = 1;
+		imageUploadService.findUserBackGroundImage(id, "username");
+
+		return "success";
+	}
+
+	@GetMapping(value = "/img/get")
 	public ResponseEntity<Resource> getImage() {
 		String defaultLocation = "E:\\img" + File.separator;
 		String imgName = "8b956be74df2ac6c6c8d79d6046de6d577c0185816904f6ebc629382503e9a39.jpg";
@@ -164,13 +178,7 @@ public class TestController {
 		return new ResponseEntity<Resource>(new FileSystemResource(file), headers, HttpStatus.OK);
 	}
 
-	@PostMapping("/create/test")
-	public void aopTest(@RequestBody UserDTO reqBody, @TokenValidator UserTokenDTO tokenUser) {
-		System.out.println("Test");
-		System.out.println("token User : " + tokenUser.toString());
-	}
-
-	@GetMapping("/value/test")
+	@GetMapping("/img/test")
 	public void valueTest() {
 		String username = "1234";
 		Path path = Paths.get("E:\\img\\" + File.separator + username);
@@ -214,6 +222,12 @@ public class TestController {
 		return new ResponseEntity<List<DefaultQuoteEntity>>(quotes, HttpStatus.OK);
 	}
 
+	@PostMapping("/create/test")
+	public void aopTest(@RequestBody UserDTO reqBody, @TokenValidator UserTokenDTO tokenUser) {
+		System.out.println("Test");
+		System.out.println("token User : " + tokenUser.toString());
+	}
+
 	@PostMapping("/get/valid")
 	public Claims getValid(HttpServletRequest httpServletRequest) {
 
@@ -223,6 +237,16 @@ public class TestController {
 		Claims body = jwtLoginToken.getUser(authorization);
 
 		return body;
+	}
+
+	private void initImage() {
+		File file = new File("E:\\img\\" + File.separator + "username");
+		List<UserBackGroundImageEntity> entities = new ArrayList<UserBackGroundImageEntity>();
+		for (String str : file.list()) {
+			entities.add(new UserBackGroundImageEntity("username", "fileName", "none", str, (long) 0));
+		}
+
+		imageRepository.saveAll(entities);
 	}
 
 }

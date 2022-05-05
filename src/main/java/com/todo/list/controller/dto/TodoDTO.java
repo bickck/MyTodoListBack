@@ -1,18 +1,23 @@
 package com.todo.list.controller.dto;
 
+import java.sql.Timestamp;
+
 public class TodoDTO {
 
 	private Long id;
+
+	private String username;
 
 	private String title;
 
 	private String content;
 
-	private String createDate;
+	private Timestamp createDate;
 
-	public TodoDTO(Long id, String title, String content, String createDate) {
+	public TodoDTO(Long id, String username, String title, String content, Timestamp createDate) {
 		super();
 		this.id = id;
+		this.username = username;
 		this.title = title;
 		this.content = content;
 		this.createDate = createDate;
@@ -34,6 +39,14 @@ public class TodoDTO {
 		this.title = title;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -42,11 +55,11 @@ public class TodoDTO {
 		this.content = content;
 	}
 
-	public String getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 

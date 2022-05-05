@@ -1,5 +1,6 @@
 package com.todo.list.controller.dto;
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileDTO {
@@ -8,23 +9,19 @@ public class FileDTO {
 	private String username;
 	private String fileName;
 	private String originName;
-	private String location;
-	private MultipartFile file;
-	private Long fileSize;
+	private Resource file;
 
 	public FileDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileDTO(String username, String fileName, String originName, String location, MultipartFile file,
-			long fileSize) {
+	public FileDTO(Long id, String username, String fileName, String originName, Resource file) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.fileName = fileName;
 		this.originName = originName;
-		this.location = location;
 		this.file = file;
-		this.fileSize = fileSize;
 	}
 
 	public Long getId() {
@@ -59,28 +56,12 @@ public class FileDTO {
 		this.originName = originName;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public MultipartFile getFile() {
+	public Resource getFile() {
 		return file;
 	}
 
-	public void setFile(MultipartFile file) {
+	public void setFile(Resource file) {
 		this.file = file;
-	}
-
-	public Long getFileSize() {
-		return fileSize;
-	}
-
-	public void setFileSize(Long fileSize) {
-		this.fileSize = fileSize;
 	}
 
 }

@@ -11,9 +11,13 @@ import java.nio.file.StandardCopyOption;
 
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.orm.hibernate5.SpringBeanContainer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriBuilder;
 
 import com.todo.list.controller.dto.FileDTO;
 import com.todo.list.domain.UserBackGroundImageEntity;
@@ -25,8 +29,11 @@ public class ImageUploadService {
 
 	@Autowired
 	private UserBackGroundImgService backGroundImgService;
+	
+	
 
 	public void saveImageInDir(MultipartFile multipartFile, String username, String fileName) {
+		
 		String location = defaultLocation + username;
 		Path path = Paths.get(location);
 		String originalName = multipartFile.getOriginalFilename();
@@ -40,6 +47,7 @@ public class ImageUploadService {
 				e.printStackTrace();
 			}
 		}
+		
 		try {
 			InputStream inputStream = multipartFile.getInputStream();
 			Path dirPath = path.resolve(multipartFile.getOriginalFilename());
@@ -53,18 +61,20 @@ public class ImageUploadService {
 
 	}
 
-	public void findUserBackGroundImage(Long imageId, String username) {
+	public ResponseEntity<?> findUserBackGroundImage(Long imageId, String username) {
 		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(imageId);
 
 		File file = new File(defaultLocation + username + File.separator + backGroundImageEntity.getOriginName());
-		try {
-			File destFile = file.getCanonicalFile();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		Resource resource = new FileSystemResource(file);
+//		try {
+//			
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return ResponseEntity<?>();
+		return null;
 	}
 
 	public String userBackGroundDelete(Long id) {

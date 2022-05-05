@@ -29,14 +29,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.LoginUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.domain.UserEntity;
+import com.todo.list.domain.UserTodoEntity;
 import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.UserBackGroundImgService;
 import com.todo.list.service.queto.UserQuoteService;
+import com.todo.list.service.todo.TodoService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.aop.TokenValidator;
@@ -60,6 +63,7 @@ public class UserController {
 	private UserApiService userApiService;
 	private UserQuoteService userQuoteService;
 	private ImageUploadService imageUploadService;
+	private TodoService todoService;
 
 	@Autowired
 	private AuthenticationJwtToken jwtLoginToken;
@@ -119,12 +123,14 @@ public class UserController {
 	@PostMapping("/background/3/{id}")
 	public ResponseEntity deleteUserBackGroundImg(@PathVariable Long id) {
 		imageUploadService.userBackGroundDelete(id);
-		
+
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/todo/1/")
-	public ResponseEntity saveUserTodo(@PathVariable Long id) {
+	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @TokenValidator UserTokenDTO userTokenDTO) {
+
+		todoService.todoSave(todoDTO);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}

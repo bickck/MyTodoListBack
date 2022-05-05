@@ -8,6 +8,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.todo.list.controller.dto.TodoDTO;
+
 @Entity(name = "TODO")
 public class UserTodoEntity {
 
@@ -41,6 +43,15 @@ public class UserTodoEntity {
 		this.title = title;
 		this.content = content;
 		this.date = date;
+	}
+	
+	public UserTodoEntity(TodoDTO dto) {
+		// TODO Auto-generated constructor stub
+		this.id = dto.getId();
+		this.user = dto.getUsername();
+		this.title = dto.getTitle();
+		this.content = dto.getContent();
+		this.date = dto.getCreateDate();
 	}
 
 	@Override
