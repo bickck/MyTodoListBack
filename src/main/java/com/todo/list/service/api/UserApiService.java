@@ -37,7 +37,7 @@ public class UserApiService {
 	public List<UserQuoteEntity> getUserquotes(UserTokenDTO userDTO) {
 		String username = userDTO.getUsername();
 
-		return userQuoteRepository.findByUsername(username);
+		return null;
 	}
 
 	@Transactional(readOnly = true)

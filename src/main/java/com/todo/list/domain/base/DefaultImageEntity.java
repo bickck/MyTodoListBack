@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity(name="IMAGE")
-public class ImageEntity {
+@Entity(name="DEFAULTIMAGE")
+public class DefaultImageEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class ImageEntity {
 	@NotNull
 	private Long file_size;
 
-	public ImageEntity(@NotNull String original_file_name, @NotNull String stored_file_path, @NotNull Long file_size) {
+	public DefaultImageEntity(@NotNull String original_file_name, @NotNull String stored_file_path, @NotNull Long file_size) {
 		super();
 		this.original_file_name = original_file_name;
 		this.stored_file_path = stored_file_path;

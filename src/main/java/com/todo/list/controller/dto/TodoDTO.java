@@ -2,11 +2,13 @@ package com.todo.list.controller.dto;
 
 import java.sql.Timestamp;
 
+import com.todo.list.domain.UserEntity;
+
 public class TodoDTO {
 
 	private Long id;
 
-	private String username;
+	private UserEntity user;
 
 	private String title;
 
@@ -14,10 +16,10 @@ public class TodoDTO {
 
 	private Timestamp createDate;
 
-	public TodoDTO(Long id, String username, String title, String content, Timestamp createDate) {
+	public TodoDTO(Long id, UserEntity user, String title, String content, Timestamp createDate) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.createDate = createDate;
@@ -39,12 +41,12 @@ public class TodoDTO {
 		this.title = title;
 	}
 
-	public String getUsername() {
-		return username;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 	public String getContent() {

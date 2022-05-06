@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.domain.base.DefaultQuoteEntity;
-import com.todo.list.domain.base.ImageEntity;
+import com.todo.list.domain.base.DefaultImageEntity;
 import com.todo.list.service.image.BackGroundImageService;
 import com.todo.list.service.queto.DefaultQuetoService;
 
@@ -40,7 +40,7 @@ public class MainController {
 
 	@ResponseBody
 	@PostMapping("/api/backgrounds")
-	public List<ImageEntity> responseBackGrounds() {
+	public List<DefaultImageEntity> responseBackGrounds() {
 		return null;
 	}
 

@@ -1,11 +1,15 @@
 package com.todo.list.service.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.domain.UserEntity;
+import com.todo.list.domain.UserQuoteEntity;
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
@@ -27,7 +31,8 @@ public class UserService {
 
 	@PostConstruct
 	public void init() {
-		userRepository.save(new UserEntity("1234", "1234"));
+		UserEntity entity = new UserEntity("1234", "1234");
+		userRepository.save(entity);
 		userRepository.save(new UserEntity("user1234", "password1234"));
 		userRepository.save(new UserEntity("user2345", "password4141"));
 		userRepository.save(new UserEntity("user4444", "password23231"));

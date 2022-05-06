@@ -1,6 +1,7 @@
 package com.todo.list.domain;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
 
-@Entity(name = "USER")
+@Entity(name = "USER_ENTITY")
 public class UserEntity {
 
 	@Id
@@ -36,11 +37,11 @@ public class UserEntity {
 	@CreationTimestamp
 	private Timestamp date;
 
-	@OneToMany(mappedBy = "username", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<UserQuoteEntity> quotes;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<UserQuoteEntity> quotes = new ArrayList<UserQuoteEntity>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<UserTodoEntity> todos;
+	@OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<UserTodoEntity> todos = new ArrayList<UserTodoEntity>();
 
 	public UserEntity() {
 		// TODO Auto-generated constructor stub

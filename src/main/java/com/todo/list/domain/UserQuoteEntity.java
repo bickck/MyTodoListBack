@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -15,15 +16,16 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
 
-@Entity(name = "USERQUOTE")
+@Entity(name = "USER_QUOTE_ENTITY")
 public class UserQuoteEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USER")
-	private String username;
+	@ManyToOne
+	@JoinColumn(name="USER")
+	private UserEntity user;
 
 	@Column(name = "QUETO")
 	private String queto;
@@ -39,16 +41,16 @@ public class UserQuoteEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserQuoteEntity(@NotNull String user, @NotNull String queto, @NotNull String author) {
+	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String queto, @NotNull String author) {
 		super();
-		this.username = user;
+		this.user = user;
 		this.queto = queto;
 		this.author = author;
 	}
 
-	public UserQuoteEntity(@NotNull String user, @NotNull QuoteDTO quoteDTO) {
+	public UserQuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
 		super();
-		this.username = user;
+		this.user = user;
 		this.queto = quoteDTO.getQueto();
 		this.author = quoteDTO.getAuthor();
 	}
@@ -61,12 +63,12 @@ public class UserQuoteEntity {
 		this.id = id;
 	}
 
-	public String getUser() {
-		return username;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setUser(String user) {
-		this.username = user;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 	public String getQueto() {

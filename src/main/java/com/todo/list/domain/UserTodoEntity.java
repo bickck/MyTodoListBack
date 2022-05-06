@@ -2,22 +2,29 @@ package com.todo.list.domain;
 
 import java.sql.Timestamp;
 
+import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.todo.list.controller.dto.TodoDTO;
 
-@Entity(name = "TODO")
+@Entity(name = "USER_TODO_ENTITY")
 public class UserTodoEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USER")
-	private String user;
+	@ManyToOne
+	@JoinColumn(name = "USER")
+	private UserEntity user;
 
 	@Column(name = "TITLE")
 	private String title;
@@ -29,14 +36,18 @@ public class UserTodoEntity {
 	@Column(name = "CREATE_DATE")
 	private Timestamp date;
 
-	public UserTodoEntity(String user, String title, String content) {
+	public UserTodoEntity() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserTodoEntity(UserEntity user, String title, String content) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.content = content;
 	}
 
-	public UserTodoEntity(Long id, String user, String title, String content, Timestamp date) {
+	public UserTodoEntity(Long id, UserEntity user, String title, String content, Timestamp date) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -44,11 +55,11 @@ public class UserTodoEntity {
 		this.content = content;
 		this.date = date;
 	}
-	
+
 	public UserTodoEntity(TodoDTO dto) {
 		// TODO Auto-generated constructor stub
 		this.id = dto.getId();
-		this.user = dto.getUsername();
+		this.user = dto.getUser();
 		this.title = dto.getTitle();
 		this.content = dto.getContent();
 		this.date = dto.getCreateDate();
@@ -69,11 +80,11 @@ public class UserTodoEntity {
 		this.id = id;
 	}
 
-	public String getUsername() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUsername(String user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 

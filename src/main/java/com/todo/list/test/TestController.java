@@ -42,7 +42,9 @@ import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.domain.UserBackGroundImageEntity;
 import com.todo.list.domain.UserEntity;
 import com.todo.list.domain.UserQuoteEntity;
+import com.todo.list.domain.UserTodoEntity;
 import com.todo.list.domain.base.DefaultQuoteEntity;
+import com.todo.list.repository.DefaultQuoteRepository;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
@@ -66,6 +68,9 @@ public class TestController {
 	private UserRepository repository;
 
 	@Autowired
+	private UserQuoteRepository quoteRepository;
+
+	@Autowired
 	private UserApiService userApiService;
 
 	@Autowired
@@ -79,6 +84,9 @@ public class TestController {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
+
+	@Autowired
+	private DefaultQuoteRepository defaultQuoteRepository;
 
 	@Autowired
 	private ImageUploadService imageUploadService;
@@ -108,6 +116,60 @@ public class TestController {
 		String s = jwtLoginToken.createTokenTest(new UserTokenDTO((long) 1234, "username"));
 		return s;
 
+	}
+
+	@GetMapping("/test/jpa/save1")
+	public DefaultQuoteEntity testJpa1() {
+		DefaultQuoteEntity defaultQuoteEntity = new DefaultQuoteEntity("save1", "save1");
+		return defaultQuoteRepository.save(defaultQuoteEntity);
+	}
+
+	@GetMapping("/test/jpa/save2")
+	public DefaultQuoteEntity testJpa2() {
+		long id = 11;
+		DefaultQuoteEntity defaultQuoteEntity = defaultQuoteRepository.findById(id).get();
+		defaultQuoteEntity.setQuote("save2");
+		defaultQuoteEntity.setAuthor("save2");
+		defaultQuoteRepository.save(defaultQuoteEntity);
+		return defaultQuoteEntity;
+	}
+
+//	@GetMapping("/test/jpa/save3")
+//	public UserEntity testJpa3() {
+//		long id = 1;
+//		UserEntity entity = repository.findById(id).get();
+//		List<UserTodoEntity> list = new ArrayList<UserTodoEntity>();
+//		list.add(new UserTodoEntity(entity.getUsername(), "title", "content"));
+//		entity.setTodos(list);
+//		return repository.save(entity);
+//	}
+
+//	@GetMapping("/test/jpa/save4")
+//	public List<UserQuoteEntity> testJpa4() {
+//		UserEntity entity = repository.findByUsername("1234");
+//		
+//		return entity.getQuotes();
+//	}
+
+	@GetMapping("/test/jpa/save5")
+	public String testJpa5() {
+		UserEntity entity = repository.findByUsername("1234");
+		List<UserQuoteEntity> entities = new ArrayList();
+		entities.add(new UserQuoteEntity(entity, "quote1", "author1"));
+		entity.setQuotes(entities);
+		quoteRepository.save(new UserQuoteEntity(entity, "quote1", "author1"));
+
+		return "success";
+	}
+
+	@GetMapping("/test/jpa/save6")
+	public UserEntity testJpa6() {
+		return repository.findByUsername("1234");
+	}
+
+	@GetMapping("/test/jpa/save7")
+	public List<UserEntity> testJpa7() {
+		return repository.findAll();
 	}
 
 	@PostMapping("/img/test")
@@ -195,15 +257,15 @@ public class TestController {
 		}
 	}
 
-	@PostMapping(value = "/quote/2")
-	public List<UserQuoteEntity> quoteSaveTest() {
-		UserEntity userEntity = userApiService.getUserApi(dto);
-		List<UserQuoteEntity> entities = new ArrayList<UserQuoteEntity>();
-		entities.add(new UserQuoteEntity(userEntity.getUsername(), dto3));
-		userEntity.setQuotes(entities);
-		repository.saveAndFlush(userEntity);
-		return userEntity.getQuotes();
-	}
+//	@PostMapping(value = "/quote/2")
+//	public List<UserQuoteEntity> quoteSaveTest() {
+//		UserEntity userEntity = userApiService.getUserApi(dto);
+//		List<UserQuoteEntity> entities = new ArrayList<UserQuoteEntity>();
+//		entities.add(new UserQuoteEntity(userEntity.getUsername(), dto3));
+//		userEntity.setQuotes(entities);
+//		repository.saveAndFlush(userEntity);
+//		return userEntity.getQuotes();
+//	}
 
 	@PostMapping(value = "/quote/1")
 	public List<UserQuoteEntity> quoteSelectQuote() {

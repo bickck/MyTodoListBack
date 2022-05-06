@@ -20,7 +20,7 @@ public class UserQuoteService {
 
 	public void quoteInsert(QuoteDTO quoteDTO, UserEntity username) {
 		userQuoteRepository
-				.saveAndFlush(new UserQuoteEntity(username.getUsername(), quoteDTO.getQueto(), quoteDTO.getAuthor()));
+				.saveAndFlush(new UserQuoteEntity(username, quoteDTO.getQueto(), quoteDTO.getAuthor()));
 	}
 
 	public void quoteDelete(Long id) {
