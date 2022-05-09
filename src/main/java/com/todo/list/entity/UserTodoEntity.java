@@ -56,15 +56,6 @@ public class UserTodoEntity {
 		this.date = date;
 	}
 
-	public UserTodoEntity(TodoDTO dto) {
-		// TODO Auto-generated constructor stub
-		this.id = dto.getId();
-		this.user = dto.getUser();
-		this.title = dto.getTitle();
-		this.content = dto.getContent();
-		this.date = dto.getCreateDate();
-	}
-
 	@Override
 	public String toString() {
 		return "UserTodoEntity [id=" + id + ", user=" + user.toString() + ", title=" + title + ", content=" + content
