@@ -3,11 +3,12 @@ package com.todo.list.controller.builder;
 import java.sql.Timestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.domain.UserEntity;
+import com.todo.list.entity.UserEntity;
 
 public class QuoteBuilder {
 	private Long id;
 	private String quote;
+	private UserEntity userEntity;
 	private String author;
 
 	public QuoteBuilder setId(Long id) {
@@ -15,12 +16,13 @@ public class QuoteBuilder {
 		return this;
 	}
 
-	public QuoteBuilder setUser(String quote) {
+	public QuoteBuilder setQuote(String quote) {
 		this.quote = quote;
 		return this;
 	}
+	
 
-	public QuoteBuilder setTitle(String author) {
+	public QuoteBuilder setAuthor(String author) {
 		this.author = author;
 		return this;
 	}

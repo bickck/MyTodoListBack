@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.todo.list.domain.UserEntity;
+import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserRepository;
 
 /**

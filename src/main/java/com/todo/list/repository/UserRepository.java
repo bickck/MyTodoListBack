@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.todo.list.domain.UserEntity;
-import com.todo.list.domain.UserQuoteEntity;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserQuoteEntity;
 
 @EnableJpaRepositories
 public interface UserRepository extends JpaRepository<UserEntity, Long> {

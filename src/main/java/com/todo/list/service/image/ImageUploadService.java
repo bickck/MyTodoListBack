@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriBuilder;
 
 import com.todo.list.controller.dto.FileDTO;
-import com.todo.list.domain.UserBackGroundImageEntity;
+import com.todo.list.entity.UserBackGroundImageEntity;
 
 @Service
 public class ImageUploadService {

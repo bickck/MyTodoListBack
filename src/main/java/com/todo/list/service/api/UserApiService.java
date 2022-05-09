@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
-import com.todo.list.domain.UserEntity;
-import com.todo.list.domain.UserQuoteEntity;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;

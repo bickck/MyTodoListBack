@@ -27,13 +27,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.LoginUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
-import com.todo.list.domain.UserEntity;
-import com.todo.list.domain.UserTodoEntity;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageUploadService;
@@ -86,12 +87,20 @@ public class UserController {
 
 	}
 
+	/*
+	 * Quote CRUD
+	 */
+
 	// save = 1, update = 2, delete = 3
 	@PostMapping("/quote/1")
 	public ResponseEntity savetUserQuote(@RequestBody QuoteDTO quoteDTO, @TokenValidator UserTokenDTO tokenDTO) {
 
 		UserEntity user = userApiService.getUserApi(tokenDTO);
-		userQuoteService.quoteInsert(quoteDTO, null);
+		QuoteBuilder builder = new QuoteBuilder();
+		builder.setQuote(quoteDTO.getQueto());
+		builder.setAuthor(quoteDTO.getAuthor());
+		
+		userQuoteService.quoteInsert(builder.builder(), user);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
@@ -103,6 +112,10 @@ public class UserController {
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
+
+	/*
+	 * BackGroundImg CRUD
+	 */
 
 	@PostMapping("/background/1")
 	public ResponseEntity saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
@@ -126,6 +139,10 @@ public class UserController {
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
+
+	/*
+	 * To Do CRUD
+	 */
 
 	@PostMapping("/todo/1")
 	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @TokenValidator UserTokenDTO userTokenDTO) {

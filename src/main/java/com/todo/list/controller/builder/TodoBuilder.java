@@ -3,7 +3,7 @@ package com.todo.list.controller.builder;
 import java.sql.Timestamp;
 
 import com.todo.list.controller.dto.TodoDTO;
-import com.todo.list.domain.UserEntity;
+import com.todo.list.entity.UserEntity;
 
 public class TodoBuilder {
 

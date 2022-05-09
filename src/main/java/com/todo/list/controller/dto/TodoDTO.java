@@ -2,7 +2,7 @@ package com.todo.list.controller.dto;
 
 import java.sql.Timestamp;
 
-import com.todo.list.domain.UserEntity;
+import com.todo.list.entity.UserEntity;
 
 public class TodoDTO {
 

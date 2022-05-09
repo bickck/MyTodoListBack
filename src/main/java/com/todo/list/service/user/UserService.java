@@ -8,9 +8,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.domain.UserEntity;
-import com.todo.list.domain.UserQuoteEntity;
 import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
 

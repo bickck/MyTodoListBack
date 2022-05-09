@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.TodoDTO;
-import com.todo.list.domain.UserTodoEntity;
+import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.repository.TodoRepository;
 
 @Service

@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.FileDTO;
-import com.todo.list.domain.UserBackGroundImageEntity;
-import com.todo.list.domain.UserEntity;
+import com.todo.list.entity.UserBackGroundImageEntity;
+import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
 

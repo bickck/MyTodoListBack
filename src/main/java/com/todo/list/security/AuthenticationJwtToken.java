@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
-import com.todo.list.domain.UserEntity;
+import com.todo.list.entity.UserEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;

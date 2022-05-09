@@ -1,4 +1,4 @@
-package com.todo.list.domain;
+package com.todo.list.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
