@@ -127,7 +127,7 @@ public class UserController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@PostMapping("/todo/1/")
+	@PostMapping("/todo/1")
 	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @TokenValidator UserTokenDTO userTokenDTO) {
 
 		todoService.todoSave(todoDTO);

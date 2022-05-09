@@ -23,6 +23,12 @@ public class QuoteDTO {
 		this.author = author;
 	}
 
+	public QuoteDTO(Long id, String quote, String author) {
+		this.id = id;
+		this.quote = quote;
+		this.author = author;
+	}
+
 	public QuoteDTO(@NotNull Long id, @NotNull DefaultQuoteEntity quote) {
 		this.id = id;
 		this.quote = quote.getQuote();

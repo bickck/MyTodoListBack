@@ -163,8 +163,12 @@ public class TestController {
 	}
 
 	@GetMapping("/test/jpa/save6")
-	public UserEntity testJpa6() {
-		return repository.findByUsername("1234");
+	public String testJpa6() {
+		UserEntity entity = repository.findByUsername("1234");
+		List<UserQuoteEntity> entitis = entity.getQuotes();
+		System.out.println(entitis.isEmpty());
+		
+		return "success";
 	}
 
 	@GetMapping("/test/jpa/save7")

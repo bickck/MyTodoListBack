@@ -21,6 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
 	List<UserEntity> findAllbyfetchJoin();
 
-	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
-	List<UserEntity> findAll();
+//	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
+//	List<UserEntity> findAll();
 }
