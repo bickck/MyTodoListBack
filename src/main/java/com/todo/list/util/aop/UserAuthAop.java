@@ -35,7 +35,7 @@ public class UserAuthAop {
 
 	Logger logger = LoggerFactory.getLogger(UserAuthAop.class);
 
-	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @TokenValidator (*), ..))")
+	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))")
 	public void cut() {
 	}
 
