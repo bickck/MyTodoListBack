@@ -54,7 +54,7 @@ import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.queto.DefaultQuetoService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;
-import com.todo.list.util.aop.TokenValidator;
+import com.todo.list.util.aop.UserAuthToken;
 
 import io.jsonwebtoken.Claims;
 
@@ -178,7 +178,7 @@ public class TestController {
 
 	@PostMapping("/img/test")
 	public String imgTest(@RequestParam(name = "file") MultipartFile multipartFile,
-			@TokenValidator UserTokenDTO userTokenDTO) throws Exception {
+			@UserAuthToken UserTokenDTO userTokenDTO) throws Exception {
 
 		System.out.println("OriginalFileName : " + multipartFile.getOriginalFilename());
 		System.out.println("FileName : " + multipartFile.getName());
@@ -197,7 +197,7 @@ public class TestController {
 
 	@PostMapping("/img/save/test")
 	public String imgSaveTest(@RequestParam(name = "file") MultipartFile multipartFile,
-			@TokenValidator UserTokenDTO userTokenDTO) throws Exception {
+			@UserAuthToken UserTokenDTO userTokenDTO) throws Exception {
 
 		imageUploadService.saveImageInDir(multipartFile, "username", "yadong");
 
@@ -289,7 +289,7 @@ public class TestController {
 	}
 
 	@PostMapping("/create/test")
-	public void aopTest(@RequestBody UserDTO reqBody, @TokenValidator UserTokenDTO tokenUser) {
+	public void aopTest(@RequestBody UserDTO reqBody, @UserAuthToken UserTokenDTO tokenUser) {
 		System.out.println("Test");
 		System.out.println("token User : " + tokenUser.toString());
 	}

@@ -28,12 +28,12 @@ import com.todo.list.util.UserUtil;
 
 @Aspect
 @Component
-public class UserAop {
+public class UserAuthAop {
 
 	@Autowired
 	private AuthenticationJwtToken authenticationJwtToken;
 
-	Logger logger = LoggerFactory.getLogger(UserAop.class);
+	Logger logger = LoggerFactory.getLogger(UserAuthAop.class);
 
 	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @TokenValidator (*), ..))")
 	public void cut() {

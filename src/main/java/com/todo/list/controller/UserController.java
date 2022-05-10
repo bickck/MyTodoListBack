@@ -43,7 +43,7 @@ import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.todo.TodoService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
-import com.todo.list.util.aop.TokenValidator;
+import com.todo.list.util.aop.UserAuthToken;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;
@@ -79,7 +79,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public ResponseEntity<LoginUserDTO> getUser(@TokenValidator UserTokenDTO tokenDTO) {
+	public ResponseEntity<LoginUserDTO> getUser(@UserAuthToken UserTokenDTO tokenDTO) {
 
 		UserEntity userinfo = userApiService.getUserApi(tokenDTO);
 
@@ -93,7 +93,7 @@ public class UserController {
 
 	// save = 1, update = 2, delete = 3
 	@PostMapping("/quote/1")
-	public ResponseEntity savetUserQuote(@RequestBody QuoteDTO quoteDTO, @TokenValidator UserTokenDTO tokenDTO) {
+	public ResponseEntity savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
 
 		UserEntity user = userApiService.getUserApi(tokenDTO);
 		QuoteBuilder builder = new QuoteBuilder();
@@ -106,7 +106,7 @@ public class UserController {
 	}
 
 	@PostMapping("/quote/3/{id}")
-	public ResponseEntity deleteUserQuote(@PathVariable Long id, @TokenValidator UserTokenDTO tokenDTO) {
+	public ResponseEntity deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
 
 		userQuoteService.quoteDelete(id);
 
@@ -119,7 +119,7 @@ public class UserController {
 
 	@PostMapping("/background/1")
 	public ResponseEntity saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
-			@RequestParam(name = "fileName") String fileName, @TokenValidator UserTokenDTO tokenDTO)
+			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO)
 			throws IOException {
 
 		imageUploadService.saveImageInDir(multipartFile, tokenDTO.getUsername(), fileName);
@@ -145,7 +145,7 @@ public class UserController {
 	 */
 
 	@PostMapping("/todo/1")
-	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @TokenValidator UserTokenDTO userTokenDTO) {
+	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		todoService.todoSave(todoDTO);
 

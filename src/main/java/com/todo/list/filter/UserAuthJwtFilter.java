@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @WebFilter(urlPatterns = "/user/*")
-public class UserApiFilter implements Filter {
+public class UserAuthJwtFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
