@@ -2,7 +2,7 @@ package com.todo.list.controller.dto;
 
 import javax.validation.constraints.NotNull;
 
-import com.todo.list.domain.base.DefaultQuoteEntity;
+import com.todo.list.entity.base.DefaultQuoteEntity;
 
 import lombok.Data;
 import lombok.Getter;

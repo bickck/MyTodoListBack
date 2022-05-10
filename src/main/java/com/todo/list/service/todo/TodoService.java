@@ -20,7 +20,7 @@ public class TodoService {
 
 	@Transactional
 	public void todoSave(TodoDTO todoDTO) {
-		repository.save(null);
+		repository.save(new UserTodoEntity(null, null, null));
 	}
 
 	@Transactional

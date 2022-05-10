@@ -1,4 +1,4 @@
-package com.todo.list.domain.base;
+package com.todo.list.entity.base;
 
 import java.sql.Timestamp;
 

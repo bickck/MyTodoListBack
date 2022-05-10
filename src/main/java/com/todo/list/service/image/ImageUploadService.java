@@ -29,11 +29,9 @@ public class ImageUploadService {
 
 	@Autowired
 	private UserBackGroundImgService backGroundImgService;
-	
-	
 
 	public void saveImageInDir(MultipartFile multipartFile, String username, String fileName) {
-		
+
 		String location = defaultLocation + username;
 		Path path = Paths.get(location);
 		String originalName = multipartFile.getOriginalFilename();
@@ -47,7 +45,7 @@ public class ImageUploadService {
 				e.printStackTrace();
 			}
 		}
-		
+
 		try {
 			InputStream inputStream = multipartFile.getInputStream();
 			Path dirPath = path.resolve(multipartFile.getOriginalFilename());
@@ -65,15 +63,7 @@ public class ImageUploadService {
 		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(imageId);
 
 		File file = new File(defaultLocation + username + File.separator + backGroundImageEntity.getOriginName());
-		Resource resource = new FileSystemResource(file);
-//		try {
-//			
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return ResponseEntity<?>();
+
 		return null;
 	}
 

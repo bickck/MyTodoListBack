@@ -155,12 +155,14 @@ public class UserController {
 	@PostMapping("/todo/2/{id}")
 	public ResponseEntity updateUserTodo(@PathVariable Long id) {
 
+		todoService.todoUpdate(null);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/todo/3/{id}")
 	public ResponseEntity deleteUserTodo(@PathVariable Long id) {
-
+		
+		
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

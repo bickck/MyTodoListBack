@@ -53,9 +53,7 @@ public class AuthenticationJwtToken {
 		Long id = (Long) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody().get(USERID);
 		String username = (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody()
 				.get(USERNAME);
-
-//		return new UserTokenDTO(id, username);
-		return null;
+		return new UserTokenDTO(id, username);
 	}
 
 	public String getUsername(String requestToken) {
@@ -68,11 +66,4 @@ public class AuthenticationJwtToken {
 		return (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(requestToken).getBody().get(USERID);
 	}
 
-	public String createTokenTest(UserTokenDTO entity) {
-		Date now = new Date();
-
-		return Jwts.builder().setHeaderParam(Header.TYPE, Header.JWT_TYPE).setIssuer("server").setIssuedAt(now)
-				.setExpiration(new Date(now.getTime() + tokenValidTime)).claim(USERID, entity.getId())
-				.claim(USERNAME, entity.getUsername()).signWith(SignatureAlgorithm.HS256, SECURITY_KEY).compact();
-	}
 }

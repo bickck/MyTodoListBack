@@ -12,7 +12,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.event.EventListener;
 
-import com.todo.list.domain.base.DefaultQuoteEntity;
+import com.todo.list.entity.base.DefaultQuoteEntity;
 import com.todo.list.repository.DefaultQuoteRepository;
 
 @ServletComponentScan

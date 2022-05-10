@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.CookieGenerator;
 
 import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
+import com.todo.list.util.aop.UserAuthToken;
 
 @RestController
 @RequestMapping(value = "/account")
@@ -86,7 +88,6 @@ public class AccountController {
 		return new ResponseEntity(userToken, HttpStatus.OK);
 	}
 
-
 	@PostMapping("/register")
 	public String registerRequest(@ModelAttribute UserDTO userDTO, HttpServletResponse httpServletResponse) {
 		userService.userSave(userDTO);
@@ -95,7 +96,7 @@ public class AccountController {
 	}
 
 	@PostMapping("/logout")
-	public String logoutRequest(@RequestBody UserDTO userDTO) {
+	public String logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 		return "redirect:http://127.0.0.1:5501/index.html";
 	}
 

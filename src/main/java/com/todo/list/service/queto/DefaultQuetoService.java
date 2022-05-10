@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.domain.base.DefaultQuoteEntity;
+import com.todo.list.entity.base.DefaultQuoteEntity;
 import com.todo.list.repository.DefaultQuoteRepository;
 
 @Service

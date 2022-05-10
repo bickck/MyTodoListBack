@@ -15,20 +15,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 @WebFilter(urlPatterns = "/account/*")
-public class JwtTokenLoginFilter implements Filter {
+public class JwtLoginFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("==========JwtTokenLoginFilter before==========");
+		
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-
 		String authorization = httpServletRequest.getHeader("authorization");
-		System.out.println(authorization);
 		chain.doFilter(request, response);
-
-		System.out.println("==========JwtTokenLoginFilter after==========");
-
 	}
-
 }

@@ -29,16 +29,6 @@ public class UserService {
 	@Autowired
 	private UserUtil userUtil;
 
-	@PostConstruct
-	public void init() {
-		UserEntity entity = new UserEntity("1234", "1234");
-		userRepository.save(entity);
-		userRepository.save(new UserEntity("user1234", "password1234"));
-		userRepository.save(new UserEntity("user2345", "password4141"));
-		userRepository.save(new UserEntity("user4444", "password23231"));
-		userRepository.save(new UserEntity("user2222", "passwordafeee"));
-	}
-
 	public void userSave(UserDTO userDTO) {
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
@@ -51,9 +41,9 @@ public class UserService {
 		}
 	}
 
-//	public UserEntity userUpdate() {
-//		return null;
-//	}
+	public UserEntity userUpdate(UserDTO userDTO) {
+		return userRepository.save(new UserEntity());
+	}
 
 	public void userDelete(UserDTO userDTO) {
 		userRepository.deleteByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());

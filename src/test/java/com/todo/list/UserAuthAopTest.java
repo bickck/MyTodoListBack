@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.todo.list.controller.UserController;
 
-public class AopTest {
+public class UserAuthAopTest {
 
 	AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 	Method method;

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.domain.base.DefaultQuoteEntity;
-import com.todo.list.domain.base.DefaultImageEntity;
+import com.todo.list.entity.base.DefaultImageEntity;
+import com.todo.list.entity.base.DefaultQuoteEntity;
 import com.todo.list.service.image.BackGroundImageService;
 import com.todo.list.service.queto.DefaultQuetoService;
 
