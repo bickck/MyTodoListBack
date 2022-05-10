@@ -7,12 +7,13 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
 
-@Configuration
+@Component
 public class DummyData {
 
 	@Autowired

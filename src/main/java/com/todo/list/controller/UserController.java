@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.LoginUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
@@ -99,7 +100,7 @@ public class UserController {
 		QuoteBuilder builder = new QuoteBuilder();
 		builder.setQuote(quoteDTO.getQueto());
 		builder.setAuthor(quoteDTO.getAuthor());
-		
+
 		userQuoteService.quoteInsert(builder.builder(), user);
 
 		return new ResponseEntity(HttpStatus.OK);
@@ -119,10 +120,11 @@ public class UserController {
 
 	@PostMapping("/background/1")
 	public ResponseEntity saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
-			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO)
-			throws IOException {
+			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO) throws IOException {
 
-		imageUploadService.saveImageInDir(multipartFile, tokenDTO.getUsername(), fileName);
+		BackGroundImgBuilder backGroundImgBuilder = new BackGroundImgBuilder();
+		backGroundImgBuilder.setFileName(fileName).setMultipartFile(multipartFile).setUserName(tokenDTO.getUsername());
+		imageUploadService.saveImageInDir(backGroundImgBuilder.builder());
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
@@ -153,16 +155,15 @@ public class UserController {
 	}
 
 	@PostMapping("/todo/2/{id}")
-	public ResponseEntity updateUserTodo(@PathVariable Long id) {
+	public ResponseEntity updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto) {
 
-		todoService.todoUpdate(null);
+		todoService.todoUpdate(dto);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/todo/3/{id}")
 	public ResponseEntity deleteUserTodo(@PathVariable Long id) {
-		
-		
+
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

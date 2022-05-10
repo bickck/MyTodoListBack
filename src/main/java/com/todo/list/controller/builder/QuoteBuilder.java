@@ -7,8 +7,8 @@ import com.todo.list.entity.UserEntity;
 
 public class QuoteBuilder {
 	private Long id;
-	private String quote;
 	private UserEntity userEntity;
+	private String quote;
 	private String author;
 
 	public QuoteBuilder setId(Long id) {
@@ -16,11 +16,15 @@ public class QuoteBuilder {
 		return this;
 	}
 
+	public QuoteBuilder setUser(UserEntity entity) {
+		this.userEntity = entity;
+		return this;
+	}
+
 	public QuoteBuilder setQuote(String quote) {
 		this.quote = quote;
 		return this;
 	}
-	
 
 	public QuoteBuilder setAuthor(String author) {
 		this.author = author;

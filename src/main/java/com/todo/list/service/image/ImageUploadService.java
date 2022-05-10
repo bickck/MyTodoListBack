@@ -30,12 +30,12 @@ public class ImageUploadService {
 	@Autowired
 	private UserBackGroundImgService backGroundImgService;
 
-	public void saveImageInDir(MultipartFile multipartFile, String username, String fileName) {
+	public void saveImageInDir(FileDTO fileDTO) {
 
-		String location = defaultLocation + username;
+		String location = defaultLocation + fileDTO.getUsername();
 		Path path = Paths.get(location);
-		String originalName = multipartFile.getOriginalFilename();
-		long fileSize = multipartFile.getSize();
+		String originalName = fileDTO.getFile2().getOriginalFilename();
+		long fileSize = fileDTO.getFileSize();
 
 		if (Files.isExecutable(path) == false) {
 			try {
@@ -47,15 +47,15 @@ public class ImageUploadService {
 		}
 
 		try {
-			InputStream inputStream = multipartFile.getInputStream();
-			Path dirPath = path.resolve(multipartFile.getOriginalFilename());
-			Files.copy(inputStream, dirPath, StandardCopyOption.REPLACE_EXISTING);
+//			InputStream inputStream = multipartFile.getInputStream();
+//			Path dirPath = path.resolve(multipartFile.getOriginalFilename());
+//			Files.copy(inputStream, dirPath, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		backGroundImgService
-				.userImageSave(new UserBackGroundImageEntity(username, fileName, location, originalName, fileSize));
+//		backGroundImgService
+//				.userImageSave(new UserBackGroundImageEntity(username, fileName, location, originalName, fileSize));
 
 	}
 

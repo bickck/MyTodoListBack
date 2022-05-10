@@ -9,18 +9,17 @@ import com.todo.list.repository.DefaultImageRepository;
 @Service
 public class BackGroundImageService {
 
-
 	@Autowired
 	private DefaultImageRepository imageRepository;
-	
+
 	public String save(MultipartFile multipartFile) {
 		imageRepository.save(null);
 		return null;
 	}
-	
+
 	public void delete(Long id) {
-		
+
 		imageRepository.deleteById(id);
 	}
-	
+
 }
