@@ -2,8 +2,13 @@ package com.todo.list.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +20,9 @@ import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.entity.base.DefaultImageEntity;
 import com.todo.list.entity.base.DefaultQuoteEntity;
 import com.todo.list.service.image.BackGroundImageService;
+import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.queto.DefaultQuetoService;
+import com.todo.list.test.TestService;
 
 /**
  * 
@@ -31,6 +38,12 @@ public class MainController {
 
 	@Autowired
 	private BackGroundImageService backGroundImageService;
+	
+	@Autowired
+	private ImageUploadService imageUploadService;
+
+	@Autowired
+	private TestService service;
 
 	@ResponseBody
 	@GetMapping("/api/quotes")
@@ -39,9 +52,22 @@ public class MainController {
 	}
 
 	@ResponseBody
-	@PostMapping("/api/backgrounds")
+	@GetMapping("/api/backgrounds")
 	public List<DefaultImageEntity> responseBackGrounds() {
+		//imageUploadService.fi
 		return null;
+	}
+
+	@ResponseBody
+	@GetMapping("/")
+	public ResponseEntity<String> main(@RequestParam(value = "test") String test, HttpServletRequest httpServletRequest)
+			throws InterruptedException {
+
+		if (service.testSaveService(test) == null) {
+			return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
 }

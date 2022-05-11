@@ -89,7 +89,8 @@ public class AccountController {
 	}
 
 	@PostMapping("/register")
-	public String registerRequest(@ModelAttribute UserDTO userDTO, HttpServletResponse httpServletResponse) {
+	public synchronized String registerRequest(@ModelAttribute UserDTO userDTO,
+			HttpServletResponse httpServletResponse) {
 		userService.userSave(userDTO);
 
 		return "redirect:http://127.0.0.1:5501/index.html";
