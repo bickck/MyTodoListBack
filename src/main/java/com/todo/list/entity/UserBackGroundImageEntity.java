@@ -1,10 +1,14 @@
 package com.todo.list.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "USER_BACKGROUND_IMAGE")
 public class UserBackGroundImageEntity {
@@ -13,8 +17,9 @@ public class UserBackGroundImageEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USER")
-	private String user;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID")
+	private UserEntity user;
 
 	@Column(name = "FILENAME")
 	private String fileName;
@@ -32,7 +37,8 @@ public class UserBackGroundImageEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserBackGroundImageEntity(String user, String fileName, String location, String originName, Long fileSize) {
+	public UserBackGroundImageEntity(UserEntity user, String fileName, String location, String originName,
+			Long fileSize) {
 		super();
 		this.user = user;
 		this.fileName = fileName;
@@ -49,11 +55,11 @@ public class UserBackGroundImageEntity {
 		this.id = id;
 	}
 
-	public String getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUser(String user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 

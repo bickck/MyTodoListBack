@@ -24,7 +24,7 @@ import com.todo.list.controller.dto.QuoteDTO;
 @Entity(name = "USER_ENTITY")
 public class UserEntity {
 
-	@Id
+	@Id @Column(name="USER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

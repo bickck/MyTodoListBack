@@ -25,7 +25,7 @@ public class UserQuoteEntity {
 	private Long id;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER")
+	@JoinColumn(name = "USER_ID")
 	private UserEntity user;
 
 	@Column(name = "QUETO")

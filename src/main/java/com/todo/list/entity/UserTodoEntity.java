@@ -23,7 +23,7 @@ public class UserTodoEntity {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "USER")
+	@JoinColumn(name = "USER_ID")
 	private UserEntity user;
 
 	@Column(name = "TITLE")
