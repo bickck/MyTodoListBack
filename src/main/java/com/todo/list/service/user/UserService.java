@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.entity.UserEntity;
@@ -29,6 +31,7 @@ public class UserService {
 	@Autowired
 	private UserUtil userUtil;
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void userSave(UserDTO userDTO) {
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();

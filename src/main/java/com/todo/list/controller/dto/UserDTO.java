@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 public class UserDTO {
 
+	private Long id;
+
 	@NotEmpty
 	private String username;
 
@@ -17,6 +19,13 @@ public class UserDTO {
 
 	public UserDTO(@NotNull String username, @NotNull String password) {
 		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	public UserDTO(Long id, @NotNull String username, @NotNull String password) {
+		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 	}

@@ -6,15 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.entity.UserTodoEntity;
-import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.UserTodoRepository;
 
 @Service
 public class TodoService {
 
-	private TodoRepository repository;
+	private UserTodoRepository repository;
 
 	@Autowired
-	public TodoService(TodoRepository todoRepository) {
+	public TodoService(UserTodoRepository todoRepository) {
 		this.repository = todoRepository;
 	}
 

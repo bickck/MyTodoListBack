@@ -73,7 +73,7 @@ public class AccountController {
 //		return "redirect:http://127.0.0.1:5501/index.html";
 //	}
 	@PostMapping("/login")
-	public ResponseEntity loginRequest(@RequestBody UserDTO userDTO, HttpSession httpSession,
+	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO, HttpSession httpSession,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
 		UserEntity user = userService.userLogin(userDTO);
@@ -85,12 +85,11 @@ public class AccountController {
 		} else {
 			throw new IllegalAccessError();
 		}
-		return new ResponseEntity(userToken, HttpStatus.OK);
+		return new ResponseEntity<String>(userToken, HttpStatus.OK);
 	}
 
 	@PostMapping("/register")
-	public synchronized String registerRequest(@ModelAttribute UserDTO userDTO,
-			HttpServletResponse httpServletResponse) {
+	public synchronized String registerRequest(@RequestBody UserDTO userDTO, HttpServletResponse httpServletResponse) {
 		userService.userSave(userDTO);
 
 		return "redirect:http://127.0.0.1:5501/index.html";

@@ -1,15 +1,19 @@
 package com.todo.list.controller.builder;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserTodoEntity;
 
 public class TodoBuilder {
 
 	private Long id;
 
 	private UserEntity user;
+	
+	private String username;
 
 	private String title;
 
@@ -45,6 +49,11 @@ public class TodoBuilder {
 	
 	public TodoDTO builder() {
 		return new TodoDTO(id, user, title, content, createDate);
+	}
+	
+	public List<TodoDTO> listBuilder(List<UserTodoEntity> list){
+		
+		return null;
 	}
 
 }

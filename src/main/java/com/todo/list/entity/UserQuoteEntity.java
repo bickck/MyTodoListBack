@@ -2,6 +2,7 @@ package com.todo.list.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,8 +24,8 @@ public class UserQuoteEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name="USER")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER")
 	private UserEntity user;
 
 	@Column(name = "QUETO")
@@ -39,6 +40,12 @@ public class UserQuoteEntity {
 
 	public UserQuoteEntity() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "UserQuoteEntity [id=" + id + ", user=" + user + ", queto=" + queto + ", author=" + author
+				+ ", createDate=" + createDate + "]";
 	}
 
 	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String queto, @NotNull String author) {

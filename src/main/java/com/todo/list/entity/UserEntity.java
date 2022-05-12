@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
@@ -37,14 +38,21 @@ public class UserEntity {
 	@CreationTimestamp
 	private Timestamp date;
 
+	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<UserQuoteEntity> quotes = new ArrayList<UserQuoteEntity>();
 
-	@OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@BatchSize(size = 10)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<UserTodoEntity> todos = new ArrayList<UserTodoEntity>();
 
 	public UserEntity() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "UserEntity [id=" + id + ", username=" + username + ", password=" + password + ", date=" + date + "]";
 	}
 
 	public UserEntity(@NotNull String username, @NotNull String password) {
@@ -55,6 +63,7 @@ public class UserEntity {
 
 	public UserEntity(Long id, @NotNull String username, @NotNull String password) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 	}
@@ -65,6 +74,19 @@ public class UserEntity {
 		this.username = username;
 		this.password = password;
 		this.date = date;
+	}
+
+	public UserEntity(String username, String password, List<UserQuoteEntity> quotes, List<UserTodoEntity> todos) {
+		this.username = username;
+		this.password = password;
+		this.quotes = quotes;
+		this.todos = todos;
+	}
+
+	public UserEntity(String username, String password, List<UserQuoteEntity> quotes) {
+		this.username = username;
+		this.password = password;
+		this.quotes = quotes;
 	}
 
 	public Long getId() {

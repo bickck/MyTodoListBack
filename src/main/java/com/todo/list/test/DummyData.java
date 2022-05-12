@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
 
@@ -36,7 +38,14 @@ public class DummyData implements ApplicationRunner {
 //
 //		List<UserEntity> lists = new ArrayList<UserEntity>();
 //		for (int i = 0; i < 100; i++) {
-//			lists.add(new UserEntity("username" + i, userUtil.passwordEncoding("1234" + i)));
+//			UserEntity entity = new UserEntity("username" + i, userUtil.passwordEncoding("1234" + i));
+//
+//			List<UserQuoteEntity> entities = new ArrayList<UserQuoteEntity>();
+//			for (int j = 0; j < 5; j++) {
+//				entities.add(new UserQuoteEntity(entity, "quote" + j, "author" + j));
+//			}
+//			entity.setQuotes(entities);
+//			lists.add(entity);
 //		}
 //		repository.saveAll(lists);
 	}

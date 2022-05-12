@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public String SQLIntegrityConstraintViolationExceptionHandler() {
 		return "fail";
 	}
-	
+
+	@ExceptionHandler(IllegalAccessError.class)
+	public String IllegalAccessErrorHandler() {
+		return "fail";
+	}
 }
