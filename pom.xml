@@ -108,6 +108,7 @@
 						<configuration>
 							<backend>html</backend>
 							<doctype>book</doctype>
+							<skipTests>true</skipTests>
 						</configuration>
 					</execution>
 				</executions>

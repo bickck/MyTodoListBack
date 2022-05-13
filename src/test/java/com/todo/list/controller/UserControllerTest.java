@@ -25,18 +25,18 @@ import com.todo.list.controller.dto.QuoteDTO;
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
-	@Autowired
-	private MockMvc mockMvc;
-
-	@Test
-	public void saveUserQuote() throws Exception {
-		QuoteDTO dto = new QuoteDTO("quote", "author");
-		MultiValueMap<String, String> values = new LinkedMultiValueMap<String, String>();
-		values.add("author", "1234");
-		values.add("quote", "qqqqq");
-		mockMvc.perform(post("/user/manage/quote/1").params(values))
-		.andExpect(status().isOk())
-		.andExpect((ResultMatcher) content().string("성공"))
-		.andDo(print());
-	}
+//	@Autowired
+//	private MockMvc mockMvc;
+//
+//	@Test
+//	public void saveUserQuote() throws Exception {
+//		QuoteDTO dto = new QuoteDTO("quote", "author");
+//		MultiValueMap<String, String> values = new LinkedMultiValueMap<String, String>();
+//		values.add("author", "1234");
+//		values.add("quote", "qqqqq");
+//		mockMvc.perform(post("/user/manage/quote/1").params(values))
+//		.andExpect(status().isOk())
+//		.andExpect((ResultMatcher) content().string("성공"))
+//		.andDo(print());
+//	}
 }
