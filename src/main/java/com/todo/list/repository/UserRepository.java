@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	void deleteByUsernameAndPassword(String username, String password);
 
 	List<UserQuoteEntity> findQuoteEntitiesByUsername(String username);
-	
+
 	Page<UserEntity> findAll(Pageable pageable);
 
 	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")

@@ -7,6 +7,12 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.DefaultImageEntity;
 import com.todo.list.entity.base.DefaultQuoteEntity;
+import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.BackGroundImageService;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.queto.DefaultQuetoService;
@@ -38,12 +46,12 @@ public class MainController {
 
 	@Autowired
 	private BackGroundImageService backGroundImageService;
-	
+
 	@Autowired
 	private ImageUploadService imageUploadService;
 
 	@Autowired
-	private TestService service;
+	private UserApiService apiService;
 
 	@ResponseBody
 	@GetMapping("/api/quotes")
@@ -54,18 +62,25 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/api/backgrounds")
 	public List<DefaultImageEntity> responseBackGrounds() {
-		//imageUploadService.fi
+		// imageUploadService.fi
 		return null;
+	}
+
+	@GetMapping("/users")
+	public long getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
+
+		Page<UserEntity> api = apiService.getUserList(pageable);
+		api.getTotalElements();
+		
+		// Page<String> apis = api.getContent();
+		
+		return api.getTotalElements();
 	}
 
 	@ResponseBody
 	@GetMapping("/")
 	public ResponseEntity<String> main(@RequestParam(value = "test") String test, HttpServletRequest httpServletRequest)
 			throws InterruptedException {
-
-		if (service.testSaveService(test) == null) {
-			return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
-		}
 
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}

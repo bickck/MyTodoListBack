@@ -63,13 +63,14 @@ public class UserApiController {
 	}
 
 	@GetMapping("/users/{id}")
-	public Page<UserEntity> getUsers(@PathVariable Integer id) {
+	public Page<UserEntity> getUser(@PathVariable Integer id) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 		return userApiService.getUserList(pageRequest);
 	}
+	
 
-	@GetMapping("/quotes/{id}")
-	public ResponseEntity<List<QuoteDTO>> getQuotes(@PathVariable Integer id,
+	@GetMapping("/quote/{id}")
+	public ResponseEntity<List<QuoteDTO>> getQuote(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
@@ -86,6 +87,7 @@ public class UserApiController {
 		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
 	}
 
+	
 	@GetMapping("/backgrounds/{id}")
 	public ResponseEntity<List<BackGroundDTO>> getBackGrounds(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
@@ -104,15 +106,7 @@ public class UserApiController {
 		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
 	}
 
-	@GetMapping("/todo/{id}")
-	public Optional<UserQuoteEntity> getTodo(@PathVariable Long id) {
-		// UserEntity entity = userRepository.getById(id);
-
-		UserQuoteEntity entity= userQuoteRepository.findById(id).get();
-		System.out.println(entity.toString());
-		System.out.println(entity.getUser().toString());
-		return null;
-	}
+	
 
 	// @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
 	// Pageable pageable
