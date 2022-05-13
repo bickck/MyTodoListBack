@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.controller.builder.PageUserBuilder;
+import com.todo.list.controller.dto.PageUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.DefaultImageEntity;
@@ -67,14 +69,20 @@ public class MainController {
 	}
 
 	@GetMapping("/users")
-	public long getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
+	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
 
 		Page<UserEntity> api = apiService.getUserList(pageable);
-		api.getTotalElements();
-		
+		PageUserBuilder builder = new PageUserBuilder();
+		builder.setNumber(api.getNumber());
+		builder.setNumberOfElements(api.getNumberOfElements());
+		builder.setTotalElements(api.getTotalElements());
+		builder.setSize(api.getSize());
+		builder.setTotalPages(api.getTotalPages());
+		builder.setPageable(api.getPageable());
+
 		// Page<String> apis = api.getContent();
-		
-		return api.getTotalElements();
+
+		return builder.builder();
 	}
 
 	@ResponseBody

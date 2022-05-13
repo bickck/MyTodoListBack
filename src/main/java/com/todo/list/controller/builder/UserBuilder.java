@@ -46,5 +46,13 @@ public class UserBuilder {
 		this.todos = entities;
 		return this;
 	}
+	
+	public UserBuilder setPassword(String password) {
+		this.password = password;
+		return this;
+	}
 
+	public UserDTO dtoBuilder() {
+		return new UserDTO(username, password);
+	}
 }

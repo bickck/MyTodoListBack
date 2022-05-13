@@ -20,6 +20,18 @@ public class PageUserDTO {
 
 	private Pageable pageable;
 
+	public PageUserDTO(List<UserDTO> userDTO, int number, int totalPages, long totalElement, long size,
+			int numberOfElements, Pageable pageable) {
+		super();
+		this.userDTO = userDTO;
+		this.number = number;
+		this.totalPages = totalPages;
+		this.totalElement = totalElement;
+		this.size = size;
+		this.numberOfElements = numberOfElements;
+		this.pageable = pageable;
+	}
+
 	public List<UserDTO> getUserDTO() {
 		return userDTO;
 	}

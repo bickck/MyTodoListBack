@@ -1,13 +1,18 @@
 package com.todo.list.controller.builder;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
+import com.todo.list.controller.dto.PageUserDTO;
 import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.entity.UserEntity;
 
 public class PageUserBuilder {
-	private List<UserDTO> userDTO;
+
+	private List<UserDTO> dtos;
 
 	private int number;
 
@@ -21,8 +26,16 @@ public class PageUserBuilder {
 
 	private Pageable pageable;
 
-	public PageUserBuilder setUserDTO(List<UserDTO> userDTO) {
-		this.userDTO = userDTO;
+	public PageUserBuilder setUserDTO(List<UserEntity> userEntities) {
+		Iterator<UserEntity> itr = userEntities.listIterator();
+		List<UserDTO> lists = new ArrayList<UserDTO>();
+		while (itr.hasNext()) {
+			UserBuilder builder = new UserBuilder();
+			builder.setUserName(itr.next().getUsername());
+			builder.setPassword(itr.next().getPassword());
+			lists.add(builder.dtoBuilder());
+		}
+		this.dtos = lists;
 		return this;
 	}
 
@@ -36,7 +49,7 @@ public class PageUserBuilder {
 		return this;
 	}
 
-	public PageUserBuilder setTotalElement(long totalElement) {
+	public PageUserBuilder setTotalElements(long totalElement) {
 		this.totalElement = totalElement;
 		return this;
 	}
@@ -54,5 +67,9 @@ public class PageUserBuilder {
 	public PageUserBuilder setPageable(Pageable pageable) {
 		this.pageable = pageable;
 		return this;
+	}
+
+	public PageUserDTO builder() {
+		return new PageUserDTO(dtos, number, totalPages, totalElement, size, numberOfElements, pageable);
 	}
 }
