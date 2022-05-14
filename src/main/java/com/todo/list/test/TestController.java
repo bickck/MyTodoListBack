@@ -10,10 +10,17 @@ public class TestController {
 	@Autowired
 	private TestService service;
 
-	@GetMapping("/test/cache")
-	public String testCache() {
+	@GetMapping("/test/ArgCache")
+	public String testArgCache() {
 		long id = 1;
-		String testEntity = service.testCacheService(id);
+		String testEntity = service.testArgCacheService(id);
+		return testEntity;
+	}
+
+	@GetMapping("/test/noArgCache")
+	public String testNoArgCache() {
+
+		String testEntity = service.testNoArgCacheService();
 		return testEntity;
 	}
 }

@@ -33,7 +33,14 @@ public class TestService {
 	}
 
 	@Cacheable(value = "cacheStorage", key = "#no")
-	public String testCacheService(Long no) {
+	public String testArgCacheService(Long no) {
+		String test = testRepository.getById(no).getTest();
+		return test;
+	}
+
+	@Cacheable(value = "cacheStorage")
+	public String testNoArgCacheService() {
+		long no = 1;
 		String test = testRepository.getById(no).getTest();
 		return test;
 	}
