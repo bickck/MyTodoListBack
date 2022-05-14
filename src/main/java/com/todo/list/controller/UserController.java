@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todo.list.configs.token.AuthenticationJwtToken;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.LoginUserDTO;
@@ -36,7 +37,6 @@ import com.todo.list.controller.dto.UserDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserTodoEntity;
-import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.UserBackGroundImgService;

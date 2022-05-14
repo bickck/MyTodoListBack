@@ -21,6 +21,10 @@ public class TestEntity {
 		this.test = test;
 	}
 
+	public TestEntity() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

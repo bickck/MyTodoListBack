@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.configs.token.AuthenticationJwtToken;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.BackGroundDTO;
 import com.todo.list.controller.dto.QuoteDTO;
@@ -33,7 +34,6 @@ import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.UserTodoRepository;
-import com.todo.list.security.AuthenticationJwtToken;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;

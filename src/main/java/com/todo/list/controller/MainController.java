@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -55,10 +56,12 @@ public class MainController {
 	@Autowired
 	private UserApiService apiService;
 
+	
 	@ResponseBody
 	@GetMapping("/api/quotes")
 	public List<DefaultQuoteEntity> responseQuotes() {
-		return quoteService.getQuotes();
+		List<DefaultQuoteEntity> entities = quoteService.getQuotes();
+		return entities;
 	}
 
 	@ResponseBody
@@ -74,6 +77,7 @@ public class MainController {
 		Page<UserEntity> api = apiService.getUserList(pageable);
 		PageUserBuilder builder = new PageUserBuilder();
 		builder.setNumber(api.getNumber());
+		builder.setUserDTO(api.getContent());
 		builder.setNumberOfElements(api.getNumberOfElements());
 		builder.setTotalElements(api.getTotalElements());
 		builder.setSize(api.getSize());

@@ -1,4 +1,4 @@
-package com.todo.list.security;
+package com.todo.list.configs.network;
 
 import java.io.IOException;
 

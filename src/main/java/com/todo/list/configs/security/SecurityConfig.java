@@ -1,4 +1,4 @@
-package com.todo.list.security.config;
+package com.todo.list.configs.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

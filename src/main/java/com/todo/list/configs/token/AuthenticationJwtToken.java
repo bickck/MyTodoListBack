@@ -1,4 +1,4 @@
-package com.todo.list.security;
+package com.todo.list.configs.token;
 
 import java.util.Date;
 
