@@ -20,6 +20,10 @@ public class UserTokenDTO {
 		return "UserTokenDTO [id=" + id + ", username=" + username + "]";
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

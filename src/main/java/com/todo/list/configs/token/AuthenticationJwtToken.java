@@ -27,17 +27,22 @@ public class AuthenticationJwtToken {
 
 		Date now = new Date();
 
-		return Jwts.builder().setHeaderParam(Header.TYPE, Header.JWT_TYPE).setIssuer("server").setIssuedAt(now)
-				.setExpiration(new Date(now.getTime() + tokenValidTime)).claim(USERID, userEntity.getId())
-				.claim(USERNAME, userEntity.getUsername()).signWith(SignatureAlgorithm.HS256, SECURITY_KEY).compact();
+		return Jwts.builder()
+				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+				.setIssuer("server")
+				.setIssuedAt(now)
+				.setExpiration(new Date(now.getTime() + tokenValidTime))
+				.claim(USERID, userEntity.getId())
+				.claim(USERNAME, userEntity.getUsername())
+				.signWith(SignatureAlgorithm.HS256, SECURITY_KEY).compact();
 	}
 
-	public boolean validCheck(String requestToken) {
+	public boolean tokenRefresh(String requestToken) {
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(requestToken);
 
 			String s = Jwts.parser().setSigningKey(SECURITY_KEY).parsePlaintextJws(requestToken).getBody();
-			System.out.println(s);
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -50,9 +55,14 @@ public class AuthenticationJwtToken {
 	}
 
 	public UserTokenDTO getUserTokenDTO(String token) {
-		Long id = (Long) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody().get(USERID);
+		
+		Long id = (Long) Jwts.parser()
+				.setSigningKey(SECURITY_KEY)
+				.parseClaimsJws(token).getBody().get(USERID);
+		
 		String username = (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody()
 				.get(USERNAME);
+		
 		return new UserTokenDTO(id, username);
 	}
 

@@ -62,16 +62,14 @@ public class UserApiController {
 
 	}
 
-	@GetMapping("/users/{id}")
+	@GetMapping("/user/")
 	public Page<UserEntity> getUser(@PathVariable Integer id) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 		return userApiService.getUserList(pageRequest);
 	}
-	
 
 	@GetMapping("/quote/{id}")
-	public ResponseEntity<List<QuoteDTO>> getQuote(@PathVariable Integer id,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
+	public ResponseEntity<List<QuoteDTO>> getQuote(@PathVariable Integer id, @UserAuthToken UserTokenDTO userTokenDTO) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
 		Iterator<UserQuoteEntity> itr = userApiService.getUserquotes(userTokenDTO, pageRequest).listIterator();
@@ -87,7 +85,6 @@ public class UserApiController {
 		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
 	}
 
-	
 	@GetMapping("/backgrounds/{id}")
 	public ResponseEntity<List<BackGroundDTO>> getBackGrounds(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
@@ -105,8 +102,6 @@ public class UserApiController {
 
 		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
 	}
-
-	
 
 	// @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
 	// Pageable pageable

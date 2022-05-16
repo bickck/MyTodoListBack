@@ -55,7 +55,7 @@ import lombok.extern.java.Log;
  * 
  */
 @RestController
-@RequestMapping(value = "/user/manage")
+//@RequestMapping(value = "/user/manage")
 public class UserController {
 
 	private static final String SEESION_NAME = "username";
@@ -84,7 +84,7 @@ public class UserController {
 
 		UserEntity userinfo = userApiService.getUserApi(tokenDTO);
 
-		return new ResponseEntity<LoginUserDTO>(HttpStatus.OK);
+		return new ResponseEntity<LoginUserDTO>(new LoginUserDTO(userinfo), HttpStatus.OK);
 
 	}
 
@@ -149,15 +149,16 @@ public class UserController {
 	@PostMapping("/todo/1")
 	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		todoService.todoSave(todoDTO);
+		todoService.todoSave(userTokenDTO, todoDTO);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/todo/2/{id}")
-	public ResponseEntity updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto) {
+	public ResponseEntity updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		todoService.todoUpdate(dto);
+		todoService.todoUpdate(userTokenDTO, dto);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

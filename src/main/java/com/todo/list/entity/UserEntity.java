@@ -24,7 +24,8 @@ import com.todo.list.controller.dto.QuoteDTO;
 @Entity(name = "USER_ENTITY")
 public class UserEntity {
 
-	@Id @Column(name="USER_ID")
+	@Id
+	@Column(name = "USER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -55,20 +56,20 @@ public class UserEntity {
 		return "UserEntity [id=" + id + ", username=" + username + ", password=" + password + ", date=" + date + "]";
 	}
 
-	public UserEntity(@NotNull String username, @NotNull String password) {
+	public UserEntity(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
 	}
 
-	public UserEntity(Long id, @NotNull String username, @NotNull String password) {
+	public UserEntity(Long id, String username, String password) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 	}
 
-	public UserEntity(@NotNull Long id, @NotNull String username, @NotNull String password, @NotNull Timestamp date) {
+	public UserEntity(Long id, String username, String password, Timestamp date) {
 		super();
 		this.id = id;
 		this.username = username;

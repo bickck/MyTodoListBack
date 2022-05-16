@@ -2,8 +2,8 @@ package com.todo.list.util;
 
 import javax.servlet.http.Cookie;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,16 +17,24 @@ import com.todo.list.repository.UserRepository;
  * 
  */
 @Component
-public class UserUtil {
-
-	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+public class UserUtil implements BcryptHelper {
+//
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
 	private UserRepository userRepository;
 
-	public String passwordEncoding(String password) {
-		String encodePassword = bCryptPasswordEncoder.encode(password);
-		return encodePassword;
+	@Override
+	public String bCrypt(String password) {
+		// TODO Auto-generated method stub
+		return BCrypt.hashpw(password, BCrypt.gensalt());
+	}
+
+	@Override
+	public boolean isMatch(String rowPassword, String encPassword) {
+		// TODO Auto-generated method stub
+		return BCrypt.checkpw(rowPassword, encPassword);
 	}
 
 	public boolean isUsernameDuplicatedCheck(String username) {
@@ -39,34 +47,34 @@ public class UserUtil {
 		return true;
 	}
 
-	public boolean isFindCookie(Cookie[] cookies, String target) {
-		int i = 0;
-		if (cookies.length == 0)
-			return false;
-
-		while (i < cookies.length) {
-			Cookie cookie = cookies[i];
-			if (target.equals(cookie.getName())) {
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	public int findCookieIndex(Cookie[] cookies, String target) {
-
-		int i = 0;
-		if (cookies.length == 0)
-			return -1;
-
-		while (i < cookies.length) {
-			Cookie cookie = cookies[i];
-			if (target.equals(cookie.getName())) {
-				return i;
-			}
-
-		}
-		return -1;
-	}
+//	public boolean isFindCookie(Cookie[] cookies, String target) {
+//		int i = 0;
+//		if (cookies.length == 0)
+//			return false;
+//
+//		while (i < cookies.length) {
+//			Cookie cookie = cookies[i];
+//			if (target.equals(cookie.getName())) {
+//				return true;
+//			}
+//
+//		}
+//		return false;
+//	}
+//
+//	public int findCookieIndex(Cookie[] cookies, String target) {
+//
+//		int i = 0;
+//		if (cookies.length == 0)
+//			return -1;
+//
+//		while (i < cookies.length) {
+//			Cookie cookie = cookies[i];
+//			if (target.equals(cookie.getName())) {
+//				return i;
+//			}
+//
+//		}
+//		return -1;
+//	}
 }

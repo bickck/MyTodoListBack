@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.TodoDTO;
+import com.todo.list.controller.dto.UserTokenDTO;
 import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.repository.UserTodoRepository;
 
@@ -19,18 +20,18 @@ public class TodoService {
 	}
 
 	@Transactional
-	public void todoSave(TodoDTO todoDTO) {
-		
+	public void todoSave(UserTokenDTO dto, TodoDTO todoDTO) {
+
 		repository.save(new UserTodoEntity(null, null, null));
 	}
 
 	@Transactional
-	public void todoUpdate(TodoDTO todoDTO) {
+	public void todoUpdate(UserTokenDTO dto, TodoDTO todoDTO) {
 		repository.save(null);
 	}
 
 	@Transactional
-	public void todoDelete(Long id) {
+	public void todoDelete(UserTokenDTO dto, Long id) {
 		repository.deleteById(id);
 	}
 }

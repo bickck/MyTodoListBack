@@ -1,5 +1,6 @@
 package com.todo.list.controller;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,30 @@ public class AccountController {
 		this.userService = userService;
 	}
 
+	@PostMapping("/login")
+	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO) throws AuthenticationException {
+
+		UserEntity user = userService.userLogin(userDTO);
+		String userToken = jwtLoginToken.makeToken(user);
+
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@PostMapping("/register")
+	public synchronized ResponseEntity<String> registerRequest(@RequestBody UserDTO userDTO) {
+
+		userService.userSave(userDTO);
+
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<String> logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
+
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
 //	@PostMapping("/login")
 //	public String loginRequest(@ModelAttribute UserDTO userDTO, HttpSession httpSession,
 //			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
@@ -72,32 +97,5 @@ public class AccountController {
 //		}
 //		return "redirect:http://127.0.0.1:5501/index.html";
 //	}
-	@PostMapping("/login")
-	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO, HttpSession httpSession,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-
-		UserEntity user = userService.userLogin(userDTO);
-		System.out.println(userDTO.toString());
-		String userToken = null;
-
-		if (user != null) {
-			userToken = jwtLoginToken.makeToken(user);
-		} else {
-			throw new IllegalAccessError();
-		}
-		return new ResponseEntity<String>(userToken, HttpStatus.OK);
-	}
-
-	@PostMapping("/register")
-	public synchronized String registerRequest(@RequestBody UserDTO userDTO, HttpServletResponse httpServletResponse) {
-		userService.userSave(userDTO);
-
-		return "redirect:http://127.0.0.1:5501/index.html";
-	}
-
-	@PostMapping("/logout")
-	public String logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
-		return "redirect:http://127.0.0.1:5501/index.html";
-	}
 
 }

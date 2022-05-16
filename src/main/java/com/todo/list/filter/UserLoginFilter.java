@@ -2,6 +2,7 @@ package com.todo.list.filter;
 
 import java.io.IOException;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,14 +16,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 @WebFilter(urlPatterns = "/account/*")
-public class JwtLoginFilter implements Filter {
+public class UserLoginFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
+
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authorization = httpServletRequest.getHeader("authorization");
-		chain.doFilter(request, response);
+		if (authorization == null) {
+			chain.doFilter(request, response);
+		} else {
+
+		}
+
 	}
 }

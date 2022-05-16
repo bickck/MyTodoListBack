@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.security.sasl.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,10 @@ public class UserService {
 		String password = userDTO.getPassword();
 
 		if (userUtil.isUsernameDuplicatedCheck(username)) {
-			String passwordEncode = userUtil.passwordEncoding(password);
+			String passwordEncode = userUtil.bCrypt(password);
 			userRepository.save(new UserEntity(username, passwordEncode));
 		} else {
-			throw new IllegalAccessError();
+			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
 	}
 
@@ -52,9 +53,17 @@ public class UserService {
 		userRepository.deleteByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
 	}
 
-	public UserEntity userLogin(UserDTO userDTO) {
+	public UserEntity userLogin(UserDTO userDTO) throws AuthenticationException {
 
-		return userRepository.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+		UserEntity user = userRepository.findByUsername(userDTO.getUsername());
+		String password = userDTO.getPassword();
+		String encPassword = user.getPassword();
+
+		if (!userUtil.isMatch(password, encPassword)) {
+			throw new AuthenticationException();
+		}
+
+		return user;
 	}
 
 }
