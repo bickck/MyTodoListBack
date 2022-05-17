@@ -28,8 +28,8 @@ public class UserQuoteEntity {
 	@JoinColumn(name = "USER_ID")
 	private UserEntity user;
 
-	@Column(name = "QUETO")
-	private String queto;
+	@Column(name = "QUOTE")
+	private String quote;
 
 	@Column(name = "AUTHOR")
 	private String author;
@@ -42,24 +42,24 @@ public class UserQuoteEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String toString() {
-		return "UserQuoteEntity [id=" + id + ", user=" + user + ", queto=" + queto + ", author=" + author
-				+ ", createDate=" + createDate + "]";
-	}
-
-	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String queto, @NotNull String author) {
+	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
 		super();
 		this.user = user;
-		this.queto = queto;
+		this.quote = quote;
 		this.author = author;
 	}
 
 	public UserQuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
 		super();
 		this.user = user;
-		this.queto = quoteDTO.getQueto();
+		this.quote = quoteDTO.getQuote();
 		this.author = quoteDTO.getAuthor();
+	}
+
+	@Override
+	public String toString() {
+		return "UserQuoteEntity [id=" + id + ", user=" + user + ", quote=" + quote + ", author=" + author
+				+ ", createDate=" + createDate + "]";
 	}
 
 	public Long getId() {
@@ -78,12 +78,12 @@ public class UserQuoteEntity {
 		this.user = user;
 	}
 
-	public String getQueto() {
-		return queto;
+	public String getQuote() {
+		return quote;
 	}
 
-	public void setQueto(String queto) {
-		this.queto = queto;
+	public void setQuote(String quote) {
+		this.quote = quote;
 	}
 
 	public String getAuthor() {
@@ -101,4 +101,5 @@ public class UserQuoteEntity {
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
+
 }

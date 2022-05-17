@@ -40,7 +40,7 @@ public class DefaultQuoteEntity {
 	}
 
 	public DefaultQuoteEntity(QuoteDTO quoteDTO) {
-		this.quote = quoteDTO.getQueto();
+		this.quote = quoteDTO.getQuote();
 		this.author = quoteDTO.getAuthor();
 	}
 

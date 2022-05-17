@@ -41,17 +41,20 @@ public class QuoteDTO {
 		this.author = queto.getAuthor();
 	}
 
-	@Override
-	public String toString() {
-		return "Queto [queto=" + quote + ", author=" + author + "]";
+	public Long getId() {
+		return id;
 	}
 
-	public String getQueto() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getQuote() {
 		return quote;
 	}
 
-	public void setQueto(String queto) {
-		this.quote = queto;
+	public void setQuote(String quote) {
+		this.quote = quote;
 	}
 
 	public String getAuthor() {

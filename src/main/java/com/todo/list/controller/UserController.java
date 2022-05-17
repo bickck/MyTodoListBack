@@ -98,7 +98,7 @@ public class UserController {
 
 		UserEntity user = userApiService.getUserApi(tokenDTO);
 		QuoteBuilder builder = new QuoteBuilder();
-		builder.setQuote(quoteDTO.getQueto());
+		builder.setQuote(quoteDTO.getQuote());
 		builder.setAuthor(quoteDTO.getAuthor());
 
 		userQuoteService.quoteInsert(builder.builder(), user);
