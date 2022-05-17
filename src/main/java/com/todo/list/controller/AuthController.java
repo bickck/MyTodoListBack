@@ -29,11 +29,8 @@ import com.todo.list.util.UserUtil;
 import com.todo.list.util.aop.UserAuthToken;
 
 @RestController
-@RequestMapping(value = "/account")
-public class AccountController {
-
-	private static final String SEESION_NAME = "username";
-	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
+@RequestMapping(value = "/auth")
+public class AuthController {
 
 	private UserService userService;
 
@@ -44,7 +41,7 @@ public class AccountController {
 	private AuthenticationJwtToken jwtLoginToken;
 
 	@Autowired
-	public AccountController(UserService userService) {
+	public AuthController(UserService userService) {
 		this.userService = userService;
 	}
 
@@ -54,7 +51,7 @@ public class AccountController {
 		UserEntity user = userService.userLogin(userDTO);
 		String userToken = jwtLoginToken.makeToken(user);
 
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+		return new ResponseEntity<String>("success", HttpStatus.CREATED);
 	}
 
 	@ResponseBody
@@ -63,13 +60,13 @@ public class AccountController {
 
 		userService.userSave(userDTO);
 
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+		return new ResponseEntity<String>("success", HttpStatus.CREATED);
 	}
 
 	@PostMapping("/logout")
 	public ResponseEntity<String> logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
 
 //	@PostMapping("/login")

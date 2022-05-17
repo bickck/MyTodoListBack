@@ -2,6 +2,8 @@ package com.todo.list.exception;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -14,7 +16,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(IllegalAccessError.class)
-	public String IllegalAccessErrorHandler() {
-		return "fail";
+	public ResponseEntity<String> IllegalAccessErrorHandler() {
+		return new ResponseEntity<String>(" ", HttpStatus.NOT_FOUND);
 	}
 }

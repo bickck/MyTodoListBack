@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResponseErrorHandler;
 
-import com.todo.list.controller.AccountController;
+import com.todo.list.controller.AuthController;
 
-@RestControllerAdvice(basePackageClasses = { AccountController.class })
-public class AccountExcetionHandler {
+@RestControllerAdvice(basePackageClasses = { AuthController.class })
+public class AuthtExcetionHandler {
 
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<String> unExsistUser() {

@@ -111,7 +111,7 @@ public class UserController {
 
 		userQuoteService.quoteDelete(id);
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.CREATED);
 	}
 
 	/*
