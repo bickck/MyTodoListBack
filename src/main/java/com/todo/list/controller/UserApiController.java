@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.configs.token.AuthenticationJwtToken;
 import com.todo.list.controller.builder.QuoteBuilder;
+import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.dto.BackGroundDTO;
+import com.todo.list.controller.dto.PageQuote;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.entity.UserBackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;
@@ -62,40 +67,77 @@ public class UserApiController {
 
 	}
 
-	@GetMapping("/user/")
-	public Page<UserEntity> getUser(@PathVariable Integer id) {
-		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-		return userApiService.getUserList(pageRequest);
+//	@PostMapping("/user")
+//	public Page<UserEntity> getUser(@PathVariable Integer id, @UserAuthToken UserTokenDTO userTokenDTO) {
+//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+//		return userApiService.getUserList(pageRequest);
+//	}
+
+	@PostMapping("/quotes")
+	public ResponseEntity<PageQuote> getUserApiQuotes(
+			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
+		Page<UserQuoteEntity> itr = userApiService.getUserquotes(userTokenDTO, pageable);
+		PageQuoteBuilder builder = new PageQuoteBuilder();
+		builder.setLists(itr.getContent());
+		builder.setNumber(itr.getNumber());
+		builder.setNumberOfElements(itr.getNumberOfElements());
+		builder.setPageable(itr.getPageable());
+		builder.setSize(itr.getSize());
+		builder.setTotalPages(itr.getTotalPages());
+		builder.setTotalElements(itr.getTotalElements());
+		return new ResponseEntity<PageQuote>(builder.builder(), HttpStatus.OK);
 	}
 
-	@GetMapping("/quote/{id}")
-	public ResponseEntity<List<QuoteDTO>> getQuote(@PathVariable Integer id, @UserAuthToken UserTokenDTO userTokenDTO) {
-		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+//	@PostMapping("/backgrounds")
+//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
+//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+//
+//		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
+//
+//		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
+//	}
+//
+//	@PostMapping("/todos")
+//	public ResponseEntity<List<TodoDTO>> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
+//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+//
+//		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
+//
+//		return new ResponseEntity<List<TodoDTO>>(null, HttpStatus.OK);
+//	}
 
-		Iterator<UserQuoteEntity> itr = userApiService.getUserquotes(userTokenDTO, pageRequest).listIterator();
-		List<QuoteDTO> list = new ArrayList<QuoteDTO>();
-		while (itr.hasNext()) {
-			QuoteBuilder builder = new QuoteBuilder();
-			builder.setId(itr.next().getId());
-			builder.setAuthor(itr.next().getAuthor());
-			builder.setQuote(itr.next().getQueto());
-			builder.setUser(itr.next().getUser());
-			list.add(builder.builder());
-		}
-		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
-	}
-
-	@GetMapping("/backgrounds/{id}")
-	public ResponseEntity<List<BackGroundDTO>> getBackGrounds(@PathVariable Integer id,
+	@PostMapping("/quote/{id}")
+	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
-		List<BackGroundDTO> list = userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
+//		Iterator<UserQuoteEntity> itr = userApiService.getUserquotes(userTokenDTO, pageRequest).listIterator();
+		List<QuoteDTO> list = new ArrayList<QuoteDTO>();
+//		while (itr.hasNext()) {
+//			QuoteBuilder builder = new QuoteBuilder();
+//			builder.setId(itr.next().getId());
+//			builder.setAuthor(itr.next().getAuthor());
+//			builder.setQuote(itr.next().getQueto());
+//			builder.setUser(itr.next().getUser());
+//			list.add(builder.builder());
+//		}
+		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
+	}
+
+	@PostMapping("/background/{id}")
+	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
+		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+
+		List<BackGroundDTO> list = null;
+		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
 		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
 	}
 
-	@GetMapping("/todos/{id}")
-	public ResponseEntity<List<TodoDTO>> getTodos(@PathVariable Integer id, @UserAuthToken UserTokenDTO userTokenDTO) {
+	@PostMapping("/todo/{id}")
+	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
 		List<TodoDTO> list = null; // userApiService.getUserToDoLists(userTokenDTO, pageRequest);

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.builder.PageUserBuilder;
+import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.PageUserDTO;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.entity.UserEntity;
@@ -73,23 +73,23 @@ public class MainController {
 		return null;
 	}
 
-	@GetMapping("/users")
-	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
-
-		Page<UserEntity> api = apiService.getUserList(pageable);
-		PageUserBuilder builder = new PageUserBuilder();
-		builder.setNumber(api.getNumber());
-		builder.setUserDTO(api.getContent());
-		builder.setNumberOfElements(api.getNumberOfElements());
-		builder.setTotalElements(api.getTotalElements());
-		builder.setSize(api.getSize());
-		builder.setTotalPages(api.getTotalPages());
-		builder.setPageable(api.getPageable());
-
-		// Page<String> apis = api.getContent();
-
-		return builder.builder();
-	}
+//	@GetMapping("/users")
+//	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
+//
+//		Page<UserEntity> api = apiService.getUserList(pageable);
+//		PageUserBuilder builder = new PageUserBuilder();
+//		builder.setNumber(api.getNumber());
+//		builder.setUserDTO(api.getContent());
+//		builder.setNumberOfElements(api.getNumberOfElements());
+//		builder.setTotalElements(api.getTotalElements());
+//		builder.setSize(api.getSize());
+//		builder.setTotalPages(api.getTotalPages());
+//		builder.setPageable(api.getPageable());
+//
+//		// Page<String> apis = api.getContent();
+//
+//		return builder.builder();
+//	}
 
 	@ResponseBody
 	@GetMapping("/")

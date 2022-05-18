@@ -1,4 +1,4 @@
-package com.todo.list.controller.builder;
+package com.todo.list.controller.builder.page;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import com.todo.list.controller.dto.PageUserDTO;
 
 public interface PageBuilder<T, O> {
 
-	public List<O> builder();
-	
-	//public List<K> setLists(K lists);
+	public O builder();
+
+	public <K> T setLists(K lists);
 
 	public T setNumber(int number);
 
