@@ -42,6 +42,12 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
+	public UserEntity getUserApi(String username) {
+
+		return userRepository.findByUsername(username);
+	}
+
+	@Transactional(readOnly = true)
 	public UserEntity getUserApi(UserTokenDTO username) {
 
 		return userRepository.findByUsername(username.getUsername());

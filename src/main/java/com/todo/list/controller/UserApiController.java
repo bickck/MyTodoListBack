@@ -77,7 +77,7 @@ public class UserApiController {
 
 	@PostMapping("/quotes")
 	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
-			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
 
 		Page<UserQuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
@@ -92,18 +92,18 @@ public class UserApiController {
 		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
 	}
 
-	@PostMapping("/backgrounds")
-	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
-			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
-
-		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
-
-		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
-	}
+//	@PostMapping("/backgrounds")
+//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
+//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+//
+//		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
+//
+//		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
+//	}
 
 	@PostMapping("/todos")
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
-			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 
 		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
 

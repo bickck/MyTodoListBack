@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.apache.catalina.User;
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -21,11 +22,17 @@ import org.springframework.web.util.UriBuilder;
 
 import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.entity.UserBackGroundImageEntity;
+import com.todo.list.repository.UserRepository;
+import com.todo.list.service.api.UserApiService;
+import com.todo.list.service.user.UserService;
 
 @Service
 public class ImageUploadService {
 
 	private static final String defaultLocation = "E:\\img" + File.separator;
+	
+	@Autowired
+	private UserApiService userService;
 
 	@Autowired
 	private UserBackGroundImgService backGroundImgService;
@@ -34,7 +41,7 @@ public class ImageUploadService {
 
 		String location = defaultLocation + fileDTO.getUsername();
 		Path path = Paths.get(location);
-		String originalName = fileDTO.getFile2().getOriginalFilename();
+		String originalName = fileDTO.getMultipartFile().getOriginalFilename();
 		long fileSize = fileDTO.getFileSize();
 
 		if (Files.isExecutable(path) == false) {
@@ -47,19 +54,18 @@ public class ImageUploadService {
 		}
 
 		try {
-//			InputStream inputStream = multipartFile.getInputStream();
-//			Path dirPath = path.resolve(multipartFile.getOriginalFilename());
-//			Files.copy(inputStream, dirPath, StandardCopyOption.REPLACE_EXISTING);
+			InputStream inputStream = fileDTO.getMultipartFile().getInputStream();
+			Path dirPath = path.resolve(fileDTO.getMultipartFile().getOriginalFilename());
+			Files.copy(inputStream, dirPath, StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-//		backGroundImgService
-//				.userImageSave(new UserBackGroundImageEntity(username, fileName, location, originalName, fileSize));
+		//backGroundImgService.userImageSave();
 
 	}
 
-	public ResponseEntity<?> findUserBackGroundImage(Long imageId, String username) {
+	public ResponseEntity findUserBackGroundImage(Long imageId, String username) {
 		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(imageId);
 
 		File file = new File(defaultLocation + username + File.separator + backGroundImageEntity.getOriginName());
@@ -69,7 +75,8 @@ public class ImageUploadService {
 
 	public String userBackGroundDelete(Long id) {
 
-		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.userImgDelete(id);
+		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(id);
+
 		File file = new File(defaultLocation + backGroundImageEntity.getUser() + File.separator
 				+ backGroundImageEntity.getOriginName());
 
@@ -87,6 +94,8 @@ public class ImageUploadService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+
+		backGroundImgService.userImgDelete(id);
 
 		return "";
 	}

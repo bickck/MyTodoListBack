@@ -9,7 +9,6 @@ public class FileDTO {
 	private String username;
 	private String fileName;
 	private String originName;
-	private Resource resource;
 	private MultipartFile multipartFile;
 	private Long fileSize;
 
@@ -17,14 +16,20 @@ public class FileDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileDTO(Long id, String username, String fileName, String originName, Resource resource,
-			MultipartFile multipartFile, Long fileSize) {
+	public FileDTO(String fileName, String originName, Resource resource, MultipartFile multipartFile, Long fileSize) {
+		this.fileName = fileName;
+		this.originName = originName;
+		this.multipartFile = multipartFile;
+		this.fileSize = fileSize;
+	}
+
+	public FileDTO(Long id, String username, String fileName, String originName, MultipartFile multipartFile,
+			Long fileSize) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.fileName = fileName;
 		this.originName = originName;
-		this.resource = resource;
 		this.multipartFile = multipartFile;
 		this.fileSize = fileSize;
 	}
@@ -59,14 +64,6 @@ public class FileDTO {
 
 	public void setOriginName(String originName) {
 		this.originName = originName;
-	}
-
-	public Resource getResource() {
-		return resource;
-	}
-
-	public void setResource(Resource resource) {
-		this.resource = resource;
 	}
 
 	public MultipartFile getMultipartFile() {

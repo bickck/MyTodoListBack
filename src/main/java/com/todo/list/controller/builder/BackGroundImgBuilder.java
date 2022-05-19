@@ -10,9 +10,12 @@ public class BackGroundImgBuilder {
 	private String username;
 	private String fileName;
 	private String originName;
-	private Resource resource;
 	private MultipartFile multipartFile;
 	private Long fileSize;
+	
+	public FileDTO builder() {
+		return new FileDTO(id, username, fileName, originName, multipartFile, fileSize);
+	}
 
 	public BackGroundImgBuilder setId(Long id) {
 		this.id = id;
@@ -34,11 +37,6 @@ public class BackGroundImgBuilder {
 		return this;
 	}
 
-	public BackGroundImgBuilder setFile(Resource resource) {
-		this.resource = resource;
-		return this;
-	}
-
 	public BackGroundImgBuilder setMultipartFile(MultipartFile multipartFile) {
 		this.multipartFile = multipartFile;
 		return this;
@@ -47,10 +45,6 @@ public class BackGroundImgBuilder {
 	public BackGroundImgBuilder setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 		return this;
-	}
-
-	public FileDTO builder() {
-		return new FileDTO(id, username, fileName, originName, resource, multipartFile, fileSize);
 	}
 
 }
