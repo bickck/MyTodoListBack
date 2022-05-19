@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.controller.builder.QuoteBuilder;
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;

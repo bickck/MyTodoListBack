@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-@WebFilter(urlPatterns = "/account/*")
+@WebFilter(urlPatterns = "/auth/*")
 public class UserLoginFilter implements Filter {
 
 	@Override

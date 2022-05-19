@@ -1,10 +1,12 @@
-package com.todo.list.controller.dto;
+package com.todo.list.controller.dto.page;
 
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-public class PageQuote {
+import com.todo.list.controller.dto.service.QuoteDTO;
+
+public class PageQuoteDTO {
 	private List<QuoteDTO> dtos;
 
 	private int number;
@@ -19,11 +21,11 @@ public class PageQuote {
 
 	private Pageable pageable;
 
-	public PageQuote() {
+	public PageQuoteDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PageQuote(List<QuoteDTO> dtos, int number, int totalPages, long totalElement, long size,
+	public PageQuoteDTO(List<QuoteDTO> dtos, int number, int totalPages, long totalElement, long size,
 			int numberOfElements, Pageable pageable) {
 		super();
 		this.dtos = dtos;

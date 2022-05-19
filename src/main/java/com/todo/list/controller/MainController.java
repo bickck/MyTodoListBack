@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageUserBuilder;
-import com.todo.list.controller.dto.PageUserDTO;
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.page.PageUserDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.DefaultImageEntity;
 import com.todo.list.entity.base.DefaultQuoteEntity;
@@ -43,7 +43,6 @@ import com.todo.list.test.TestService;
  */
 
 @RestController
-@RequestMapping("/main")
 public class MainController {
 
 	@Autowired

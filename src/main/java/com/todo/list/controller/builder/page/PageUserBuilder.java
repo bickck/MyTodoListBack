@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import com.todo.list.controller.dto.PageUserDTO;
-import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.controller.dto.page.PageUserDTO;
+import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 
-public class PageUserBuilder implements PageBuilder<PageUserBuilder, PageUser> {
+public class PageUserBuilder implements PageBuilder<PageUserBuilder, PageTodoBuilder> {
 
 	private List<UserDTO> dtos;
 
@@ -27,7 +27,7 @@ public class PageUserBuilder implements PageBuilder<PageUserBuilder, PageUser> {
 	private Pageable pageable;
 
 	@Override
-	public PageUser builder() {
+	public PageTodoBuilder builder() {
 		// TODO Auto-generated method stub
 		return null;
 	}

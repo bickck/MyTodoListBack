@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.todo.list.controller.dto.TodoDTO;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.repository.UserTodoRepository;
 

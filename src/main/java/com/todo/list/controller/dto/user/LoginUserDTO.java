@@ -1,4 +1,4 @@
-package com.todo.list.controller.dto;
+package com.todo.list.controller.dto.user;
 
 import javax.validation.constraints.NotNull;
 

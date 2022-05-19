@@ -19,4 +19,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> IllegalAccessErrorHandler() {
 		return new ResponseEntity<String>(" ", HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> globalExceptionErrorHandler() {
+		return new ResponseEntity<String>("server error", HttpStatus.NOT_FOUND);
+	}
 }

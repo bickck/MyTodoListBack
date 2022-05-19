@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.CookieGenerator;
 
 import com.todo.list.configs.token.AuthenticationJwtToken;
-import com.todo.list.controller.dto.UserDTO;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;

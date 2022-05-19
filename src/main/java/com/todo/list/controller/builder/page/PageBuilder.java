@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import com.todo.list.controller.dto.PageUserDTO;
+import com.todo.list.controller.dto.page.PageUserDTO;
 
 public interface PageBuilder<T, O> {
 

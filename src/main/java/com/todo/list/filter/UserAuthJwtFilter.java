@@ -3,6 +3,7 @@ package com.todo.list.filter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -35,7 +36,7 @@ public class UserAuthJwtFilter implements Filter {
 		String authorization = httpServletRequest.getHeader("authorization");
 
 		if (authorization == null) {
-			throw new IllegalAccessError();
+			throw new AuthenticationException();
 		} else {
 			chain.doFilter(request, response);
 		}

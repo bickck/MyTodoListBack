@@ -17,7 +17,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.todo.list.configs.token.AuthenticationJwtToken;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
 
 @Aspect
 @Component

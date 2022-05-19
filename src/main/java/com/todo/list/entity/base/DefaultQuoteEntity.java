@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 
 @Entity(name="DEFAULTQUOTE")
 public class DefaultQuoteEntity {

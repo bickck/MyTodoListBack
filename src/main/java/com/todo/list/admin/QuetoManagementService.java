@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.base.DefaultQuoteEntity;
 import com.todo.list.repository.DefaultQuoteRepository;
 

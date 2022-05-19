@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 
 @Entity(name = "USER_ENTITY")
 public class UserEntity {

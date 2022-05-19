@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.todo.list.controller.dto.BackGroundDTO;
-import com.todo.list.controller.dto.UserDTO;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.controller.dto.service.BackGroundDTO;
+import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserBackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;

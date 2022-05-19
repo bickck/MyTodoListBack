@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import com.todo.list.controller.dto.UserDTO;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 
 import io.jsonwebtoken.Claims;

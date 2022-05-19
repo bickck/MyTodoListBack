@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriBuilder;
 
-import com.todo.list.controller.dto.FileDTO;
+import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.entity.UserBackGroundImageEntity;
 
 @Service

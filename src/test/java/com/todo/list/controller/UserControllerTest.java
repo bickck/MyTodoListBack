@@ -19,7 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.todo.list.controller.UserController;
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 
 
 @WebMvcTest(UserController.class)

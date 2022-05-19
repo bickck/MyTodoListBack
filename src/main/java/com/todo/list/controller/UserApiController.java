@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.configs.token.AuthenticationJwtToken;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.builder.page.PageQuoteBuilder;
-import com.todo.list.controller.dto.BackGroundDTO;
-import com.todo.list.controller.dto.PageQuote;
-import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.controller.dto.TodoDTO;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.builder.page.PageTodoBuilder;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.controller.dto.page.PageQuoteDTO;
+import com.todo.list.controller.dto.page.PageTodoDTO;
+import com.todo.list.controller.dto.service.BackGroundDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.UserBackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;
@@ -45,7 +47,7 @@ import com.todo.list.service.user.UserService;
 import com.todo.list.util.aop.UserAuthToken;
 
 @RestController
-//@RequestMapping(value = "/user/api")
+@RequestMapping(value = "/user/api")
 public class UserApiController {
 
 	private UserService userService;
@@ -74,38 +76,48 @@ public class UserApiController {
 //	}
 
 	@PostMapping("/quotes")
-	public ResponseEntity<PageQuote> getUserApiQuotes(
+	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
 			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
 		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
-		Page<UserQuoteEntity> itr = userApiService.getUserquotes(userTokenDTO, pageable);
+
+		Page<UserQuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
 		PageQuoteBuilder builder = new PageQuoteBuilder();
-		builder.setLists(itr.getContent());
-		builder.setNumber(itr.getNumber());
-		builder.setNumberOfElements(itr.getNumberOfElements());
-		builder.setPageable(itr.getPageable());
-		builder.setSize(itr.getSize());
-		builder.setTotalPages(itr.getTotalPages());
-		builder.setTotalElements(itr.getTotalElements());
-		return new ResponseEntity<PageQuote>(builder.builder(), HttpStatus.OK);
+		builder.setLists(entities.getContent());
+		builder.setNumber(entities.getNumber());
+		builder.setNumberOfElements(entities.getNumberOfElements());
+		builder.setPageable(entities.getPageable());
+		builder.setSize(entities.getSize());
+		builder.setTotalPages(entities.getTotalPages());
+		builder.setTotalElements(entities.getTotalElements());
+		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
 	}
 
-//	@PostMapping("/backgrounds")
-//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
-//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
-//
-//		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
-//
-//		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
-//	}
-//
-//	@PostMapping("/todos")
-//	public ResponseEntity<List<TodoDTO>> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
-//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
-//
-//		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
-//
-//		return new ResponseEntity<List<TodoDTO>>(null, HttpStatus.OK);
-//	}
+	@PostMapping("/backgrounds")
+	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
+			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+
+		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
+
+		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
+	}
+
+	@PostMapping("/todos")
+	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
+			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+
+		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
+
+		PageTodoBuilder builder = new PageTodoBuilder();
+		builder.setLists(entities.getContent());
+		builder.setNumber(entities.getNumber());
+		builder.setNumberOfElements(entities.getNumberOfElements());
+		builder.setPageable(entities.getPageable());
+		builder.setSize(entities.getSize());
+		builder.setTotalPages(entities.getTotalPages());
+		builder.setTotalElements(entities.getTotalElements());
+
+		return new ResponseEntity<PageTodoDTO>(builder.builder(), HttpStatus.OK);
+	}
 
 	@PostMapping("/quote/{id}")
 	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id,

@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.todo.list.controller.builder.QuoteBuilder;
-import com.todo.list.controller.dto.PageQuote;
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.page.PageQuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserQuoteEntity;
 
-public class PageQuoteBuilder implements PageBuilder<PageQuoteBuilder, PageQuote> {
+public class PageQuoteBuilder implements PageBuilder<PageQuoteBuilder, PageQuoteDTO> {
 
 	private List<QuoteDTO> dtos;
 	private int number;
@@ -21,9 +21,9 @@ public class PageQuoteBuilder implements PageBuilder<PageQuoteBuilder, PageQuote
 	private int numberOfElements;
 
 	@Override
-	public PageQuote builder() {
+	public PageQuoteDTO builder() {
 		// TODO Auto-generated method stub
-		return new PageQuote(dtos, number, totalPages, totalElement, size, numberOfElements, pageable);
+		return new PageQuoteDTO(dtos, number, totalPages, totalElement, size, numberOfElements, pageable);
 	}
 
 	@Override

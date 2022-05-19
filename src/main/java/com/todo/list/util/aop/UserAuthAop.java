@@ -23,7 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.ServletContextResourceLoader;
 
 import com.todo.list.configs.token.AuthenticationJwtToken;
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.util.UserUtil;
 
 @Aspect

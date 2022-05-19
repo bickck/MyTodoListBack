@@ -3,7 +3,7 @@ package com.todo.list.controller.builder;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.todo.list.controller.dto.TodoDTO;
+import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserTodoEntity;
 
@@ -29,6 +29,11 @@ public class TodoBuilder {
 
 	public TodoBuilder setUser(UserEntity entity) {
 		this.user = entity;
+		return this;
+	}
+	
+	public TodoBuilder setUsername(String username) {
+		this.username = username;
 		return this;
 	}
 

@@ -2,7 +2,7 @@ package com.todo.list.controller.builder;
 
 import java.sql.Timestamp;
 
-import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
 
 public class QuoteBuilder {

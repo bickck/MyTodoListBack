@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.todo.list.controller.dto.TodoDTO;
+import com.todo.list.controller.dto.service.TodoDTO;
 
 @Entity(name = "USER_TODO_ENTITY")
 public class UserTodoEntity {

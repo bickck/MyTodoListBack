@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import com.todo.list.controller.dto.UserTokenDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
 
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;

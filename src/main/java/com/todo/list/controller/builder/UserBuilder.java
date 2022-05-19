@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.todo.list.controller.dto.UserDTO;
+import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.entity.UserTodoEntity;
 

@@ -1,11 +1,13 @@
 package com.todo.list.test;
 
+import java.rmi.server.ServerCloneException;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerErrorException;
 
 import com.todo.list.configs.token.AuthenticationJwtToken;
 import com.todo.list.entity.UserEntity;
@@ -57,18 +59,25 @@ public class TestController {
 		long startTime = System.currentTimeMillis();
 //		Iterator<UserQuoteEntity> lists = quoteRepository.findQuoteEntitiesByUser(entity).iterator();
 		long endTime = System.currentTimeMillis();
-		
+
 		return endTime - startTime + "ms";
 	}
 
 	@GetMapping("/test/quote/querytest2")
 	public String testQuoteQueryTest2() {
 		UserEntity entity = repository.findById((long) 1).get();
-		
+
 		long startTime = System.currentTimeMillis();
 //		Iterator<UserQuoteEntity> lists = quoteRepository.findQuoteEntitiesByUserId(entity.getId()).iterator();
 		long endTime = System.currentTimeMillis();
 
 		return endTime - startTime + "ms";
+	}
+
+	@GetMapping("/test/make/500error")
+	public String makeExceptionError() throws ServerErrorException {
+
+		throw new ServerErrorException("error",new Throwable());
+
 	}
 }

@@ -3,7 +3,7 @@ package com.todo.list.controller.builder;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.controller.dto.FileDTO;
+import com.todo.list.controller.dto.service.FileDTO;
 
 public class BackGroundImgBuilder {
 	private Long id;
