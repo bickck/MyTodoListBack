@@ -36,6 +36,7 @@ public class AdminController {
 	@PostMapping("/save/queto")
 	public String saveQuetoList(@RequestBody QuoteDTO queto) {
 		managementService.quetoSave(queto);
+		
 		return "saveSuccess";
 	}
 
