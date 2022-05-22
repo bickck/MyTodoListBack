@@ -33,14 +33,14 @@ public class UserAuthAop {
 	@Autowired
 	private AuthenticationJwtToken authenticationJwtToken;
 
-	Logger logger = LoggerFactory.getLogger(UserAuthAop.class);
+	private Logger logger = LoggerFactory.getLogger(UserAuthAop.class);
 
 	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))")
 	public void cut() {
 	}
 
 	@Around(value = "cut()")
-	public Object test(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object userAuthAop(ProceedingJoinPoint joinPoint) throws Throwable {
 
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
