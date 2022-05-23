@@ -1,4 +1,4 @@
-package com.todo.list.util;
+package com.todo.list.util.auth;
 
 public interface BcryptHelper {
 

@@ -44,7 +44,7 @@ import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;
-import com.todo.list.util.aop.UserAuthToken;
+import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
 @RequestMapping(value = "/user/api")

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.util.auth.BcryptHelper;
 
 /**
  * @author DongHyeon_kim
@@ -47,34 +48,36 @@ public class UserUtil implements BcryptHelper {
 		return true;
 	}
 
-//	public boolean isFindCookie(Cookie[] cookies, String target) {
-//		int i = 0;
-//		if (cookies.length == 0)
-//			return false;
-//
-//		while (i < cookies.length) {
-//			Cookie cookie = cookies[i];
-//			if (target.equals(cookie.getName())) {
-//				return true;
-//			}
-//
-//		}
-//		return false;
-//	}
-//
-//	public int findCookieIndex(Cookie[] cookies, String target) {
-//
-//		int i = 0;
-//		if (cookies.length == 0)
-//			return -1;
-//
-//		while (i < cookies.length) {
-//			Cookie cookie = cookies[i];
-//			if (target.equals(cookie.getName())) {
-//				return i;
-//			}
-//
-//		}
-//		return -1;
-//	}
+	@Deprecated
+	public boolean isFindCookie(Cookie[] cookies, String target) {
+		int i = 0;
+		if (cookies.length == 0)
+			return false;
+
+		while (i < cookies.length) {
+			Cookie cookie = cookies[i];
+			if (target.equals(cookie.getName())) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	@Deprecated
+	public int findCookieIndex(Cookie[] cookies, String target) {
+
+		int i = 0;
+		if (cookies.length == 0)
+			return -1;
+
+		while (i < cookies.length) {
+			Cookie cookie = cookies[i];
+			if (target.equals(cookie.getName())) {
+				return i;
+			}
+
+		}
+		return -1;
+	}
 }

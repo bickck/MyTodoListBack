@@ -26,7 +26,7 @@ import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
-import com.todo.list.util.aop.UserAuthToken;
+import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
 @RequestMapping(value = "/auth")

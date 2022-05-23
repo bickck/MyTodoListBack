@@ -68,27 +68,18 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/api/backgrounds")
 	public List<DefaultImageEntity> responseBackGrounds() {
-		// imageUploadService.fi
+		backGroundImageService.backImageGrounds();
+		return null;
+	}
+	
+	@ResponseBody
+	@GetMapping("/api/backgrounds/")
+	public List<DefaultImageEntity> responseBackGroundsImg() {
+		backGroundImageService.backImageGrounds();
 		return null;
 	}
 
-//	@GetMapping("/users")
-//	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
-//
-//		Page<UserEntity> api = apiService.getUserList(pageable);
-//		PageUserBuilder builder = new PageUserBuilder();
-//		builder.setNumber(api.getNumber());
-//		builder.setUserDTO(api.getContent());
-//		builder.setNumberOfElements(api.getNumberOfElements());
-//		builder.setTotalElements(api.getTotalElements());
-//		builder.setSize(api.getSize());
-//		builder.setTotalPages(api.getTotalPages());
-//		builder.setPageable(api.getPageable());
-//
-//		// Page<String> apis = api.getContent();
-//
-//		return builder.builder();
-//	}
+
 
 	@ResponseBody
 	@GetMapping("/")

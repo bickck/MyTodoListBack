@@ -29,9 +29,11 @@ public class UserAccessLog {
 
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
-		//RequestContextHolder.currentRequestAttributes().
-
-		logger.info("Access address = {}", httpServletRequest.getAsyncContext());
+		
+		logger.info("Protocol = {}", httpServletRequest.getProtocol());
+		logger.info("getRequestURI = {}", httpServletRequest.getRequestURI());
+		//logger.info("getRequestURI = {}", httpServletRequest.);
+		//logger.info("Access address = {}", httpServletRequest.getAsyncContext());
 		logger.info("Access Method = {} , {}", joinPoint.getThis(), joinPoint.getSignature());
 
 		return joinPoint.proceed();

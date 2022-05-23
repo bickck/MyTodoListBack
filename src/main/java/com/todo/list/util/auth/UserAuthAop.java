@@ -1,4 +1,4 @@
-package com.todo.list.util.aop;
+package com.todo.list.util.auth;
 
 import java.net.http.HttpHeaders;
 import java.util.Arrays;

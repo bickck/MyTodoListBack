@@ -44,7 +44,7 @@ import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.todo.TodoService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
-import com.todo.list.util.aop.UserAuthToken;
+import com.todo.list.util.auth.UserAuthToken;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;
