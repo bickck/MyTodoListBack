@@ -36,6 +36,7 @@ public class BackGroundImageService {
 	@Transactional(readOnly = true)
 	public List<ImageInfoDTO> imageNameAndPathList() {
 
+		//imageRepository.findBy
 		return null;
 	}
 
