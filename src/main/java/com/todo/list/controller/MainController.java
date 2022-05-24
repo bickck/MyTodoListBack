@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageUserBuilder;
+import com.todo.list.controller.dto.ImageInfoDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
@@ -57,7 +58,6 @@ public class MainController {
 	@Autowired
 	private UserApiService apiService;
 
-	
 	@ResponseBody
 	@GetMapping("/api/quotes")
 	public List<DefaultQuoteEntity> responseQuotes() {
@@ -71,20 +71,24 @@ public class MainController {
 		backGroundImageService.backImageGrounds();
 		return null;
 	}
-	
+
 	@ResponseBody
-	@GetMapping("/api/backgrounds/")
-	public List<DefaultImageEntity> responseBackGroundsImg() {
+	@GetMapping("/api/img/")
+	public List<DefaultImageEntity> responseBackGroundsImageList() {
 		backGroundImageService.backImageGrounds();
 		return null;
 	}
 
+	@ResponseBody
+	@GetMapping("/api/img/infos")
+	public List<ImageInfoDTO> responseBackGroundsImg() {
 
+		return backGroundImageService.imageNameAndPathList();
+	}
 
 	@ResponseBody
 	@GetMapping("/")
-	public ResponseEntity<String> main(@RequestParam(value = "test") String test, HttpServletRequest httpServletRequest)
-			throws InterruptedException {
+	public ResponseEntity<String> main() {
 
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}

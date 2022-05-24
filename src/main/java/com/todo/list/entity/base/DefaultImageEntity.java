@@ -7,10 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import com.todo.list.controller.dto.ImageInfoDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity(name="DEFAULTIMAGE")
+@Entity(name = "DEFAULTIMAGE")
 public class DefaultImageEntity {
 
 	@Id
@@ -18,21 +20,34 @@ public class DefaultImageEntity {
 	private Long id;
 
 	@NotNull
-	@Column(name = "ORIGINAL_NAME")
-	private String original_file_name;
+	@Column(name = "ORIGINALFILENAME")
+	private String originalFileName;
 
 	@NotNull
-	@Column(name = "FILE_PATH")
-	private String stored_file_path;
+	@Column(name = "FILEPATH")
+	private String filePath;
 
 	@NotNull
-	private Long file_size;
+	private Long fileSize;
 
-	public DefaultImageEntity(@NotNull String original_file_name, @NotNull String stored_file_path, @NotNull Long file_size) {
+	public DefaultImageEntity() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public DefaultImageEntity(@NotNull String originalFileName, @NotNull String filePath) {
+
+		this.originalFileName = originalFileName;
+		this.filePath = filePath;
+
+	}
+
+	public DefaultImageEntity(Long id, @NotNull String originalFileName, @NotNull String filePath,
+			@NotNull Long fileSize) {
 		super();
-		this.original_file_name = original_file_name;
-		this.stored_file_path = stored_file_path;
-		this.file_size = file_size;
+		this.id = id;
+		this.originalFileName = originalFileName;
+		this.filePath = filePath;
+		this.fileSize = fileSize;
 	}
 
 	public Long getId() {
@@ -43,28 +58,28 @@ public class DefaultImageEntity {
 		this.id = id;
 	}
 
-	public String getOriginal_file_name() {
-		return original_file_name;
+	public String getOriginalFileName() {
+		return originalFileName;
 	}
 
-	public void setOriginal_file_name(String original_file_name) {
-		this.original_file_name = original_file_name;
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
 	}
 
-	public String getStored_file_path() {
-		return stored_file_path;
+	public String getFilePath() {
+		return filePath;
 	}
 
-	public void setStored_file_path(String stored_file_path) {
-		this.stored_file_path = stored_file_path;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
-	public Long getFile_size() {
-		return file_size;
+	public Long getFileSize() {
+		return fileSize;
 	}
 
-	public void setFile_size(Long file_size) {
-		this.file_size = file_size;
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
 	}
 
 }

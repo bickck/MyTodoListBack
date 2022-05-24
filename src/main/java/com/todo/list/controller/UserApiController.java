@@ -147,6 +147,7 @@ public class UserApiController {
 		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
 	}
 
+
 	@PostMapping("/todo/{id}")
 	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
@@ -156,8 +157,4 @@ public class UserApiController {
 
 		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
 	}
-
-	// @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
-	// Pageable pageable
-
 }
