@@ -49,7 +49,7 @@ import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.UserImageUploadService;
 
 @RestController
 public class TestController {
@@ -69,8 +69,8 @@ public class TestController {
 	@Autowired
 	private UserApiService userApiService;
 
-	@Autowired
-	private ImageUploadService imageUploadService;
+//	@Autowired
+//	private UserImageUploadService imageUploadService;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -80,7 +80,7 @@ public class TestController {
 		UserEntity entity = repository.findByUsername("username0");
 		BackGroundImgBuilder mul = new BackGroundImgBuilder().setFileName(fileName).setMultipartFile(multipartFile);
 
-		imageUploadService.saveImageInDir(mul.builder());
+		// imageUploadService.saveImageInDir(mul.builder());
 		return "success";
 	}
 

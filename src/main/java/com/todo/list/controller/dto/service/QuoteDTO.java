@@ -2,7 +2,7 @@ package com.todo.list.controller.dto.service;
 
 import javax.validation.constraints.NotNull;
 
-import com.todo.list.entity.base.DefaultQuoteEntity;
+import com.todo.list.entity.base.AdminQuoteEntity;
 
 import lombok.Data;
 import lombok.Getter;
@@ -29,13 +29,13 @@ public class QuoteDTO {
 		this.author = author;
 	}
 
-	public QuoteDTO(@NotNull Long id, @NotNull DefaultQuoteEntity quote) {
+	public QuoteDTO(@NotNull Long id, @NotNull AdminQuoteEntity quote) {
 		this.id = id;
 		this.quote = quote.getQuote();
 		this.author = quote.getAuthor();
 	}
 
-	public QuoteDTO(@NotNull DefaultQuoteEntity queto) {
+	public QuoteDTO(@NotNull AdminQuoteEntity queto) {
 		this.id = queto.getId();
 		this.quote = queto.getQuote();
 		this.author = queto.getAuthor();

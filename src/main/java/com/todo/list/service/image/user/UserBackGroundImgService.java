@@ -1,4 +1,4 @@
-package com.todo.list.service.image;
+package com.todo.list.service.image.user;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -13,12 +13,15 @@ import com.todo.list.entity.UserBackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.service.image.ImageService;
+import com.todo.list.service.image.UserImageUploadService;
 
 @Service
 public class UserBackGroundImgService {
 
 	private UserImageRepository imageRepository;
 	private UserRepository userRepository;
+	private ImageService imageService = new UserImageUploadService();
 
 	@Autowired
 	public UserBackGroundImgService(UserImageRepository imageRepository, UserRepository userRepository) {
@@ -32,7 +35,7 @@ public class UserBackGroundImgService {
 	}
 
 	public UserBackGroundImageEntity userImgDelete(Long id) {
-		UserBackGroundImageEntity  backGroundImageEntity = imageRepository.getById(id);
+		UserBackGroundImageEntity backGroundImageEntity = imageRepository.getById(id);
 		imageRepository.deleteById(id);
 		return backGroundImageEntity;
 	}

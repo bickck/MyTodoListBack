@@ -12,8 +12,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.event.EventListener;
 
-import com.todo.list.entity.base.DefaultQuoteEntity;
-import com.todo.list.repository.DefaultQuoteRepository;
+import com.todo.list.entity.base.AdminQuoteEntity;
+import com.todo.list.repository.AdminQuoteRepository;
 
 @ServletComponentScan
 @EnableAspectJAutoProxy

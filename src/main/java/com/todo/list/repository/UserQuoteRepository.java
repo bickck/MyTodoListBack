@@ -19,9 +19,9 @@ public interface UserQuoteRepository extends JpaRepository<UserQuoteEntity, Long
 	Page<UserQuoteEntity> findQuoteEntitiesByUserId(Long id, Pageable pageable);
 //	Page<UserQuoteEntity> findQuoteEntitiesByUser(UserEntity user, Pageable pageable);
 //	Page<UserQuoteEntity> findQuoteEntitiesByUserId(Long id, Pageable pageable);
-//	Page<QuoteMapper> findQuoteEntitiesByUserId(Long id, Pageable pageable);
+//	Page<QuoteMapper> findQuoteEntitiesByUser(Long id, Pageable pageable);
 
 	List<UserQuoteEntity> findQuoteEntityById(long id);
-
+	
 	void deleteById(Long id);
 }

@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.entity.base.DefaultQuoteEntity;
-import com.todo.list.repository.DefaultQuoteRepository;
+import com.todo.list.entity.base.AdminQuoteEntity;
+import com.todo.list.repository.AdminQuoteRepository;
 
 @Service
 public class DefaultQuetoService {
 
 	@Autowired
-	private DefaultQuoteRepository quetoRepository;
+	private AdminQuoteRepository quetoRepository;
 
 	@Transactional(readOnly = true)
-	public List<DefaultQuoteEntity> getQuotes() {
+	public List<AdminQuoteEntity> getQuotes() {
 		return quetoRepository.findAll();
 	}
 	

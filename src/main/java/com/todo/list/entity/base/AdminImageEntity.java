@@ -12,8 +12,8 @@ import com.todo.list.controller.dto.ImageInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity(name = "DEFAULTIMAGE")
-public class DefaultImageEntity {
+@Entity(name = "ADMIN_IMAGE")
+public class AdminImageEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,18 +30,17 @@ public class DefaultImageEntity {
 	@NotNull
 	private Long fileSize;
 
-	public DefaultImageEntity() {
+	public AdminImageEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DefaultImageEntity(@NotNull String originalFileName, @NotNull String filePath) {
-
+	public AdminImageEntity(@NotNull String originalFileName, @NotNull String filePath) {
 		this.originalFileName = originalFileName;
 		this.filePath = filePath;
 
 	}
 
-	public DefaultImageEntity(Long id, @NotNull String originalFileName, @NotNull String filePath,
+	public AdminImageEntity(Long id, @NotNull String originalFileName, @NotNull String filePath,
 			@NotNull Long fileSize) {
 		super();
 		this.id = id;

@@ -10,18 +10,18 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.entity.base.DefaultQuoteEntity;
-import com.todo.list.repository.DefaultQuoteRepository;
+import com.todo.list.entity.base.AdminQuoteEntity;
+import com.todo.list.repository.AdminQuoteRepository;
 
 @Service
 public class QuetoManagementService {
 
 	@Autowired
-	private DefaultQuoteRepository quetoRepository;
+	private AdminQuoteRepository quetoRepository;
 
 	
 	public void quetoSave(QuoteDTO dto) {
-		quetoRepository.save(new DefaultQuoteEntity(dto));
+		quetoRepository.save(new AdminQuoteEntity(dto));
 	}
 
 }

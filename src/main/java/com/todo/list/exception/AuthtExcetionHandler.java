@@ -17,13 +17,15 @@ import com.todo.list.controller.AuthController;
 public class AuthtExcetionHandler {
 
 	@ExceptionHandler(NullPointerException.class)
-	public ResponseEntity<String> unExsistUser() {
+	public ResponseEntity<String> unExsistUser(Exception exception) {
+		exception.printStackTrace();
 		return new ResponseEntity<String>("not user fail", HttpStatus.BAD_REQUEST);
 
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
-	public ResponseEntity<String> notAcceptAuthentication() {
+	public ResponseEntity<String> notAcceptAuthentication(Exception exception) {
+		exception.printStackTrace();
 		return new ResponseEntity<String>("auth Fail", HttpStatus.BAD_REQUEST);
 
 	}

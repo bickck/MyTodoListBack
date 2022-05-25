@@ -107,14 +107,14 @@ public class UserApiController {
 
 		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
 
-		PageTodoBuilder builder = new PageTodoBuilder();
-		builder.setLists(entities.getContent());
-		builder.setNumber(entities.getNumber());
-		builder.setNumberOfElements(entities.getNumberOfElements());
-		builder.setPageable(entities.getPageable());
-		builder.setSize(entities.getSize());
-		builder.setTotalPages(entities.getTotalPages());
-		builder.setTotalElements(entities.getTotalElements());
+		PageTodoBuilder builder = new PageTodoBuilder()
+				.setLists(entities.getContent())
+				.setNumber(entities.getNumber())
+				.setNumberOfElements(entities.getNumberOfElements())
+				.setPageable(entities.getPageable())
+				.setSize(entities.getSize())
+				.setTotalPages(entities.getTotalPages())
+				.setTotalElements(entities.getTotalElements());
 
 		return new ResponseEntity<PageTodoDTO>(builder.builder(), HttpStatus.OK);
 	}
@@ -146,7 +146,6 @@ public class UserApiController {
 		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
 		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
 	}
-
 
 	@PostMapping("/todo/{id}")
 	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id,

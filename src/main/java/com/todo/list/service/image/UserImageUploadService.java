@@ -24,25 +24,17 @@ import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.entity.UserBackGroundImageEntity;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
+import com.todo.list.service.image.user.UserBackGroundImgService;
 import com.todo.list.service.user.UserService;
 
-@Service
-public class ImageUploadService {
 
-	private static final String defaultLocation = "E:\\img" + File.separator;
-	
-	@Autowired
-	private UserApiService userService;
+public class UserImageUploadService implements ImageService {
 
-	@Autowired
-	private UserBackGroundImgService backGroundImgService;
-
+	@Override
 	public void saveImageInDir(FileDTO fileDTO) {
 
-		String location = defaultLocation + fileDTO.getUsername();
+		String location = DEFAULT_PATH + fileDTO.getUsername();
 		Path path = Paths.get(location);
-		String originalName = fileDTO.getMultipartFile().getOriginalFilename();
-		long fileSize = fileDTO.getFileSize();
 
 		if (Files.isExecutable(path) == false) {
 			try {
@@ -60,43 +52,34 @@ public class ImageUploadService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
-		//backGroundImgService.userImageSave();
-
 	}
 
-	public ResponseEntity findUserBackGroundImage(Long imageId, String username) {
-		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(imageId);
+	@Override
+	public Resource findBackGroundImageInDir(String originalName, String folderName) {
 
-		File file = new File(defaultLocation + username + File.separator + backGroundImageEntity.getOriginName());
-
-		return null;
+		String path = DEFAULT_PATH + folderName + File.separator + originalName;
+		return new FileSystemResource(path);
 	}
 
-	public String userBackGroundDelete(Long id) {
+	@Override
+	public boolean deleteBackGroundImageInDir(Long id) {
 
-		UserBackGroundImageEntity backGroundImageEntity = backGroundImgService.findById(id);
+//		try {
+//			if (file.exists()) {
+//				if (file.delete()) {
+//					System.out.println("삭제 성공");
+//				} else {
+//
+//				}
+//
+//			} else {
+//
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
 
-		File file = new File(defaultLocation + backGroundImageEntity.getUser() + File.separator
-				+ backGroundImageEntity.getOriginName());
-
-		try {
-			if (file.exists()) {
-				if (file.delete()) {
-					System.out.println("삭제 성공");
-				} else {
-
-				}
-
-			} else {
-
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		backGroundImgService.userImgDelete(id);
-
-		return "";
+		return false;
 	}
+
 }

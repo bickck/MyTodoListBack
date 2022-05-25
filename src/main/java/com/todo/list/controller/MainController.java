@@ -1,20 +1,28 @@
 package com.todo.list.controller;
 
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.IntFunction;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +37,13 @@ import com.todo.list.controller.dto.ImageInfoDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.base.DefaultImageEntity;
-import com.todo.list.entity.base.DefaultQuoteEntity;
+import com.todo.list.entity.base.AdminImageEntity;
+import com.todo.list.entity.base.AdminQuoteEntity;
+import com.todo.list.repository.mapper.ImageInfoMapper;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.BackGroundImageService;
-import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.AdminImageUploadService;
+import com.todo.list.service.image.ImageService;
+import com.todo.list.service.image.admin.MainBackGroundImageService;
 import com.todo.list.service.queto.DefaultQuetoService;
 import com.todo.list.test.TestService;
 
@@ -46,44 +56,51 @@ import com.todo.list.test.TestService;
 @RestController
 public class MainController {
 
-	@Autowired
 	private DefaultQuetoService quoteService;
-
-	@Autowired
-	private BackGroundImageService backGroundImageService;
-
-	@Autowired
-	private ImageUploadService imageUploadService;
-
-	@Autowired
+	private MainBackGroundImageService backGroundImageService;
 	private UserApiService apiService;
+
+	@Autowired
+	public MainController(DefaultQuetoService quoteService, MainBackGroundImageService backGroundImageService,
+			UserApiService apiService) {
+		this.quoteService = quoteService;
+		this.backGroundImageService = backGroundImageService;
+		this.apiService = apiService;
+	}
 
 	@ResponseBody
 	@GetMapping("/api/quotes")
-	public List<DefaultQuoteEntity> responseQuotes() {
-		List<DefaultQuoteEntity> entities = quoteService.getQuotes();
+	public List<AdminQuoteEntity> responseQuotes() {
+		List<AdminQuoteEntity> entities = quoteService.getQuotes();
 		return entities;
 	}
 
 	@ResponseBody
 	@GetMapping("/api/backgrounds")
-	public List<DefaultImageEntity> responseBackGrounds() {
-		backGroundImageService.backImageGrounds();
+	public List<AdminImageEntity> responseBackGrounds() {
+		backGroundImageService.backGroundImages();
 		return null;
 	}
 
 	@ResponseBody
-	@GetMapping("/api/img/")
-	public List<DefaultImageEntity> responseBackGroundsImageList() {
-		backGroundImageService.backImageGrounds();
-		return null;
+	@GetMapping("/api/img")
+	public ResponseEntity<Resource> responseBackGroundsImageList(@RequestParam(value = "fileName") String fileName) throws FileNotFoundException {
+
+		Resource resource = backGroundImageService.getResource(fileName);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@GetMapping("/api/img/infos")
-	public List<ImageInfoDTO> responseBackGroundsImg() {
-
-		return backGroundImageService.imageNameAndPathList();
+	public List<ImageInfoDTO> responseBackGroundsImages() {
+		List<ImageInfoMapper> list = backGroundImageService.imageNameAndPathList();
+		List<ImageInfoDTO> imageInfoDTOs = new ArrayList<ImageInfoDTO>();
+		for (int i = 0; i < list.size(); i++) {
+			imageInfoDTOs.add(new ImageInfoDTO(list.get(i).getOriginalFileName(), list.get(i).getFilePath()));
+		}
+		return imageInfoDTOs;
 	}
 
 	@ResponseBody

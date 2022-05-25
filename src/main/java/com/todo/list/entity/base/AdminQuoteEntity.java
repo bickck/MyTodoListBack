@@ -13,7 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.todo.list.controller.dto.service.QuoteDTO;
 
 @Entity(name="DEFAULTQUOTE")
-public class DefaultQuoteEntity {
+public class AdminQuoteEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +29,17 @@ public class DefaultQuoteEntity {
 	@Column(name = "CREATEDATE")
 	private Timestamp createDate;
 
-	public DefaultQuoteEntity() {
+	public AdminQuoteEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DefaultQuoteEntity(String quote, String author) {
+	public AdminQuoteEntity(String quote, String author) {
 		super();
 		this.quote = quote;
 		this.author = author;
 	}
 
-	public DefaultQuoteEntity(QuoteDTO quoteDTO) {
+	public AdminQuoteEntity(QuoteDTO quoteDTO) {
 		this.quote = quoteDTO.getQuote();
 		this.author = quoteDTO.getAuthor();
 	}

@@ -38,8 +38,9 @@ import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.ImageUploadService;
-import com.todo.list.service.image.UserBackGroundImgService;
+import com.todo.list.service.image.ImageService;
+import com.todo.list.service.image.UserImageUploadService;
+import com.todo.list.service.image.user.UserBackGroundImgService;
 import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.todo.TodoService;
 import com.todo.list.service.user.UserService;
@@ -64,19 +65,18 @@ public class UserController {
 	private UserService userService;
 	private UserApiService userApiService;
 	private UserQuoteService userQuoteService;
-	private ImageUploadService imageUploadService;
+	private ImageService imaegService;
 	private TodoService todoService;
 
 	@Autowired
 	private AuthenticationJwtToken jwtLoginToken;
 
 	@Autowired
-	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService,
-			ImageUploadService imageUploadService) {
+	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService) {
 		this.userService = userService;
 		this.userApiService = userApiService;
 		this.userQuoteService = userQuoteService;
-		this.imageUploadService = imageUploadService;
+		this.imaegService = new UserImageUploadService();
 	}
 
 	@PostMapping("/user")
@@ -124,7 +124,7 @@ public class UserController {
 
 		BackGroundImgBuilder backGroundImgBuilder = new BackGroundImgBuilder();
 		backGroundImgBuilder.setFileName(fileName).setMultipartFile(multipartFile).setUserName(tokenDTO.getUsername());
-		imageUploadService.saveImageInDir(backGroundImgBuilder.builder());
+		imaegService.saveImageInDir(backGroundImgBuilder.builder());
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
@@ -137,7 +137,7 @@ public class UserController {
 
 	@PostMapping("/background/3/{id}")
 	public ResponseEntity deleteUserBackGroundImg(@PathVariable Long id) {
-		imageUploadService.userBackGroundDelete(id);
+		// imaegService.deleteBackGroundImage(id);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}

@@ -62,7 +62,7 @@ public class UserApiService {
 
 	@Transactional(readOnly = true)
 	public Page<UserBackGroundImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
-		long id = userDTO.getId();
+	
 		return null;
 	}
 
