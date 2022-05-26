@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntFunction;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.ImageInfoDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
+import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.AdminImageEntity;
@@ -54,6 +57,7 @@ import com.todo.list.test.TestService;
  */
 
 @RestController
+@RequestMapping("/main")
 public class MainController {
 
 	private DefaultQuetoService quoteService;
@@ -69,6 +73,38 @@ public class MainController {
 	}
 
 	@ResponseBody
+	@PostMapping("/manage/quote/1")
+	public String requestQuoteSave(@RequestBody QuoteDTO quoteDTO) {
+		quoteService.saveQuote(quoteDTO);
+
+		return "success";
+	}
+
+	@ResponseBody
+	@PostMapping("/manage/quote/2")
+	public String requestQuoteUpdate(@RequestBody QuoteDTO quoteDTO) {
+		quoteService.updateQuote(quoteDTO);
+
+		return "success";
+	}
+
+	@ResponseBody
+	@PostMapping("/manage/quote/3/{id}")
+	public String requestQuoteDelete(@PathVariable Long id) {
+		quoteService.deleteQuoteById(id);
+
+		return "success";
+	}
+
+	@ResponseBody
+	@PostMapping("/manage/image/3/")
+	public String requestImageDelete(@RequestBody BackGroundDTO backGroundDTO) {
+		backGroundImageService.delete(backGroundDTO.getId(), backGroundDTO.getFilename());
+
+		return "success";
+	}
+
+	@ResponseBody
 	@GetMapping("/api/quotes")
 	public List<AdminQuoteEntity> responseQuotes() {
 		List<AdminQuoteEntity> entities = quoteService.getQuotes();
@@ -76,16 +112,11 @@ public class MainController {
 	}
 
 	@ResponseBody
-	@GetMapping("/api/backgrounds")
-	public List<AdminImageEntity> responseBackGrounds() {
-		backGroundImageService.backGroundImages();
-		return null;
-	}
-
-	@ResponseBody
 	@GetMapping("/api/img")
-	public ResponseEntity<Resource> responseBackGroundsImageList(@RequestParam(value = "fileName") String fileName) throws FileNotFoundException {
+	public ResponseEntity<Resource> responseBackGroundsImageList(@RequestParam(value = "filename") String fileName)
+			throws FileNotFoundException {
 
+		System.out.println("=======request====== data :" + new Date() + ": " + fileName);
 		Resource resource = backGroundImageService.getResource(fileName);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_JPEG);
@@ -94,13 +125,9 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/img/infos")
-	public List<ImageInfoDTO> responseBackGroundsImages() {
-		List<ImageInfoMapper> list = backGroundImageService.imageNameAndPathList();
-		List<ImageInfoDTO> imageInfoDTOs = new ArrayList<ImageInfoDTO>();
-		for (int i = 0; i < list.size(); i++) {
-			imageInfoDTOs.add(new ImageInfoDTO(list.get(i).getOriginalFileName(), list.get(i).getFilePath()));
-		}
-		return imageInfoDTOs;
+	public List<String> responseBackGroundsImages() {
+
+		return backGroundImageService.imageNames();
 	}
 
 	@ResponseBody

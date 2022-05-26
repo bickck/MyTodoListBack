@@ -21,9 +21,21 @@ public class DefaultQuetoService {
 	public List<AdminQuoteEntity> getQuotes() {
 		return quetoRepository.findAll();
 	}
-	
+
 	@Transactional
-	public String saveQuote() {
-		return null;
+	public AdminQuoteEntity saveQuote(QuoteDTO quoteDTO) {
+
+		return quetoRepository.save(new AdminQuoteEntity(quoteDTO));
+	}
+
+	@Transactional
+	public AdminQuoteEntity updateQuote(QuoteDTO quoteDTO) {
+
+		return quetoRepository.save(new AdminQuoteEntity(quoteDTO));
+	}
+
+	@Transactional
+	public void deleteQuoteById(Long id) {
+		quetoRepository.deleteById(id);
 	}
 }

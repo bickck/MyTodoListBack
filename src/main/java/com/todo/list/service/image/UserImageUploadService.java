@@ -1,7 +1,6 @@
 package com.todo.list.service.image;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -9,24 +8,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import org.apache.catalina.User;
-import org.apache.catalina.core.ApplicationContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.orm.hibernate5.SpringBeanContainer;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriBuilder;
 
 import com.todo.list.controller.dto.service.FileDTO;
-import com.todo.list.entity.UserBackGroundImageEntity;
-import com.todo.list.repository.UserRepository;
-import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.user.UserBackGroundImgService;
-import com.todo.list.service.user.UserService;
-
 
 public class UserImageUploadService implements ImageService {
 
@@ -62,24 +47,17 @@ public class UserImageUploadService implements ImageService {
 	}
 
 	@Override
-	public boolean deleteBackGroundImageInDir(Long id) {
+	public boolean deleteBackGroundImageInDir(String originalName, String folderName) throws IOException {
 
-//		try {
-//			if (file.exists()) {
-//				if (file.delete()) {
-//					System.out.println("삭제 성공");
-//				} else {
-//
-//				}
-//
-//			} else {
-//
-//			}
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-
-		return false;
+		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + folderName));
+		return resource.getFile().delete();
 	}
+
+//	@Override
+//	public boolean existsImage(String originalName, String folderName) {
+//		// TODO Auto-generated method stub
+//		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + originalName));
+//		return resource.exists();
+//	}
 
 }

@@ -19,6 +19,8 @@ public interface AdminImageRepository extends JpaRepository<AdminImageEntity, Lo
 
 	@Query(value = "SELECT originalFileName, filePath FROM ADMIN_IMAGE ", nativeQuery = true)
 	List<ImageInfoMapper> findOriginalFileNameAndFilePath();
+	
+	List<String> findOriginalFileName();
 
 	AdminImageEntity findByOriginalFileName(String originalFilename);
 

@@ -1,6 +1,7 @@
 package com.todo.list.service.image;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,8 +41,18 @@ public class AdminImageUploadService implements ImageService {
 	}
 
 	@Override
-	public boolean deleteBackGroundImageInDir(Long id) {
+	public boolean deleteBackGroundImageInDir(String originalName, String folderName) throws IOException {
 		// TODO Auto-generated method stub
-		return false;
+		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + originalName));
+		
+		return resource.getFile().delete();
 	}
+
+//	@Override
+//	public boolean existsImage(String originalName, String folderName) {
+//		// TODO Auto-generated method stub
+//
+//		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + folderName));
+//		return resource.exists();
+//	}
 }
