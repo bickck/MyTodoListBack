@@ -1,10 +1,13 @@
 package com.todo.list.controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntFunction;
@@ -90,18 +93,18 @@ public class MainController {
 
 	@ResponseBody
 	@PostMapping("/manage/quote/3/{id}")
-	public String requestQuoteDelete(@PathVariable Long id) {
+	public ResponseEntity<String> requestQuoteDelete(@PathVariable Long id) {
 		quoteService.deleteQuoteById(id);
 
-		return "success";
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@PostMapping("/manage/image/3/")
-	public String requestImageDelete(@RequestBody BackGroundDTO backGroundDTO) {
+	public ResponseEntity<String> requestImageDelete(@RequestBody BackGroundDTO backGroundDTO) {
 		backGroundImageService.delete(backGroundDTO.getId(), backGroundDTO.getFilename());
 
-		return "success";
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
 	@ResponseBody
@@ -115,8 +118,7 @@ public class MainController {
 	@GetMapping("/api/img")
 	public ResponseEntity<Resource> responseBackGroundsImageList(@RequestParam(value = "filename") String fileName)
 			throws FileNotFoundException {
-
-		System.out.println("=======request====== data :" + new Date() + ": " + fileName);
+		System.out.println("fileName : " + fileName);
 		Resource resource = backGroundImageService.getResource(fileName);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_JPEG);
@@ -125,9 +127,14 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/img/infos")
-	public List<String> responseBackGroundsImages() {
+	public List<ImageInfoDTO> responseBackGroundsImages() {
 
-		return backGroundImageService.imageNames();
+		List<ImageInfoDTO> list = new ArrayList<ImageInfoDTO>();
+		Iterator<AdminImageEntity> adminImageEntities = backGroundImageService.imageNames().iterator();
+		while (adminImageEntities.hasNext()) {
+			list.add(new ImageInfoDTO(adminImageEntities.next()));
+		}
+		return list;
 	}
 
 	@ResponseBody

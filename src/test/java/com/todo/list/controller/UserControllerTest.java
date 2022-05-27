@@ -6,7 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -21,8 +28,7 @@ import org.springframework.util.MultiValueMap;
 import com.todo.list.controller.UserController;
 import com.todo.list.controller.dto.service.QuoteDTO;
 
-
-@WebMvcTest(UserController.class)
+//@WebMvcTest(UserController.class)
 public class UserControllerTest {
 
 //	@Autowired
@@ -39,4 +45,24 @@ public class UserControllerTest {
 //		.andExpect((ResultMatcher) content().string("성공"))
 //		.andDo(print());
 //	}
+
+	@Test
+	public void test() {
+		File[] files = File.listRoots();
+		for (File file : files) {
+			System.out.println(file);
+		}
+	}
+
+	@Test
+	public void test2() throws IOException {
+		String pathname = "E:\\img\\defaultImage\\8b956be74df2ac6c6c8d79d6046de6d577c0185816904f6ebc629382503e9a39.jpg";
+		String type = Files.probeContentType(Path.of(pathname));
+
+		List<String> lines = Files.readAllLines(Path.of("E:\\img\\defaultImage"));
+
+		for (int i = 0; i < lines.size(); i++) {
+			System.out.println(lines.get(i));
+		}
+	}
 }

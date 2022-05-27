@@ -1,18 +1,34 @@
 package com.todo.list.controller.dto;
 
+import com.todo.list.entity.base.AdminImageEntity;
+
 public class ImageInfoDTO {
 
+	private Long id;
 	private String originalFileName;
-	private String filePath;
 
 	public ImageInfoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ImageInfoDTO(String originalFileName, String filePath) {
+	public ImageInfoDTO(Long id, String originalFileName) {
 		super();
+		this.id = id;
 		this.originalFileName = originalFileName;
-		this.filePath = filePath;
+	}
+
+	public ImageInfoDTO(AdminImageEntity adminImageEntity) {
+		super();
+		this.id = adminImageEntity.getId();
+		this.originalFileName = adminImageEntity.getOriginalFileName();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getOriginalFileName() {
@@ -21,14 +37,6 @@ public class ImageInfoDTO {
 
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
-	}
-
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
 	}
 
 }

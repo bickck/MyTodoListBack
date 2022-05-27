@@ -50,9 +50,9 @@ public class MainBackGroundImageService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<String> imageNames() {
+	public List<AdminImageEntity> imageNames() {
 
-		return imageRepository.findOriginalFileName();
+		return imageRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)

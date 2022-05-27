@@ -135,7 +135,7 @@ public class TestController {
 
 	}
 
-	private static String fileDefaultPath = "E:\\img\\defaultImage";
+	private static String fileDefaultPath = "E:\\img\\username";
 
 	@GetMapping("/test/file/find1")
 	public ResponseEntity<Resource> filefind1() throws IOException {
@@ -157,20 +157,20 @@ public class TestController {
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 
-//	@GetMapping("/test/file/find2")
-//	public ResponseEntity<Resource> filefind2() throws IOException {
-//
-//		String str = fileDefaultPath + File.separator
-//				+ "8b956be74df2ac6c6c8d79d6046de6d577c0185816904f6ebc629382503e9a39.jpg";
-//		String contentType = Files.probeContentType(Paths.get(str));
-//		HttpHeaders headers = new HttpHeaders();
-//		Resource resource = new UrlResource(Paths.get(str).toAbsolutePath().normalize().toUri());
-//
-//		headers.add("Content-Type", contentType);
-//		logger.info("resource = {} ", resource.exists());
-//
-//		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-//	}
+	@GetMapping("/test/file/find2")
+	public ResponseEntity<Resource> filefind2() throws IOException {
+
+		String str = fileDefaultPath + File.separator
+				+ "25f151db0330e9eb4e08a92df805c9b82b801c82d931a7f5a07463a1267bb767.png";
+		String contentType = Files.probeContentType(Paths.get(str));
+		HttpHeaders headers = new HttpHeaders();
+		Resource resource = new UrlResource(Paths.get(str).toAbsolutePath().normalize().toUri());
+
+		headers.add("Content-Type", contentType);
+		logger.info("resource = {} ", resource.exists());
+
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+	}
 
 	@GetMapping("/users")
 	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
