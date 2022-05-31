@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +36,13 @@ public class UserQuoteEntity {
 	@Column(name = "AUTHOR")
 	private String author;
 
+	@Column(name = "ISAVAILABLEPUBLISH")
+	@Enumerated(value = EnumType.STRING)
+	private Publish isPublish;
+
+	@Column(name = "RECOMMAND")
+	private Long like;
+
 	@CreationTimestamp
 	@Column(name = "CREATEDATE")
 	private Timestamp createDate;
@@ -56,10 +65,20 @@ public class UserQuoteEntity {
 		this.author = quoteDTO.getAuthor();
 	}
 
+	public UserQuoteEntity(UserEntity user, String quote, String author, Publish isPublish, Long like) {
+		super();
+		this.user = user;
+		this.quote = quote;
+		this.author = author;
+		this.isPublish = isPublish;
+		this.like = like;
+	}
+
+
 	@Override
 	public String toString() {
 		return "UserQuoteEntity [id=" + id + ", user=" + user + ", quote=" + quote + ", author=" + author
-				+ ", createDate=" + createDate + "]";
+				+ ", isPublish=" + isPublish + ", like=" + like + ", createDate=" + createDate + "]";
 	}
 
 	public Long getId() {
@@ -100,6 +119,22 @@ public class UserQuoteEntity {
 
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
+	}
+
+	public Publish getIsPublish() {
+		return isPublish;
+	}
+
+	public void setIsPublish(Publish isPublish) {
+		this.isPublish = isPublish;
+	}
+
+	public Long getLike() {
+		return like;
+	}
+
+	public void setLike(Long like) {
+		this.like = like;
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.mapper.QuoteMapper;
@@ -22,6 +23,8 @@ public interface UserQuoteRepository extends JpaRepository<UserQuoteEntity, Long
 //	Page<QuoteMapper> findQuoteEntitiesByUser(Long id, Pageable pageable);
 
 	List<UserQuoteEntity> findQuoteEntityById(long id);
-	
+
 	void deleteById(Long id);
+
+	List<UserQuoteEntity> findQuoteEntitiesByIsPublish(Publish publish);
 }

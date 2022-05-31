@@ -109,9 +109,9 @@ public class MainController {
 
 	@ResponseBody
 	@GetMapping("/api/quotes")
-	public List<AdminQuoteEntity> responseQuotes() {
+	public ResponseEntity<List<AdminQuoteEntity>> responseQuotes() {
 		List<AdminQuoteEntity> entities = quoteService.getQuotes();
-		return entities;
+		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
 	}
 
 	@ResponseBody

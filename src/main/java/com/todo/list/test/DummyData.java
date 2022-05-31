@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.Entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,12 +20,14 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.AdminImageRepository;
 import com.todo.list.repository.AdminQuoteRepository;
+import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
 
@@ -40,12 +44,18 @@ public class DummyData implements ApplicationRunner {
 	private AdminImageRepository defaultImageRepository;
 
 	@Autowired
+	private UserQuoteRepository userQuoteRepository;
+
+	@Autowired
 	private UserUtil userUtil;
+
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		// TODO Auto-generated method stub
-//		insertDefaultQuoteAndUser();
+
+		//insertDefaultQuoteAndUser();
 //		insertDefaultBackGroundImage();
 
 	}
@@ -62,18 +72,21 @@ public class DummyData implements ApplicationRunner {
 	}
 
 	public void insertDefaultQuoteAndUser() {
+		long startTime = System.currentTimeMillis();
 		List<UserEntity> lists = new ArrayList<UserEntity>();
-		for (int i = 0; i < 100; i++) {
+
+		for (int i = 0; i < 10000; i++) {
 			UserEntity entity = new UserEntity("username" + i, userUtil.bCrypt("1234" + i));
 
 			List<UserQuoteEntity> entities = new ArrayList<UserQuoteEntity>();
-			for (int j = 0; j < 5; j++) {
-				entities.add(new UserQuoteEntity(entity, "quote" + j, "author" + j));
+			for (int j = 0; j < 50; j++) {
+				entities.add(new UserQuoteEntity(entity, "quote" + j, "author" + j, Publish.PRIVATE, (long) 0));
 			}
 			entity.setQuotes(entities);
-			lists.add(entity);
+
+			repository.save(entity);
 		}
-		repository.saveAll(lists);
+		// repository.saveAll(lists);
 
 		List<AdminQuoteEntity> list = new ArrayList<AdminQuoteEntity>();
 		list.add(new AdminQuoteEntity("나 자신에 대한 자신감을 잃으면 온 세상이 나의 적이 된다.", "토마스 에디슨"));
@@ -89,6 +102,8 @@ public class DummyData implements ApplicationRunner {
 				"랜터 윌슨 스미스"));
 
 		defaultQuoteRepository.saveAllAndFlush(list);
+		long endTime = System.currentTimeMillis();
+		logger.info("DummyData Time = {}ms", endTime - startTime);
 	}
 
 }

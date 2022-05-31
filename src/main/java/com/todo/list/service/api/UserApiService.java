@@ -73,5 +73,10 @@ public class UserApiService {
 
 		return entities;
 	}
+	
+	@Transactional(readOnly = true)
+	public void usersQuoteList() {
+		
+	}
 
 }

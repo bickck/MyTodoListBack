@@ -1,5 +1,6 @@
 package com.todo.list.test;
 
+import java.util.List;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
@@ -25,24 +26,32 @@ public class TestService {
 //	}
 
 	// @Transactional(isolation = Isolation.SERIALIZABLE)
-	public TestEntity testSaveService(String test) throws InterruptedException {
-		if (testRepository.existsByTest(test)) {
-			return null;
-		}
-		return testRepository.save(new TestEntity(test));
+//	public TestEntity testSaveService(String test) throws InterruptedException {
+//		if (testRepository.existsByTest(test)) {
+//			return null;
+//		}
+//		return testRepository.save(new TestEntity(test));
+//	}
+
+//	@Cacheable(value = "cacheStorage", key = "#no")
+//	public String testArgCacheService(Long no) {
+//		String test = testRepository.getById(no).getTest();
+//		return test;
+//	}
+
+//	@Cacheable(value = "cacheStorage")
+//	public String testNoArgCacheService() {
+//		long no = 1;
+//		String test = testRepository.getById(no).getTest();
+//		return test;
+//	}
+
+	public void testInsert() {
+		testRepository.save(new TestEntity("test1", "test1", "test1", "test1", (long) 1, (long) 4));
 	}
 
-	@Cacheable(value = "cacheStorage", key = "#no")
-	public String testArgCacheService(Long no) {
-		String test = testRepository.getById(no).getTest();
-		return test;
-	}
-
-	@Cacheable(value = "cacheStorage")
-	public String testNoArgCacheService() {
-		long no = 1;
-		String test = testRepository.getById(no).getTest();
-		return test;
+	public List<TestEntity> testSelect() {
+		return testRepository.findAll();
 	}
 
 }

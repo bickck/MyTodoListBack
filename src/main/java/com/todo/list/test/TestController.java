@@ -44,6 +44,7 @@ import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.service.FileDTO;
+import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
@@ -84,19 +85,34 @@ public class TestController {
 		return "success";
 	}
 
-	@GetMapping("/test/ArgCache")
-	public String testArgCache() {
-		long id = 1;
-		String testEntity = service.testArgCacheService(id);
-		return testEntity;
+	@GetMapping("/test/insert")
+	public String testInsertTime() {
+		service.testInsert();
+		return "success";
 	}
 
-	@GetMapping("/test/noArgCache")
-	public String testNoArgCache() {
-
-		String testEntity = service.testNoArgCacheService();
-		return testEntity;
+	@GetMapping("/test/select")
+	public String testSelectTime() {
+		long startTime = System.currentTimeMillis();
+		int size = service.testSelect().size();
+		long endTime = System.currentTimeMillis();
+		System.out.println(size);
+		return String.valueOf(endTime - startTime) + "ms";
 	}
+
+//	@GetMapping("/test/ArgCache")
+//	public String testArgCache() {
+//		long id = 1;
+//		String testEntity = service.testArgCacheService(id);
+//		return testEntity;
+//	}
+//
+//	@GetMapping("/test/noArgCache")
+//	public String testNoArgCache() {
+//
+//		String testEntity = service.testNoArgCacheService();
+//		return testEntity;
+//	}
 
 	@GetMapping("/test/jwtProblem")
 	public String testJwtProblem() {
@@ -104,6 +120,16 @@ public class TestController {
 		String token = authenticationJwtToken.makeToken(repository.findByUsername("username0"));
 
 		return token;
+	}
+
+	@GetMapping("/test/queryTest1")
+	public String userQuoteQueryTest() {
+		List<UserQuoteEntity> entities = quoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH);
+
+		for (UserQuoteEntity entity : entities) {
+			System.out.println(entity.toString());
+		}
+		return "success";
 	}
 
 	@GetMapping("/test/quote/querytest1")
