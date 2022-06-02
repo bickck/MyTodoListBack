@@ -42,7 +42,7 @@ import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.UserImageUploadService;
 import com.todo.list.service.image.user.UserBackGroundImgService;
 import com.todo.list.service.queto.UserQuoteService;
-import com.todo.list.service.todo.TodoService;
+import com.todo.list.service.todo.UserTodoService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.UserAuthToken;
@@ -66,7 +66,7 @@ public class UserController {
 	private UserApiService userApiService;
 	private UserQuoteService userQuoteService;
 	private ImageService imaegService;
-	private TodoService todoService;
+	private UserTodoService todoService;
 
 	@Autowired
 	private AuthenticationJwtToken jwtLoginToken;

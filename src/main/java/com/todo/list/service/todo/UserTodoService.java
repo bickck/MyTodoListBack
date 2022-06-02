@@ -10,12 +10,12 @@ import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.repository.UserTodoRepository;
 
 @Service
-public class TodoService {
+public class UserTodoService {
 
 	private UserTodoRepository repository;
 
 	@Autowired
-	public TodoService(UserTodoRepository todoRepository) {
+	public UserTodoService(UserTodoRepository todoRepository) {
 		this.repository = todoRepository;
 	}
 

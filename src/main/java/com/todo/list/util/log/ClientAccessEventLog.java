@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Aspect
 @Component
-public class UserAccessEventLog {
+public class ClientAccessEventLog {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -29,11 +29,9 @@ public class UserAccessEventLog {
 
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
-		
-		logger.info("Protocol = {}", httpServletRequest.getProtocol());
+
+		logger.trace("Protocol = {}", httpServletRequest.getProtocol());
 		logger.info("getRequestURI = {}", httpServletRequest.getRequestURI());
-		//logger.info("getRequestURI = {}", httpServletRequest.);
-		//logger.info("Access address = {}", httpServletRequest.getAsyncContext());
 		logger.info("Access Method = {} , {}", joinPoint.getThis(), joinPoint.getSignature());
 
 		return joinPoint.proceed();

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.service.image.admin.MainBackGroundImageService;
 
-public class AdminImageUploadService implements ImageService {
+public class MainImageUploadService implements ImageService {
 
 	@Override
 	public void saveImageInDir(FileDTO filedto) {
