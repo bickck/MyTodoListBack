@@ -7,12 +7,13 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.ehcache.EhCacheCache;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.configs.cache.CacheConfig;
+//import com.todo.list.configs.cache.CacheConfig;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -34,8 +35,14 @@ public class TestCacheController {
 
 	@GetMapping("/test/cachememory")
 	public void testCacheMemory() {
-		EhCache cache = new EhCache();
+		net.sf.ehcache.CacheManager cacheCacheManager = net.sf.ehcache.CacheManager.create();
 		
-		System.out.println(cache.getConfig());
+		
+		System.out.println(cacheCacheManager.getOriginalConfigurationText());
+		System.out.println(cacheCacheManager.getCache("cacheStorage"));
+		System.out.println(cacheCacheManager.getActiveConfigurationText());
+		System.out.println(cacheCacheManager.getCacheNames());
+		System.out.println(cacheCacheManager.getCacheManagerEventListener());
+		//System.out.println(cacheCacheManager.getOriginalConfigurationText());
 	}
 }

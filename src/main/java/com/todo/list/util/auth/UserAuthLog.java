@@ -28,12 +28,12 @@ import com.todo.list.util.UserUtil;
 
 @Aspect
 @Component
-public class UserAuthAop {
+public class UserAuthLog {
 
 	@Autowired
 	private AuthenticationJwtToken authenticationJwtToken;
 
-	private Logger logger = LoggerFactory.getLogger(UserAuthAop.class);
+	private Logger logger = LoggerFactory.getLogger(UserAuthLog.class);
 
 	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))")
 	public void cut() {
@@ -46,11 +46,11 @@ public class UserAuthAop {
 				.getRequest();
 
 		String token = httpServletRequest.getHeader("authorization");
-		authenticationJwtToken.getUserTokenDTO(token);
 
 		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
 			if (data instanceof UserTokenDTO) {
 				data = authenticationJwtToken.getUserTokenDTO(token);
+				logger.info("USER ACCESS : {}, TIME : {}, ", data.toString());
 			}
 			return data;
 		}).toArray();

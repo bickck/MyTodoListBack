@@ -5,13 +5,17 @@ import java.sql.Timestamp;
 import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.service.TodoDTO;
 
@@ -29,12 +33,22 @@ public class UserTodoEntity {
 	@Column(name = "TITLE")
 	private String title;
 
+	@Lob
 	@Column(name = "CONTENT")
 	private String content;
 
 	@CreationTimestamp
 	@Column(name = "CREATE_DATE")
-	private Timestamp date;
+	private Timestamp createDate;
+
+	@UpdateTimestamp
+	@Column(name = "LAST_UPDATE")
+	private Timestamp lastUpdate;
+
+	private String tag;
+
+	@Enumerated(value = EnumType.STRING)
+	private Publish publish;
 
 	public UserTodoEntity() {
 		// TODO Auto-generated constructor stub
@@ -45,22 +59,6 @@ public class UserTodoEntity {
 		this.user = user;
 		this.title = title;
 		this.content = content;
-	}
-
-	public UserTodoEntity(Long id, UserEntity user, String title, String content, Timestamp date) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.title = title;
-		this.content = content;
-		this.date = date;
-	}
-
-	@Override
-	public String toString() {
-		return "UserTodoEntity [id=" + id + ", user=" + user.toString() + ", title=" + title + ", content=" + content
-				+ ", date=" + date + "]";
-
 	}
 
 	public Long getId() {
@@ -95,12 +93,12 @@ public class UserTodoEntity {
 		this.content = content;
 	}
 
-	public Timestamp getDate() {
-		return date;
+	public Publish getPublish() {
+		return publish;
 	}
 
-	public void setDate(Timestamp date) {
-		this.date = date;
+	public void setPublish(Publish publish) {
+		this.publish = publish;
 	}
 
 }

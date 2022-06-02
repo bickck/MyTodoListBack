@@ -38,7 +38,6 @@ public class PageTodoBuilder implements PageBuilder<PageTodoBuilder, PageTodoDTO
 			builder.setUsername(entities.getUser().getUsername());
 			builder.setTitle(entities.getTitle());
 			builder.setContent(entities.getContent());
-			builder.setDate(entities.getDate());
 
 			dtos.add(builder.builder());
 		}

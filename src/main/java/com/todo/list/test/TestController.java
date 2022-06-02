@@ -19,6 +19,7 @@ import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.InputStreamSource;
@@ -32,6 +33,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -122,18 +124,21 @@ public class TestController {
 		return token;
 	}
 
+	@Cacheable(cacheNames = "cacheStorage")
 	@GetMapping("/test/queryTest1")
 	public String userQuoteQueryTest() {
-		List<UserQuoteEntity> entities = quoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH);
 
-		for (UserQuoteEntity entity : entities) {
-			System.out.println(entity.toString());
-		}
-		return "success";
+		long startTime = System.currentTimeMillis();
+		int size = quoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH).size();
+		long endTime = System.currentTimeMillis();
+		System.out.println(size);
+
+		return endTime - startTime + "ms";
 	}
 
-	@GetMapping("/test/quote/querytest1")
-	public String testQuoteQueryTest() {
+	@Cacheable(cacheNames = "cacheStorage")
+	@GetMapping("/test/quote/querytest1/{id}")
+	public String testQuoteQueryTest(@PathVariable Long id) {
 		UserEntity entity = repository.findById((long) 1).get();
 
 		long startTime = System.currentTimeMillis();
@@ -148,7 +153,8 @@ public class TestController {
 		UserEntity entity = repository.findById((long) 1).get();
 
 		long startTime = System.currentTimeMillis();
-//		Iterator<UserQuoteEntity> lists = quoteRepository.findQuoteEntitiesByUserId(entity.getId()).iterator();
+		// Iterator<UserQuoteEntity> lists =
+		// quoteRepository.findQuoteEntitiesByUserId(entity.getId()).iterator();
 		long endTime = System.currentTimeMillis();
 
 		return endTime - startTime + "ms";

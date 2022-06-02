@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,12 @@ public class DefaultQuetoService {
 	@Transactional(readOnly = true)
 	public List<AdminQuoteEntity> getQuotes() {
 		return quetoRepository.findAll();
+	}
+
+	@Transactional(readOnly = true)
+	public int getQuotesTotalSize(Pageable pageable) {
+
+		return quetoRepository.findAll(pageable).getTotalPages();
 	}
 
 	@Transactional

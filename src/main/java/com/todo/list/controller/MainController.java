@@ -39,6 +39,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.ImageInfoDTO;
+import com.todo.list.controller.dto.MainDataDTO;
+import com.todo.list.controller.dto.QuoteInfoDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
@@ -60,7 +62,6 @@ import com.todo.list.test.TestService;
  */
 
 @RestController
-@RequestMapping("/main")
 public class MainController {
 
 	private DefaultQuetoService quoteService;
@@ -114,27 +115,26 @@ public class MainController {
 		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
 	}
 
-	@ResponseBody
-	@GetMapping("/api/img")
-	public ResponseEntity<Resource> responseBackGroundsImageList(@RequestParam(value = "filename") String fileName)
-			throws FileNotFoundException {
-		System.out.println("fileName : " + fileName);
-		Resource resource = backGroundImageService.getResource(fileName);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.IMAGE_JPEG);
-		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-	}
+//	@ResponseBody
+//	@GetMapping("/api/quote/infos")
+//	public Long responseMainQuoteIds() {
+//		return quoteService.getQuotesTotalSize();
+//	}
 
 	@ResponseBody
-	@GetMapping("/api/img/infos")
-	public List<ImageInfoDTO> responseBackGroundsImages() {
+	@GetMapping("/api/infos")
+	public ResponseEntity<MainDataDTO> responseMainDatas(@PageableDefault(size = 8) Pageable pageable) {
+
+		int quoteTotalSize = quoteService.getQuotesTotalSize(pageable);
+		Iterator<AdminImageEntity> adminImageEntities = backGroundImageService.imageNames().iterator();
 
 		List<ImageInfoDTO> list = new ArrayList<ImageInfoDTO>();
-		Iterator<AdminImageEntity> adminImageEntities = backGroundImageService.imageNames().iterator();
+		
 		while (adminImageEntities.hasNext()) {
 			list.add(new ImageInfoDTO(adminImageEntities.next()));
 		}
-		return list;
+
+		return new ResponseEntity<MainDataDTO>(new MainDataDTO(list, quoteTotalSize), HttpStatus.OK);
 	}
 
 	@ResponseBody

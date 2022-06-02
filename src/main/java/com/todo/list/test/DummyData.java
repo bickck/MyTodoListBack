@@ -56,7 +56,7 @@ public class DummyData implements ApplicationRunner {
 		// TODO Auto-generated method stub
 
 		//insertDefaultQuoteAndUser();
-//		insertDefaultBackGroundImage();
+		//insertDefaultBackGroundImage();
 
 	}
 
@@ -75,12 +75,12 @@ public class DummyData implements ApplicationRunner {
 		long startTime = System.currentTimeMillis();
 		List<UserEntity> lists = new ArrayList<UserEntity>();
 
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 100; i++) {
 			UserEntity entity = new UserEntity("username" + i, userUtil.bCrypt("1234" + i));
 
 			List<UserQuoteEntity> entities = new ArrayList<UserQuoteEntity>();
 			for (int j = 0; j < 50; j++) {
-				entities.add(new UserQuoteEntity(entity, "quote" + j, "author" + j, Publish.PRIVATE, (long) 0));
+				entities.add(new UserQuoteEntity(entity, "quote" + j, "author" + j, Publish.PUBLISH, (long) 0));
 			}
 			entity.setQuotes(entities);
 
