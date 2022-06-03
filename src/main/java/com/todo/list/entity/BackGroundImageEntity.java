@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "USER_BACKGROUND_IMAGE")
-public class UserBackGroundImageEntity {
+public class BackGroundImageEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +33,11 @@ public class UserBackGroundImageEntity {
 	@Column(name = "FILESIZE")
 	private Long fileSize;
 
-	public UserBackGroundImageEntity() {
+	public BackGroundImageEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserBackGroundImageEntity(UserEntity user, String fileName, String location, String originName,
+	public BackGroundImageEntity(UserEntity user, String fileName, String location, String originName,
 			Long fileSize) {
 		super();
 		this.user = user;

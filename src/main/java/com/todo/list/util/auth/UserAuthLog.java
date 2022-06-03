@@ -2,6 +2,7 @@ package com.todo.list.util.auth;
 
 import java.net.http.HttpHeaders;
 import java.util.Arrays;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,7 @@ public class UserAuthLog {
 		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
 			if (data instanceof UserTokenDTO) {
 				data = authenticationJwtToken.getUserTokenDTO(token);
-				logger.info("USER ACCESS : {}, TIME : {}, ", data.toString());
+				logger.info("USER ACCESS : {}, TIME : {}, ", data.toString(), new Date().getTime());
 			}
 			return data;
 		}).toArray();

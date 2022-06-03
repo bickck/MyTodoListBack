@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
 

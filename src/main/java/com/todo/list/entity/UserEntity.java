@@ -41,11 +41,15 @@ public class UserEntity {
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<UserQuoteEntity> quotes = new ArrayList<UserQuoteEntity>();
+	private List<QuoteEntity> quotes = new ArrayList<QuoteEntity>();
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<UserTodoEntity> todos = new ArrayList<UserTodoEntity>();
+	private List<TodoEntity> todos = new ArrayList<TodoEntity>();
+
+	@BatchSize(size = 10)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<BackGroundImageEntity> userBackGround = new ArrayList<BackGroundImageEntity>();
 
 	public UserEntity() {
 		// TODO Auto-generated constructor stub
@@ -77,14 +81,14 @@ public class UserEntity {
 		this.date = date;
 	}
 
-	public UserEntity(String username, String password, List<UserQuoteEntity> quotes, List<UserTodoEntity> todos) {
+	public UserEntity(String username, String password, List<QuoteEntity> quotes, List<TodoEntity> todos) {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
 		this.todos = todos;
 	}
 
-	public UserEntity(String username, String password, List<UserQuoteEntity> quotes) {
+	public UserEntity(String username, String password, List<QuoteEntity> quotes) {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
@@ -122,20 +126,28 @@ public class UserEntity {
 		this.date = date;
 	}
 
-	public List<UserQuoteEntity> getQuotes() {
+	public List<QuoteEntity> getQuotes() {
 		return quotes;
 	}
 
-	public void setQuotes(List<UserQuoteEntity> quotes) {
+	public void setQuotes(List<QuoteEntity> quotes) {
 		this.quotes = quotes;
 	}
 
-	public List<UserTodoEntity> getTodos() {
+	public List<TodoEntity> getTodos() {
 		return todos;
 	}
 
-	public void setTodos(List<UserTodoEntity> todos) {
+	public void setTodos(List<TodoEntity> todos) {
 		this.todos = todos;
+	}
+
+	public List<BackGroundImageEntity> getUserBackGround() {
+		return userBackGround;
+	}
+
+	public void setUserBackGround(List<BackGroundImageEntity> userBackGround) {
+		this.userBackGround = userBackGround;
 	}
 
 }

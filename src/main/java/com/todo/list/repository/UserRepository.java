@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.Async;
 
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 
-@EnableJpaRepositories
+//@EnableJpaRepositories
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	UserEntity findByUsername(String username);
@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	void deleteByUsernameAndPassword(String username, String password);
 
-	List<UserQuoteEntity> findQuoteEntitiesByUsername(String username);
+	List<QuoteEntity> findQuoteEntitiesByUsername(String username);
 
 	Page<UserEntity> findAll(Pageable pageable);
 

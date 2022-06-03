@@ -33,10 +33,10 @@ import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
-import com.todo.list.entity.UserBackGroundImageEntity;
+import com.todo.list.entity.BackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.UserTodoRepository;
@@ -80,7 +80,7 @@ public class UserApiController {
 			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
 
-		Page<UserQuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
+		Page<QuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
 		PageQuoteBuilder builder = new PageQuoteBuilder();
 		builder.setLists(entities.getContent());
 		builder.setNumber(entities.getNumber());
@@ -105,7 +105,7 @@ public class UserApiController {
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
 			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 
-		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
+		Page<TodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
 
 		PageTodoBuilder builder = new PageTodoBuilder()
 				.setLists(entities.getContent())

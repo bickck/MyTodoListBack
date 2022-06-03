@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,9 +19,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.service.TodoDTO;
+import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_TODO_ENTITY")
-public class UserTodoEntity {
+public class TodoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +39,17 @@ public class UserTodoEntity {
 	@Column(name = "CONTENT")
 	private String content;
 
+	@Column(name = "ISAVAILABLEPUBLISH")
+	@Enumerated(value = EnumType.STRING)
+	private Publish isPublish;
+
+	@Column(name = "RECOMMAND")
+	private Long recommand;
+
+	private String tag;
+
+//	@Embedded
+//	private UserTimeStamp stamp;
 	@CreationTimestamp
 	@Column(name = "CREATE_DATE")
 	private Timestamp createDate;
@@ -45,16 +58,11 @@ public class UserTodoEntity {
 	@Column(name = "LAST_UPDATE")
 	private Timestamp lastUpdate;
 
-	private String tag;
-
-	@Enumerated(value = EnumType.STRING)
-	private Publish publish;
-
-	public UserTodoEntity() {
+	public TodoEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserTodoEntity(UserEntity user, String title, String content) {
+	public TodoEntity(UserEntity user, String title, String content) {
 		super();
 		this.user = user;
 		this.title = title;
@@ -93,12 +101,28 @@ public class UserTodoEntity {
 		this.content = content;
 	}
 
-	public Publish getPublish() {
-		return publish;
+	public Publish getIsPublish() {
+		return isPublish;
 	}
 
-	public void setPublish(Publish publish) {
-		this.publish = publish;
+	public void setIsPublish(Publish isPublish) {
+		this.isPublish = isPublish;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public Long getRecommand() {
+		return recommand;
+	}
+
+	public void setRecommand(Long recommand) {
+		this.recommand = recommand;
 	}
 
 }

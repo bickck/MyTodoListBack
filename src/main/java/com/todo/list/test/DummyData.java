@@ -3,6 +3,7 @@ package com.todo.list.test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.AdminImageRepository;
@@ -72,15 +73,15 @@ public class DummyData implements ApplicationRunner {
 	}
 
 	public void insertDefaultQuoteAndUser() {
-		long startTime = System.currentTimeMillis();
+		
 		List<UserEntity> lists = new ArrayList<UserEntity>();
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 50000; i++) {
 			UserEntity entity = new UserEntity("username" + i, userUtil.bCrypt("1234" + i));
 
-			List<UserQuoteEntity> entities = new ArrayList<UserQuoteEntity>();
+			List<QuoteEntity> entities = new ArrayList<QuoteEntity>();
 			for (int j = 0; j < 50; j++) {
-				entities.add(new UserQuoteEntity(entity, "quote" + j, "author" + j, Publish.PUBLISH, (long) 0));
+				entities.add(new QuoteEntity(entity, "quote" + j, "author" + j, Publish.PUBLISH, (long) 0));
 			}
 			entity.setQuotes(entities);
 
@@ -102,8 +103,9 @@ public class DummyData implements ApplicationRunner {
 				"랜터 윌슨 스미스"));
 
 		defaultQuoteRepository.saveAllAndFlush(list);
-		long endTime = System.currentTimeMillis();
-		logger.info("DummyData Time = {}ms", endTime - startTime);
 	}
-
+	
+	private int randomNumber() {
+		return new Random(50000).nextInt();
+	}
 }

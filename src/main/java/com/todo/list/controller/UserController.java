@@ -36,7 +36,7 @@ import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.controller.dto.user.LoginUserDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.UserImageUploadService;
@@ -94,7 +94,7 @@ public class UserController {
 
 	// save = 1, update = 2, delete = 3
 	@PostMapping("/quote/1")
-	public ResponseEntity savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
+	public ResponseEntity<?> savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
 
 		UserEntity user = userApiService.getUserApi(tokenDTO);
 		QuoteBuilder builder = new QuoteBuilder();
@@ -107,7 +107,7 @@ public class UserController {
 	}
 
 	@PostMapping("/quote/3/{id}")
-	public ResponseEntity deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
+	public ResponseEntity<?> deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
 
 		userQuoteService.quoteDelete(id);
 
@@ -119,7 +119,7 @@ public class UserController {
 	 */
 
 	@PostMapping("/background/1")
-	public ResponseEntity saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
+	public ResponseEntity<?> saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
 			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO) throws IOException {
 
 		BackGroundImgBuilder backGroundImgBuilder = new BackGroundImgBuilder();
@@ -130,13 +130,13 @@ public class UserController {
 	}
 
 	@PostMapping("/background/2/{id}")
-	public ResponseEntity updateUserBackGroundImg(@PathVariable Long id) {
+	public ResponseEntity<?> updateUserBackGroundImg(@PathVariable Long id) {
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/background/3/{id}")
-	public ResponseEntity deleteUserBackGroundImg(@PathVariable Long id) {
+	public ResponseEntity<?> deleteUserBackGroundImg(@PathVariable Long id) {
 		// imaegService.deleteBackGroundImage(id);
 
 		return new ResponseEntity(HttpStatus.OK);
@@ -147,7 +147,7 @@ public class UserController {
 	 */
 
 	@PostMapping("/todo/1")
-	public ResponseEntity saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
+	public ResponseEntity<?> saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		todoService.todoSave(userTokenDTO, todoDTO);
 
@@ -155,15 +155,15 @@ public class UserController {
 	}
 
 	@PostMapping("/todo/2/{id}")
-	public ResponseEntity updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto,
+	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		todoService.todoUpdate(userTokenDTO, dto);
+		//todoService.todoUpdate(userTokenDTO, dto);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@PostMapping("/todo/3/{id}")
-	public ResponseEntity deleteUserTodo(@PathVariable Long id) {
+	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id) {
 
 		return new ResponseEntity(HttpStatus.OK);
 	}

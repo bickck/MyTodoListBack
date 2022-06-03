@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 
 public class TodoBuilder {
 
@@ -56,7 +56,7 @@ public class TodoBuilder {
 		return new TodoDTO(id, user, title, content, createDate);
 	}
 	
-	public List<TodoDTO> listBuilder(List<UserTodoEntity> list){
+	public List<TodoDTO> listBuilder(List<TodoEntity> list){
 		
 		return null;
 	}

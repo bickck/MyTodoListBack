@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.page.PageQuoteDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 
 public class PageQuoteBuilder implements PageBuilder<PageQuoteBuilder, PageQuoteDTO> {
 
@@ -29,10 +29,10 @@ public class PageQuoteBuilder implements PageBuilder<PageQuoteBuilder, PageQuote
 	@Override
 	public <K> PageQuoteBuilder setLists(K lists) {
 		// TODO Auto-generated method stub
-		List<UserQuoteEntity> entity = (List<UserQuoteEntity>) lists;
+		List<QuoteEntity> entity = (List<QuoteEntity>) lists;
 		List<QuoteDTO> dtos = new ArrayList<QuoteDTO>();
 
-		for (UserQuoteEntity entities : entity) {
+		for (QuoteEntity entities : entity) {
 			QuoteBuilder builder = new QuoteBuilder();
 			builder.setId(entities.getId());
 			builder.setQuote(entities.getQuote());

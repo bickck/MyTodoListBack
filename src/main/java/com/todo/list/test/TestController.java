@@ -48,11 +48,12 @@ import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.UserImageUploadService;
+import com.todo.list.service.test.UserTest;
 
 @RestController
 public class TestController {
@@ -71,6 +72,9 @@ public class TestController {
 
 	@Autowired
 	private UserApiService userApiService;
+	
+	@Autowired
+	private UserTest test;
 
 //	@Autowired
 //	private UserImageUploadService imageUploadService;
@@ -91,6 +95,11 @@ public class TestController {
 	public String testInsertTime() {
 		service.testInsert();
 		return "success";
+	}
+	
+	@GetMapping("/test/userTest")
+	public void testUser() {
+		test.save();
 	}
 
 	@GetMapping("/test/select")

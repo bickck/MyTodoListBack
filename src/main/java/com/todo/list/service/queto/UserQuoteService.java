@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 
@@ -21,7 +21,7 @@ public class UserQuoteService {
 
 	public void quoteInsert(QuoteDTO quoteDTO, UserEntity username) {
 		
-		userQuoteRepository.saveAndFlush(new UserQuoteEntity(username, quoteDTO));
+		userQuoteRepository.saveAndFlush(new QuoteEntity(username, quoteDTO));
 	}
 
 	public void quoteDelete(Long id) {

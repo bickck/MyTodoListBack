@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.user.UserDTO;
-import com.todo.list.entity.UserBackGroundImageEntity;
+import com.todo.list.entity.BackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.UserTodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.UserImageRepository;
@@ -54,22 +54,22 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserQuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<QuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
 		long id = userDTO.getId();
-		Page<UserQuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
+		Page<QuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
 		return entities;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserBackGroundImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<BackGroundImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
 	
 		return null;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserTodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<TodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
 		Long id = userDTO.getId();
-		Page<UserTodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
+		Page<TodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
 
 		return entities;
 	}

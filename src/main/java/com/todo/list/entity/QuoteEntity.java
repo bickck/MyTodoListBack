@@ -1,9 +1,11 @@
 package com.todo.list.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,11 +18,18 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_QUOTE_ENTITY")
-public class UserQuoteEntity {
+public class QuoteEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,44 +50,41 @@ public class UserQuoteEntity {
 	private Publish isPublish;
 
 	@Column(name = "RECOMMAND")
-	private Long like;
+	private Long recommand;
 
 	@CreationTimestamp
-	@Column(name = "CREATEDATE")
-	private Timestamp createDate;
+	@Column(name = "CREATETIMESTAMP")
+	private Timestamp creaTimestamp;
 
-	public UserQuoteEntity() {
+	@UpdateTimestamp
+	@Column(name = "UPDATETIMESTAMP")
+	private Timestamp updateTimestamp;
+
+	public QuoteEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
+	public QuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
 		super();
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
 	}
 
-	public UserQuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
+	public QuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
 		super();
 		this.user = user;
 		this.quote = quoteDTO.getQuote();
 		this.author = quoteDTO.getAuthor();
 	}
 
-	public UserQuoteEntity(UserEntity user, String quote, String author, Publish isPublish, Long like) {
+	public QuoteEntity(UserEntity user, String quote, String author, Publish isPublish, Long recommand) {
 		super();
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
 		this.isPublish = isPublish;
-		this.like = like;
-	}
-
-
-	@Override
-	public String toString() {
-		return "UserQuoteEntity [id=" + id + ", user=" + user + ", quote=" + quote + ", author=" + author
-				+ ", isPublish=" + isPublish + ", like=" + like + ", createDate=" + createDate + "]";
+		this.recommand = recommand;
 	}
 
 	public Long getId() {
@@ -113,14 +119,6 @@ public class UserQuoteEntity {
 		this.author = author;
 	}
 
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-
 	public Publish getIsPublish() {
 		return isPublish;
 	}
@@ -129,12 +127,32 @@ public class UserQuoteEntity {
 		this.isPublish = isPublish;
 	}
 
-	public Long getLike() {
-		return like;
+	public Long getRecommand() {
+		return recommand;
 	}
 
-	public void setLike(Long like) {
-		this.like = like;
+	public void setRecommand(Long recommand) {
+		this.recommand = recommand;
+	}
+
+	public Timestamp getCreaTimestamp() {
+		return creaTimestamp;
+	}
+
+	public void setCreaTimestamp(Timestamp creaTimestamp) {
+		this.creaTimestamp = creaTimestamp;
+	}
+
+	public Timestamp getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
