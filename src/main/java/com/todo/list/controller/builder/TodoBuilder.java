@@ -11,8 +11,6 @@ public class TodoBuilder {
 
 	private Long id;
 
-	private UserEntity user;
-	
 	private String username;
 
 	private String title;
@@ -21,17 +19,11 @@ public class TodoBuilder {
 
 	private Timestamp createDate;
 
-
 	public TodoBuilder setId(Long id) {
 		this.id = id;
 		return this;
 	}
 
-	public TodoBuilder setUser(UserEntity entity) {
-		this.user = entity;
-		return this;
-	}
-	
 	public TodoBuilder setUsername(String username) {
 		this.username = username;
 		return this;
@@ -51,13 +43,13 @@ public class TodoBuilder {
 		this.createDate = date;
 		return this;
 	}
-	
+
 	public TodoDTO builder() {
-		return new TodoDTO(id, user, title, content, createDate);
+		return new TodoDTO(id, username, title, content, createDate);
 	}
-	
-	public List<TodoDTO> listBuilder(List<TodoEntity> list){
-		
+
+	public List<TodoDTO> listBuilder(List<TodoEntity> list) {
+
 		return null;
 	}
 

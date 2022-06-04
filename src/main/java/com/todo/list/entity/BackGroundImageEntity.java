@@ -1,5 +1,7 @@
 package com.todo.list.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity(name = "USER_BACKGROUND_IMAGE")
 public class BackGroundImageEntity {
@@ -33,12 +37,15 @@ public class BackGroundImageEntity {
 	@Column(name = "FILESIZE")
 	private Long fileSize;
 
+	@CreationTimestamp
+	@Column(name = "CREATE_DATE")
+	private Timestamp createDate;
+
 	public BackGroundImageEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BackGroundImageEntity(UserEntity user, String fileName, String location, String originName,
-			Long fileSize) {
+	public BackGroundImageEntity(UserEntity user, String fileName, String location, String originName, Long fileSize) {
 		super();
 		this.user = user;
 		this.fileName = fileName;
@@ -93,6 +100,14 @@ public class BackGroundImageEntity {
 
 	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
 	}
 
 }

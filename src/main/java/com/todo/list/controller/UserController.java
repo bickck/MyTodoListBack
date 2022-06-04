@@ -56,7 +56,7 @@ import lombok.extern.java.Log;
  * 
  */
 @RestController
-//@RequestMapping(value = "/user/manage")
+@RequestMapping(value = "/user/manage")
 public class UserController {
 
 	private static final String SEESION_NAME = "username";

@@ -39,14 +39,14 @@ public class TodoEntity {
 	@Column(name = "CONTENT")
 	private String content;
 
-	@Column(name = "ISAVAILABLEPUBLISH")
-	@Enumerated(value = EnumType.STRING)
-	private Publish isPublish;
-
 	@Column(name = "RECOMMAND")
 	private Long recommand;
 
 	private String tag;
+
+	@Column(name = "ISAVAILABLEPUBLISH")
+	@Enumerated(value = EnumType.STRING)
+	private Publish isPublish;
 
 //	@Embedded
 //	private UserTimeStamp stamp;
@@ -67,6 +67,14 @@ public class TodoEntity {
 		this.user = user;
 		this.title = title;
 		this.content = content;
+	}
+
+	public TodoEntity(UserEntity user, String title, String content, Publish publish) {
+		super();
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.isPublish = publish;
 	}
 
 	public Long getId() {

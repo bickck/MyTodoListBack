@@ -56,8 +56,10 @@ public class DummyData implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		// TODO Auto-generated method stub
 
-		//insertDefaultQuoteAndUser();
+		//insertDummyUser();
+		//insertDummyQuote();
 		//insertDefaultBackGroundImage();
+		//defaultQuoteInsert();
 
 	}
 
@@ -72,22 +74,25 @@ public class DummyData implements ApplicationRunner {
 
 	}
 
-	public void insertDefaultQuoteAndUser() {
-		
+	public void insertDummyUser() {
+
 		List<UserEntity> lists = new ArrayList<UserEntity>();
 
 		for (int i = 0; i < 50000; i++) {
+			
 			UserEntity entity = new UserEntity("username" + i, userUtil.bCrypt("1234" + i));
-
-			List<QuoteEntity> entities = new ArrayList<QuoteEntity>();
-			for (int j = 0; j < 50; j++) {
-				entities.add(new QuoteEntity(entity, "quote" + j, "author" + j, Publish.PUBLISH, (long) 0));
-			}
-			entity.setQuotes(entities);
-
 			repository.save(entity);
-		}
-		// repository.saveAll(lists);
+		}	
+	}
+	
+	public void insertDummyQuote() {
+
+		
+
+		
+	}
+
+	public void insertDefaultQuote() {
 
 		List<AdminQuoteEntity> list = new ArrayList<AdminQuoteEntity>();
 		list.add(new AdminQuoteEntity("나 자신에 대한 자신감을 잃으면 온 세상이 나의 적이 된다.", "토마스 에디슨"));
@@ -104,7 +109,7 @@ public class DummyData implements ApplicationRunner {
 
 		defaultQuoteRepository.saveAllAndFlush(list);
 	}
-	
+
 	private int randomNumber() {
 		return new Random(50000).nextInt();
 	}

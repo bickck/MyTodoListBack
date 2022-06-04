@@ -8,7 +8,7 @@ public class TodoDTO {
 
 	private Long id;
 
-	private UserEntity user;
+	private String user;
 
 	private String title;
 
@@ -16,7 +16,7 @@ public class TodoDTO {
 
 	private Timestamp createDate;
 
-	public TodoDTO(Long id, UserEntity user, String title, String content, Timestamp createDate) {
+	public TodoDTO(Long id, String user, String title, String content, Timestamp createDate) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -41,11 +41,11 @@ public class TodoDTO {
 		this.title = title;
 	}
 
-	public UserEntity getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(UserEntity user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

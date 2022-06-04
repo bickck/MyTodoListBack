@@ -1,12 +1,16 @@
 package com.todo.list.service.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
+import com.todo.list.entity.Publish;
 import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserTodoRepository;
 
 @Service
@@ -39,6 +43,11 @@ public class UserTodoService {
 	}
 
 	@Transactional
+	public Page<TodoEntity> publishTodos(Pageable pageable) {
+		return repository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+	}
+
+	@Transactional
 	public void addRecommand(UserTokenDTO dto, Long id) {
 		TodoEntity entity = repository.findById(id).get();
 		entity.setRecommand(entity.getRecommand() + 1);
@@ -48,6 +57,25 @@ public class UserTodoService {
 	@Transactional
 	public void updatePublished(UserTokenDTO dto, Long id) {
 		TodoEntity entity = repository.findById(id).get();
+		if (entity.getIsPublish().equals(Publish.PUBLISH)) {
+			entity.setIsPublish(Publish.PRIVATE);
+		} else {
+			entity.setIsPublish(Publish.PUBLISH);
+		}
+		repository.save(entity);
+
+	}
+
+	Publish publish = Publish.PUBLISH;
+
+	public void updatePublishedTest() {
+
+		if (publish.equals(Publish.PUBLISH)) {
+			publish = Publish.PRIVATE;
+		} else {
+			publish = Publish.PUBLISH;
+		}
+		System.out.println(publish);
 
 	}
 }
