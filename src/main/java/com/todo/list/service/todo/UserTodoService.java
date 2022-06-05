@@ -11,15 +11,15 @@ import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.Publish;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.repository.TodoRepository;
 
 @Service
 public class UserTodoService {
 
-	private UserTodoRepository repository;
+	private TodoRepository repository;
 
 	@Autowired
-	public UserTodoService(UserTodoRepository todoRepository) {
+	public UserTodoService(TodoRepository todoRepository) {
 		this.repository = todoRepository;
 	}
 
@@ -42,7 +42,7 @@ public class UserTodoService {
 		repository.deleteById(id);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<TodoEntity> publishTodos(Pageable pageable) {
 		return repository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 	}
@@ -66,16 +66,4 @@ public class UserTodoService {
 
 	}
 
-	Publish publish = Publish.PUBLISH;
-
-	public void updatePublishedTest() {
-
-		if (publish.equals(Publish.PUBLISH)) {
-			publish = Publish.PRIVATE;
-		} else {
-			publish = Publish.PUBLISH;
-		}
-		System.out.println(publish);
-
-	}
 }

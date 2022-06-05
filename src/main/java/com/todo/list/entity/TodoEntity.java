@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -62,19 +63,37 @@ public class TodoEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TodoEntity(UserEntity user, String title, String content) {
+	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.content = content;
 	}
 
-	public TodoEntity(UserEntity user, String title, String content, Publish publish) {
+	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content,
+			@NotNull Publish publish) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.isPublish = publish;
+	}
+
+	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content, @NotNull Long recommand,
+			@NotNull Publish isPublish) {
+		super();
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.recommand = recommand;
+		this.isPublish = isPublish;
+	}
+
+	@Override
+	public String toString() {
+		return "TodoEntity [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", recommand="
+				+ recommand + ", tag=" + tag + ", isPublish=" + isPublish + ", createDate=" + createDate
+				+ ", lastUpdate=" + lastUpdate + "]";
 	}
 
 	public Long getId() {
@@ -131,6 +150,22 @@ public class TodoEntity {
 
 	public void setRecommand(Long recommand) {
 		this.recommand = recommand;
+	}
+
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
+
+	public Timestamp getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Timestamp lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 }

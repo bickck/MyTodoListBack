@@ -78,7 +78,8 @@ public class QuoteEntity {
 		this.author = quoteDTO.getAuthor();
 	}
 
-	public QuoteEntity(UserEntity user, String quote, String author, Publish isPublish, Long recommand) {
+	public QuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author,
+			@NotNull Publish isPublish, @NotNull Long recommand) {
 		super();
 		this.user = user;
 		this.quote = quote;

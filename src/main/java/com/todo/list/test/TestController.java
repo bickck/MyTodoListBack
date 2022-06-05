@@ -80,6 +80,15 @@ public class TestController {
 //	private UserImageUploadService imageUploadService;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@PostMapping("/test/randomnumberAndPublish")
+	public String dummyTest() { 
+		DummyData data = new DummyData();
+		System.out.println(data.randomNumber());
+		System.out.println(data.publish());
+		
+		return "success";
+	}
 
 	@PostMapping
 	public String imgUploadTest(@RequestParam(name = "file") MultipartFile multipartFile,

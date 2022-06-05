@@ -10,7 +10,7 @@ import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.TodoEntity;
 
-public interface UserTodoRepository extends JpaRepository<TodoEntity, Long> {
+public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
 	List<TodoEntity> findAllByUser(UserEntity userEntity, Pageable pageable);
 

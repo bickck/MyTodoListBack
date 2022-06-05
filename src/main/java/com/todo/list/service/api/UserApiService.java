@@ -15,7 +15,7 @@ import com.todo.list.entity.BackGroundImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
@@ -29,7 +29,7 @@ public class UserApiService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private UserTodoRepository userTodoRepository;
+	private TodoRepository userTodoRepository;
 
 	@Autowired
 	private UserQuoteRepository userQuoteRepository;

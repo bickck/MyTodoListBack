@@ -1,6 +1,7 @@
 package com.todo.list.test;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.AdminImageRepository;
@@ -55,11 +57,8 @@ public class DummyData implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		// TODO Auto-generated method stub
-
-		//insertDummyUser();
-		//insertDummyQuote();
+		// insertDummyUser();
 		//insertDefaultBackGroundImage();
-		//defaultQuoteInsert();
 
 	}
 
@@ -79,17 +78,30 @@ public class DummyData implements ApplicationRunner {
 		List<UserEntity> lists = new ArrayList<UserEntity>();
 
 		for (int i = 0; i < 50000; i++) {
-			
+
 			UserEntity entity = new UserEntity("username" + i, userUtil.bCrypt("1234" + i));
+			entity.setQuotes(insertDummyQuote(entity));
+			entity.setTodos(insertDummyTodo(entity));
 			repository.save(entity);
-		}	
+		}
 	}
-	
-	public void insertDummyQuote() {
 
-		
+	public List<QuoteEntity> insertDummyQuote(UserEntity userEntity) {
+		List<QuoteEntity> lists = new ArrayList<QuoteEntity>();
+		for (int i = 0; i < 50; i++) {
+			lists.add(new QuoteEntity(userEntity, userEntity.getUsername() + "quote" + i,
+					userEntity.getUsername() + "author " + i, publish(), randomNumber()));
+		}
+		return lists;
+	}
 
-		
+	public List<TodoEntity> insertDummyTodo(UserEntity userEntity) {
+		List<TodoEntity> lists = new ArrayList<TodoEntity>();
+		for (int i = 0; i < 50; i++) {
+			lists.add(new TodoEntity(userEntity, userEntity.getUsername() + "title" + i,
+					userEntity.getUsername() + "content" + i, randomNumber(), publish()));
+		}
+		return lists;
 	}
 
 	public void insertDefaultQuote() {
@@ -110,7 +122,28 @@ public class DummyData implements ApplicationRunner {
 		defaultQuoteRepository.saveAllAndFlush(list);
 	}
 
-	private int randomNumber() {
-		return new Random(50000).nextInt();
+	public Publish publish() {
+		int randomNumber = (int) (Math.random() * 10000) % 10;
+
+		if (randomNumber % 2 == 0) {
+			return Publish.PRIVATE;
+		} else {
+			return Publish.PUBLISH;
+		}
+	}
+
+	public long randomNumber() {
+		return (long) (Math.random() * 10000);
+	}
+
+	public int createRandomMonthAndDay(int start, int end) {
+		return start + (int) Math.round(Math.random() * (end - start));
+	}
+
+	public LocalDate createRandomDate(int startYear, int endYear) {
+		int day = createRandomMonthAndDay(1, 28);
+		int month = createRandomMonthAndDay(1, 12);
+		int year = createRandomMonthAndDay(startYear, endYear);
+		return LocalDate.of(year, month, day);
 	}
 }

@@ -26,7 +26,7 @@ import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.repository.TodoRepository;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
