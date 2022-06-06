@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 //import com.todo.list.configs.cache.CacheConfig;
 
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
+
 
 @RestController
 public class TestCacheController {
@@ -35,17 +33,17 @@ public class TestCacheController {
 		return repository.findById(id).get();
 	}
 
-	@GetMapping("/test/cachememory")
-	public void testCacheMemory() {
-		net.sf.ehcache.CacheManager cacheCacheManager = net.sf.ehcache.CacheManager.create();
-
-		System.out.println(cacheCacheManager.getOriginalConfigurationText());
-		System.out.println(cacheCacheManager.getCache("cacheStorage"));
-		System.out.println(cacheCacheManager.getActiveConfigurationText());
-		System.out.println(cacheCacheManager.getCacheNames());
-		System.out.println(cacheCacheManager.getCacheManagerEventListener());
-		// System.out.println(cacheCacheManager.getOriginalConfigurationText());
-	}
+//	@GetMapping("/test/cachememory")
+//	public void testCacheMemory() {
+//		net.sf.ehcache.CacheManager cacheCacheManager = net.sf.ehcache.CacheManager.create();
+//
+//		System.out.println(cacheCacheManager.getOriginalConfigurationText());
+//		System.out.println(cacheCacheManager.getCache("cacheStorage"));
+//		System.out.println(cacheCacheManager.getActiveConfigurationText());
+//		System.out.println(cacheCacheManager.getCacheNames());
+//		System.out.println(cacheCacheManager.getCacheManagerEventListener());
+//		// System.out.println(cacheCacheManager.getOriginalConfigurationText());
+//	}
 
 	@GetMapping("/test/log")
 	public void testLog() {

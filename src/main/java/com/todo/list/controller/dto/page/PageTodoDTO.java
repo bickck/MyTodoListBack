@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import com.todo.list.controller.dto.service.TodoDTO;
 
 public class PageTodoDTO {
-	private List<TodoDTO> userDTO;
+	private List<TodoDTO> todoDTOs;
 
 	private int number;
 
@@ -25,10 +25,10 @@ public class PageTodoDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PageTodoDTO(List<TodoDTO> userDTO, int number, int totalPages, long totalElement, long size,
+	public PageTodoDTO(List<TodoDTO> todoDTOs, int number, int totalPages, long totalElement, long size,
 			int numberOfElements, Pageable pageable) {
 		super();
-		this.userDTO = userDTO;
+		this.todoDTOs = todoDTOs;
 		this.number = number;
 		this.totalPages = totalPages;
 		this.totalElement = totalElement;
@@ -37,12 +37,12 @@ public class PageTodoDTO {
 		this.pageable = pageable;
 	}
 
-	public List<TodoDTO> getUserDTO() {
-		return userDTO;
+	public List<TodoDTO> getTodoDTOs() {
+		return todoDTOs;
 	}
 
-	public void setUserDTO(List<TodoDTO> userDTO) {
-		this.userDTO = userDTO;
+	public void setTodoDTOs(List<TodoDTO> todoDTOs) {
+		this.todoDTOs = todoDTOs;
 	}
 
 	public int getNumber() {

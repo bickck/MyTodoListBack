@@ -5,8 +5,10 @@ import java.util.Iterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,7 @@ import com.todo.list.service.todo.UserTodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
-@RequestMapping(value = "/api/todo")
+@RequestMapping(value = "/api")
 public class TodoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -42,10 +44,11 @@ public class TodoController {
 		this.userTodoService = userTodoService;
 	}
 
+	@Cacheable(key = "#pageable.getPageNumber")
 	@GetMapping("/todos")
-	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 8, page = 0) Pageable pageable) {
+	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
 		long startTime = System.currentTimeMillis();
-		Page<TodoEntity> page = userTodoService.publishTodos(pageable);
+		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
 		long endTime = System.currentTimeMillis();
 
 		PageTodoBuilder builder = new PageTodoBuilder().setLists(page.getContent()).setNumber(page.getNumber())
@@ -53,11 +56,19 @@ public class TodoController {
 				.setTotalPages(page.getTotalPages()).setTotalElements(page.getTotalElements());
 
 		logger.info("Time : {}ms", endTime - startTime);
-		
+
 		return new ResponseEntity<PageTodoDTO>(builder.builder(), HttpStatus.OK);
 	}
 
-	@PostMapping("/recommand/{id}")
+	@GetMapping("/recommand/todos")
+	public ResponseEntity<?> requestRecommandTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
+
+		userTodoService.recommandTodos(pageable);
+
+		return new ResponseEntity<PageTodoDTO>(HttpStatus.OK);
+	}
+
+	@PostMapping("/recommand/todo/{id}")
 	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
 		userTodoService.addRecommand(dto, id);
@@ -65,10 +76,10 @@ public class TodoController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@PostMapping("/ispublish/{id}")
+	@PostMapping("/ispublish/todos/{id}")
 	public ResponseEntity<?> requestUpdatIsPublished(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
-		userTodoService.addRecommand(dto, id);
+		userTodoService.updatePublished(dto, id);
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

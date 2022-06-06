@@ -12,9 +12,13 @@ import com.todo.list.entity.TodoEntity;
 
 public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
-	List<TodoEntity> findAllByUser(UserEntity userEntity, Pageable pageable);
+	TodoEntity findTodoEntityByIdAndUserName(Long id, String username);
+
+	List<TodoEntity> findAllByUserEntity(UserEntity userEntity, Pageable pageable);
 
 	Page<TodoEntity> findTodoEntitiesByUserId(Long id, Pageable pageable);
 
 	Page<TodoEntity> findTodoEntitiesByIsPublishOrderByIdDesc(Publish publish, Pageable pageable);
+
+	//Page<TodoEntity> findTodoEntitiesByIsPublish(Publish publish, Pageable pageable);
 }

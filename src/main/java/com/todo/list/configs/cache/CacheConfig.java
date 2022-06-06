@@ -1,7 +1,10 @@
 package com.todo.list.configs.cache;
 
+import java.time.Duration;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,10 +15,12 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.MemoryUnit;
-import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 @EnableCaching
 @Configuration
@@ -23,41 +28,65 @@ public class CacheConfig implements CachingConfigurer {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Bean(destroyMethod = "shutdown")
-	public net.sf.ehcache.CacheManager ehcacheManager() {
-		CacheConfiguration cacheConfiguration = new CacheConfiguration();
-		cacheConfiguration.setName("cacheStorage");
-		cacheConfiguration.setMemoryStoreEvictionPolicyFromObject(MemoryStoreEvictionPolicy.LRU);
-		cacheConfiguration.setMaxBytesLocalHeap((long) 1000);
-		net.sf.ehcache.config.Configuration config = new net.sf.ehcache.config.Configuration();
-		config.addCache(cacheConfiguration);
+	@Value("${spring.redis.host}")
+	private String host;
 
-		return net.sf.ehcache.CacheManager.newInstance(config);
+	@Value("${spring.redis.port}")
+	private int port;
+
+	@Bean
+	public RedisConnectionFactory redisConnectionFactory() {
+		return new LettuceConnectionFactory(host, port);
 	}
 
-	@Override
+	@Bean
 	public CacheManager cacheManager() {
-		// TODO Auto-generated method stub
-		return new EhCacheCacheManager(ehcacheManager());
+		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
+				.fromConnectionFactory(redisConnectionFactory());
+
+		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(
+				RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+				.entryTtl(Duration.ofMinutes(30));
+
+		cacheManager.cacheDefaults(cacheConfiguration);
+		return cacheManager.build();
 	}
 
-	@Override
-	public CacheResolver cacheResolver() {
-		// TODO Auto-generated method stub
-		return new SimpleCacheResolver(cacheManager());
-	}
-
-	@Override
-	public CacheErrorHandler errorHandler() {
-		// TODO Auto-generated method stub
-		return CachingConfigurer.super.errorHandler();
-	}
-
-	@Override
-	public KeyGenerator keyGenerator() {
-		// TODO Auto-generated method stub
-		return CachingConfigurer.super.keyGenerator();
-	}
+//	@Bean(destroyMethod = "shutdown")
+//	public net.sf.ehcache.CacheManager ehcacheManager() {
+//		CacheConfiguration cacheConfiguration = new CacheConfiguration();
+//		cacheConfiguration.setName("cacheStorage");
+//		cacheConfiguration.setMemoryStoreEvictionPolicyFromObject(MemoryStoreEvictionPolicy.LRU);
+//		cacheConfiguration.setMaxBytesLocalHeap((long) 1000);
+//		net.sf.ehcache.config.Configuration config = new net.sf.ehcache.config.Configuration();
+//		config.addCache(cacheConfiguration);
+//
+//		return net.sf.ehcache.CacheManager.newInstance(config);
+//	}
+//
+//	@Override
+//	public CacheManager cacheManager() {
+//		// TODO Auto-generated method stub
+//		return new EhCacheCacheManager(ehcacheManager());
+//	}
+//
+//	@Override
+//	public CacheResolver cacheResolver() {
+//		// TODO Auto-generated method stub
+//		return new SimpleCacheResolver(cacheManager());
+//	}
+//
+//	@Override
+//	public CacheErrorHandler errorHandler() {
+//		// TODO Auto-generated method stub
+//		return CachingConfigurer.super.errorHandler();
+//	}
+//
+//	@Override
+//	public KeyGenerator keyGenerator() {
+//		// TODO Auto-generated method stub
+//		return CachingConfigurer.super.keyGenerator();
+//	}
 
 //	@Bean
 //	public CacheManager cacheManager() {
