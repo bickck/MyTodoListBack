@@ -1,5 +1,7 @@
 package com.todo.list.test;
 
+import java.util.List;
+
 import org.hibernate.boot.model.Caching;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,27 +13,33 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.ehcache.EhCacheCache;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 //import com.todo.list.configs.cache.CacheConfig;
 
-
-
 @RestController
 public class TestCacheController {
 
 	@Autowired
 	private TestRepository repository;
+
+	@Autowired
+	private TestService service;
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@GetMapping("/test/cache/{id}")
-	@Cacheable(cacheNames = "cacheStorage", key = "#id")
-	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
-
-		return repository.findById(id).get();
-	}
+//	@GetMapping("/test/cache/{id}")
+//	@Cacheable(cacheNames = "cacheStorage", key = "#id")
+//	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
+//
+//		return repository.findById(id).get();
+//	}
 
 //	@GetMapping("/test/cachememory")
 //	public void testCacheMemory() {
@@ -49,9 +57,15 @@ public class TestCacheController {
 	public void testLog() {
 		logger.info("안녕하세요~ Trace 함수에요~");
 	}
-	
+
 	@GetMapping("/test/tracelog")
 	public void testLogTrace() {
 		logger.trace("안녕하세요~ Trace 함수에요~");
+	}
+
+	@GetMapping("/test/cache")
+	public ResponseEntity<?> testCache(@PageableDefault Pageable pageable) {
+		List<TestEntity> page = service.testPageEntity(pageable);
+		return new ResponseEntity<>(page, HttpStatus.OK);
 	}
 }

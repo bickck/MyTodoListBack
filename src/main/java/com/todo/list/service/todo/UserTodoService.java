@@ -35,10 +35,10 @@ public class UserTodoService {
 
 	@Transactional
 	public void todoUpdate(UserTokenDTO dto, TodoDTO todoDTO, Long id) {
-		TodoEntity entity = todoRepository.findTodoEntityByIdAndUserName(id, dto.getUsername());
-		entity.setContent(todoDTO.getContent());
-		entity.setTitle(todoDTO.getTitle());
-		todoRepository.save(entity);
+	//	TodoEntity entity = todoRepository.findTodoEntityByIdAndUserEntityByUsername(id, dto.getUsername());
+	//	entity.setContent(todoDTO.getContent());
+	//	entity.setTitle(todoDTO.getTitle());
+	//	todoRepository.save(entity);
 	}
 
 	@Transactional

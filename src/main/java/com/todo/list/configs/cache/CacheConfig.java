@@ -4,7 +4,10 @@ import java.time.Duration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -19,24 +22,34 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 @EnableCaching
+@EnableRedisRepositories
 @Configuration
 public class CacheConfig implements CachingConfigurer {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Value("${spring.redis.host}")
-	private String host;
-
-	@Value("${spring.redis.port}")
-	private int port;
+	@Autowired
+	private RedisProperties properties;
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory(host, port);
+		return new LettuceConnectionFactory(properties.getHost(), properties.getPort());
+	}
+
+	@Bean
+	public RedisTemplate<Object, Object> redisTemplate() {
+		RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		redisTemplate.setKeySerializer(new GenericJackson2JsonRedisSerializer());
+		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+
+		return redisTemplate;
 	}
 
 	@Bean
@@ -48,7 +61,9 @@ public class CacheConfig implements CachingConfigurer {
 				RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
 				.entryTtl(Duration.ofMinutes(30));
 
-		cacheManager.cacheDefaults(cacheConfiguration);
+		cacheManager.withCacheConfiguration("todoCache", cacheConfiguration);
+		cacheManager.withCacheConfiguration("quoteCache", cacheConfiguration);
+		cacheManager.withCacheConfiguration("testCache", cacheConfiguration);
 		return cacheManager.build();
 	}
 

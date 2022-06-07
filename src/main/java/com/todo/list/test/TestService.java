@@ -9,6 +9,9 @@ import javax.annotation.PostConstruct;
 import org.hibernate.annotations.OptimisticLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -52,6 +55,13 @@ public class TestService {
 
 	public List<TestEntity> testSelect() {
 		return testRepository.findAll();
+	}
+
+	@Cacheable(key = "#pageable.getPageNumber", cacheNames = "testCache")	
+	public List<TestEntity> testPageEntity(Pageable pageable){
+		Page<TestEntity>entities =  testRepository.findAll(pageable);
+		
+		return entities.getContent();
 	}
 
 }

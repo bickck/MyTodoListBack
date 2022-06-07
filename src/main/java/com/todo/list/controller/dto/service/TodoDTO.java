@@ -2,7 +2,14 @@ package com.todo.list.controller.dto.service;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.todo.list.entity.UserEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 
 public class TodoDTO {
 
@@ -15,6 +22,10 @@ public class TodoDTO {
 	private String content;
 
 	private Timestamp createDate;
+
+	public TodoDTO() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public TodoDTO(Long id, String user, String title, String content, Timestamp createDate) {
 		super();

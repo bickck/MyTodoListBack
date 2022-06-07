@@ -23,7 +23,7 @@ public class PageTodoBuilder implements PageBuilder<PageTodoBuilder, PageTodoDTO
 	@Override
 	public PageTodoDTO builder() {
 		// TODO Auto-generated method stub
-		return new PageTodoDTO(dtos, number, totalPages, totalElement, size, numberOfElements, pageable);
+		return new PageTodoDTO(dtos, number, totalPages, totalElement, size, numberOfElements);
 	}
 
 	@Override

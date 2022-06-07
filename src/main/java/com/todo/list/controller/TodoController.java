@@ -24,6 +24,7 @@ import com.todo.list.controller.builder.page.PageTodoBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.response.ResponseTodoEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.api.UserApiService;
@@ -44,9 +45,25 @@ public class TodoController {
 		this.userTodoService = userTodoService;
 	}
 
-	@Cacheable(key = "#pageable.getPageNumber")
+//	@Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
+//	@GetMapping("/todos")
+//	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
+//		long startTime = System.currentTimeMillis();
+//		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
+//		long endTime = System.currentTimeMillis();
+//
+//		PageTodoBuilder builder = new PageTodoBuilder().setLists(page.getContent()).setNumber(page.getNumber())
+//				.setPageable(page.getPageable()).setNumberOfElements(page.getNumberOfElements()).setSize(page.getSize())
+//				.setTotalPages(page.getTotalPages()).setTotalElements(page.getTotalElements());
+//
+//		logger.info("Time : {}ms", endTime - startTime);
+//
+//		return new ResponseEntity<PageTodoDTO>(builder.builder(), HttpStatus.OK);
+//	}
+
+	@Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
 	@GetMapping("/todos")
-	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
+	public PageTodoDTO requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
 		long startTime = System.currentTimeMillis();
 		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
 		long endTime = System.currentTimeMillis();
@@ -57,7 +74,7 @@ public class TodoController {
 
 		logger.info("Time : {}ms", endTime - startTime);
 
-		return new ResponseEntity<PageTodoDTO>(builder.builder(), HttpStatus.OK);
+		return builder.builder();
 	}
 
 	@GetMapping("/recommand/todos")

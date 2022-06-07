@@ -4,7 +4,16 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.todo.list.controller.dto.service.TodoDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 
 public class PageTodoDTO {
 	private List<TodoDTO> todoDTOs;
@@ -24,7 +33,18 @@ public class PageTodoDTO {
 	public PageTodoDTO() {
 		// TODO Auto-generated constructor stub
 	}
-
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public PageTodoDTO(List<TodoDTO> todoDTOs, int number, int totalPages, long totalElement, long size,
+			int numberOfElements) {
+		super();
+		this.todoDTOs = todoDTOs;
+		this.number = number;
+		this.totalPages = totalPages;
+		this.totalElement = totalElement;
+		this.size = size;
+		this.numberOfElements = numberOfElements;
+	}
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public PageTodoDTO(List<TodoDTO> todoDTOs, int number, int totalPages, long totalElement, long size,
 			int numberOfElements, Pageable pageable) {
 		super();
@@ -34,7 +54,7 @@ public class PageTodoDTO {
 		this.totalElement = totalElement;
 		this.size = size;
 		this.numberOfElements = numberOfElements;
-		this.pageable = pageable;
+		//this.pageable = pageable;
 	}
 
 	public List<TodoDTO> getTodoDTOs() {
@@ -85,11 +105,11 @@ public class PageTodoDTO {
 		this.numberOfElements = numberOfElements;
 	}
 
-	public Pageable getPageable() {
-		return pageable;
-	}
-
-	public void setPageable(Pageable pageable) {
-		this.pageable = pageable;
-	}
+//	public Pageable getPageable() {
+//		return pageable;
+//	}
+//
+//	public void setPageable(Pageable pageable) {
+//		this.pageable = pageable;
+//	}
 }
