@@ -1,5 +1,6 @@
 package com.todo.list.controller.dto.service;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,7 +12,12 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 
-public class TodoDTO {
+public class TodoDTO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 

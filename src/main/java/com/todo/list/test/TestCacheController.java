@@ -14,6 +14,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.ehcache.EhCacheCache;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -65,7 +67,29 @@ public class TestCacheController {
 
 	@GetMapping("/test/cache")
 	public ResponseEntity<?> testCache(@PageableDefault Pageable pageable) {
-		List<TestEntity> page = service.testPageEntity(pageable);
+		// List<TestEntity> page = service.testPageEntity(pageable);
+
+		return new ResponseEntity<>("", HttpStatus.OK);
+	}
+
+	@GetMapping("/test/cache/pageable")
+	public ResponseEntity<?> testCachePageable(@PageableDefault Pageable pageable) {
+		Page<TestEntity> page = service.testCachePageEntity(pageable);
+
 		return new ResponseEntity<>(page, HttpStatus.OK);
 	}
+
+	@GetMapping("/test/Notcache/pageable")
+	public Pageable testNotCachePageable(@PageableDefault() Pageable pageable) {
+		Pageable page = service.testPageEntity(pageable);
+
+		return page;
+	}
+
+//	@GetMapping("/test/cache/Custompageable")
+//	public PageableTest<TestEntity> testNotCacheCustomPageable(@PageableDefault() Pageable pageable) {
+//		PageableTest<TestEntity> page = service.testPageCustomEntity(pageable);
+//
+//		return page;
+//	}
 }

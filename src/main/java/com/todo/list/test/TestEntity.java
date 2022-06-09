@@ -1,5 +1,6 @@
 package com.todo.list.test;
 
+import java.io.Serializable;
 import java.sql.Time;
 
 import javax.persistence.Column;
@@ -8,9 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-public class TestEntity {
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+@JsonSerialize
+@JsonDeserialize
+@Entity
+public class TestEntity implements Serializable{
+
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

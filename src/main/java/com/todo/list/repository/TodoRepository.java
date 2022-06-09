@@ -12,7 +12,7 @@ import com.todo.list.entity.TodoEntity;
 
 public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
-//	TodoEntity findTodoEntityByIdAndUserEntityByUsername(Long id, String username);
+	TodoEntity findTodoEntityById(Long id);
 
 //	List<TodoEntity> findAllByUserEntity(UserEntity userEntity, Pageable pageable);
 

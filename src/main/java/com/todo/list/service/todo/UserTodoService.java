@@ -34,11 +34,11 @@ public class UserTodoService {
 	}
 
 	@Transactional
-	public void todoUpdate(UserTokenDTO dto, TodoDTO todoDTO, Long id) {
-	//	TodoEntity entity = todoRepository.findTodoEntityByIdAndUserEntityByUsername(id, dto.getUsername());
-	//	entity.setContent(todoDTO.getContent());
-	//	entity.setTitle(todoDTO.getTitle());
-	//	todoRepository.save(entity);
+	public void todoUpdate(Long id,TodoDTO todoDTO) {
+		TodoEntity entity = todoRepository.findTodoEntityById(id);
+		entity.setContent(todoDTO.getContent());
+		entity.setTitle(todoDTO.getTitle());
+		todoRepository.save(entity);
 	}
 
 	@Transactional
@@ -64,7 +64,7 @@ public class UserTodoService {
 	}
 
 	@Transactional
-	public void updatePublished(UserTokenDTO dto, Long id) {
+	public void updatePublished(Long id, String username) {
 		TodoEntity entity = todoRepository.findById(id).get();
 		if (entity.getIsPublish().equals(Publish.PUBLISH)) {
 			entity.setIsPublish(Publish.PRIVATE);
@@ -75,4 +75,15 @@ public class UserTodoService {
 
 	}
 
+	@Transactional
+	public void updatePublishedTest(Long id) {
+		TodoEntity entity = todoRepository.findById(id).get();
+		if (entity.getIsPublish().equals(Publish.PUBLISH)) {
+			entity.setIsPublish(Publish.PRIVATE);
+		} else {
+			entity.setIsPublish(Publish.PUBLISH);
+		}
+		todoRepository.save(entity);
+
+	}
 }

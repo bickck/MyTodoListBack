@@ -1,6 +1,8 @@
 package com.todo.list.controller.builder;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.todo.list.controller.dto.service.TodoDTO;
@@ -49,8 +51,12 @@ public class TodoBuilder {
 	}
 
 	public List<TodoDTO> listBuilder(List<TodoEntity> list) {
-
-		return null;
+		List<TodoDTO> todoDTOs = new ArrayList<TodoDTO>();
+		Iterator<TodoEntity> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			todoDTOs.add(new TodoDTO(iterator.next().getId(), iterator.next().getUser().getUsername(), iterator.next().getTitle(), iterator.next().getContent(), iterator.next().getCreateDate()));
+		}
+		return todoDTOs;
 	}
 
 }

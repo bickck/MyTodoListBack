@@ -1,12 +1,16 @@
 package com.todo.list.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -20,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.QuoteBuilder;
+import com.todo.list.controller.builder.TodoBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.controller.response.ResponseTodoEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
@@ -63,18 +69,28 @@ public class TodoController {
 
 	@Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
 	@GetMapping("/todos")
-	public PageTodoDTO requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
-		long startTime = System.currentTimeMillis();
+	public Page<TodoDTO> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
+
 		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
-		long endTime = System.currentTimeMillis();
 
-		PageTodoBuilder builder = new PageTodoBuilder().setLists(page.getContent()).setNumber(page.getNumber())
-				.setPageable(page.getPageable()).setNumberOfElements(page.getNumberOfElements()).setSize(page.getSize())
-				.setTotalPages(page.getTotalPages()).setTotalElements(page.getTotalElements());
+		TodoBuilder builder = new TodoBuilder();
+		builder.listBuilder(page.getContent());
 
-		logger.info("Time : {}ms", endTime - startTime);
+		return new PageImpl<TodoDTO>(builder.listBuilder(page.getContent()), page.getPageable(),
+				page.getTotalElements());
+	}
 
-		return builder.builder();
+	@CacheEvict()
+	@PostMapping("/todo/2/{id}")
+	public void requestUserTodoUpdate(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO,
+			@RequestBody TodoDTO todoDTO) {
+		//userTodoService.todoUpdate(userTokenDTO, todoDTO, id);
+
+	}
+
+	@PostMapping("/todo/3/{id}")
+	public void requestUserTodoDelete() {
+
 	}
 
 	@GetMapping("/recommand/todos")
@@ -89,14 +105,6 @@ public class TodoController {
 	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
 		userTodoService.addRecommand(dto, id);
-
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
-
-	@PostMapping("/ispublish/todos/{id}")
-	public ResponseEntity<?> requestUpdatIsPublished(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
-
-		userTodoService.updatePublished(dto, id);
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

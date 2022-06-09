@@ -18,6 +18,8 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.support.DefaultConversionService;
+import org.springframework.data.redis.cache.CacheKeyPrefix;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -26,6 +28,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @EnableCaching
 @EnableRedisRepositories
@@ -58,9 +63,11 @@ public class CacheConfig implements CachingConfigurer {
 				.fromConnectionFactory(redisConnectionFactory());
 
 		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(
-				RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+				RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
 				.entryTtl(Duration.ofMinutes(30));
-
+		
+		//new GenericJackson2JsonRedisSerializer();
+		//RedisSerializer.java()
 		cacheManager.withCacheConfiguration("todoCache", cacheConfiguration);
 		cacheManager.withCacheConfiguration("quoteCache", cacheConfiguration);
 		cacheManager.withCacheConfiguration("testCache", cacheConfiguration);

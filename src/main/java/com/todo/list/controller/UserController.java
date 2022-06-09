@@ -103,7 +103,7 @@ public class UserController {
 
 		userQuoteService.quoteInsert(builder.builder(), user);
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/quote/3/{id}")
@@ -111,7 +111,7 @@ public class UserController {
 
 		userQuoteService.quoteDelete(id);
 
-		return new ResponseEntity(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	/*
@@ -126,20 +126,20 @@ public class UserController {
 		backGroundImgBuilder.setFileName(fileName).setMultipartFile(multipartFile).setUserName(tokenDTO.getUsername());
 		imaegService.saveImageInDir(backGroundImgBuilder.builder());
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/background/2/{id}")
 	public ResponseEntity<?> updateUserBackGroundImg(@PathVariable Long id) {
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/background/3/{id}")
 	public ResponseEntity<?> deleteUserBackGroundImg(@PathVariable Long id) {
 		// imaegService.deleteBackGroundImage(id);
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	/*
@@ -151,21 +151,31 @@ public class UserController {
 
 		todoService.todoSave(userTokenDTO, todoDTO);
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	// cache 삭제 후 정보를 다시 입력
 
 	@PostMapping("/todo/2/{id}")
 	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		//todoService.todoUpdate(userTokenDTO, dto);
-		return new ResponseEntity(HttpStatus.OK);
+		todoService.todoUpdate(id, dto);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/todo/3/{id}")
 	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id) {
 
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping("/todo/isPublish/{id}")
+	public ResponseEntity<?> requestUpdatIsPublished(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
+
+		todoService.updatePublished(id, dto.getUsername());
+
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 }

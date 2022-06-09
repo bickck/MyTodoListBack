@@ -1,5 +1,7 @@
 package com.todo.list.controller.dto.service;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 
 import com.todo.list.entity.base.AdminQuoteEntity;
@@ -7,7 +9,7 @@ import com.todo.list.entity.base.AdminQuoteEntity;
 import lombok.Data;
 import lombok.Getter;
 
-public class QuoteDTO {
+public class QuoteDTO implements Serializable{
 
 	private Long id;
 	private String quote;
