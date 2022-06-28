@@ -1,4 +1,4 @@
-package com.todo.list.test;
+package com.todo.list.test.service;
 
 import java.util.List;
 import java.util.concurrent.Delayed;
@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.todo.list.test.Entity.TestEntity;
+import com.todo.list.test.repository.TestRepository;
 
 @Service
 public class TestService {

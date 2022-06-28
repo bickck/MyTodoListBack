@@ -53,7 +53,7 @@ import com.todo.list.service.image.MainImageUploadService;
 import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.admin.MainBackGroundImageService;
 import com.todo.list.service.queto.DefaultQuetoService;
-import com.todo.list.test.TestService;
+import com.todo.list.test.service.TestService;
 
 /**
  * 

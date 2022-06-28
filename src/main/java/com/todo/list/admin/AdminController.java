@@ -41,6 +41,7 @@ public class AdminController {
 	}
 
 	// Save Image
+	@ResponseBody
 	@PostMapping("/save/backGroundImage")
 	public String saveBackGroundImages(@RequestParam MultipartFile multipartFile) {
 		backGroundImageService.save(multipartFile);

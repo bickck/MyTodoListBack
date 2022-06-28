@@ -1,4 +1,4 @@
-package com.todo.list.test;
+package com.todo.list.test.Entity;
 
 import java.io.Serializable;
 import java.sql.Time;

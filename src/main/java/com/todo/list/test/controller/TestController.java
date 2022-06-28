@@ -1,4 +1,4 @@
-package com.todo.list.test;
+package com.todo.list.test.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +54,8 @@ import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.UserImageUploadService;
 import com.todo.list.service.test.UserTest;
+import com.todo.list.test.DummyData;
+import com.todo.list.test.service.TestService;
 
 @RestController
 public class TestController {
