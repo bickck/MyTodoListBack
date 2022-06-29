@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties.EhCache;
+import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
 import org.springframework.cache.Cache;
+import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +19,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.cache.RedisCache;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisAccessor;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +45,9 @@ public class TestCacheController {
 
 	@Autowired
 	private TestService service;
+	
+	
+
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 //	@GetMapping("/test/cache/{id}")
@@ -58,15 +68,29 @@ public class TestCacheController {
 //		System.out.println(cacheCacheManager.getCacheManagerEventListener());
 //		// System.out.println(cacheCacheManager.getOriginalConfigurationText());
 //	}
+	@GetMapping("/test/cache/{id}")
+	@Cacheable(cacheNames = "testCache", key = "#id",cacheManager = "testCacheManager")
+	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
 
-	@GetMapping("/test/log")
-	public void testLog() {
-		logger.info("안녕하세요~ Trace 함수에요~");
+		return repository.findById(id).get();
+		
 	}
 
-	@GetMapping("/test/tracelog")
-	public void testLogTrace() {
-		logger.trace("안녕하세요~ Trace 함수에요~");
+	@GetMapping("test/cache/callManager")
+	public Object cacheManager() {
+		RedisAccessor redisAccessor = new RedisAccessor();
+		
+		RedisConnectionFactory redisConnectionFactory = redisAccessor.getConnectionFactory();
+		
+		System.out.println(redisAccessor);
+		return "hi";
+	}
+
+	
+	@GetMapping("/test/cache/save")
+	public void testSaveTestCase() {
+
+		repository.save(new TestEntity("testA", "testB", "testC", "testD", (long) 1, (long) 5));
 	}
 
 	@GetMapping("/test/cache")

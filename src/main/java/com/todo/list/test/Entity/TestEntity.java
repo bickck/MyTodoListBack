@@ -9,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 @JsonSerialize
 @JsonDeserialize
@@ -66,6 +69,7 @@ public class TestEntity implements Serializable{
 				+ testArg7 + "]";
 	}
 
+	
 	public Long getId() {
 		return id;
 	}

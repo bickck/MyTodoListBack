@@ -121,21 +121,7 @@ public class TestController {
 		System.out.println(size);
 		return String.valueOf(endTime - startTime) + "ms";
 	}
-
-//	@GetMapping("/test/ArgCache")
-//	public String testArgCache() {
-//		long id = 1;
-//		String testEntity = service.testArgCacheService(id);
-//		return testEntity;
-//	}
-//
-//	@GetMapping("/test/noArgCache")
-//	public String testNoArgCache() {
-//
-//		String testEntity = service.testNoArgCacheService();
-//		return testEntity;
-//	}
-
+	
 	@GetMapping("/test/jwtProblem")
 	public String testJwtProblem() {
 
