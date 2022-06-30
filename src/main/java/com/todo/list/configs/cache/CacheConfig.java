@@ -18,6 +18,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.data.redis.cache.CacheKeyPrefix;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -32,13 +33,13 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.todo.list.CacheNames;
+import com.todo.list.RedisCacheNames;
 import com.todo.list.RedisCacheManagerName;
 
 @EnableCaching
 @EnableRedisRepositories
 @Configuration
-public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, CacheNames {
+public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, RedisCacheNames {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -60,6 +61,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Ca
 		return redisTemplate;
 	}
 
+	@Primary
 	@Bean(name = TodoCacheManagerName)
 	public CacheManager todoCacheManager() {
 		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
@@ -96,7 +98,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Ca
 		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
 				.entryTtl(Duration.ofMinutes(30));
-		cacheManager.withCacheConfiguration(testCacheName, cacheConfiguration);
+		cacheManager.withCacheConfiguration(TestCacheName, cacheConfiguration);
 		return cacheManager.build();
 	}
 

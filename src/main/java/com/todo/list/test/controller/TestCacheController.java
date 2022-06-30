@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.RedisCacheNames;
+import com.todo.list.RedisCacheManagerName;
 import com.todo.list.test.Entity.TestEntity;
 import com.todo.list.test.repository.TestRepository;
 import com.todo.list.test.service.TestService;
@@ -45,8 +47,6 @@ public class TestCacheController {
 
 	@Autowired
 	private TestService service;
-	
-	
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -69,24 +69,23 @@ public class TestCacheController {
 //		// System.out.println(cacheCacheManager.getOriginalConfigurationText());
 //	}
 	@GetMapping("/test/cache/{id}")
-	@Cacheable(cacheNames = "testCache", key = "#id",cacheManager = "testCacheManager")
+	@Cacheable(cacheNames = RedisCacheNames.TestCacheName, key = "#id", cacheManager = RedisCacheManagerName.TestCacheManagerName)
 	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
 
 		return repository.findById(id).get();
-		
+
 	}
 
 	@GetMapping("test/cache/callManager")
 	public Object cacheManager() {
 		RedisAccessor redisAccessor = new RedisAccessor();
-		
+
 		RedisConnectionFactory redisConnectionFactory = redisAccessor.getConnectionFactory();
-		
+
 		System.out.println(redisAccessor);
 		return "hi";
 	}
 
-	
 	@GetMapping("/test/cache/save")
 	public void testSaveTestCase() {
 

@@ -1,8 +1,8 @@
 package com.todo.list;
 
-public interface CacheNames {
+public interface RedisCacheNames {
 
 	static final String QuoteCacheName = "quoteCache";
 	static final String TodoCacheName = "todoCache";
-	static final String testCacheName = "testCache";
+	static final String TestCacheName = "testCache";
 }
