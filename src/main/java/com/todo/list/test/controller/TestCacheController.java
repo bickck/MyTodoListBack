@@ -2,28 +2,15 @@ package com.todo.list.test.controller;
 
 import java.util.List;
 
-import org.hibernate.boot.model.Caching;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties.EhCache;
-import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
-import org.springframework.cache.Cache;
-import org.springframework.cache.Cache.ValueWrapper;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.ehcache.EhCacheCache;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.cache.RedisCache;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisAccessor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.RedisCacheNames;
+import com.todo.list.service.CacheService;
 import com.todo.list.RedisCacheManagerName;
 import com.todo.list.test.Entity.TestEntity;
 import com.todo.list.test.repository.TestRepository;
@@ -48,29 +36,18 @@ public class TestCacheController {
 	@Autowired
 	private TestService service;
 
+	@Autowired
+	private CacheService cacheService;
+	
+	@Autowired
+	private RedisTemplate<Object, Object> redisTemplate;
+
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-//	@GetMapping("/test/cache/{id}")
-//	@Cacheable(cacheNames = "cacheStorage", key = "#id")
-//	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
-//
-//		return repository.findById(id).get();
-//	}
-
-//	@GetMapping("/test/cachememory")
-//	public void testCacheMemory() {
-//		net.sf.ehcache.CacheManager cacheCacheManager = net.sf.ehcache.CacheManager.create();
-//
-//		System.out.println(cacheCacheManager.getOriginalConfigurationText());
-//		System.out.println(cacheCacheManager.getCache("cacheStorage"));
-//		System.out.println(cacheCacheManager.getActiveConfigurationText());
-//		System.out.println(cacheCacheManager.getCacheNames());
-//		System.out.println(cacheCacheManager.getCacheManagerEventListener());
-//		// System.out.println(cacheCacheManager.getOriginalConfigurationText());
-//	}
 	@GetMapping("/test/cache/{id}")
 	@Cacheable(cacheNames = RedisCacheNames.TestCacheName, key = "#id", cacheManager = RedisCacheManagerName.TestCacheManagerName)
 	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
+
 
 		return repository.findById(id).get();
 
@@ -118,5 +95,24 @@ public class TestCacheController {
 //		PageableTest<TestEntity> page = service.testPageCustomEntity(pageable);
 //
 //		return page;
+//	}
+
+//	@GetMapping("/test/cache/{id}")
+//	@Cacheable(cacheNames = "cacheStorage", key = "#id")
+//	public TestEntity testCacheEventLogMethod(@PathVariable Long id) {
+//
+//		return repository.findById(id).get();
+//	}
+
+//	@GetMapping("/test/cachememory")
+//	public void testCacheMemory() {
+//		net.sf.ehcache.CacheManager cacheCacheManager = net.sf.ehcache.CacheManager.create();
+//
+//		System.out.println(cacheCacheManager.getOriginalConfigurationText());
+//		System.out.println(cacheCacheManager.getCache("cacheStorage"));
+//		System.out.println(cacheCacheManager.getActiveConfigurationText());
+//		System.out.println(cacheCacheManager.getCacheNames());
+//		System.out.println(cacheCacheManager.getCacheManagerEventListener());
+//		// System.out.println(cacheCacheManager.getOriginalConfigurationText());
 //	}
 }

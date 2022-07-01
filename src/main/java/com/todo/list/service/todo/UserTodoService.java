@@ -34,7 +34,7 @@ public class UserTodoService {
 	}
 
 	@Transactional
-	public void todoUpdate(Long id,TodoDTO todoDTO) {
+	public void todoUpdate(Long id, TodoDTO todoDTO) {
 		TodoEntity entity = todoRepository.findTodoEntityById(id);
 		entity.setContent(todoDTO.getContent());
 		entity.setTitle(todoDTO.getTitle());
@@ -53,7 +53,10 @@ public class UserTodoService {
 
 	@Transactional(readOnly = true)
 	public Page<TodoEntity> recommandTodos(Pageable pageable) {
-		return todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+
+		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+
+		return pages;
 	}
 
 	@Transactional

@@ -63,7 +63,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 
 	@Primary
 	@Bean(name = TodoCacheManagerName)
-	public CacheManager todoCacheManager() {
+	public RedisCacheManager todoCacheManager() {
 		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
 				.fromConnectionFactory(redisConnectionFactory());
 
@@ -79,7 +79,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 	}
 
 	@Bean(name = QuoteCacheManagerName)
-	public CacheManager quoteCacheManager() {
+	public RedisCacheManager quoteCacheManager() {
 		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
 				.fromConnectionFactory(redisConnectionFactory());
 
@@ -91,7 +91,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 	}
 
 	@Bean(name = TestCacheManagerName)
-	public CacheManager testCacheeManager() {
+	public RedisCacheManager testCacheeManager() {
 		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
 				.fromConnectionFactory(redisConnectionFactory());
 

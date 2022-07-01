@@ -3,7 +3,7 @@ package com.todo.list.test.Entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash(value = "eventId")
+@RedisHash(value = "eventId",timeToLive= 100)
 public class RedisEntity {
 
 	@Id
