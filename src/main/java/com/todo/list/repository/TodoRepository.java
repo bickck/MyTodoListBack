@@ -20,5 +20,8 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
 	Page<TodoEntity> findTodoEntitiesByIsPublishOrderByIdDesc(Publish publish, Pageable pageable);
 
-	//Page<TodoEntity> findTodoEntitiesByIsPublish(Publish publish, Pageable pageable);
+	List<TodoEntity> findAllEntitiesByIsPublish(Publish publish);
+
+	// Page<TodoEntity> findTodoEntitiesByIsPublish(Publish publish, Pageable
+	// pageable);
 }

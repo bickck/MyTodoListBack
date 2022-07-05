@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.RedisCacheNames;
-import com.todo.list.service.CacheService;
+import com.todo.list.service.TodoCacheService;
 import com.todo.list.RedisCacheManagerName;
 import com.todo.list.test.Entity.TestEntity;
 import com.todo.list.test.repository.TestRepository;
@@ -37,7 +37,7 @@ public class TestCacheController {
 	private TestService service;
 
 	@Autowired
-	private CacheService cacheService;
+	private TodoCacheService cacheService;
 	
 	@Autowired
 	private RedisTemplate<Object, Object> redisTemplate;

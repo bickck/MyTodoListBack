@@ -1,5 +1,7 @@
 package com.todo.list.service.todo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -44,6 +46,12 @@ public class UserTodoService {
 	@Transactional
 	public void todoDelete(UserTokenDTO dto, Long id) {
 		todoRepository.deleteById(id);
+	}
+	
+	@Transactional
+	public List<TodoEntity> findAllPublishTodos() {
+		
+		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
 	}
 
 	@Transactional(readOnly = true)
