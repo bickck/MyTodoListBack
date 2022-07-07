@@ -47,25 +47,6 @@ public class UserTodoService {
 	public void todoDelete(UserTokenDTO dto, Long id) {
 		todoRepository.deleteById(id);
 	}
-	
-	@Transactional
-	public List<TodoEntity> findAllPublishTodos() {
-		
-		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
-	}
-
-	@Transactional(readOnly = true)
-	public Page<TodoEntity> publishTodos(int pageNumber, Pageable pageable) {
-		return todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
-	}
-
-	@Transactional(readOnly = true)
-	public Page<TodoEntity> recommandTodos(Pageable pageable) {
-
-		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
-
-		return pages;
-	}
 
 	@Transactional
 	public void addRecommand(UserTokenDTO dto, Long id) {
@@ -96,5 +77,25 @@ public class UserTodoService {
 		}
 		todoRepository.save(entity);
 
+	}
+
+	//todo api로 옮김
+	@Transactional
+	public List<TodoEntity> findAllPublishTodos() {
+
+		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<TodoEntity> publishTodos(int pageNumber, Pageable pageable) {
+		return todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<TodoEntity> recommandTodos(Pageable pageable) {
+
+		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+
+		return pages;
 	}
 }

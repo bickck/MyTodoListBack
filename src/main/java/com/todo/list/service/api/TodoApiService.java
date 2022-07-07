@@ -1,5 +1,7 @@
 package com.todo.list.service.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,5 +31,24 @@ public class TodoApiService {
 		Page<TodoEntity> entities = null;
 
 		return entities;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<TodoEntity> findAllPublishTodos() {
+		
+		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<TodoEntity> publishTodos(int pageNumber, Pageable pageable) {
+		return todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<TodoEntity> recommandTodos(Pageable pageable) {
+
+		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+
+		return pages;
 	}
 }
