@@ -34,6 +34,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.todo.list.RedisCacheNames;
+import com.todo.list.cache.TestCacheKeyGenerator;
 import com.todo.list.RedisCacheManagerName;
 
 @EnableCaching
@@ -42,6 +43,7 @@ import com.todo.list.RedisCacheManagerName;
 public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, RedisCacheNames {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private static long TtlMinutes = 30;
 
 	@Autowired
 	private RedisProperties properties;
@@ -69,7 +71,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 
 		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
-				.entryTtl(Duration.ofMinutes(30));
+				.entryTtl(Duration.ofMinutes(TtlMinutes));
 
 		// new GenericJackson2JsonRedisSerializer();
 		// RedisSerializer.java()
@@ -85,7 +87,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 
 		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
-				.entryTtl(Duration.ofMinutes(30));
+				.entryTtl(Duration.ofMinutes(TtlMinutes));
 		cacheManager.withCacheConfiguration(QuoteCacheName, cacheConfiguration);
 		return cacheManager.build();
 	}
@@ -97,9 +99,14 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 
 		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
-				.entryTtl(Duration.ofMinutes(30));
+				.entryTtl(Duration.ofMinutes(TtlMinutes));
 		cacheManager.withCacheConfiguration(TestCacheName, cacheConfiguration);
 		return cacheManager.build();
+	}
+
+	@Bean
+	public KeyGenerator testCacheKeyGenerator() {
+		return new TestCacheKeyGenerator();
 	}
 
 }

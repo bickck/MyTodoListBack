@@ -57,7 +57,7 @@ public class DummyData implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		// TODO Auto-generated method stub
-		// insertDummyUser();
+		//insertDummyUser();
 		//insertDefaultBackGroundImage();
 
 	}

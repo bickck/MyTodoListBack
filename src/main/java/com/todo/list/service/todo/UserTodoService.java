@@ -3,9 +3,11 @@ package com.todo.list.service.todo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,7 @@ public class UserTodoService {
 		todoRepository.deleteById(id);
 	}
 
+
 	@Transactional
 	public void addRecommand(UserTokenDTO dto, Long id) {
 		TodoEntity entity = todoRepository.findById(id).get();
@@ -79,7 +82,7 @@ public class UserTodoService {
 
 	}
 
-	//todo api로 옮김
+	// todo api로 옮김
 	@Transactional
 	public List<TodoEntity> findAllPublishTodos() {
 
@@ -97,5 +100,26 @@ public class UserTodoService {
 		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 
 		return pages;
+	}
+	//
+	// exist 필요
+	@Autowired
+	private RedisCacheManager redisCacheManager;
+	
+	@Transactional(readOnly = true)
+	public TodoEntity findOne(Long id) {
+		System.out.println("ID : " + id);
+		String cacheName = redisCacheManager.getCache(String.valueOf(id)).getName();
+		System.out.println(cacheName);
+		return todoRepository.findById(id).get();
+	}
+	
+	@Transactional(readOnly = true)
+	public TodoEntity findOneTestNotCacheAnnotation(Long id) {
+		System.out.println("ID : " + id);
+		Cache cache = redisCacheManager.getCache(String.valueOf(id));
+		
+		
+		return todoRepository.findById(id).get();
 	}
 }
