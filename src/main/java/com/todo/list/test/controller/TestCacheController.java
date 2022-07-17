@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.RedisCacheNames;
-import com.todo.list.service.TodoCacheService;
-import com.todo.list.RedisCacheManagerName;
+import com.todo.list.redis.RedisCacheManagerName;
+import com.todo.list.redis.RedisCacheNames;
+import com.todo.list.redis.service.TodoCacheService;
 import com.todo.list.test.Entity.TestEntity;
 import com.todo.list.test.repository.TestRepository;
 import com.todo.list.test.service.TestService;

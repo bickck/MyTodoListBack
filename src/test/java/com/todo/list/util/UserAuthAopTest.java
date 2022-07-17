@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.http.ResponseEntity;
 
-import com.todo.list.controller.UserController;
+import com.todo.list.controller.user.UserController;
 
 public class UserAuthAopTest {
 

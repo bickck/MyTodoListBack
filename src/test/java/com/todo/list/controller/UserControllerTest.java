@@ -25,8 +25,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.todo.list.controller.UserController;
 import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.user.UserController;
 
 //@WebMvcTest(UserController.class)
 public class UserControllerTest {

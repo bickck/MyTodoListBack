@@ -1,4 +1,4 @@
-package com.todo.list;
+package com.todo.list.redis;
 
 public interface RedisCacheManagerName {
 

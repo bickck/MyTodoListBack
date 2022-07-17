@@ -1,4 +1,4 @@
-package com.todo.list.service;
+package com.todo.list.redis.service;
 
 public interface CacheStorageManager {
 

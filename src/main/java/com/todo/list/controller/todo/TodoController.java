@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.todo;
 
 import java.util.ArrayList;
 import java.util.Iterator;

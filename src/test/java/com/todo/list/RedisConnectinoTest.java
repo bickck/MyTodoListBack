@@ -20,6 +20,8 @@ import org.springframework.data.redis.core.types.RedisClientInfo;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.todo.list.redis.RedisCacheManagerName;
+import com.todo.list.redis.RedisCacheNames;
 import com.todo.list.test.Entity.RedisEntity;
 import com.todo.list.test.Entity.RedisTestEntity;
 import com.todo.list.test.Entity.TestEntity;

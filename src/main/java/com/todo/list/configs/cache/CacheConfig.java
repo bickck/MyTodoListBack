@@ -33,9 +33,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.todo.list.RedisCacheNames;
 import com.todo.list.cache.TestCacheKeyGenerator;
-import com.todo.list.RedisCacheManagerName;
+import com.todo.list.redis.RedisCacheManagerName;
+import com.todo.list.redis.RedisCacheNames;
 
 @EnableCaching
 @EnableRedisRepositories

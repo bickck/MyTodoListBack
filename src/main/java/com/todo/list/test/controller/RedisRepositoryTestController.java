@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.RedisCacheManagerName;
-import com.todo.list.RedisCacheNames;
 import com.todo.list.entity.TodoEntity;
-import com.todo.list.service.TodoCacheService;
+import com.todo.list.redis.RedisCacheManagerName;
+import com.todo.list.redis.RedisCacheNames;
+import com.todo.list.redis.service.TodoCacheService;
 import com.todo.list.service.todo.UserTodoService;
 
 @RestController
-public class TodoTestController implements RedisCacheNames, RedisCacheManagerName {
+public class RedisRepositoryTestController implements RedisCacheNames, RedisCacheManagerName {
 
 	@Autowired
 	private UserTodoService todoService;
