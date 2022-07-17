@@ -6,14 +6,14 @@ import org.springframework.data.redis.core.RedisHash;
 import com.todo.list.entity.TodoEntity;
 
 @RedisHash(value = "", timeToLive = 3000)
-public class RedisTodoEntity {
+public class TodoRedisEntity {
 
 	@Id
 	private Long id;
 
 	private TodoEntity todoEntity;
 
-	public RedisTodoEntity() {
+	public TodoRedisEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
