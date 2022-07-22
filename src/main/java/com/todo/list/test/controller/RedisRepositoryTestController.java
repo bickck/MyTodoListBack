@@ -18,55 +18,27 @@ import com.todo.list.redis.RedisCacheManagerName;
 import com.todo.list.redis.RedisCacheNames;
 import com.todo.list.redis.service.TodoCacheService;
 import com.todo.list.service.todo.UserTodoService;
+import com.todo.list.test.Entity.EventEntity;
+import com.todo.list.test.repository.EventRepository;
 
 @RestController
 public class RedisRepositoryTestController implements RedisCacheNames, RedisCacheManagerName {
 
 	@Autowired
-	private UserTodoService todoService;
+	private EventRepository eventRepository;
 
-	@Autowired
-	private TodoCacheService todoCacheService;
+	long eventId = 1;
 
-	@PostMapping("/test/todo/isPublishTest/{id}")
-	public ResponseEntity<?> requestUpdatIsPublishedTest(@PathVariable Long id) {
-
-		todoService.updatePublishedTest(id);
-
-		return new ResponseEntity<String>(HttpStatus.OK);
+	@GetMapping(value = "/redis/event/save")
+	public String redisEventSave() {
+		eventRepository.save(new EventEntity(eventId));
+		return "success";
 	}
 
-	@GetMapping("/test/todo/isPublishTest")
-	public ResponseEntity<?> findAllPublishedTest() {
-
-		int count = todoService.findAllPublishTodos().size();
-
-		return new ResponseEntity<Integer>(count, HttpStatus.OK);
-	}
-
-	@Cacheable(cacheNames = RedisCacheNames.TodoCacheName, cacheManager = RedisCacheManagerName.TestCacheManagerName, keyGenerator = "testCacheKeyGenerator")
-	@GetMapping("/test/todo/cache/{id}")
-	public String testCacheStorage(@PathVariable Long id) {
-
-		Long todoId = todoService.findOne(id).getId();
-
-		return "todoId : " + todoId;
-	}
-	
-	@CachePut(cacheNames = RedisCacheNames.TodoCacheName, cacheManager = RedisCacheManagerName.TestCacheManagerName, keyGenerator = "testCacheKeyGenerator")
-	@GetMapping("/test/todo/cache/put/{id}")
-	public String testCacheAnnotationPut(@PathVariable Long id) {
-
-		Long todoId = todoService.findOne(id).getId();
-
-		return "todoId : " + todoId;
-	}
-	
-	@GetMapping("/test/todo/notuseAnnotation/{id}")
-	public String testCacheAnnotationNotUse(@PathVariable Long id) {
-
-		Long todoId = todoService.findOneTestNotCacheAnnotation(id).getId();
-
-		return "todoId : " + todoId;
+	@GetMapping(value = "/redis/event/find")
+	public String redisEventSelect() {
+		EventEntity entity = eventRepository.findById(eventId).get();
+		System.out.println(entity.toString());
+		return "success";
 	}
 }
