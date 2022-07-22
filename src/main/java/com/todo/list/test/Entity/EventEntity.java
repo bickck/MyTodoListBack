@@ -4,12 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash(value = "eventId", timeToLive = 100)
-public class RedisEntity {
+public class EventEntity {
 
 	@Id
 	private Long eventId;
 
-	public RedisEntity() {
+	public EventEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,7 +18,7 @@ public class RedisEntity {
 		return "RedisRepositoryEntity [eventId=" + eventId + "]";
 	}
 
-	public RedisEntity(Long eventId) {
+	public EventEntity(Long eventId) {
 		super();
 		this.eventId = eventId;
 	}

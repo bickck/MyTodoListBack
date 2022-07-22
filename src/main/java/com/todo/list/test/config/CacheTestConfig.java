@@ -1,4 +1,4 @@
-package com.todo.list.test;
+package com.todo.list.test.config;
 
 public class CacheTestConfig {
 

@@ -12,6 +12,8 @@ public class TodoRedisEntity {
 	private Long id;
 
 	private TodoEntity todoEntity;
+	
+	private Long expire;
 
 	public TodoRedisEntity() {
 		// TODO Auto-generated constructor stub

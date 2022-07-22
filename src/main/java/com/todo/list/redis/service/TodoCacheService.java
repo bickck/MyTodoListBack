@@ -25,9 +25,9 @@ public class TodoCacheService implements CacheStorageManager {
 
 	/**
 	 * 
-	 * db의 부하를 줄이기 위해 db의 내용을 redis를 옮기며 Read 전용 메모리로 사용
+	 * DB의 부하를 줄이기 위해 DB의 내용을 redis를 옮기며 Read 전용 메모리로 사용
 	 * 
-	 * db cud 발생 시 Redis 내용 업데이트
+	 * DB CUD 발생 시 Redis 내용 업데이트
 	 * 
 	 * Redis에서 가져온 데이터를 Page<?>로 변경
 	 * 

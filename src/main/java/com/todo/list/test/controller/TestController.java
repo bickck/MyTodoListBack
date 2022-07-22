@@ -41,6 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.server.ServerErrorException;
 
+import com.todo.list.DummyData;
 import com.todo.list.configs.token.AuthenticationJwtToken;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
@@ -54,7 +55,6 @@ import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.UserImageUploadService;
 import com.todo.list.service.test.UserTest;
-import com.todo.list.test.DummyData;
 import com.todo.list.test.service.TestService;
 
 @RestController

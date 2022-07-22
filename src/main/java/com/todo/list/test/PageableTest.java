@@ -16,20 +16,58 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-//@JsonIgnoreProperties(ignoreUnknown = true, value = { "pageable" })
-public class PageableTest<T>  {
+public class PageableTest<T> extends PageImpl<T> {
 
-//	@JsonCreator(mode = Mode.PROPERTIES)
-//	public PageableTest(
-//			@JsonProperty("content") List<T> content, 
-//			@JsonProperty("number") int page,
-//			@JsonProperty("size") int size, 
-//			@JsonProperty("totalElements") long total) {
-//		super(content, PageRequest.of(page, size), total);
-//		// TODO Auto-generated constructor stub
-//	}
-//
-//	public PageableTest(Page<T> pages) {
-//		super(pages.getContent(),pages.getPageable(),pages.getTotalElements());
-//	}
+	public PageableTest(List<T> content) {
+		super(content);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<T> getContent() {
+		// TODO Auto-generated method stub
+		return super.getContent();
+	}
+
+	@Override
+	public int getNumber() {
+		// TODO Auto-generated method stub
+		return super.getNumber();
+	}
+
+	@Override
+	public int getNumberOfElements() {
+		// TODO Auto-generated method stub
+		return super.getNumberOfElements();
+	}
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return super.getSize();
+	}
+
+	@Override
+	public Sort getSort() {
+		// TODO Auto-generated method stub
+		return super.getSort();
+	}
+
+	@Override
+	public boolean hasContent() {
+		// TODO Auto-generated method stub
+		return super.hasContent();
+	}
+
+	@Override
+	public boolean hasPrevious() {
+		// TODO Auto-generated method stub
+		return super.hasPrevious();
+	}
+
+	@Override
+	public boolean isFirst() {
+		// TODO Auto-generated method stub
+		return super.isFirst();
+	}
 }

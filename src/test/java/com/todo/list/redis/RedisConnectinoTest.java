@@ -1,4 +1,4 @@
-package com.todo.list;
+package com.todo.list.redis;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.todo.list.redis.RedisCacheManagerName;
 import com.todo.list.redis.RedisCacheNames;
-import com.todo.list.test.Entity.RedisEntity;
+import com.todo.list.test.Entity.EventEntity;
 import com.todo.list.test.Entity.RedisTestEntity;
 import com.todo.list.test.Entity.TestEntity;
 import com.todo.list.test.repository.EventRepository;
@@ -34,9 +34,6 @@ import com.todo.list.test.repository.TestRepository;
 public class RedisConnectinoTest {
 
 	@Autowired
-	private EventRepository eventRepository;
-
-	@Autowired
 	private RedisTestRepository redisTestRepository;
 
 	@Autowired
@@ -44,19 +41,6 @@ public class RedisConnectinoTest {
 
 	@Autowired
 	private RedisTemplate<Object, Object> redisTemplate;
-
-	// @Test
-	public void dbSize() {
-		// redisTemplate.
-	}
-
-	// @Test
-	public void testBatchSave() {
-		for (int i = 0; i < 10000; i++) {
-			long id = i;
-			eventRepository.save(new RedisEntity(id));
-		}
-	}
 
 	// @Test
 	public void executePipeLineTest() {
@@ -83,10 +67,10 @@ public class RedisConnectinoTest {
 		});
 	}
 
-	@Test
+	// @Test
 	public void delete() {
-		List<RedisClientInfo> redis = redisTemplate.getClientList();	
-		redis.forEach((data)-> {
+		List<RedisClientInfo> redis = redisTemplate.getClientList();
+		redis.forEach((data) -> {
 			System.out.println(data.toString());
 		});
 	}
@@ -99,30 +83,6 @@ public class RedisConnectinoTest {
 	// @Test
 	public void testRedisGetValueSerializer() {
 		System.out.println(redisTemplate.getValueSerializer().getTargetType());
-	}
-
-	// @Test
-	public void testBatchDelete() {
-		eventRepository.deleteAll();
-	}
-
-	// @Test
-	public void testRedisRepositoryInsertJob() {
-		long eventId = 1;
-		eventRepository.save(new RedisEntity(eventId));
-	}
-
-	// @Test
-	public void testRedisManagerNames() {
-		redisCacheManager.getCacheNames().forEach((data) -> {
-			System.out.println(data);
-		});
-	}
-
-	@Test
-	public void testRedisDelete() {
-		long Id = 1;
-		eventRepository.delete(new RedisEntity(Id));
 	}
 
 	// @Test
@@ -156,21 +116,6 @@ public class RedisConnectinoTest {
 		// cache.
 		ValueWrapper valueWrapper = cache.get("1");
 		System.out.println(valueWrapper.get().toString());
-	}
-
-	// @Test
-	public void testRedisRepositorySelectJob() {
-		eventRepository.findAll().forEach((data) -> {
-			System.out.println("hi");
-			System.out.println(data);
-		});
-
-	}
-
-	// @Test
-	public void testRedisRepositorydeleteJob() {
-		long eventId = 1;
-		eventRepository.delete(new RedisEntity(eventId));
 	}
 
 	// @Test

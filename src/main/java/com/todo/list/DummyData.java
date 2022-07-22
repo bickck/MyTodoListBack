@@ -1,4 +1,4 @@
-package com.todo.list.test;
+package com.todo.list;
 
 import java.io.File;
 import java.time.LocalDate;
