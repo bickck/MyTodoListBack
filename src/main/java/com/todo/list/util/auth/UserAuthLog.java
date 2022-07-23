@@ -37,10 +37,10 @@ public class UserAuthLog {
 	private Logger logger = LoggerFactory.getLogger(UserAuthLog.class);
 
 	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))")
-	public void cut() {
+	public void authLogPointCut() {
 	}
 
-	@Around(value = "cut()")
+	@Around(value = "authLogPointCut()")
 	public Object userAuthAop(ProceedingJoinPoint joinPoint) throws Throwable {
 
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())

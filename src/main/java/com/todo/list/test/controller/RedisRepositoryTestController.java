@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.redis.RedisCacheManagerName;
 import com.todo.list.redis.RedisCacheNames;
+import com.todo.list.redis.RedisCacheable;
 import com.todo.list.redis.service.TodoCacheService;
 import com.todo.list.service.todo.UserTodoService;
 import com.todo.list.test.Entity.EventEntity;
@@ -39,6 +40,13 @@ public class RedisRepositoryTestController implements RedisCacheNames, RedisCach
 	public String redisEventSelect() {
 		EventEntity entity = eventRepository.findById(eventId).get();
 		System.out.println(entity.toString());
+		return "success";
+	}
+
+	@RedisCacheable(value = "hi")
+	@GetMapping(value="/redis/annotation/cacheable")
+	public String redisCacheableTest() {
+
 		return "success";
 	}
 }
