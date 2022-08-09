@@ -1,4 +1,4 @@
-package com.todo.list.util.log;
+package com.todo.list.event.log;
 
 import javax.servlet.http.HttpServletRequest;
 
