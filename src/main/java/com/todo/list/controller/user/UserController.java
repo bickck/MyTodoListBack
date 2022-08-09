@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.configs.token.AuthenticationJwtToken;
+import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
@@ -69,7 +69,7 @@ public class UserController {
 	private UserTodoService todoService;
 
 	@Autowired
-	private AuthenticationJwtToken jwtLoginToken;
+	private AuthenticationJwt jwtLoginToken;
 
 	@Autowired
 	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService) {

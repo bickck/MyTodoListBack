@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.CookieGenerator;
 
-import com.todo.list.configs.token.AuthenticationJwtToken;
+import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
@@ -38,7 +38,7 @@ public class AuthController {
 	private UserUtil userUtil;
 
 	@Autowired
-	private AuthenticationJwtToken jwtLoginToken;
+	private AuthenticationJwt jwtLoginToken;
 
 	@Autowired
 	public AuthController(UserService userService) {

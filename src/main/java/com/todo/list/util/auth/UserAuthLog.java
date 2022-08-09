@@ -16,19 +16,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.todo.list.configs.token.AuthenticationJwtToken;
+import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 
 @Aspect
 @Component
 public class UserAuthLog {
 
+	private static final String AUTHTOKENNAME = "authorization";
+	private static final String logExecution = "execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))";
+
 	@Autowired
-	private AuthenticationJwtToken authenticationJwtToken;
+	private AuthenticationJwt authenticationJwtToken;
 
 	private Logger logger = LoggerFactory.getLogger(UserAuthLog.class);
 
-	@Pointcut("execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))")
+	@Pointcut(logExecution)
 	public void authLogPointCut() {
 	}
 
@@ -38,7 +41,7 @@ public class UserAuthLog {
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 
-		String token = httpServletRequest.getHeader("authorization");
+		String token = httpServletRequest.getHeader(AUTHTOKENNAME);
 
 		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
 			if (data instanceof UserTokenDTO) {

@@ -16,7 +16,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class AuthenticationJwtToken {
+public class AuthenticationJwt {
 
 	private final String SECURITY_KEY = "security";
 	private final String USERNAME = "username";

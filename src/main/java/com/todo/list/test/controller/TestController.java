@@ -42,7 +42,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.server.ServerErrorException;
 
 import com.todo.list.DummyData;
-import com.todo.list.configs.token.AuthenticationJwtToken;
+import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.page.PageUserDTO;
@@ -70,7 +70,7 @@ public class TestController {
 	private UserQuoteRepository quoteRepository;
 
 	@Autowired
-	private AuthenticationJwtToken authenticationJwtToken;
+	private AuthenticationJwt authenticationJwtToken;
 
 	@Autowired
 	private UserApiService userApiService;

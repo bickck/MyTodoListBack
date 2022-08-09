@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.configs.token.AuthenticationJwtToken;
+import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
@@ -60,7 +60,7 @@ public class UserApiController {
 	private UserQuoteRepository userQuoteRepository;
 
 	@Autowired
-	private AuthenticationJwtToken jwtLoginToken;
+	private AuthenticationJwt jwtLoginToken;
 
 	@Autowired
 	public UserApiController(UserService userService, UserApiService userApiService) {
