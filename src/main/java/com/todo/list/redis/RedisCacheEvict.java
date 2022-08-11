@@ -10,4 +10,9 @@ import java.lang.annotation.Target;
 public @interface RedisCacheEvict {
 
 	String[] value() default "";
+	
+	String[] cacheNames() default {};
+	
+	String[] key() default {};
+	
 }

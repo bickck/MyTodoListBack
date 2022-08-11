@@ -27,7 +27,7 @@ public class UserAuthLog {
 	private static final String logExecution = "execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))";
 
 	@Autowired
-	private AuthenticationJwt authenticationJwtToken;
+	private AuthenticationJwt authenticationJwt;
 
 	private Logger logger = LoggerFactory.getLogger(UserAuthLog.class);
 
@@ -45,7 +45,7 @@ public class UserAuthLog {
 
 		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
 			if (data instanceof UserTokenDTO) {
-				data = authenticationJwtToken.getUserTokenDTO(token);
+				data = authenticationJwt.getUserTokenDTO(token);
 				logger.info("USER ACCESS : {}, TIME : {}, ", data.toString(), new Date().getTime());
 			}
 			return data;

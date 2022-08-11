@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class RedisRepositoryTestController implements RedisCacheNames, RedisCach
 	}
 
 	@RedisCacheable(value = "hi")
-	@GetMapping(value="/redis/annotation/cacheable")
+	@GetMapping(value = "/redis/annotation/cacheable")
 	public String redisCacheableTest() {
 
 		return "success";
