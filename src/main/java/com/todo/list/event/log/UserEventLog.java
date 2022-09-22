@@ -14,7 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Aspect
 @Component
-public class UserCRUDEventLog {
+public class UserEventLog {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
