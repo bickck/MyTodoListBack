@@ -1,8 +1,10 @@
 package com.todo.list.event.record;
 
 import java.nio.channels.CompletionHandler;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,14 +39,19 @@ public class EventLogCallee {
 	};
 
 	public void callee(EventLogRecordEntity eventLogRecordEntity) {
+		
+		// CompletableFuture <ReturnType>
+		CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+			eventLogService.save(eventLogRecordEntity);
+		});
 
-		try {
-			System.out.println("callee");
-			completionHandler.completed(eventLogRecordEntity, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-			completionHandler.failed(e, null);
-		}
+//		try {
+//			System.out.println("callee");
+//			completionHandler.completed(eventLogRecordEntity, null);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			completionHandler.failed(e, null);
+//		}
 
 	}
 }
