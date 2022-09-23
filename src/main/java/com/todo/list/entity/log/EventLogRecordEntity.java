@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "logRecord")
-public class LogRecordEntity {
+@Entity(name = "EventLogRecord")
+public class EventLogRecordEntity {
 
 	@Id
 	private Long id;
@@ -22,7 +22,7 @@ public class LogRecordEntity {
 	@Column(name = "LOGMESSAGE")
 	private String logMessage;
 
-	public LogRecordEntity() {
+	public EventLogRecordEntity() {
 		// TODO Auto-generated constructor stub
 	}
 

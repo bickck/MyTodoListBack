@@ -12,22 +12,37 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.todo.list.event.EventLog;
+import com.todo.list.event.EventLogger;
+
 @Aspect
 @Component
-public class UserEventLog {
+public class UserEventLog extends EventLog{
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final String USER_EVENT_LOG_EXECUTION = "execution(* com.todo.list.service.*.User*.*())";
+	
+	public UserEventLog() {
+		super.setEventLogger(getClass());
+	}
 
-	@Pointcut("execution(* com.todo.list.service.*.User*.*())")
-	public void userCrudExecution() {
+	@Pointcut(USER_EVENT_LOG_EXECUTION)
+	public void userExecution() {
 
 	}
 
 	@Around(value = "userCrudExecution()")
 	public Object userAccessLog(ProceedingJoinPoint joinPoint) throws Throwable {
 
-		logger.info("Current Method = {}", joinPoint.getTarget());
+//		logger.info("Current Method = {}", joinPoint.getTarget());
 
 		return joinPoint.proceed();
 	}
+
+	@Override
+	public void record() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

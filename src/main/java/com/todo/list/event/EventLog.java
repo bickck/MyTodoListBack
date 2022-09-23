@@ -16,13 +16,7 @@ public abstract class EventLog implements EventLogger {
 	@Override
 	public Logger getEventLogger() {
 		// TODO Auto-generated method stub
-
 		return this.logger;
 	}
 
-	public void record() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

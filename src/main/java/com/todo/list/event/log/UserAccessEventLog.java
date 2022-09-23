@@ -18,17 +18,17 @@ import com.todo.list.event.EventLog;
 
 @Aspect
 @Component
-public class ClientAccessEventLog extends EventLog{
+public class UserAccessEventLog extends EventLog{
 	
-	private final static String CLIENTACCESSEXECUTION = "execution(* com.todo.list.controller.*..*())";
+	private final static String CLIENT_ACCESS_EXECUTION = "execution(* com.todo.list.controller.*..*())";
 
 	
-	public ClientAccessEventLog() {
+	public UserAccessEventLog() {
 		super.setEventLogger(getClass());
 	}
 	
 
-	@Pointcut(CLIENTACCESSEXECUTION)
+	@Pointcut(CLIENT_ACCESS_EXECUTION)
 	public void accessEventLogExecution() {
 
 	}
@@ -44,6 +44,13 @@ public class ClientAccessEventLog extends EventLog{
 //		logger.info("Access Method = {} , {}", joinPoint.getThis(), joinPoint.getSignature());
 
 		return joinPoint.proceed();
+	}
+
+
+	@Override
+	public void record() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
