@@ -1,21 +1,17 @@
 package com.todo.list.event.log;
 
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.todo.list.event.EventLog;
+import com.todo.list.event.EventLogListener;
 
 @Aspect
 @Component
-public class AdminEventLog extends EventLog {
+public class AdminEventLog {
 
 	public AdminEventLog() {
-		setEventLogger(getClass());
-	}
-
-	@Override
-	public void record() {
-		// TODO Auto-generated method stub
-
+		// TODO Auto-generated constructor stub
+		
 	}
 }

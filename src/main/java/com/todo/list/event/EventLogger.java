@@ -1,5 +1,6 @@
 package com.todo.list.event;
 
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 
 public interface EventLogger {
@@ -8,6 +9,6 @@ public interface EventLogger {
 	
 	public Logger getEventLogger();
 	
-	public void record();
+	public Object record(ProceedingJoinPoint joinPoint) throws Throwable;
 
 }

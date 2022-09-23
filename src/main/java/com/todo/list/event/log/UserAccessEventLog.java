@@ -14,43 +14,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.todo.list.event.EventLog;
+import com.todo.list.event.EventLogListener;
+import com.todo.list.event.record.EventLogCallee;
 
 @Aspect
 @Component
-public class UserAccessEventLog extends EventLog{
-	
+public class UserAccessEventLog extends EventLogListener {
+
 	private final static String CLIENT_ACCESS_EXECUTION = "execution(* com.todo.list.controller.*..*())";
 
+	@Autowired
+	private EventLogCallee eventLogCallee;
 	
 	public UserAccessEventLog() {
 		super.setEventLogger(getClass());
 	}
-	
 
 	@Pointcut(CLIENT_ACCESS_EXECUTION)
 	public void accessEventLogExecution() {
-
+		super.getEventLogger().info("call accessEventLogExecution aop");
 	}
-
-	@Around(value = "accessEventLogExecution()")
-	public Object clientAccessLog(ProceedingJoinPoint joinPoint) throws Throwable {
-
-		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-				.getRequest();
-
-//		logger.trace("Protocol = {}", httpServletRequest.getProtocol());
-//		logger.info("getRequestURI = {}", httpServletRequest.getRequestURI());
-//		logger.info("Access Method = {} , {}", joinPoint.getThis(), joinPoint.getSignature());
-
-		return joinPoint.proceed();
-	}
-
 
 	@Override
-	public void record() {
+	@Around(value = "accessEventLogExecution()")
+	public Object record(ProceedingJoinPoint joinPoint) throws Throwable {
 		// TODO Auto-generated method stub
-		
+		return joinPoint.proceed();
 	}
 
 }

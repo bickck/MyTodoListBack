@@ -26,6 +26,21 @@ public class EventLogRecordEntity {
 		// TODO Auto-generated constructor stub
 	}
 
+	public EventLogRecordEntity(String locationOfOccurrence, String methodOfOccurrence, String dateOfOccurrence,
+			String logMessage) {
+		this.locationOfOccurrence = locationOfOccurrence;
+		this.methodOfOccurrence = methodOfOccurrence;
+		this.dateOfOccurrence = dateOfOccurrence;
+		this.logMessage = logMessage;
+	}
+
+	@Override
+	public String toString() {
+		return "EventLogRecordEntity [id=" + id + ", locationOfOccurrence=" + locationOfOccurrence
+				+ ", methodOfOccurrence=" + methodOfOccurrence + ", dateOfOccurrence=" + dateOfOccurrence
+				+ ", logMessage=" + logMessage + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}

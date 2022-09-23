@@ -66,4 +66,10 @@ public class UserService {
 		return user;
 	}
 
+	public String test() {
+		
+		
+		return "success";
+	}
+
 }
