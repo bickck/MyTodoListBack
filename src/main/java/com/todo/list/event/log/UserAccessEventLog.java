@@ -21,7 +21,7 @@ import com.todo.list.event.record.EventLogCallee;
 @Component
 public class UserAccessEventLog extends EventLogListener {
 
-	private final static String CLIENT_ACCESS_EXECUTION = "execution(* com.todo.list.controller.*..*())";
+	private final static String CLIENT_ACCESS_EXECUTION = "execution(* com.todo.list.*.*..*(@UserAuthToken))";
 
 	@Autowired
 	private EventLogCallee eventLogCallee;

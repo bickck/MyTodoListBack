@@ -3,6 +3,7 @@ package com.todo.list.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.entity.log.EventLogRecordEntity;
@@ -27,8 +28,9 @@ public class EventLogService {
 	@Autowired
 	private EventLogRepository eventLogRepository;
 
-	@Transactional
-	public void save(EventLogRecordEntity eventLogRecordEntity) {
+	//@Transactional
+	@Async
+	public void saveLogger(EventLogRecordEntity eventLogRecordEntity) {
 		System.out.println("save");
 		System.out.println(eventLogRecordEntity.toString());
 		eventLogRepository.save(eventLogRecordEntity);

@@ -27,7 +27,7 @@ public class EventLogCallee {
 		public void completed(EventLogRecordEntity result, Void attachment) {
 			// TODO Auto-generated method stub
 			System.out.println("completed");
-			eventLogService.save(result);
+			eventLogService.saveLogger(result);
 		}
 
 		@Override
@@ -42,7 +42,7 @@ public class EventLogCallee {
 		
 		// CompletableFuture <ReturnType>
 		CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
-			eventLogService.save(eventLogRecordEntity);
+			eventLogService.saveLogger(eventLogRecordEntity);
 		});
 
 //		try {

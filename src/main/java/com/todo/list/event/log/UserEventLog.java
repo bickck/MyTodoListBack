@@ -24,28 +24,25 @@ import com.todo.list.event.record.EventLogCallee;
 @Component
 public class UserEventLog extends EventLogListener {
 
-
 	private final static String USER_EVENT_LOG_EXECUTION = "execution(* com.todo.list.service.*.User*.*())";
 
 	@Autowired
 	private EventLogCallee eventLogCallee;
-	
-	
+
 	public UserEventLog() {
 		super.setEventLogger(getClass());
 	}
 
 	@Pointcut(USER_EVENT_LOG_EXECUTION)
 	public void userExecution() {
-		
+		super.getEventLogger().info("call UserEventLog aop");
 	}
 
 	@Override
 	@Around(value = "userExecution()")
 	public Object record(ProceedingJoinPoint joinPoint) throws Throwable {
 		// TODO Auto-generated method stub
-		
-		super.getEventLogger().info("hi success");
+
 		EventLogRecordEntity entity = new EventLogRecordEntity();
 		entity.setLogMessage("");
 		entity.setDateOfOccurrence(new Date().toString());

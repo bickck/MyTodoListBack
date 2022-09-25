@@ -1,14 +1,22 @@
 package com.todo.list.entity.log;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "EventLogRecord")
+@Entity(name = "EVENT_LOG_ENTITY")
 public class EventLogRecordEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+//	@Column(name="")
+//	private UUID uuid;
 
 	@Column(name = "LOCATION_OF_OCCURRENCE")
 	private String locationOfOccurrence;
