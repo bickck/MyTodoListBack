@@ -30,4 +30,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	List<UserEntity> findAllbyfetchJoin();
 
 	List<UserEntity> findAll();
+	
+	//long count();
 }

@@ -1,6 +1,7 @@
 package com.todo.list.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.service.EventLogService;
+import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.admin.MainBackGroundImageService;
 
 /**
@@ -30,6 +33,12 @@ public class AdminController {
 
 	@Autowired
 	private MainBackGroundImageService backGroundImageService;
+	
+	@Autowired
+	private UserApiService userApiService;
+	
+	@Autowired
+	private EventLogService eventLogService;
 
 	// Save Queto or Queto List
 	@ResponseBody
@@ -48,4 +57,31 @@ public class AdminController {
 		return "saveSuccess";
 	}
 	
+	@ResponseBody
+	@PostMapping("/user/total")
+	public ResponseEntity<?> getTotalUser() {
+		
+		return new ResponseEntity(null);
+	}
+	
+	@ResponseBody
+	@PostMapping("/user/join")
+	public ResponseEntity<?> getUsersJoinedToday() {
+		
+		return new ResponseEntity(null);
+	}
+	
+	@ResponseBody
+	@PostMapping("/log/")
+	public ResponseEntity<?> getLogs() {
+		
+		return new ResponseEntity(null);
+	}
+	
+	@ResponseBody
+	@PostMapping("/post/lists")
+	public ResponseEntity<?> getPost() {
+		
+		return new ResponseEntity(null);
+	}
 }

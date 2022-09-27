@@ -1,4 +1,4 @@
-package com.todo.list.controller.todo;
+package com.todo.list.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,7 +39,7 @@ import com.todo.list.service.todo.UserTodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/todo/api")
 public class TodoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -67,8 +67,8 @@ public class TodoController {
 //		return new ResponseEntity<PageTodoDTO>(builder.builder(), HttpStatus.OK);
 //	}
 
-	@Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
-	@GetMapping("/todos")
+	//@Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
+	@GetMapping("/todoData")
 	public Page<TodoDTO> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
 
 		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
