@@ -22,8 +22,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.TodoRepository;

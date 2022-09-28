@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.todo.list.entity.Publish;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.TodoEntity;
 
 public interface TodoRepository extends JpaRepository<TodoEntity, Long> {

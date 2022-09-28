@@ -20,6 +20,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.service.TodoDTO;
+import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_TODO_ENTITY")
@@ -28,6 +29,9 @@ public class TodoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+//	@Column(name = "TODO_UUID", unique = true)
+//	private String todoUUID;
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -43,7 +47,7 @@ public class TodoEntity {
 	@Column(name = "RECOMMAND")
 	private Long recommand;
 
-	private String tag;
+	// private String tag;
 
 	@Column(name = "ISAVAILABLEPUBLISH")
 	@Enumerated(value = EnumType.STRING)
@@ -89,13 +93,6 @@ public class TodoEntity {
 		this.isPublish = isPublish;
 	}
 
-	@Override
-	public String toString() {
-		return "TodoEntity [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", recommand="
-				+ recommand + ", tag=" + tag + ", isPublish=" + isPublish + ", createDate=" + createDate
-				+ ", lastUpdate=" + lastUpdate + "]";
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -134,14 +131,6 @@ public class TodoEntity {
 
 	public void setIsPublish(Publish isPublish) {
 		this.isPublish = isPublish;
-	}
-
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	public Long getRecommand() {

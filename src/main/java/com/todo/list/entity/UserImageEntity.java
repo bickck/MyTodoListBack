@@ -14,16 +14,19 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity(name = "USER_BACKGROUND_IMAGE")
-public class BackGroundImageEntity {
+@Entity(name = "USER_IMAGE")
+public class UserImageEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID")
-	private UserEntity user;
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@JoinColumn(name = "USER_ID")
+//	private UserEntity user;
+	
+	@Column(name ="USERNAME")
+	private String username;
 
 	@Column(name = "FILENAME")
 	private String fileName;
@@ -41,18 +44,18 @@ public class BackGroundImageEntity {
 	@Column(name = "CREATE_DATE")
 	private Timestamp createDate;
 
-	public BackGroundImageEntity() {
+	public UserImageEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BackGroundImageEntity(UserEntity user, String fileName, String location, String originName, Long fileSize) {
-		super();
-		this.user = user;
-		this.fileName = fileName;
-		this.location = location;
-		this.originName = originName;
-		this.fileSize = fileSize;
-	}
+//	public UserImageEntity(UserEntity user, String fileName, String location, String originName, Long fileSize) {
+//		super();
+//		this.user = user;
+//		this.fileName = fileName;
+//		this.location = location;
+//		this.originName = originName;
+//		this.fileSize = fileSize;
+//	}
 
 	public Long getId() {
 		return id;
@@ -62,13 +65,13 @@ public class BackGroundImageEntity {
 		this.id = id;
 	}
 
-	public UserEntity getUser() {
-		return user;
-	}
-
-	public void setUser(UserEntity user) {
-		this.user = user;
-	}
+//	public UserEntity getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(UserEntity user) {
+//		this.user = user;
+//	}
 
 	public String getLocation() {
 		return location;

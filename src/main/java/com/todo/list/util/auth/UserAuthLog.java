@@ -24,7 +24,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 public class UserAuthLog {
 
 	private static final String AUTHTOKENNAME = "authorization";
-	private static final String logExecution = "execution(* com.todo.list.controller.UserController..*(.., @UserAuthToken (*), ..))";
+	private static final String logExecution = "execution(* com.todo.list.controller.*..*(.., @UserAuthToken (*), ..))";
 
 	@Autowired
 	private AuthenticationJwt authenticationJwt;

@@ -79,6 +79,8 @@ public class AuthController {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
+	
+	
 
 //	@PostMapping("/login")
 //	public String loginRequest(@ModelAttribute UserDTO userDTO, HttpSession httpSession,

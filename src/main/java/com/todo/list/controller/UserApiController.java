@@ -1,12 +1,7 @@
 package com.todo.list.controller;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,14 +12,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.configs.token.AuthenticationJwt;
-import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
@@ -33,31 +27,24 @@ import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
-import com.todo.list.entity.BackGroundImageEntity;
-import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
-import com.todo.list.repository.UserQuoteRepository;
-import com.todo.list.repository.UserRepository;
-import com.todo.list.repository.TodoRepository;
-import com.todo.list.repository.mapper.QuoteMapper;
+
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.queto.UserQuoteService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.auth.UserAuthToken;
 
+
+/**
+ * 로그인이 되었을 시 유저 브라우저에 있는 토큰 정보를 가지고 데이터를 제공하는 파일
+ * 
+ */
 @RestController
 @RequestMapping(value = "/user/api")
 public class UserApiController {
 
 	private UserService userService;
 	private UserApiService userApiService;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private UserQuoteRepository userQuoteRepository;
 
 	@Autowired
 	private AuthenticationJwt jwtLoginToken;
@@ -68,12 +55,29 @@ public class UserApiController {
 		this.userApiService = userApiService;
 
 	}
+	
+	/**
+	 * 
+	 * 유저의 Intro 정보 가져오기
+	 * 
+	 * header에 유저의 Jwt으로 판별
+	 * 
+	 * return username, userIntro, userImagePath
+	 */
+	
+	@ResponseBody
+	@RequestMapping(value = "/intro",headers = "")
+	public ResponseEntity<?> getUserIntroInfo(){
+//		String username = userTokenDTO.getUsername();
+//		userApiService.getUserIntroDetailsApi(username);
+		return new ResponseEntity(null);
+	}
 
-//	@PostMapping("/user")
-//	public Page<UserEntity> getUser(@PathVariable Integer id, @UserAuthToken UserTokenDTO userTokenDTO) {
-//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-//		return userApiService.getUserList(pageRequest);
-//	}
+
+	/**
+	 * 
+	 * 유저의 Quote 모든 정보 가져오기
+	 */
 
 	@PostMapping("/quotes")
 	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
@@ -92,14 +96,10 @@ public class UserApiController {
 		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
 	}
 
-//	@PostMapping("/backgrounds")
-//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
-//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
-//
-//		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
-//
-//		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
-//	}
+	/**
+	 * 
+	 * 유저의 Todo 모든 정보 가져오기
+	 */
 
 	@PostMapping("/todos")
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
@@ -137,6 +137,18 @@ public class UserApiController {
 		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
 	}
 
+	
+	@PostMapping("/todo/{id}")
+	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
+		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+
+		List<TodoDTO> list = null; // userApiService.getUserToDoLists(userTokenDTO, pageRequest);
+
+		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
+	}
+	
+	
 	@PostMapping("/background/{id}")
 	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
@@ -147,13 +159,14 @@ public class UserApiController {
 		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
 	}
 
-	@PostMapping("/todo/{id}")
-	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
-		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-
-		List<TodoDTO> list = null; // userApiService.getUserToDoLists(userTokenDTO, pageRequest);
-
-		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
-	}
+	
+	
+//	@PostMapping("/backgrounds")
+//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
+//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
+//
+//		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
+//
+//		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
+//	}
 }

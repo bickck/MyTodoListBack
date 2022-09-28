@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -47,8 +48,10 @@ import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.service.FileDTO;
-import com.todo.list.entity.Publish;
+import com.todo.list.controller.dto.user.UserIntro;
+import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
@@ -74,7 +77,7 @@ public class TestController {
 
 	@Autowired
 	private UserApiService userApiService;
-	
+
 	@Autowired
 	private UserTest test;
 
@@ -82,13 +85,21 @@ public class TestController {
 //	private UserImageUploadService imageUploadService;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-	
+
+	@GetMapping("/test/findUserIntroInfoByUsername")
+	@ResponseBody
+	public ResponseEntity<?> testFindUserIntroInfoByUsername() {
+		repository.save(new UserEntity("username1234", "1234"));
+		UserIntro dto = repository.findUserIntroInfoByUsername("username1234");
+		return new ResponseEntity<UserIntro>(dto, HttpStatus.OK);
+	}
+
 	@PostMapping("/test/randomnumberAndPublish")
-	public String dummyTest() { 
+	public String dummyTest() {
 		DummyData data = new DummyData();
-		System.out.println(data.randomNumber());
-		System.out.println(data.publish());
-		
+//		System.out.println(data.randomNumber());
+//		System.out.println(data.publish());
+
 		return "success";
 	}
 
@@ -107,7 +118,7 @@ public class TestController {
 		service.testInsert();
 		return "success";
 	}
-	
+
 	@GetMapping("/test/userTest")
 	public void testUser() {
 		test.save();
@@ -121,7 +132,7 @@ public class TestController {
 		System.out.println(size);
 		return String.valueOf(endTime - startTime) + "ms";
 	}
-	
+
 	@GetMapping("/test/jwtProblem")
 	public String testJwtProblem() {
 

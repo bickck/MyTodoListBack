@@ -20,8 +20,8 @@ import com.todo.list.entity.log.EventLogRecordEntity;
 import com.todo.list.event.EventLogListener;
 import com.todo.list.event.record.EventLogCallee;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class UserAccessEventLog extends EventLogListener {
 
 	private final static String CLIENT_ACCESS_EXECUTION = "execution(* com.todo.list.*.*..*(@UserAuthToken))";

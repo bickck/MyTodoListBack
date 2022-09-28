@@ -1,26 +1,25 @@
 package com.todo.list.controller.dto.user;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.todo.list.entity.UserEntity;
+public class UserIntroDTO {
 
-public class LoginUserDTO {
-
+	// user identify number
+	@NotEmpty
 	private Long id;
+
+	@NotEmpty
 	private String username;
 
 	private String introComment;
-	private String userImagePath;
 
-	public LoginUserDTO(@NotNull UserEntity userEntity) {
-		this.id = userEntity.getId();
-		this.username = userEntity.getUsername();
-	}
+	private String fileName;
 
-	public LoginUserDTO(@NotNull Long id, @NotNull String username) {
-		super();
-		this.id = id;
-		this.username = username;
+	private String location;
+
+	public UserIntroDTO() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -47,12 +46,20 @@ public class LoginUserDTO {
 		this.introComment = introComment;
 	}
 
-	public String getUserImagePath() {
-		return userImagePath;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setUserImagePath(String userImagePath) {
-		this.userImagePath = userImagePath;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

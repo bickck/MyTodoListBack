@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.user.UserDTO;
-import com.todo.list.entity.BackGroundImageEntity;
+import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
@@ -46,6 +46,11 @@ public class UserApiService {
 
 		return userRepository.findByUsername(username);
 	}
+	@Transactional(readOnly = true)
+	public UserEntity getUserIntroDetailsApi(String username) {
+
+		return userRepository.findByUsername(username);
+	}
 
 	@Transactional(readOnly = true)
 	public UserEntity getUserApi(UserTokenDTO username) {
@@ -61,7 +66,7 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<BackGroundImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<UserImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
 	
 		return null;
 	}

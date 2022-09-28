@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
-import com.todo.list.entity.Publish;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.base.Publish;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserRepository;
 

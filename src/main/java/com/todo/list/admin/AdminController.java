@@ -84,4 +84,10 @@ public class AdminController {
 		
 		return new ResponseEntity(null);
 	}
+	
+//	@PostMapping("/user")
+//	public Page<UserEntity> getUser(@PathVariable Integer id, @UserAuthToken UserTokenDTO userTokenDTO) {
+//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+//		return userApiService.getUserList(pageRequest);
+//	}
 }

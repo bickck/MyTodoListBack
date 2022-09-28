@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.service.FileDTO;
-import com.todo.list.entity.BackGroundImageEntity;
+import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
@@ -30,17 +30,17 @@ public class UserBackGroundImgService {
 	}
 
 	@Transactional
-	public void userImageSave(BackGroundImageEntity backGroundImageEntity) {
+	public void userImageSave(UserImageEntity backGroundImageEntity) {
 		imageRepository.save(backGroundImageEntity);
 	}
 
-	public BackGroundImageEntity userImgDelete(Long id) {
-		BackGroundImageEntity backGroundImageEntity = imageRepository.getById(id);
+	public UserImageEntity userImgDelete(Long id) {
+		UserImageEntity backGroundImageEntity = imageRepository.getById(id);
 		imageRepository.deleteById(id);
 		return backGroundImageEntity;
 	}
 
-	public BackGroundImageEntity findById(long id) {
+	public UserImageEntity findById(long id) {
 		return imageRepository.findById(id).get();
 	}
 }

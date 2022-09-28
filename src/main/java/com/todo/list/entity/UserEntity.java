@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
@@ -29,11 +30,14 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USERNAME",unique = true)
+	@Column(name = "USERNAME", unique = true)
 	private String username;
 
 	@Column(name = "PASSWORD")
 	private String password;
+
+	@Column(name = "INTRO_COMMENT")
+	private String introComment;
 
 	@Column(name = "CREATEDATE")
 	@CreationTimestamp
@@ -47,9 +51,9 @@ public class UserEntity {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<TodoEntity> todos = new ArrayList<TodoEntity>();
 
-	@BatchSize(size = 10)
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<BackGroundImageEntity> userBackGround = new ArrayList<BackGroundImageEntity>();
+//	@BatchSize(size = 10)
+	@OneToOne(mappedBy = "username", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private UserImageEntity userImageEntity;
 
 	public UserEntity() {
 		// TODO Auto-generated constructor stub
@@ -102,6 +106,14 @@ public class UserEntity {
 		this.id = id;
 	}
 
+	public String getIntroComment() {
+		return introComment;
+	}
+
+	public void setIntroComment(String introComment) {
+		this.introComment = introComment;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -142,12 +154,12 @@ public class UserEntity {
 		this.todos = todos;
 	}
 
-	public List<BackGroundImageEntity> getUserBackGround() {
-		return userBackGround;
+	public UserImageEntity getUserImageEntity() {
+		return userImageEntity;
 	}
 
-	public void setUserBackGround(List<BackGroundImageEntity> userBackGround) {
-		this.userBackGround = userBackGround;
+	public void setUserImageEntity(UserImageEntity userImageEntity) {
+		this.userImageEntity = userImageEntity;
 	}
 
 }
