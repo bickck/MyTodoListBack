@@ -51,8 +51,10 @@ import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.controller.dto.user.UserIntro;
 import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
@@ -79,6 +81,9 @@ public class TestController {
 	private UserApiService userApiService;
 
 	@Autowired
+	private UserImageRepository userImageRepository;
+
+	@Autowired
 	private UserTest test;
 
 //	@Autowired
@@ -89,9 +94,15 @@ public class TestController {
 	@GetMapping("/test/findUserIntroInfoByUsername")
 	@ResponseBody
 	public ResponseEntity<?> testFindUserIntroInfoByUsername() {
-		repository.save(new UserEntity("username1234", "1234"));
-		UserIntro dto = repository.findUserIntroInfoByUsername("username1234");
-		return new ResponseEntity<UserIntro>(dto, HttpStatus.OK);
+		UserEntity user = new UserEntity("username1234", "1234");
+		user.setUserImageEntity(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
+		repository.save(user);
+		//userImageRepository.save(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
+		UserEntity dto = repository.findUserIntroInfoByUsername("username1234");
+		
+		System.out.println(dto.getUserImageEntity().toString());
+
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
 	@PostMapping("/test/randomnumberAndPublish")

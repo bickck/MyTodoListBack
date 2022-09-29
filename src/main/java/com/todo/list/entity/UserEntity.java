@@ -52,7 +52,7 @@ public class UserEntity {
 	private List<TodoEntity> todos = new ArrayList<TodoEntity>();
 
 //	@BatchSize(size = 10)
-	@OneToOne(mappedBy = "username", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private UserImageEntity userImageEntity;
 
 	public UserEntity() {

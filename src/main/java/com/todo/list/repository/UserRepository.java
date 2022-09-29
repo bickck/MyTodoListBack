@@ -22,23 +22,17 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	UserEntity findByUsernameAndPassword(String username, String password);
 
-	
-	@Query(name = 
-			"SELECT" +
-			"id, username,introComment,fileName,location"+
-			"FROM USER_ENTITY u, USER_IMAGE i OUTER JOIN i.username = u.username")
-	UserIntro findUserIntroInfoByUsername(String username);
-	
-	Page<UserEntity> findAll(Pageable pageable);
-
-	List<UserEntity> findAll();
-
-	void deleteByUsernameAndPassword(String username, String password);
-
 	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
 	List<UserEntity> findAllbyfetchJoin();
-	
-	//List<QuoteEntity> findQuoteEntitiesByUsername(String username);
+
+	@Query(name = "SELECT" + 
+				  "u.id, u.username, u.introComment, i.fileName, i.location" + 
+				  "FROM USER_ENTITY u inner join USER_IMAGE i on u.id = i.id where=#{username}",nativeQuery = true)
+	UserEntity findUserIntroInfoByUsername(String username);
+
+	Page<UserEntity> findAll(Pageable pageable);
+
+	void deleteByUsernameAndPassword(String username, String password);
 
 	// long count();
 }

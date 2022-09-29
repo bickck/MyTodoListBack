@@ -114,13 +114,8 @@ public class MainController {
 		List<AdminQuoteEntity> entities = quoteService.getQuotes();
 		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
 	}
-
-//	@ResponseBody
-//	@GetMapping("/api/quote/infos")
-//	public Long responseMainQuoteIds() {
-//		return quoteService.getQuotesTotalSize();
-//	}
-
+	
+	
 	@ResponseBody
 	@GetMapping("/api/infos")
 	public ResponseEntity<MainDataDTO> responseMainDatas(@PageableDefault(size = 8) Pageable pageable) {

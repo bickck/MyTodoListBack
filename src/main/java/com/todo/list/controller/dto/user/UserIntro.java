@@ -1,5 +1,7 @@
 package com.todo.list.controller.dto.user;
 
+import com.todo.list.entity.UserImageEntity;
+
 public interface UserIntro {
 
 	Long getId();
@@ -8,7 +10,10 @@ public interface UserIntro {
 
 	String getIntroComment();
 
-	String getFileName();
+	UserImageInfo getUserImageEntity();
 
-	String getLocation();
+	interface UserImageInfo {
+		String fileName();
+		String location();
+	}
 }

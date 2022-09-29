@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.user;
 
 import org.springframework.web.bind.annotation.RestController;
 

@@ -14,14 +14,14 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
 	TodoEntity findTodoEntityById(Long id);
 
-//	List<TodoEntity> findAllByUserEntity(UserEntity userEntity, Pageable pageable);
-
 	Page<TodoEntity> findTodoEntitiesByUserId(Long id, Pageable pageable);
 
 	Page<TodoEntity> findTodoEntitiesByIsPublishOrderByIdDesc(Publish publish, Pageable pageable);
 
 	List<TodoEntity> findAllEntitiesByIsPublish(Publish publish);
 
-	// Page<TodoEntity> findTodoEntitiesByIsPublish(Publish publish, Pageable
-	// pageable);
+//   Page<TodoEntity> findTodoEntitiesByIsPublish(Publish publish, Pageable pageable);
+
+//	List<TodoEntity> findAllByUserEntity(UserEntity userEntity, Pageable pageable);
+
 }

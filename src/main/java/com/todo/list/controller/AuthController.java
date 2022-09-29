@@ -45,17 +45,6 @@ public class AuthController {
 		this.userService = userService;
 	}
 
-	@GetMapping("aoptest")
-	public ResponseEntity<String> aopTest() {
-
-		System.out.println("test method before");
-		userService.test();
-		System.out.println("test method after");
-		
-		
-		return new ResponseEntity<String>("success", HttpStatus.CREATED);
-	}
-
 	@PostMapping("/login")
 	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO) throws AuthenticationException {
 

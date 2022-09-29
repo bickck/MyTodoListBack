@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.user.UserDTO;
+import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
@@ -46,10 +47,16 @@ public class UserApiService {
 
 		return userRepository.findByUsername(username);
 	}
-	@Transactional(readOnly = true)
-	public UserEntity getUserIntroDetailsApi(String username) {
 
-		return userRepository.findByUsername(username);
+	@Transactional(readOnly = true)
+	public UserIntroDTO getUserIntroDetailsApi(String username) {
+		UserEntity userEntity = userRepository.findByUsername(username);
+		UserIntroDTO userIntroDTO = new UserIntroDTO();
+		userIntroDTO.setId(userEntity.getId());
+		userIntroDTO.setFileName(userEntity.getUserImageEntity().getFileName());
+		userIntroDTO.setLocation(userEntity.getUserImageEntity().getLocation());
+		userIntroDTO.setIntroComment(userEntity.getIntroComment());
+		return userIntroDTO;
 	}
 
 	@Transactional(readOnly = true)
@@ -67,7 +74,7 @@ public class UserApiService {
 
 	@Transactional(readOnly = true)
 	public Page<UserImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
-	
+
 		return null;
 	}
 
@@ -78,11 +85,10 @@ public class UserApiService {
 
 		return entities;
 	}
-	
+
 	@Transactional(readOnly = true)
 	public void usersQuoteList() {
-		
+
 	}
-	
 
 }

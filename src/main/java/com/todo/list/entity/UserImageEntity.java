@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,9 +25,10 @@ public class UserImageEntity {
 //	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //	@JoinColumn(name = "USER_ID")
 //	private UserEntity user;
-	
-	@Column(name ="USERNAME")
-	private String username;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID")
+	private UserEntity user;
 
 	@Column(name = "FILENAME")
 	private String fileName;
@@ -48,14 +50,29 @@ public class UserImageEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-//	public UserImageEntity(UserEntity user, String fileName, String location, String originName, Long fileSize) {
+//	public UserImageEntity(UserImageEntity userImageEntity) {
 //		super();
-//		this.user = user;
-//		this.fileName = fileName;
-//		this.location = location;
-//		this.originName = originName;
-//		this.fileSize = fileSize;
+//		this.user = userImageEntity.getUser();
+//		this.fileName = userImageEntity.getFileName();
+//		this.location = userImageEntity.getLocation();
+//		this.originName = userImageEntity.getOriginName();
+//		this.fileSize = userImageEntity.getFileSize();
 //	}
+
+	public UserImageEntity(UserEntity user, String fileName, String location, String originName, Long fileSize) {
+		super();
+		this.user = user;
+		this.fileName = fileName;
+		this.location = location;
+		this.originName = originName;
+		this.fileSize = fileSize;
+	}
+
+	@Override
+	public String toString() {
+		return "UserImageEntity [id=" + id + ", user=" + user + ", fileName=" + fileName + ", location=" + location
+				+ ", originName=" + originName + ", fileSize=" + fileSize + ", createDate=" + createDate + "]";
+	}
 
 	public Long getId() {
 		return id;
@@ -65,13 +82,13 @@ public class UserImageEntity {
 		this.id = id;
 	}
 
-//	public UserEntity getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(UserEntity user) {
-//		this.user = user;
-//	}
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
 
 	public String getLocation() {
 		return location;
