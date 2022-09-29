@@ -24,8 +24,10 @@ import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserImageEntity;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
+import com.todo.list.util.Utils;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
@@ -36,6 +38,8 @@ public class AuthController {
 
 	@Autowired
 	private UserUtil userUtil;
+
+	private Utils utils = new Utils();
 
 	@Autowired
 	private AuthenticationJwt jwtLoginToken;
@@ -58,7 +62,11 @@ public class AuthController {
 	@PostMapping("/register")
 	public synchronized ResponseEntity<String> registerRequest(@RequestBody UserDTO userDTO) {
 
-		userService.userSave(userDTO);
+		String username = userDTO.getUsername();
+		String password = userDTO.getPassword();
+		String introComment = utils.nvl(userDTO.getIntroComment());
+
+		userService.userSave(new UserEntity(username, password, introComment));
 
 		return new ResponseEntity<String>("success", HttpStatus.CREATED);
 	}
@@ -68,8 +76,6 @@ public class AuthController {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
-	
-	
 
 //	@PostMapping("/login")
 //	public String loginRequest(@ModelAttribute UserDTO userDTO, HttpSession httpSession,

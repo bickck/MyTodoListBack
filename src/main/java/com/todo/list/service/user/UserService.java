@@ -33,9 +33,9 @@ public class UserService {
 	private UserUtil userUtil;
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void userSave(UserDTO userDTO) {
-		String username = userDTO.getUsername();
-		String password = userDTO.getPassword();
+	public void userSave(UserEntity userEntity) {
+		String username = userEntity.getUsername();
+		String password = userEntity.getPassword();
 
 		if (userUtil.isUsernameDuplicatedCheck(username)) {
 			String passwordEncode = userUtil.bCrypt(password);
@@ -45,14 +45,22 @@ public class UserService {
 		}
 	}
 
-	public UserEntity userUpdate(UserDTO userDTO) {
-		return userRepository.save(new UserEntity());
+	@Transactional
+	public UserEntity userUpdate(UserEntity user) {
+		UserEntity userEntityFromDB = userRepository.getById(user.getId());
+		
+		userEntityFromDB.setIntroComment(user.getIntroComment());
+		
+		return userRepository.save(userEntityFromDB);
 	}
 
-	public void userDelete(UserDTO userDTO) {
-		userRepository.deleteByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+	@Transactional
+	public void userDelete(Long id) {
+		//userRepository.deleteByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+		userRepository.deleteById(id);
 	}
 
+	@Transactional
 	public UserEntity userLogin(UserDTO userDTO) throws AuthenticationException {
 
 		UserEntity user = userRepository.findByUsername(userDTO.getUsername());
@@ -64,12 +72,6 @@ public class UserService {
 		}
 
 		return user;
-	}
-
-	public String test() {
-		
-		
-		return "success";
 	}
 
 }

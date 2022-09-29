@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.service.QuoteDTO;
 
@@ -41,7 +42,11 @@ public class UserEntity {
 
 	@Column(name = "CREATEDATE")
 	@CreationTimestamp
-	private Timestamp date;
+	private Timestamp create;
+
+	@Column(name = "UPDATECREATE")
+	@UpdateTimestamp
+	private Timestamp update;
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -59,11 +64,6 @@ public class UserEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String toString() {
-		return "UserEntity [id=" + id + ", username=" + username + ", password=" + password + ", date=" + date + "]";
-	}
-
 	public UserEntity(String username, String password) {
 		super();
 		this.username = username;
@@ -77,12 +77,17 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public UserEntity(Long id, String username, String password, Timestamp date) {
-		super();
-		this.id = id;
+	public UserEntity(String username, String password, List<QuoteEntity> quotes) {
 		this.username = username;
 		this.password = password;
-		this.date = date;
+		this.quotes = quotes;
+	}
+
+	public UserEntity(String username, String password, String introComment) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.introComment = introComment;
 	}
 
 	public UserEntity(String username, String password, List<QuoteEntity> quotes, List<TodoEntity> todos) {
@@ -92,10 +97,11 @@ public class UserEntity {
 		this.todos = todos;
 	}
 
-	public UserEntity(String username, String password, List<QuoteEntity> quotes) {
+	public UserEntity(String username, String password, String introComment, UserImageEntity userImageEntity) {
 		this.username = username;
 		this.password = password;
-		this.quotes = quotes;
+		this.introComment = introComment;
+		this.userImageEntity = userImageEntity;
 	}
 
 	public Long getId() {
@@ -130,12 +136,20 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public Timestamp getDate() {
-		return date;
+	public Timestamp getCreate() {
+		return create;
 	}
 
-	public void setDate(Timestamp date) {
-		this.date = date;
+	public void setCreate(Timestamp create) {
+		this.create = create;
+	}
+
+	public Timestamp getUpdate() {
+		return update;
+	}
+
+	public void setUpdate(Timestamp update) {
+		this.update = update;
 	}
 
 	public List<QuoteEntity> getQuotes() {

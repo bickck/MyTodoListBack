@@ -32,24 +32,23 @@ public class UserTodoService {
 	}
 
 	@Transactional
-	public void todoSave(UserTokenDTO dto, TodoDTO todoDTO) {
+	public TodoEntity todoSave(UserTokenDTO dto, TodoDTO todoDTO) {
 		UserEntity entity = userRepository.findByUsername(dto.getUsername());
-		todoRepository.save(new TodoEntity(entity, todoDTO.getTitle(), todoDTO.getContent()));
+		return todoRepository.save(new TodoEntity(entity, todoDTO.getTitle(), todoDTO.getContent()));
 	}
 
 	@Transactional
-	public void todoUpdate(Long id, TodoDTO todoDTO) {
-		TodoEntity entity = todoRepository.findTodoEntityById(id);
-		entity.setContent(todoDTO.getContent());
-		entity.setTitle(todoDTO.getTitle());
-		todoRepository.save(entity);
+	public TodoEntity todoUpdate(TodoEntity todoEntity) {
+		TodoEntity entity = todoRepository.findTodoEntityById(todoEntity.getId());
+		entity.setContent(todoEntity.getContent());
+		entity.setTitle(todoEntity.getTitle());
+		return todoRepository.save(entity);
 	}
 
 	@Transactional
-	public void todoDelete(UserTokenDTO dto, Long id) {
+	public void todoDelete(Long id) {
 		todoRepository.deleteById(id);
 	}
-
 
 	@Transactional
 	public void addRecommand(UserTokenDTO dto, Long id) {
@@ -101,11 +100,12 @@ public class UserTodoService {
 
 		return pages;
 	}
+
 	//
 	// exist 필요
 	@Autowired
 	private RedisCacheManager redisCacheManager;
-	
+
 	@Transactional(readOnly = true)
 	public TodoEntity findOne(Long id) {
 		System.out.println("ID : " + id);
@@ -113,13 +113,12 @@ public class UserTodoService {
 		System.out.println(cacheName);
 		return todoRepository.findById(id).get();
 	}
-	
+
 	@Transactional(readOnly = true)
 	public TodoEntity findOneTestNotCacheAnnotation(Long id) {
 		System.out.println("ID : " + id);
 		Cache cache = redisCacheManager.getCache(String.valueOf(id));
-		
-		
+
 		return todoRepository.findById(id).get();
 	}
 }

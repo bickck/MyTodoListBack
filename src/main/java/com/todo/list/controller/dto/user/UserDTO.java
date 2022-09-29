@@ -4,12 +4,19 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UserDTO {
+	
+	private Long id;
 
 	@NotEmpty
 	private String username;
 
-	@NotEmpty
 	private String password;
+
+	private String introComment;
+
+	private String userImageName;
+
+	private String userIagePath;
 
 	public UserDTO() {
 		// TODO Auto-generated constructor stub
@@ -19,6 +26,16 @@ public class UserDTO {
 		super();
 		this.username = username;
 		this.password = password;
+	}
+
+	public UserDTO(@NotEmpty String username, String password, String introComment, String userImageName,
+			String userIagePath) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.introComment = introComment;
+		this.userImageName = userImageName;
+		this.userIagePath = userIagePath;
 	}
 
 	public String getUsername() {
@@ -37,9 +54,28 @@ public class UserDTO {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "UserDTO [username=" + username + ", password=" + password + "]";
+	public String getIntroComment() {
+		return introComment;
+	}
+
+	public void setIntroComment(String introComment) {
+		this.introComment = introComment;
+	}
+
+	public String getUserImageName() {
+		return userImageName;
+	}
+
+	public void setUserImageName(String userImageName) {
+		this.userImageName = userImageName;
+	}
+
+	public String getUserIagePath() {
+		return userIagePath;
+	}
+
+	public void setUserIagePath(String userIagePath) {
+		this.userIagePath = userIagePath;
 	}
 
 }

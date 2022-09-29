@@ -52,7 +52,7 @@ import lombok.extern.java.Log;
 
 /**
  * 
- * 이 문서는 로그인된 유저가 자기가 작성한 글, 배경, 명언들을 API로 보내줌
+ * 
  * 
  */
 @RestController
@@ -63,7 +63,7 @@ public class UserController {
 	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
 
 	private UserService userService;
-	private UserApiService userApiService;
+
 	private UserQuoteService userQuoteService;
 	private ImageService imaegService;
 	private UserTodoService todoService;
@@ -74,108 +74,42 @@ public class UserController {
 	@Autowired
 	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService) {
 		this.userService = userService;
-		this.userApiService = userApiService;
 		this.userQuoteService = userQuoteService;
 		this.imaegService = new UserImageUploadService();
 	}
 
-	@PostMapping("/user")
-	public ResponseEntity<LoginUserDTO> getUser(@UserAuthToken UserTokenDTO tokenDTO) {
-
-		UserEntity userinfo = userApiService.getUserApi(tokenDTO);
-
-		return new ResponseEntity<LoginUserDTO>(new LoginUserDTO(userinfo), HttpStatus.OK);
-
-	}
-
-	/*
-	 * Quote CRUD
+	/**
+	 * 
+	 * 파라미터 유저 ID와
+	 * 
 	 */
 
-	// save = 1, update = 2, delete = 3
-	@PostMapping("/quote/1")
-	public ResponseEntity<?> savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
+	@PostMapping("/update/intro/{id}")
+	public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody UserDTO userDTO) {
 
-		UserEntity user = userApiService.getUserApi(tokenDTO);
-		QuoteBuilder builder = new QuoteBuilder();
-		builder.setQuote(quoteDTO.getQuote());
-		builder.setAuthor(quoteDTO.getAuthor());
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(id);
+		userEntity.setIntroComment(userDTO.getIntroComment());
+		userService.userUpdate(userEntity);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	// User identify number
 
-		userQuoteService.quoteInsert(builder.builder(), user);
+	@PostMapping("/delete/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+
+		userService.userDelete(id);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PostMapping("/quote/3/{id}")
-	public ResponseEntity<?> deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
+	// change password
 
-		userQuoteService.quoteDelete(id);
-
-		return new ResponseEntity<>(HttpStatus.CREATED);
-	}
-
-	/*
-	 * BackGroundImg CRUD
-	 */
-
-	@PostMapping("/background/1")
-	public ResponseEntity<?> saveUserBackGroundImg(@RequestParam(name = "file") MultipartFile multipartFile,
-			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO) throws IOException {
-
-		BackGroundImgBuilder backGroundImgBuilder = new BackGroundImgBuilder();
-		backGroundImgBuilder.setFileName(fileName).setMultipartFile(multipartFile).setUserName(tokenDTO.getUsername());
-		imaegService.saveImageInDir(backGroundImgBuilder.builder());
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@PostMapping("/background/2/{id}")
-	public ResponseEntity<?> updateUserBackGroundImg(@PathVariable Long id) {
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@PostMapping("/background/3/{id}")
-	public ResponseEntity<?> deleteUserBackGroundImg(@PathVariable Long id) {
+	@PostMapping("/changePassword/{id}")
+	public ResponseEntity<?> changePassword(@PathVariable Long id) {
 		// imaegService.deleteBackGroundImage(id);
 
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	/*
-	 * To Do CRUD
-	 */
-
-	@PostMapping("/todo/1")
-	public ResponseEntity<?> saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
-
-		todoService.todoSave(userTokenDTO, todoDTO);
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	// cache 삭제 후 정보를 다시 입력
-
-	@PostMapping("/todo/2/{id}")
-	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO dto,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
-
-		todoService.todoUpdate(id, dto);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@PostMapping("/todo/3/{id}")
-	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id) {
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@PostMapping("/todo/isPublish/{id}")
-	public ResponseEntity<?> requestUpdatIsPublished(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
-
-		todoService.updatePublished(id, dto.getUsername());
-
-		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 }

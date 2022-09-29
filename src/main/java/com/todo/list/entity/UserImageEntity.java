@@ -68,6 +68,12 @@ public class UserImageEntity {
 		this.fileSize = fileSize;
 	}
 
+	public UserImageEntity(String fileName, String location) {
+		super();
+		this.fileName = fileName;
+		this.location = location;
+	}
+
 	@Override
 	public String toString() {
 		return "UserImageEntity [id=" + id + ", user=" + user + ", fileName=" + fileName + ", location=" + location
