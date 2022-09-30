@@ -34,9 +34,16 @@ import com.todo.list.controller.response.ResponseTodoEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.queto.UserQuoteService;
-import com.todo.list.service.todo.UserTodoService;
+import com.todo.list.service.user.UserQuoteService;
+import com.todo.list.service.user.UserTodoService;
 import com.todo.list.util.auth.UserAuthToken;
+
+
+/**
+ * 
+ * 해당 유저의 Todo 데이터를 가지고 있는 클래스
+ * 
+ */
 
 @RestController
 @RequestMapping(value = "/todo/manage")
@@ -63,7 +70,7 @@ public class TodoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PostMapping("/update")
+	@PostMapping("/update/{id}")
 	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
@@ -75,7 +82,7 @@ public class TodoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PostMapping("/delete")
+	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		userTodoService.todoDelete(id);

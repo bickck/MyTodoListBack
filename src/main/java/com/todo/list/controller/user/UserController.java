@@ -41,20 +41,22 @@ import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.UserImageUploadService;
 import com.todo.list.service.image.user.UserBackGroundImgService;
-import com.todo.list.service.queto.UserQuoteService;
-import com.todo.list.service.todo.UserTodoService;
+import com.todo.list.service.user.UserQuoteService;
 import com.todo.list.service.user.UserService;
+import com.todo.list.service.user.UserTodoService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.UserAuthToken;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;
 
+
 /**
  * 
- * 
+ * 해당 유저의 데이터를 가지고 있는 클래스
  * 
  */
+
 @RestController
 @RequestMapping(value = "/user/manage")
 public class UserController {
@@ -77,12 +79,6 @@ public class UserController {
 		this.userQuoteService = userQuoteService;
 		this.imaegService = new UserImageUploadService();
 	}
-
-	/**
-	 * 
-	 * 파라미터 유저 ID와
-	 * 
-	 */
 
 	@PostMapping("/update/intro/{id}")
 	public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody UserDTO userDTO) {

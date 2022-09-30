@@ -1,4 +1,4 @@
-package com.todo.list.service.todo;
+package com.todo.list.service.user;
 
 import java.util.List;
 

@@ -19,7 +19,7 @@ import com.todo.list.redis.RedisCacheManagerName;
 import com.todo.list.redis.RedisCacheNames;
 import com.todo.list.redis.RedisCacheable;
 import com.todo.list.redis.service.TodoCacheService;
-import com.todo.list.service.todo.UserTodoService;
+import com.todo.list.service.user.UserTodoService;
 import com.todo.list.test.Entity.EventEntity;
 import com.todo.list.test.repository.EventRepository;
 

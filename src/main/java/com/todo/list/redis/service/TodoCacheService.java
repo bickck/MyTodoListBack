@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.RedisConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.service.todo.UserTodoService;
+import com.todo.list.service.user.UserTodoService;
 
 @Service
 public class TodoCacheService implements CacheStorageManager {

@@ -23,7 +23,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.TodoEntity;
-import com.todo.list.service.todo.UserTodoService;
+import com.todo.list.service.user.UserTodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController

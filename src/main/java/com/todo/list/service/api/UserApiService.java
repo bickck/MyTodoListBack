@@ -18,10 +18,10 @@ import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
+import com.todo.list.service.user.UserQuoteService;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
-import com.todo.list.service.queto.UserQuoteService;
 
 @Service
 public class UserApiService {
