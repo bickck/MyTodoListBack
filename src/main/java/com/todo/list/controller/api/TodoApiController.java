@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.api;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.TodoBuilder;
@@ -27,6 +28,7 @@ import com.todo.list.service.user.UserTodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
+@RequestMapping("/todo/api")
 public class TodoApiController {
 
 	private UserTodoService userTodoService;

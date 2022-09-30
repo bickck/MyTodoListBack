@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;

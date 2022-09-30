@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class UserApiController {
 	 */
 
 	@ResponseBody
-	@RequestMapping(value = "/intro", headers = "")
+	@RequestMapping(value = "/intro")
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
 		String username = userTokenDTO.getUsername();
 		userApiService.getUserIntroDetailsApi(username);
