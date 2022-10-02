@@ -59,7 +59,6 @@ import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.UserImageUploadService;
-import com.todo.list.service.test.UserTest;
 import com.todo.list.test.service.TestService;
 
 @RestController
@@ -83,8 +82,6 @@ public class TestController {
 	@Autowired
 	private UserImageRepository userImageRepository;
 
-	@Autowired
-	private UserTest test;
 
 //	@Autowired
 //	private UserImageUploadService imageUploadService;
@@ -130,10 +127,6 @@ public class TestController {
 		return "success";
 	}
 
-	@GetMapping("/test/userTest")
-	public void testUser() {
-		test.save();
-	}
 
 	@GetMapping("/test/select")
 	public String testSelectTime() {

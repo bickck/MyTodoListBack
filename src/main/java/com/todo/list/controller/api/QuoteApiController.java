@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageQuoteBuilder;
@@ -26,6 +27,7 @@ import com.todo.list.service.user.UserService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
+@RequestMapping("/quote/api")
 public class QuoteApiController {
 
 	private UserApiService userApiService;
@@ -59,9 +61,8 @@ public class QuoteApiController {
 		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
 	}
 	
-	@PostMapping("/quote/{id}")
-	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
+	@PostMapping("/{id}")
+	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
 //		Iterator<UserQuoteEntity> itr = userApiService.getUserquotes(userTokenDTO, pageRequest).listIterator();
@@ -77,5 +78,16 @@ public class QuoteApiController {
 		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
 	}
 
+//	@PostMapping("/recommand/all")
+//	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id) {
+//
+//		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
+//	}
+	
+//	@PostMapping("/recommand/{id}")
+//	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id) {
+//
+//		return new ResponseEntity<List<QuoteDTO>>(list, HttpStatus.OK);
+//	}
 	
 }

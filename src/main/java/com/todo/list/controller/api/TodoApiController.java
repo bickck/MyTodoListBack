@@ -39,7 +39,7 @@ public class TodoApiController {
 	}
 
 	// @Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
-	@GetMapping("/todoData")
+	@GetMapping("/mainpost")
 	public Page<TodoDTO> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
 
 		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
@@ -51,9 +51,8 @@ public class TodoApiController {
 				page.getTotalElements());
 	}
 
-	@PostMapping("/todo/{id}")
-	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
+	@PostMapping("/{id}")
+	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
 		List<TodoDTO> list = null; // userApiService.getUserToDoLists(userTokenDTO, pageRequest);
@@ -61,16 +60,6 @@ public class TodoApiController {
 		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
 	}
 	
-	
-
-	@PostMapping("/todo/isPublish/{id}")
-	public ResponseEntity<?> requestUpdatIsPublished(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
-
-		userTodoService.updatePublished(id, dto.getUsername());
-
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
-
 	@GetMapping("/recommand/todos")
 	public ResponseEntity<?> requestRecommandTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
 
@@ -79,7 +68,7 @@ public class TodoApiController {
 		return new ResponseEntity<PageTodoDTO>(HttpStatus.OK);
 	}
 
-	@PostMapping("/recommand/todo/{id}")
+	@PostMapping("/recommand/{id}")
 	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
 		userTodoService.addRecommand(dto, id);
