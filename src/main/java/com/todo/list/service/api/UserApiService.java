@@ -19,6 +19,7 @@ import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.service.user.UserQuoteService;
+import com.todo.list.util.Utils;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
@@ -38,6 +39,8 @@ public class UserApiService {
 	@Autowired
 	private UserImageRepository userImageRepository;
 
+	private Utils utils = new Utils();
+
 	public Page<UserEntity> getUserList(Pageable pageable) {
 		return userRepository.findAll(pageable);
 	}
@@ -52,10 +55,23 @@ public class UserApiService {
 	public UserIntroDTO getUserIntroDetailsApi(String username) {
 		UserEntity userEntity = userRepository.findByUsername(username);
 		UserIntroDTO userIntroDTO = new UserIntroDTO();
+
 		userIntroDTO.setId(userEntity.getId());
-		userIntroDTO.setFileName(userEntity.getUserImageEntity().getFileName());
-		userIntroDTO.setLocation(userEntity.getUserImageEntity().getLocation());
-		userIntroDTO.setIntroComment(userEntity.getIntroComment());
+		userIntroDTO.setUsername(userEntity.getUsername());
+		String fileName = userEntity.getUserImageEntity().getFileName();
+		String location = userEntity.getUserImageEntity().getLocation();
+		String introComment = userEntity.getIntroComment();
+
+		if (fileName == null) {
+			userIntroDTO.setFileName(utils.nvl(fileName));
+		}
+		if (location == null) {
+			userIntroDTO.setLocation(utils.nvl(location));
+		}
+		if (introComment == null) {
+			userIntroDTO.setIntroComment(utils.nvl(introComment));
+		}
+
 		return userIntroDTO;
 	}
 

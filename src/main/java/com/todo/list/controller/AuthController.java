@@ -49,26 +49,25 @@ public class AuthController {
 		this.userService = userService;
 	}
 
+	@ResponseBody
 	@PostMapping("/login")
 	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO) throws AuthenticationException {
 
+		System.out.println(userDTO.getEmail());
+		System.out.println(userDTO.getPassword());
 		UserEntity user = userService.userLogin(userDTO);
 		String userToken = jwtLoginToken.makeToken(user);
 
-		return new ResponseEntity<String>("success", HttpStatus.CREATED);
+		return new ResponseEntity<String>(userToken, HttpStatus.ACCEPTED);
 	}
 
 	@ResponseBody
 	@PostMapping("/register")
 	public synchronized ResponseEntity<String> registerRequest(@RequestBody UserDTO userDTO) {
 
-		String username = userDTO.getUsername();
-		String password = userDTO.getPassword();
-		String introComment = utils.nvl(userDTO.getIntroComment());
+		userService.userSave(userDTO);
 
-		userService.userSave(new UserEntity(username, password, introComment));
-
-		return new ResponseEntity<String>("success", HttpStatus.CREATED);
+		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
 	@PostMapping("/logout")

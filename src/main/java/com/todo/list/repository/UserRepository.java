@@ -22,12 +22,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	UserEntity findByUsernameAndPassword(String username, String password);
 
+	UserEntity findByEmail(String email);
+
 	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
 	List<UserEntity> findAllbyfetchJoin();
 
-	@Query(name = "SELECT" + 
-				  "u.id, u.username, u.introComment, i.fileName, i.location" + 
-				  "FROM USER_ENTITY u inner join USER_IMAGE i on u.id = i.id where=#{username}",nativeQuery = true)
+	@Query(name = "SELECT" + "u.id, u.username, u.introComment, i.fileName, i.location"
+			+ "FROM USER_ENTITY u inner join USER_IMAGE i on u.id = i.id where=#{username}", nativeQuery = true)
 	UserEntity findUserIntroInfoByUsername(String username);
 
 	Page<UserEntity> findAll(Pageable pageable);

@@ -83,6 +83,19 @@ public class TodoEntity {
 		this.isPublish = publish;
 	}
 
+	public TodoEntity(@NotNull String title, @NotNull String content, @NotNull Publish publish) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.isPublish = publish;
+	}
+
+	public TodoEntity(@NotNull String title, @NotNull String content) {
+		super();
+		this.title = title;
+		this.content = content;
+	}
+
 	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content, @NotNull Long recommand,
 			@NotNull Publish isPublish) {
 		super();

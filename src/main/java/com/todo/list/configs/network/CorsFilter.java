@@ -17,7 +17,7 @@ public class CorsFilter implements Filter {
 
 	// https://wonit.tistory.com/572 이곳에서 cors에 대한 해결 방법이 적혀있음
 
-	private String FrontEndServer = "http://127.0.0.1:5501";
+	private String FrontEndServer = "http://127.0.0.1:5500";
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

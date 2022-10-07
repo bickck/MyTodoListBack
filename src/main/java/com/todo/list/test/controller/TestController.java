@@ -82,25 +82,24 @@ public class TestController {
 	@Autowired
 	private UserImageRepository userImageRepository;
 
-
 //	@Autowired
 //	private UserImageUploadService imageUploadService;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@GetMapping("/test/findUserIntroInfoByUsername")
-	@ResponseBody
-	public ResponseEntity<?> testFindUserIntroInfoByUsername() {
-		UserEntity user = new UserEntity("username1234", "1234");
-		user.setUserImageEntity(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
-		repository.save(user);
-		//userImageRepository.save(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
-		UserEntity dto = repository.findUserIntroInfoByUsername("username1234");
-		
-		System.out.println(dto.getUserImageEntity().toString());
-
-		return new ResponseEntity<String>("success", HttpStatus.OK);
-	}
+//	@GetMapping("/test/findUserIntroInfoByUsername")
+//	@ResponseBody
+//	public ResponseEntity<?> testFindUserIntroInfoByUsername() {
+//		UserEntity user = new UserEntity("username1234", "1234");
+//		user.setUserImageEntity(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
+//		repository.save(user);
+//		//userImageRepository.save(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
+//		UserEntity dto = repository.findUserIntroInfoByUsername("username1234");
+//		
+//		System.out.println(dto.getUserImageEntity().toString());
+//
+//		return new ResponseEntity<String>("success", HttpStatus.OK);
+//	}
 
 	@PostMapping("/test/randomnumberAndPublish")
 	public String dummyTest() {
@@ -126,7 +125,6 @@ public class TestController {
 		service.testInsert();
 		return "success";
 	}
-
 
 	@GetMapping("/test/select")
 	public String testSelectTime() {

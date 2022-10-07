@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "USER_IMAGE")
 public class UserImageEntity {
@@ -45,6 +46,10 @@ public class UserImageEntity {
 	@CreationTimestamp
 	@Column(name = "CREATE_DATE")
 	private Timestamp createDate;
+	
+	@UpdateTimestamp
+	@Column(name = "UPDATE_DATE")
+	private Timestamp updateDate;
 
 	public UserImageEntity() {
 		// TODO Auto-generated constructor stub

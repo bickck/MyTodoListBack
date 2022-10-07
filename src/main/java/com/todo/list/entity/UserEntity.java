@@ -31,22 +31,25 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USERNAME", unique = true)
+	@Column(name = "EMAIL", unique = true)
+	private String email;
+
+	@Column(name = "USERNAME")
 	private String username;
 
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@Column(name = "INTRO_COMMENT")
+	@Column(name = "INTRO_COMMENT", length = 100)
 	private String introComment;
 
 	@Column(name = "CREATEDATE")
 	@CreationTimestamp
-	private Timestamp create;
+	private Timestamp createDate;
 
 	@Column(name = "UPDATECREATE")
 	@UpdateTimestamp
-	private Timestamp update;
+	private Timestamp updateDate;
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -64,8 +67,15 @@ public class UserEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserEntity(String username, String password) {
+	public UserEntity(String email, String password) {
 		super();
+		this.email = email;
+		this.password = password;
+	}
+
+	public UserEntity(String email, String username, String password) {
+		super();
+		this.email = email;
 		this.username = username;
 		this.password = password;
 	}
@@ -81,13 +91,6 @@ public class UserEntity {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
-	}
-
-	public UserEntity(String username, String password, String introComment) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.introComment = introComment;
 	}
 
 	public UserEntity(String username, String password, List<QuoteEntity> quotes, List<TodoEntity> todos) {
@@ -110,6 +113,14 @@ public class UserEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getIntroComment() {
@@ -136,22 +147,6 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public Timestamp getCreate() {
-		return create;
-	}
-
-	public void setCreate(Timestamp create) {
-		this.create = create;
-	}
-
-	public Timestamp getUpdate() {
-		return update;
-	}
-
-	public void setUpdate(Timestamp update) {
-		this.update = update;
-	}
-
 	public List<QuoteEntity> getQuotes() {
 		return quotes;
 	}
@@ -174,6 +169,22 @@ public class UserEntity {
 
 	public void setUserImageEntity(UserImageEntity userImageEntity) {
 		this.userImageEntity = userImageEntity;
+	}
+
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
+
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
 	}
 
 }

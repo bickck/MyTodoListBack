@@ -46,7 +46,7 @@ import com.todo.list.util.auth.UserAuthToken;
  */
 
 @RestController
-@RequestMapping(value = "/todo/manage")
+@RequestMapping(value = "/user/todo/manage")
 public class TodoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -66,6 +66,14 @@ public class TodoController {
 	public ResponseEntity<?> saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		userTodoService.todoSave(userTokenDTO, todoDTO);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/test/save")
+	public ResponseEntity<?> saveUserTodoTest(@RequestBody TodoDTO todoDTO) {
+
+		userTodoService.todoSaveTest(todoDTO);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

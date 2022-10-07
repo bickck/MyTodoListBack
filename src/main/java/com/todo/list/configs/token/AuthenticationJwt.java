@@ -20,6 +20,7 @@ public class AuthenticationJwt {
 
 	private final String SECURITY_KEY = "security";
 	private final String USERNAME = "username";
+	private final String EMAIL = "email";
 	private final String USERID = "userid";
 	private long tokenValidTime = 30 * 60 * 1000L;
 
@@ -27,13 +28,9 @@ public class AuthenticationJwt {
 
 		Date now = new Date();
 
-		return Jwts.builder()
-				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-				.setIssuer("server")
-				.setIssuedAt(now)
-				.setExpiration(new Date(now.getTime() + tokenValidTime))
-				.claim(USERID, userEntity.getId())
-				.claim(USERNAME, userEntity.getUsername())
+		return Jwts.builder().setHeaderParam(Header.TYPE, Header.JWT_TYPE).setIssuer("server").setIssuedAt(now)
+				.setExpiration(new Date(now.getTime() + tokenValidTime)).claim(USERID, userEntity.getId())
+				.claim(USERNAME, userEntity.getUsername()).claim(EMAIL, userEntity.getEmail())
 				.signWith(SignatureAlgorithm.HS256, SECURITY_KEY).compact();
 	}
 
@@ -42,7 +39,7 @@ public class AuthenticationJwt {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(requestToken);
 
 			String s = Jwts.parser().setSigningKey(SECURITY_KEY).parsePlaintextJws(requestToken).getBody();
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -55,18 +52,23 @@ public class AuthenticationJwt {
 	}
 
 	public UserTokenDTO getUserTokenDTO(String token) {
-		
-		Long id = (Long) Jwts.parser()
-				.setSigningKey(SECURITY_KEY)
-				.parseClaimsJws(token).getBody().get(USERID);
-		
+
+		int id = (int) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody().get(USERID);
+
 		String username = (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody()
 				.get(USERNAME);
-		
-		return new UserTokenDTO(id, username);
+
+		String email = (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody().get(EMAIL);
+
+		return new UserTokenDTO(Long.valueOf(id), username, email);
 	}
 
-	public String getUsername(String requestToken) {
+	public String getUserEmail(String requestToken) {
+
+		return (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(requestToken).getBody().get(EMAIL);
+	}
+
+	public String getUserName(String requestToken) {
 
 		return (String) Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(requestToken).getBody().get(USERNAME);
 	}

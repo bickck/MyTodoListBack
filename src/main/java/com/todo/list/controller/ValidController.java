@@ -21,9 +21,9 @@ public class ValidController {
 	@PostMapping("/valid/username")
 	public ResponseEntity<String> validUsernameCheck(String username) {
 
-		if (!userUtil.isUsernameDuplicatedCheck(username)) {
-			return new ResponseEntity<String>("unvalid",HttpStatus.NOT_FOUND);
-		}
+//		if (!userUtil.isUsernameDuplicatedCheck(username)) {
+//			return new ResponseEntity<String>("unvalid",HttpStatus.NOT_FOUND);
+//		}
 		return new ResponseEntity<String>("valid",HttpStatus.OK);
 	}
 

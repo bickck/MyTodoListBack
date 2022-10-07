@@ -11,8 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-
-public class TodoDTO implements Serializable{
+public class TodoDTO implements Serializable {
 
 	/**
 	 * 
@@ -27,6 +26,8 @@ public class TodoDTO implements Serializable{
 
 	private String content;
 
+	private String isChekcPuhlic;
+
 	private Timestamp createDate;
 
 	public TodoDTO() {
@@ -39,6 +40,16 @@ public class TodoDTO implements Serializable{
 		this.user = user;
 		this.title = title;
 		this.content = content;
+		this.createDate = createDate;
+	}
+
+	public TodoDTO(Long id, String user, String title, String content, String isChekcPuhlic, Timestamp createDate) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.isChekcPuhlic = isChekcPuhlic;
 		this.createDate = createDate;
 	}
 
@@ -72,6 +83,14 @@ public class TodoDTO implements Serializable{
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getIsChekcPuhlic() {
+		return isChekcPuhlic;
+	}
+
+	public void setIsChekcPuhlic(String isChekcPuhlic) {
+		this.isChekcPuhlic = isChekcPuhlic;
 	}
 
 	public Timestamp getCreateDate() {

@@ -36,6 +36,15 @@ public class UserTodoService {
 		UserEntity entity = userRepository.findByUsername(dto.getUsername());
 		return todoRepository.save(new TodoEntity(entity, todoDTO.getTitle(), todoDTO.getContent()));
 	}
+	
+	@Transactional
+	public TodoEntity todoSaveTest(TodoDTO todoDTO) {
+		
+		if(todoDTO.getIsChekcPuhlic() == Publish.PUBLISH.toString()) {
+			
+		}
+		return todoRepository.save(new TodoEntity(todoDTO.getTitle(), todoDTO.getContent()));
+	}
 
 	@Transactional
 	public TodoEntity todoUpdate(TodoEntity todoEntity) {

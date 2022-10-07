@@ -1,6 +1,7 @@
 package com.todo.list.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.logging.Logger;
 
 import javax.security.sasl.AuthenticationException;
@@ -16,10 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
+import antlr.collections.Enumerator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-//@WebFilter(urlPatterns = "/user/*")
+@WebFilter(urlPatterns = {"/user/*"})
 public class UserAuthJwtFilter implements Filter {
 
 	@Override
@@ -33,8 +35,13 @@ public class UserAuthJwtFilter implements Filter {
 			throws IOException, ServletException {
 
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		String authorization = httpServletRequest.getHeader("authorization");
+		String authorization = httpServletRequest.getHeader("Authorization");
 
+		Enumeration<String> e = httpServletRequest.getHeaderNames();
+		while(e.hasMoreElements()) {
+			System.out.println(e.nextElement());
+		}
+	
 		if (authorization == null) {
 			throw new AuthenticationException();
 		} else {

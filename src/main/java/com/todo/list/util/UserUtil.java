@@ -38,8 +38,8 @@ public class UserUtil implements BcryptHelper {
 		return BCrypt.checkpw(rowPassword, encPassword);
 	}
 
-	public boolean isUsernameDuplicatedCheck(String username) {
-		UserEntity user = userRepository.findByUsername(username);
+	public boolean isCheckDuplicatedEmail(String email) {
+		UserEntity user = userRepository.findByEmail(email);
 
 		return (user == null) ? true : false;
 	}

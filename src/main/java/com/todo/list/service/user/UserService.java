@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
 
@@ -30,16 +33,21 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private UserImageRepository userImageRepository;
+
+	@Autowired
 	private UserUtil userUtil;
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void userSave(UserEntity userEntity) {
-		String username = userEntity.getUsername();
-		String password = userEntity.getPassword();
+	public void userSave(UserDTO userDTO) {
+		String email = userDTO.getEmail();
+		String username = userDTO.getUsername();
+		String password = userDTO.getPassword();
 
-		if (userUtil.isUsernameDuplicatedCheck(username)) {
+		if (userUtil.isCheckDuplicatedEmail(email)) {
 			String passwordEncode = userUtil.bCrypt(password);
-			userRepository.save(new UserEntity(username, passwordEncode));
+			UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
+			userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
 		} else {
 			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
@@ -48,27 +56,31 @@ public class UserService {
 	@Transactional
 	public UserEntity userUpdate(UserEntity user) {
 		UserEntity userEntityFromDB = userRepository.getById(user.getId());
-		
+
 		userEntityFromDB.setIntroComment(user.getIntroComment());
-		
+
 		return userRepository.save(userEntityFromDB);
 	}
 
 	@Transactional
 	public void userDelete(Long id) {
-		//userRepository.deleteByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+		// userRepository.deleteByUsernameAndPassword(userDTO.getUsername(),
+		// userDTO.getPassword());
 		userRepository.deleteById(id);
 	}
 
-	@Transactional
-	public UserEntity userLogin(UserDTO userDTO) throws AuthenticationException {
+	// 이메일 확인 및 비밀번호 확인 로직 필요
 
-		UserEntity user = userRepository.findByUsername(userDTO.getUsername());
-		String password = userDTO.getPassword();
+	@Transactional
+	public UserEntity userLogin(UserDTO requestUserArg) throws AuthenticationException {
+
+		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail());
+
+		String password = requestUserArg.getPassword();
 		String encPassword = user.getPassword();
 
-		if (!userUtil.isMatch(password, encPassword)) {
-			throw new AuthenticationException();
+		if (!userUtil.isMatch(password, encPassword) && user != null) {
+			throw new AuthenticationException("이메일 및 비밀번호가 맞지 않습니다.");
 		}
 
 		return user;

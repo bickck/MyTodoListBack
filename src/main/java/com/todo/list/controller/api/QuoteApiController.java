@@ -44,23 +44,23 @@ public class QuoteApiController {
 	 * 유저의 Quote 모든 정보 가져오기
 	 */
 
-	@PostMapping("/quotes")
-	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
-			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
-		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
-
-		Page<QuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
-		PageQuoteBuilder builder = new PageQuoteBuilder();
-		builder.setLists(entities.getContent());
-		builder.setNumber(entities.getNumber());
-		builder.setNumberOfElements(entities.getNumberOfElements());
-		builder.setPageable(entities.getPageable());
-		builder.setSize(entities.getSize());
-		builder.setTotalPages(entities.getTotalPages());
-		builder.setTotalElements(entities.getTotalElements());
-		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
-	}
-	
+//	@PostMapping("/quotes")
+//	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
+//			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
+//		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
+//
+//		Page<QuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
+//		PageQuoteBuilder builder = new PageQuoteBuilder();
+//		builder.setLists(entities.getContent());
+//		builder.setNumber(entities.getNumber());
+//		builder.setNumberOfElements(entities.getNumberOfElements());
+//		builder.setPageable(entities.getPageable());
+//		builder.setSize(entities.getSize());
+//		builder.setTotalPages(entities.getTotalPages());
+//		builder.setTotalElements(entities.getTotalElements());
+//		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
+//	}
+//	
 	@PostMapping("/{id}")
 	public ResponseEntity<List<QuoteDTO>> getUserApiQuotesByid(@PathVariable Integer id) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
