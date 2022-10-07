@@ -12,10 +12,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +42,7 @@ import com.todo.list.util.auth.UserAuthToken;
  * 로그인이 되었을 시 유저 브라우저에 있는 토큰 정보를 가지고 데이터를 제공하는 파일
  * 
  */
+//@CrossOrigin(originPatterns = "http://localhost:5501",exposedHeaders = "")
 @RestController
 @RequestMapping(value = "/user/api")
 public class UserApiController {
@@ -67,7 +70,7 @@ public class UserApiController {
 	 */
 
 	@ResponseBody
-	@RequestMapping(value = "/intro")
+	@PostMapping(value = "/intro")
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
 		String username = userTokenDTO.getUsername();
 		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(username);

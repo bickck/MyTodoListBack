@@ -43,14 +43,14 @@ public class UserService {
 		String email = userDTO.getEmail();
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
+		String passwordEncode = userUtil.bCrypt(password);
 
-		if (userUtil.isCheckDuplicatedEmail(email)) {
-			String passwordEncode = userUtil.bCrypt(password);
-			UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
-			userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
-		} else {
+		if (!userUtil.isCheckDuplicatedEmail(email)) {
 			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
+
+		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
+		userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
 	}
 
 	@Transactional

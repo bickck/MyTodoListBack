@@ -15,13 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-@WebFilter(urlPatterns = "/auth/*")
+@WebFilter(urlPatterns = "/auth/*", displayName = "Check User Jwt")
 public class UserLoginFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
+		System.out.println("Come in UserLoginFilter");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authorization = httpServletRequest.getHeader("Authorization");
 		if (authorization == null) {

@@ -21,37 +21,22 @@ import antlr.collections.Enumerator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebFilter(urlPatterns = {"/user/*"})
+@WebFilter(urlPatterns = "/user/*", displayName = "Confirm User Jwt")
 public class UserAuthJwtFilter implements Filter {
-
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		Filter.super.init(filterConfig);
-	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
+		System.out.println("Come in UserAuthJwtFilter");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authorization = httpServletRequest.getHeader("Authorization");
 
-		Enumeration<String> e = httpServletRequest.getHeaderNames();
-		while(e.hasMoreElements()) {
-			System.out.println(e.nextElement());
-		}
-	
 		if (authorization == null) {
-			throw new AuthenticationException();
+			throw new AuthenticationException("승인받지 않는 접속자");
 		} else {
 			chain.doFilter(request, response);
 		}
 	}
 
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		Filter.super.destroy();
-	}
 }

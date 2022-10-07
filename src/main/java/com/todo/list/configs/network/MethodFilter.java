@@ -1,6 +1,7 @@
 package com.todo.list.configs.network;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class MethodFilter implements Filter {
 
 	@Override
@@ -21,6 +22,11 @@ public class MethodFilter implements Filter {
 		// TODO Auto-generated method stub
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+
+		Enumeration<String> e = httpServletRequest.getHeaderNames();
+		while (e.hasMoreElements()) {
+			System.out.println(e.nextElement());
+		}
 
 		if ("OPTION".equalsIgnoreCase(httpServletRequest.getMethod())
 				|| "PUT".equalsIgnoreCase(httpServletRequest.getMethod())
