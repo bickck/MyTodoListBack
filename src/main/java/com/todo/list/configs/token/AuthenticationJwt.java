@@ -22,7 +22,7 @@ public class AuthenticationJwt {
 	private final String USERNAME = "username";
 	private final String EMAIL = "email";
 	private final String USERID = "userid";
-	private long tokenValidTime = 30 * 60 * 1000L;
+	private long tokenValidTime = 30 * 60 * 100000L;
 
 	public String makeToken(UserEntity userEntity) {
 
