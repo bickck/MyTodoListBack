@@ -96,5 +96,17 @@ public class TodoController {
 		userTodoService.todoDelete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@PostMapping("/heart/{id}")
+	public ResponseEntity<?> todoCommentHeartAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
+		userTodoService.todoDelete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	@PostMapping("/comment/add/{id}")
+	public ResponseEntity<?> todoCommentAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
+
+		userTodoService.todoDelete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

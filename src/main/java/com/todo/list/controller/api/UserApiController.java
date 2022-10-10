@@ -74,7 +74,7 @@ public class UserApiController {
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
 		String username = userTokenDTO.getUsername();
 		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(username);
-		return new ResponseEntity<UserIntroDTO>(introDTO,HttpStatus.OK);
+		return new ResponseEntity<UserIntroDTO>(introDTO, HttpStatus.OK);
 	}
 
 	/**
@@ -86,16 +86,12 @@ public class UserApiController {
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
 			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 
-//		Page<TodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
-//
-//		PageTodoBuilder builder = new PageTodoBuilder()
-//				.setLists(entities.getContent())
-//				.setNumber(entities.getNumber())
-//				.setNumberOfElements(entities.getNumberOfElements())
-//				.setPageable(entities.getPageable())
-//				.setSize(entities.getSize())
-//				.setTotalPages(entities.getTotalPages())
-//				.setTotalElements(entities.getTotalElements());
+		Page<TodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
+
+		PageTodoBuilder builder = new PageTodoBuilder().setLists(entities.getContent()).setNumber(entities.getNumber())
+				.setNumberOfElements(entities.getNumberOfElements()).setPageable(entities.getPageable())
+				.setSize(entities.getSize()).setTotalPages(entities.getTotalPages())
+				.setTotalElements(entities.getTotalElements());
 
 		return new ResponseEntity<PageTodoDTO>(HttpStatus.OK);
 	}
@@ -105,22 +101,13 @@ public class UserApiController {
 	 * 유저의 Quote 모든 정보 가져오기
 	 */
 
-//	@PostMapping("/quotes")
-//	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
-//			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
-//		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
-//
-//		Page<QuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
-//		PageQuoteBuilder builder = new PageQuoteBuilder();
-//		builder.setLists(entities.getContent());
-//		builder.setNumber(entities.getNumber());
-//		builder.setNumberOfElements(entities.getNumberOfElements());
-//		builder.setPageable(entities.getPageable());
-//		builder.setSize(entities.getSize());
-//		builder.setTotalPages(entities.getTotalPages());
-//		builder.setTotalElements(entities.getTotalElements());
-//		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
-//	}
+	@PostMapping("/quotes")
+	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
+			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
+
+		return new ResponseEntity<PageQuoteDTO>(HttpStatus.OK);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,
@@ -131,9 +118,15 @@ public class UserApiController {
 		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
 		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
 	}
-	
-	@GetMapping()
-	public ResponseEntity<List<BackGroundDTO>> getUserRecommand(@PathVariable Integer id,
+
+	/**
+	 * 
+	 * @param id
+	 * @param userTokenDTO
+	 * @return 
+	 */
+	@GetMapping("/recommand")
+	public ResponseEntity<List<BackGroundDTO>> getUserRecommands(@PathVariable Integer id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
