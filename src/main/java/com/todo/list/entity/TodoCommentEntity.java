@@ -12,24 +12,22 @@ import javax.persistence.Id;
 @Entity(name = "TODO_COMMENT_ENTITY")
 public class TodoCommentEntity {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name ="COMMENT_UUID",unique = true)
+
+	@Column(name = "COMMENT_UUID", unique = true)
 	private String todoCommentUUID;
 
 //	@Column(name = "USER_ID")
 //	private UserEntity user;
-	
-//	@Column(name = "TODO_ID")
-//	private String todoUUID;
 
 	@Column(name = "COMMENT")
 	private String comment;
-	
+
 	@Column(name = "CREATE_DATE")
 	private Timestamp createTimeStamp;
-	
+
 	@Column(name = "UPDATE_DATE")
 	private Timestamp updateTimeStamp;
 

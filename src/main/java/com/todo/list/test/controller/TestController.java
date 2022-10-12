@@ -53,7 +53,7 @@ import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;

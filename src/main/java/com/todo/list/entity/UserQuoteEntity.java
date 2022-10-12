@@ -25,7 +25,7 @@ import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_QUOTE_ENTITY")
-public class QuoteEntity {
+public class UserQuoteEntity {
 
 	/**
 	 * 
@@ -61,25 +61,25 @@ public class QuoteEntity {
 	@Column(name = "UPDATETIMESTAMP")
 	private Timestamp updateTimestamp;
 
-	public QuoteEntity() {
+	public UserQuoteEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
+	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
 		super();
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
 	}
 
-	public QuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
+	public UserQuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
 		super();
 		this.user = user;
 		this.quote = quoteDTO.getQuote();
 		this.author = quoteDTO.getAuthor();
 	}
 
-	public QuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author,
+	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author,
 			@NotNull Publish isPublish, @NotNull Long recommand) {
 		super();
 		this.user = user;

@@ -1,5 +1,10 @@
 package com.todo.list.service.image;
 
+/**
+ * 
+ * 하드디스크에 실제 이미지 저장
+ */
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +15,11 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
 import com.todo.list.controller.dto.service.FileDTO;
 
+@Service
 public class UserImageUploadService implements ImageService {
 
 	@Override

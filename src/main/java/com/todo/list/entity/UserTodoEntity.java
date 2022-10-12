@@ -24,7 +24,7 @@ import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_TODO_ENTITY")
-public class TodoEntity {
+public class UserTodoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,27 +34,31 @@ public class TodoEntity {
 //	private String todoUUID;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", nullable = false)
 	private UserEntity user;
 
-	@Column(name = "TITLE")
+	@Column(name = "TITLE", nullable = false)
 	private String title;
 
 	@Lob
-	@Column(name = "CONTENT")
+	@Column(name = "CONTENT", nullable = false)
 	private String content;
 
-	@Column(name = "RECOMMAND")
-	private Long recommand;
+	@Column(name = "HEART")
+	private Long heart;
+
+//	@Column(name = "COMMENT")
+//	private List<TodoCommentEntity> comments;
 
 	// private String tag;
 
-	@Column(name = "ISAVAILABLEPUBLISH")
+	@Column(name = "ISAVAILABLEPUBLISH", nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private Publish isPublish;
 
 //	@Embedded
 //	private UserTimeStamp stamp;
+
 	@CreationTimestamp
 	@Column(name = "CREATE_DATE")
 	private Timestamp createDate;
@@ -63,47 +67,37 @@ public class TodoEntity {
 	@Column(name = "LAST_UPDATE")
 	private Timestamp lastUpdate;
 
-	public TodoEntity() {
+	public UserTodoEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content) {
+	public UserTodoEntity(String title, String content) {
 		super();
-		this.user = user;
 		this.title = title;
 		this.content = content;
 	}
 
-	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content,
-			@NotNull Publish publish) {
-		super();
-		this.user = user;
-		this.title = title;
-		this.content = content;
-		this.isPublish = publish;
-	}
-
-	public TodoEntity(@NotNull String title, @NotNull String content, @NotNull Publish publish) {
+	public UserTodoEntity(String title, String content, Publish publish) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.isPublish = publish;
 	}
 
-	public TodoEntity(@NotNull String title, @NotNull String content) {
-		super();
-		this.title = title;
-		this.content = content;
-	}
-
-	public TodoEntity(@NotNull UserEntity user, @NotNull String title, @NotNull String content, @NotNull Long recommand,
-			@NotNull Publish isPublish) {
+	public UserTodoEntity(UserEntity user, String title, String content) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.recommand = recommand;
-		this.isPublish = isPublish;
+	}
+
+	public UserTodoEntity(UserEntity userEntity, String title, String content, Long heart, Publish publish) {
+		super();
+		this.user = userEntity;
+		this.title = title;
+		this.content = content;
+		this.heart = heart;
+		this.isPublish = publish;
 	}
 
 	public Long getId() {
@@ -138,20 +132,20 @@ public class TodoEntity {
 		this.content = content;
 	}
 
+	public Long getHeart() {
+		return heart;
+	}
+
+	public void setHeart(Long heart) {
+		this.heart = heart;
+	}
+
 	public Publish getIsPublish() {
 		return isPublish;
 	}
 
 	public void setIsPublish(Publish isPublish) {
 		this.isPublish = isPublish;
-	}
-
-	public Long getRecommand() {
-		return recommand;
-	}
-
-	public void setRecommand(Long recommand) {
-		this.recommand = recommand;
 	}
 
 	public Timestamp getCreateDate() {

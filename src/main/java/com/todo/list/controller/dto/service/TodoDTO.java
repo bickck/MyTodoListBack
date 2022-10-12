@@ -28,6 +28,10 @@ public class TodoDTO implements Serializable {
 
 	private String isChekcPuhlic;
 
+	private Long heart;
+
+	private Long comment;
+
 	private Timestamp createDate;
 
 	public TodoDTO() {
@@ -51,6 +55,12 @@ public class TodoDTO implements Serializable {
 		this.content = content;
 		this.isChekcPuhlic = isChekcPuhlic;
 		this.createDate = createDate;
+	}
+
+	@Override
+	public String toString() {
+		return "TodoDTO [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", isChekcPuhlic="
+				+ isChekcPuhlic + ", heart=" + heart + ", comment=" + comment + ", createDate=" + createDate + "]";
 	}
 
 	public Long getId() {
@@ -99,6 +109,22 @@ public class TodoDTO implements Serializable {
 
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
+	}
+
+	public Long getHeart() {
+		return heart;
+	}
+
+	public void setHeart(Long heart) {
+		this.heart = heart;
+	}
+
+	public Long getComment() {
+		return comment;
+	}
+
+	public void setComment(Long comment) {
+		this.comment = comment;
 	}
 
 }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.todo.list.controller.dto.user.UserDTO;
-import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.UserTodoEntity;
 
 public class UserBuilder {
 
@@ -18,9 +18,9 @@ public class UserBuilder {
 
 	private Timestamp date;
 
-	private List<QuoteEntity> quotes = new ArrayList<QuoteEntity>();
+	private List<UserQuoteEntity> quotes = new ArrayList<UserQuoteEntity>();
 
-	private List<TodoEntity> todos = new ArrayList<TodoEntity>();
+	private List<UserTodoEntity> todos = new ArrayList<UserTodoEntity>();
 
 	public UserBuilder setId(Long id) {
 		this.id = id;
@@ -37,12 +37,12 @@ public class UserBuilder {
 		return this;
 	}
 
-	public UserBuilder setQuotes(List<QuoteEntity> entities) {
+	public UserBuilder setQuotes(List<UserQuoteEntity> entities) {
 		this.quotes = entities;
 		return this;
 	}
 
-	public UserBuilder setTodos(List<TodoEntity> entities) {
+	public UserBuilder setTodos(List<UserTodoEntity> entities) {
 		this.todos = entities;
 		return this;
 	}

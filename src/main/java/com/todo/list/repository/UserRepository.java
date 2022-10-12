@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.controller.dto.user.UserIntro;
 import com.todo.list.controller.dto.user.UserIntroDTO;
-import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.UserQuoteEntity;
 
 //@EnableJpaRepositories
 public interface UserRepository extends JpaRepository<UserEntity, Long> {

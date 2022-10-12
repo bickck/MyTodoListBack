@@ -17,21 +17,20 @@ import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.UserImageUploadService;
 
 @Service
-public class UserBackGroundImgService {
+public class UserImageService {
 
 	private UserImageRepository imageRepository;
 	private UserRepository userRepository;
-	private ImageService imageService = new UserImageUploadService();
 
 	@Autowired
-	public UserBackGroundImgService(UserImageRepository imageRepository, UserRepository userRepository) {
+	public UserImageService(UserImageRepository imageRepository, UserRepository userRepository) {
 		this.imageRepository = imageRepository;
 		this.userRepository = userRepository;
 	}
 
 	@Transactional
-	public void userImageSave(UserImageEntity backGroundImageEntity) {
-		imageRepository.save(backGroundImageEntity);
+	public void userImageSave(UserImageEntity userImageEntity) {
+		imageRepository.save(userImageEntity);
 	}
 
 	public UserImageEntity userImgDelete(Long id) {

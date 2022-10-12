@@ -1,4 +1,4 @@
-package com.todo.list.repository;
+package com.todo.list.repository.admin;
 
 import java.util.List;
 

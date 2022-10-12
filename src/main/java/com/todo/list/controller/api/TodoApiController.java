@@ -23,7 +23,8 @@ import com.todo.list.controller.builder.page.PageTodoBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
-import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.service.api.TodoApiService;
 import com.todo.list.service.user.UserTodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
@@ -32,17 +33,19 @@ import com.todo.list.util.auth.UserAuthToken;
 public class TodoApiController {
 
 	private UserTodoService userTodoService;
+	private TodoApiService todoApiService;
 
 	@Autowired
-	public TodoApiController(UserTodoService userTodoService) {
+	public TodoApiController(UserTodoService userTodoService, TodoApiService todoApiService) {
 		this.userTodoService = userTodoService;
+		this.todoApiService = todoApiService;
 	}
 
 	// @Cacheable(key = "#pageable.getPageNumber", cacheNames = "todoCache")
 	@GetMapping("/mainpost")
-	public Page<TodoDTO> requestPublishedTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
+	public Page<TodoDTO> requestPublishedTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<TodoEntity> page = userTodoService.publishTodos(pageable.getPageNumber(), pageable);
+		Page<UserTodoEntity> page = todoApiService.publishTodos(pageable.getPageNumber(), pageable);
 
 		TodoBuilder builder = new TodoBuilder();
 		builder.listBuilder(page.getContent());
@@ -52,27 +55,20 @@ public class TodoApiController {
 	}
 
 	@PostMapping("/{id}")
-	public ResponseEntity<List<TodoDTO>> getUserApiTodosByid(@PathVariable Integer id) {
+	public ResponseEntity<List<TodoDTO>> requestUserApiTodosByid(@PathVariable Integer id) {
 		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
 
 		List<TodoDTO> list = null; // userApiService.getUserToDoLists(userTokenDTO, pageRequest);
 
 		return new ResponseEntity<List<TodoDTO>>(list, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/recommand/todos")
 	public ResponseEntity<?> requestRecommandTodos(@PageableDefault(size = 50, page = 0) Pageable pageable) {
 
-		userTodoService.recommandTodos(pageable);
+		todoApiService.recommandTodos(pageable);
 
 		return new ResponseEntity<PageTodoDTO>(HttpStatus.OK);
 	}
 
-	@PostMapping("/recommand/{id}")
-	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
-
-		userTodoService.addRecommand(dto, id);
-
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
 }

@@ -53,11 +53,11 @@ public class UserEntity {
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<QuoteEntity> quotes = new ArrayList<QuoteEntity>();
+	private List<UserQuoteEntity> quotes = new ArrayList<UserQuoteEntity>();
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<TodoEntity> todos = new ArrayList<TodoEntity>();
+	private List<UserTodoEntity> todos = new ArrayList<UserTodoEntity>();
 
 //	@BatchSize(size = 10)
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -87,13 +87,13 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public UserEntity(String username, String password, List<QuoteEntity> quotes) {
+	public UserEntity(String username, String password, List<UserQuoteEntity> quotes) {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
 	}
 
-	public UserEntity(String username, String password, List<QuoteEntity> quotes, List<TodoEntity> todos) {
+	public UserEntity(String username, String password, List<UserQuoteEntity> quotes, List<UserTodoEntity> todos) {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
@@ -147,19 +147,19 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public List<QuoteEntity> getQuotes() {
+	public List<UserQuoteEntity> getQuotes() {
 		return quotes;
 	}
 
-	public void setQuotes(List<QuoteEntity> quotes) {
+	public void setQuotes(List<UserQuoteEntity> quotes) {
 		this.quotes = quotes;
 	}
 
-	public List<TodoEntity> getTodos() {
+	public List<UserTodoEntity> getTodos() {
 		return todos;
 	}
 
-	public void setTodos(List<TodoEntity> todos) {
+	public void setTodos(List<UserTodoEntity> todos) {
 		this.todos = todos;
 	}
 

@@ -21,7 +21,7 @@ import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageQuoteDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.auth.UserAuthToken;

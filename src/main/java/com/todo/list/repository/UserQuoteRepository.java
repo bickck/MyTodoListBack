@@ -8,18 +8,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.mapper.QuoteMapper;
 
-public interface UserQuoteRepository extends JpaRepository<QuoteEntity, Long> {
+public interface UserQuoteRepository extends JpaRepository<UserQuoteEntity, Long> {
 
-	Page<QuoteEntity> findQuoteEntitiesByUserId(Long id, Pageable pageable);
+	Page<UserQuoteEntity> findQuoteEntitiesByUserId(Long id, Pageable pageable);
 
-	List<QuoteEntity> findQuoteEntityById(long id);
+	List<UserQuoteEntity> findQuoteEntityById(long id);
 
 	void deleteById(Long id);
 
-	List<QuoteEntity> findQuoteEntitiesByIsPublish(Publish publish);
+	List<UserQuoteEntity> findQuoteEntitiesByIsPublish(Publish publish);
 
 //	List<QuoteEntity> findQuoteEntitiesByUsername(String username);
 //	Page<UserQuoteEntity> findQuoteEntitiesByUser(UserEntity user, Pageable pageable);

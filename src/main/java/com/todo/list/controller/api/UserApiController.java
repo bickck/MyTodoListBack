@@ -31,8 +31,8 @@ import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.controller.dto.user.UserIntroDTO;
-import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.UserTodoEntity;
 
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
@@ -86,7 +86,7 @@ public class UserApiController {
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
 			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 
-		Page<TodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
+		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
 
 		PageTodoBuilder builder = new PageTodoBuilder().setLists(entities.getContent()).setNumber(entities.getNumber())
 				.setNumberOfElements(entities.getNumberOfElements()).setPageable(entities.getPageable())

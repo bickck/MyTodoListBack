@@ -14,9 +14,9 @@ import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.TodoEntity;
-import com.todo.list.repository.TodoRepository;
+import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.repository.UserTodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.service.user.UserQuoteService;
 import com.todo.list.util.Utils;
@@ -31,7 +31,7 @@ public class UserApiService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private TodoRepository userTodoRepository;
+	private UserTodoRepository userTodoRepository;
 
 	@Autowired
 	private UserQuoteRepository userQuoteRepository;
@@ -82,9 +82,9 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<QuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<UserQuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
 		long id = userDTO.getId();
-		Page<QuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
+		Page<UserQuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
 		return entities;
 	}
 
@@ -95,9 +95,9 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<TodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<UserTodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
 		Long id = userDTO.getId();
-		Page<TodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
+		Page<UserTodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
 
 		return entities;
 	}

@@ -23,15 +23,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.UserTodoEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.repository.AdminImageRepository;
-import com.todo.list.repository.AdminQuoteRepository;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.admin.AdminImageRepository;
+import com.todo.list.repository.admin.AdminQuoteRepository;
 import com.todo.list.util.UserUtil;
 
 @Component

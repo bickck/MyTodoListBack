@@ -7,7 +7,7 @@ import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.UserQuoteEntity;
 import com.todo.list.repository.UserQuoteRepository;
 import com.todo.list.repository.UserRepository;
 
@@ -20,16 +20,16 @@ public class UserQuoteService {
 	@Autowired
 	private UserQuoteRepository userQuoteRepository;
 
-	public QuoteEntity quoteSave(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
+	public UserQuoteEntity quoteSave(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
 		UserEntity userEntity = repository.findByUsername(userTokenDTO.getUsername());
 
-		return userQuoteRepository.save(new QuoteEntity(userEntity, quoteDTO));
+		return userQuoteRepository.save(new UserQuoteEntity(userEntity, quoteDTO));
 	}
 
-	public QuoteEntity quoteUpdate(Long id, QuoteDTO quoteDTO, UserTokenDTO tokenDTO) {
+	public UserQuoteEntity quoteUpdate(Long id, QuoteDTO quoteDTO, UserTokenDTO tokenDTO) {
 		UserEntity userEntity = repository.findByUsername(tokenDTO.getUsername());
 
-		return userQuoteRepository.save(new QuoteEntity(userEntity, quoteDTO));
+		return userQuoteRepository.save(new UserQuoteEntity(userEntity, quoteDTO));
 	}
 
 	public void quoteDelete(Long id) {

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.todo.list.controller.builder.TodoBuilder;
 import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.service.TodoDTO;
-import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserTodoEntity;
 
 public class PageTodoBuilder implements PageBuilder<PageTodoBuilder, PageTodoDTO> {
 
@@ -29,10 +29,10 @@ public class PageTodoBuilder implements PageBuilder<PageTodoBuilder, PageTodoDTO
 	@Override
 	public <K> PageTodoBuilder setLists(K lists) {
 		// TODO Auto-generated method stub
-		List<TodoEntity> entity = (List<TodoEntity>) lists;
+		List<UserTodoEntity> entity = (List<UserTodoEntity>) lists;
 		List<TodoDTO> dtos = new ArrayList<TodoDTO>();
 
-		for (TodoEntity entities : entity) {
+		for (UserTodoEntity entities : entity) {
 			TodoBuilder builder = new TodoBuilder();
 			builder.setId(entities.getId());
 			builder.setUsername(entities.getUser().getUsername());
