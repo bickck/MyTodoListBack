@@ -24,15 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
+import com.todo.list.controller.dto.BackGroundDTO;
+import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageQuoteDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.controller.dto.service.BackGroundDTO;
-import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.controller.dto.user.UserIntroDTO;
-import com.todo.list.entity.UserQuoteEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.TodoEntity;
 
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
@@ -86,7 +86,7 @@ public class UserApiController {
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
 			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 
-		Page<UserTodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
+		Page<TodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
 
 		PageTodoBuilder builder = new PageTodoBuilder().setLists(entities.getContent()).setNumber(entities.getNumber())
 				.setNumberOfElements(entities.getNumberOfElements()).setPageable(entities.getPageable())
@@ -108,6 +108,29 @@ public class UserApiController {
 
 		return new ResponseEntity<PageQuoteDTO>(HttpStatus.OK);
 	}
+	
+	/**
+	 * 
+	 * 유저의 Quote 모든 정보 가져오기
+	 */
+
+//	@PostMapping("/quotes")
+//	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
+//			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
+//		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
+//
+//		Page<QuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
+//		PageQuoteBuilder builder = new PageQuoteBuilder();
+//		builder.setLists(entities.getContent());
+//		builder.setNumber(entities.getNumber());
+//		builder.setNumberOfElements(entities.getNumberOfElements());
+//		builder.setPageable(entities.getPageable());
+//		builder.setSize(entities.getSize());
+//		builder.setTotalPages(entities.getTotalPages());
+//		builder.setTotalElements(entities.getTotalElements());
+//		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
+//	}
+//	
 
 	@GetMapping("/{id}")
 	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,

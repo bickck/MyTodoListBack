@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.controller.dto.service.FileDTO;
+import com.todo.list.controller.dto.FileDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserImageRepository;

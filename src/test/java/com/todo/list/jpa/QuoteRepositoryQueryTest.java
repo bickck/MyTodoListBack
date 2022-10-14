@@ -24,9 +24,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.UserQuoteEntity;
-import com.todo.list.repository.UserQuoteRepository;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.QuoteRepository;
+import com.todo.list.repository.TodoRepository;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -34,25 +34,25 @@ import com.todo.list.repository.UserTodoRepository;
 public class QuoteRepositoryQueryTest {
 
 	@Autowired
-	private UserQuoteRepository userQuoteRepository;
+	private QuoteRepository userQuoteRepository;
 
-	private UserQuoteEntity publishEntity = null;
-	private UserQuoteEntity notPublishEntity = null;
+	private QuoteEntity publishEntity = null;
+	private QuoteEntity notPublishEntity = null;
 
 	@Before
 	public void saveTestCase() {
-		publishEntity = userQuoteRepository.save(new UserQuoteEntity(new UserEntity("hihello", "password1234"),
+		publishEntity = userQuoteRepository.save(new QuoteEntity(new UserEntity("hihello", "password1234"),
 				"quote1234", "quote1234", Publish.PUBLISH, (long) 0));
 
-		notPublishEntity = userQuoteRepository.save(new UserQuoteEntity(new UserEntity("hihello", "password1234"),
+		notPublishEntity = userQuoteRepository.save(new QuoteEntity(new UserEntity("hihello", "password1234"),
 				"quote1234", "quote1234", Publish.PRIVATE, (long) 0));
 	}
 
 	@Test
 	public void getPublishedUserTodo() {
-		List<UserQuoteEntity> entity = userQuoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH);
+		List<QuoteEntity> entity = userQuoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH);
 
-		List<UserQuoteEntity> entities = userQuoteRepository.findAll();
+		List<QuoteEntity> entities = userQuoteRepository.findAll();
 
 		System.out.println(entities.toString());
 

@@ -11,20 +11,22 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QUserQuoteEntity is a Querydsl query type for UserQuoteEntity
+ * QQuoteEntity is a Querydsl query type for QuoteEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUserQuoteEntity extends EntityPathBase<UserQuoteEntity> {
+public class QQuoteEntity extends EntityPathBase<QuoteEntity> {
 
-    private static final long serialVersionUID = 333581566L;
+    private static final long serialVersionUID = -11025719L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QUserQuoteEntity userQuoteEntity = new QUserQuoteEntity("userQuoteEntity");
+    public static final QQuoteEntity quoteEntity = new QQuoteEntity("quoteEntity");
 
     public final StringPath author = createString("author");
 
     public final DateTimePath<java.sql.Timestamp> creaTimestamp = createDateTime("creaTimestamp", java.sql.Timestamp.class);
+
+    public final NumberPath<Long> heart = createNumber("heart", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -32,29 +34,27 @@ public class QUserQuoteEntity extends EntityPathBase<UserQuoteEntity> {
 
     public final StringPath quote = createString("quote");
 
-    public final NumberPath<Long> recommand = createNumber("recommand", Long.class);
-
     public final DateTimePath<java.sql.Timestamp> updateTimestamp = createDateTime("updateTimestamp", java.sql.Timestamp.class);
 
     public final QUserEntity user;
 
-    public QUserQuoteEntity(String variable) {
-        this(UserQuoteEntity.class, forVariable(variable), INITS);
+    public QQuoteEntity(String variable) {
+        this(QuoteEntity.class, forVariable(variable), INITS);
     }
 
-    public QUserQuoteEntity(Path<? extends UserQuoteEntity> path) {
+    public QQuoteEntity(Path<? extends QuoteEntity> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QUserQuoteEntity(PathMetadata metadata) {
+    public QQuoteEntity(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QUserQuoteEntity(PathMetadata metadata, PathInits inits) {
-        this(UserQuoteEntity.class, metadata, inits);
+    public QQuoteEntity(PathMetadata metadata, PathInits inits) {
+        this(QuoteEntity.class, metadata, inits);
     }
 
-    public QUserQuoteEntity(Class<? extends UserQuoteEntity> type, PathMetadata metadata, PathInits inits) {
+    public QQuoteEntity(Class<? extends QuoteEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.user = inits.isInitialized("user") ? new QUserEntity(forProperty("user"), inits.get("user")) : null;
     }

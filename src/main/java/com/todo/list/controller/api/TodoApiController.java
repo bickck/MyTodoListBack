@@ -20,23 +20,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.TodoBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.controller.dto.service.TodoDTO;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.service.api.TodoApiService;
-import com.todo.list.service.user.UserTodoService;
+import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
+
+/**
+ * 로그인 필요 없이 Todo API를 제공하는 클래스
+ * 
+ */
 
 @RestController
 @RequestMapping("/todo/api")
 public class TodoApiController {
 
-	private UserTodoService userTodoService;
+	private TodoService userTodoService;
 	private TodoApiService todoApiService;
 
 	@Autowired
-	public TodoApiController(UserTodoService userTodoService, TodoApiService todoApiService) {
+	public TodoApiController(TodoService userTodoService, TodoApiService todoApiService) {
 		this.userTodoService = userTodoService;
 		this.todoApiService = todoApiService;
 	}
@@ -45,7 +50,7 @@ public class TodoApiController {
 	@GetMapping("/mainpost")
 	public Page<TodoDTO> requestPublishedTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<UserTodoEntity> page = todoApiService.publishTodos(pageable.getPageNumber(), pageable);
+		Page<TodoEntity> page = todoApiService.publishTodos(pageable.getPageNumber(), pageable);
 
 		TodoBuilder builder = new TodoBuilder();
 		builder.listBuilder(page.getContent());

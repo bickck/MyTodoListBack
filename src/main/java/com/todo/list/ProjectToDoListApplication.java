@@ -16,6 +16,16 @@ import org.springframework.context.event.EventListener;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.admin.AdminQuoteRepository;
 
+
+/**
+ * 저장 수정 삭제는 *Controller
+ * 
+ * 조회는 ApiController
+ * 
+ * @author 3d193
+ *
+ */
+
 @ServletComponentScan
 @EnableAspectJAutoProxy
 @SpringBootApplication

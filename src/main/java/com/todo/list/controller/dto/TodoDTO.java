@@ -1,4 +1,4 @@
-package com.todo.list.controller.dto.service;
+package com.todo.list.controller.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -26,7 +26,7 @@ public class TodoDTO implements Serializable {
 
 	private String content;
 
-	private String isChekcPuhlic;
+	private String isPublish;
 
 	private Long heart;
 
@@ -47,20 +47,30 @@ public class TodoDTO implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public TodoDTO(Long id, String user, String title, String content, String isChekcPuhlic, Timestamp createDate) {
+	public TodoDTO(String user, String title, String content, String isPublish, Long heart, Long comment) {
+		super();
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.isPublish = isPublish;
+		this.heart = heart;
+		this.comment = comment;
+	}
+
+	public TodoDTO(Long id, String user, String title, String content, String isPublish, Timestamp createDate) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.isChekcPuhlic = isChekcPuhlic;
+		this.isPublish = isPublish;
 		this.createDate = createDate;
 	}
 
 	@Override
 	public String toString() {
-		return "TodoDTO [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", isChekcPuhlic="
-				+ isChekcPuhlic + ", heart=" + heart + ", comment=" + comment + ", createDate=" + createDate + "]";
+		return "TodoDTO [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", isPublish="
+				+ isPublish + ", heart=" + heart + ", comment=" + comment + ", createDate=" + createDate + "]";
 	}
 
 	public Long getId() {
@@ -95,12 +105,12 @@ public class TodoDTO implements Serializable {
 		this.content = content;
 	}
 
-	public String getIsChekcPuhlic() {
-		return isChekcPuhlic;
+	public String getIsPublish() {
+		return isPublish;
 	}
 
-	public void setIsChekcPuhlic(String isChekcPuhlic) {
-		this.isChekcPuhlic = isChekcPuhlic;
+	public void setIsPublish(String isPublish) {
+		this.isPublish = isPublish;
 	}
 
 	public Timestamp getCreateDate() {

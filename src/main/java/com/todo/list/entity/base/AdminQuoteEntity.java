@@ -10,9 +10,9 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.QuoteDTO;
 
-@Entity(name="DEFAULTQUOTE")
+@Entity(name="ADMIN_QUOTE")
 public class AdminQuoteEntity {
 
 	@Id

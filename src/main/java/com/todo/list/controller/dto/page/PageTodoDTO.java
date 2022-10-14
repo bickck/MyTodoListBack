@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.todo.list.controller.dto.service.TodoDTO;
+import com.todo.list.controller.dto.TodoDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

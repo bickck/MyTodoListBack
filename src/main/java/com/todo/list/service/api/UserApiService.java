@@ -8,33 +8,37 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.todo.list.controller.dto.BackGroundDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.controller.dto.service.BackGroundDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserQuoteEntity;
-import com.todo.list.entity.UserTodoEntity;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.TodoEntity;
+import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
-import com.todo.list.service.user.UserQuoteService;
+import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.Utils;
 import com.todo.list.repository.UserImageRepository;
-import com.todo.list.repository.UserQuoteRepository;
+import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
 
 @Service
 public class UserApiService {
 
 	@Autowired
+	private JPAQueryFactory jpaQueryFactory;
+
+	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
-	private UserTodoRepository userTodoRepository;
+	private TodoRepository userTodoRepository;
 
 	@Autowired
-	private UserQuoteRepository userQuoteRepository;
+	private QuoteRepository userQuoteRepository;
 
 	@Autowired
 	private UserImageRepository userImageRepository;
@@ -82,9 +86,9 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserQuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<QuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
 		long id = userDTO.getId();
-		Page<UserQuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
+		Page<QuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
 		return entities;
 	}
 
@@ -95,9 +99,9 @@ public class UserApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserTodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<TodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
 		Long id = userDTO.getId();
-		Page<UserTodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
+		Page<TodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
 
 		return entities;
 	}

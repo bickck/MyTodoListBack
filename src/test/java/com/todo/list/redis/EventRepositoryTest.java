@@ -37,9 +37,9 @@ public class EventRepositoryTest {
 		long Id = 1;
 		Iterator<EventEntity> itr = eventRepository.findAll().iterator();
 
-		while (itr.hasNext()) {
-			System.out.println(itr.next().toString());
-		}
+//		while (itr.hasNext()) {
+//			System.out.println(itr.next().toString());
+//		}
 	}
 
 	// @Test

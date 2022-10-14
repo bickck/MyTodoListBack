@@ -25,8 +25,6 @@ public class QTodoCommentEntity extends EntityPathBase<TodoCommentEntity> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath todoCommentUUID = createString("todoCommentUUID");
-
     public final DateTimePath<java.sql.Timestamp> updateTimeStamp = createDateTime("updateTimeStamp", java.sql.Timestamp.class);
 
     public QTodoCommentEntity(String variable) {

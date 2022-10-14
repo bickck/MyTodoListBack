@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
-import com.todo.list.entity.UserQuoteEntity;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.util.UserUtil;
@@ -23,7 +23,7 @@ import com.todo.list.util.UserUtil;
 /**
  * @author DongHyeon_kim
  * 
- *         이 문서는 유저의 로그인, 회원가입 유저의 정보 수정등을 돕기위한 문서입니다.
+ *         이 문서는 유저의 로그인, 회원가입 유저의 정보 수정등을 제공하는 클래스
  */
 
 @Service
@@ -84,6 +84,17 @@ public class UserService {
 		}
 
 		return user;
+	}
+
+	@Transactional
+	public UserEntity changeUserPassword(Long id, UserDTO requestUserArg) {
+
+		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail());
+
+		String encPassword = userUtil.bCrypt(requestUserArg.getPassword());
+		user.setPassword(encPassword);
+
+		return userRepository.save(user);
 	}
 
 }

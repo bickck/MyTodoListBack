@@ -32,9 +32,9 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
 
     public final StringPath password = createString("password");
 
-    public final ListPath<UserQuoteEntity, QUserQuoteEntity> quotes = this.<UserQuoteEntity, QUserQuoteEntity>createList("quotes", UserQuoteEntity.class, QUserQuoteEntity.class, PathInits.DIRECT2);
+    public final ListPath<QuoteEntity, QQuoteEntity> quotes = this.<QuoteEntity, QQuoteEntity>createList("quotes", QuoteEntity.class, QQuoteEntity.class, PathInits.DIRECT2);
 
-    public final ListPath<UserTodoEntity, QUserTodoEntity> todos = this.<UserTodoEntity, QUserTodoEntity>createList("todos", UserTodoEntity.class, QUserTodoEntity.class, PathInits.DIRECT2);
+    public final ListPath<TodoEntity, QTodoEntity> todos = this.<TodoEntity, QTodoEntity>createList("todos", TodoEntity.class, QTodoEntity.class, PathInits.DIRECT2);
 
     public final DateTimePath<java.sql.Timestamp> updateDate = createDateTime("updateDate", java.sql.Timestamp.class);
 

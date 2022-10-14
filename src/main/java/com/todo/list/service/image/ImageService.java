@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.controller.dto.service.FileDTO;
+import com.todo.list.controller.dto.FileDTO;
 
 public interface ImageService {
 

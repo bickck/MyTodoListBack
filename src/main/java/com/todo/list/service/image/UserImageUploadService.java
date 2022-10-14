@@ -17,7 +17,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.controller.dto.service.FileDTO;
+import com.todo.list.controller.dto.FileDTO;
 
 @Service
 public class UserImageUploadService implements ImageService {

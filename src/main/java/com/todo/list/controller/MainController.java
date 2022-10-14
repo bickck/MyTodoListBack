@@ -38,12 +38,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageUserBuilder;
+import com.todo.list.controller.dto.BackGroundDTO;
 import com.todo.list.controller.dto.ImageInfoDTO;
 import com.todo.list.controller.dto.MainDataDTO;
+import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.QuoteInfoDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
-import com.todo.list.controller.dto.service.BackGroundDTO;
-import com.todo.list.controller.dto.service.QuoteDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
@@ -114,8 +114,7 @@ public class MainController {
 		List<AdminQuoteEntity> entities = quoteService.getQuotes();
 		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
 	}
-	
-	
+
 	@ResponseBody
 	@GetMapping("/api/infos")
 	public ResponseEntity<MainDataDTO> responseMainDatas(@PageableDefault(size = 8) Pageable pageable) {
@@ -124,7 +123,7 @@ public class MainController {
 		Iterator<AdminImageEntity> adminImageEntities = backGroundImageService.imageNames().iterator();
 
 		List<ImageInfoDTO> list = new ArrayList<ImageInfoDTO>();
-		
+
 		while (adminImageEntities.hasNext()) {
 			list.add(new ImageInfoDTO(adminImageEntities.next()));
 		}

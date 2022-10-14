@@ -26,21 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.builder.TodoBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
+import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.controller.response.ResponseTodoEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.user.UserQuoteService;
-import com.todo.list.service.user.UserTodoService;
+import com.todo.list.service.user.QuoteService;
+import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 /**
  * 
- * 해당 유저의 Todo 데이터를 가지고 있는 클래스
+ * 해당 유저의 Todo 데이터를 저장,수정,삭제를 제공하는 클래스
  * 
  */
 
@@ -50,10 +50,10 @@ public class TodoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private UserTodoService userTodoService;
+	private TodoService userTodoService;
 
 	@Autowired
-	public TodoController(UserTodoService userTodoService) {
+	public TodoController(TodoService userTodoService) {
 		this.userTodoService = userTodoService;
 	}
 
@@ -74,11 +74,11 @@ public class TodoController {
 	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		UserTodoEntity todoEntity = new UserTodoEntity();
+		TodoEntity todoEntity = new TodoEntity();
 		todoEntity.setId(id);
 		todoEntity.setContent(todoDTO.getContent());
 
-		//userTodoService.todoUpdate(todoEntity);
+		// userTodoService.todoUpdate(todoEntity);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

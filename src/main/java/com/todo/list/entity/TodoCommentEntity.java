@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "TODO_COMMENT_ENTITY")
 public class TodoCommentEntity {
@@ -16,10 +17,11 @@ public class TodoCommentEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "COMMENT_UUID", unique = true)
-	private String todoCommentUUID;
-
-//	@Column(name = "USER_ID")
+//	@Column(name = "COMMENT_UUID", unique = true)
+//	private String todoCommentUUID;
+	
+//	@ManyToOne
+//	@JoinColumn(name = "USER_ID")
 //	private UserEntity user;
 
 	@Column(name = "COMMENT")

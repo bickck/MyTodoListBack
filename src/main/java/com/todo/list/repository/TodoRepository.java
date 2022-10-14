@@ -9,20 +9,20 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 
-public interface UserTodoRepository extends JpaRepository<UserTodoEntity, Long> {
+public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
-	UserTodoEntity findTodoEntityById(Long id);
+	TodoEntity findTodoEntityById(Long id);
 
-	Page<UserTodoEntity> findTodoEntitiesByUserId(Long id, Pageable pageable);
+	Page<TodoEntity> findTodoEntitiesByUserId(Long id, Pageable pageable);
 
-	Page<UserTodoEntity> findTodoEntitiesByIsPublishOrderByIdDesc(Publish publish, Pageable pageable);
+	Page<TodoEntity> findTodoEntitiesByIsPublishOrderByIdDesc(Publish publish, Pageable pageable);
 	
 //	@Query(value = "")
 //	Page<TodoEntity> findAllIsPublishOrderByIdDesc(Publish publish, Pageable pageable);
 
-	List<UserTodoEntity> findAllEntitiesByIsPublish(Publish publish);
+	List<TodoEntity> findAllEntitiesByIsPublish(Publish publish);
 
 //   Page<TodoEntity> findTodoEntitiesByIsPublish(Publish publish, Pageable pageable);
 

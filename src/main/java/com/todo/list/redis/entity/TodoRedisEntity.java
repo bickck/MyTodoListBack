@@ -3,7 +3,7 @@ package com.todo.list.redis.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 
 @RedisHash(value = "", timeToLive = 3000)
 public class TodoRedisEntity {
@@ -11,7 +11,7 @@ public class TodoRedisEntity {
 	@Id
 	private Long id;
 
-	private UserTodoEntity todoEntity;
+	private TodoEntity todoEntity;
 	
 	private Long expire;
 
@@ -27,11 +27,11 @@ public class TodoRedisEntity {
 		this.id = id;
 	}
 
-	public UserTodoEntity getTodoEntity() {
+	public TodoEntity getTodoEntity() {
 		return todoEntity;
 	}
 
-	public void setTodoEntity(UserTodoEntity todoEntity) {
+	public void setTodoEntity(TodoEntity todoEntity) {
 		this.todoEntity = todoEntity;
 	}
 

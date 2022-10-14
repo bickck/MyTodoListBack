@@ -46,16 +46,16 @@ import com.todo.list.DummyData;
 import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
+import com.todo.list.controller.dto.FileDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
-import com.todo.list.controller.dto.service.FileDTO;
 import com.todo.list.controller.dto.user.UserIntro;
 import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.UserQuoteEntity;
+import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserImageRepository;
-import com.todo.list.repository.UserQuoteRepository;
+import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.UserImageUploadService;
@@ -71,7 +71,7 @@ public class TestController {
 	private UserRepository repository;
 
 	@Autowired
-	private UserQuoteRepository quoteRepository;
+	private QuoteRepository quoteRepository;
 
 	@Autowired
 	private AuthenticationJwt authenticationJwtToken;

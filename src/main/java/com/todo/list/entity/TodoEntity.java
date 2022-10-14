@@ -8,32 +8,35 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.todo.list.controller.dto.service.TodoDTO;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_TODO_ENTITY")
-public class UserTodoEntity {
+public class TodoEntity {
 
 	@Id
+	@Column(name = "TODO_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 //	@Column(name = "TODO_UUID", unique = true)
 //	private String todoUUID;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private UserEntity user;
 
@@ -47,8 +50,13 @@ public class UserTodoEntity {
 	@Column(name = "HEART")
 	private Long heart;
 
+//	@OneToMany(mappedBy = "todoEntity")
 //	@Column(name = "COMMENT")
 //	private List<TodoCommentEntity> comments;
+
+//	@OneToMany(mappedBy = "todoEntity")
+//	@Column(name = "TODO_IMAGE")
+//	private List<TodoImageEntity> todoImages;
 
 	// private String tag;
 
@@ -67,31 +75,31 @@ public class UserTodoEntity {
 	@Column(name = "LAST_UPDATE")
 	private Timestamp lastUpdate;
 
-	public UserTodoEntity() {
+	public TodoEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserTodoEntity(String title, String content) {
+	public TodoEntity(String title, String content) {
 		super();
 		this.title = title;
 		this.content = content;
 	}
 
-	public UserTodoEntity(String title, String content, Publish publish) {
+	public TodoEntity(String title, String content, Publish publish) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.isPublish = publish;
 	}
 
-	public UserTodoEntity(UserEntity user, String title, String content) {
+	public TodoEntity(UserEntity user, String title, String content) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.content = content;
 	}
 
-	public UserTodoEntity(UserEntity userEntity, String title, String content, Long heart, Publish publish) {
+	public TodoEntity(UserEntity userEntity, String title, String content, Long heart, Publish publish) {
 		super();
 		this.user = userEntity;
 		this.title = title;

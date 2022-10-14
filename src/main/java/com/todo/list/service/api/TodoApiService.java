@@ -10,54 +10,54 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.repository.UserTodoRepository;
+import com.todo.list.repository.TodoRepository;
 
 @Service
 public class TodoApiService {
 
 	@Autowired
-	private UserTodoRepository todoRepository;
+	private TodoRepository todoRepository;
 	
 	@Autowired
 	private JPAQueryFactory jpaQueryFactory;
 
 	@Transactional(readOnly = true)
-	public Page<UserTodoEntity> getPublishedTodos(Pageable pageable) {
-		Page<UserTodoEntity> entities = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+	public Page<TodoEntity> getPublishedTodos(Pageable pageable) {
+		Page<TodoEntity> entities = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 
 		return entities;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserTodoEntity> getMostRecommandDaily(Pageable pageable) {
-		Page<UserTodoEntity> entities = null;
+	public Page<TodoEntity> getMostRecommandDaily(Pageable pageable) {
+		Page<TodoEntity> entities = null;
 
 		return entities;
 	}
 	
 	@Transactional(readOnly = true)
-	public List<UserTodoEntity> findAllPublishTodos() {
+	public List<TodoEntity> findAllPublishTodos() {
 		
 		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
 	}
 	
 	@Transactional(readOnly = true)
-	public List<UserTodoEntity> findMainPostByPublish(Long id) {
+	public List<TodoEntity> findMainPostByPublish(Long id) {
 		//todoRepository
 		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserTodoEntity> publishTodos(int pageNumber, Pageable pageable) {
+	public Page<TodoEntity> publishTodos(int pageNumber, Pageable pageable) {
 		return todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<UserTodoEntity> recommandTodos(Pageable pageable) {
+	public Page<TodoEntity> recommandTodos(Pageable pageable) {
 
-		Page<UserTodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 
 		return pages;
 	}

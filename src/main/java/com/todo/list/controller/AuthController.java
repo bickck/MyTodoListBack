@@ -32,6 +32,12 @@ import com.todo.list.util.UserUtil;
 import com.todo.list.util.Utils;
 import com.todo.list.util.auth.UserAuthToken;
 
+/**
+ * 유저 로그인, 로그아웃, 비밀번호 찾기, 회원가입을 제공하는 클래스
+ * 
+ * @author 3d193
+ *
+ */
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthController {
@@ -78,6 +84,12 @@ public class AuthController {
 
 	@PostMapping("/logout")
 	public ResponseEntity<String> logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
+
+		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/findPassword")
+	public ResponseEntity<String> findUserPassword(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}

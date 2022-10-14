@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import com.todo.list.controller.dto.service.BackGroundDTO;
+import com.todo.list.controller.dto.BackGroundDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 
 public class PageImageBuilder implements PageBuilder<PageImageBuilder, BackGroundDTO> {

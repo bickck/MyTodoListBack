@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.controller.dto.TodoDTO;
+import com.todo.list.entity.TodoEntity;
 
 public class TodoBuilder {
 
@@ -50,9 +50,9 @@ public class TodoBuilder {
 		return new TodoDTO(id, username, title, content, createDate);
 	}
 
-	public List<TodoDTO> listBuilder(List<UserTodoEntity> list) {
+	public List<TodoDTO> listBuilder(List<TodoEntity> list) {
 		List<TodoDTO> todoDTOs = new ArrayList<TodoDTO>();
-		Iterator<UserTodoEntity> iterator = list.iterator();
+		Iterator<TodoEntity> iterator = list.iterator();
 		while (iterator.hasNext()) {
 			todoDTOs.add(new TodoDTO(iterator.next().getId(), iterator.next().getUser().getUsername(), iterator.next().getTitle(), iterator.next().getContent(), iterator.next().getCreateDate()));
 		}

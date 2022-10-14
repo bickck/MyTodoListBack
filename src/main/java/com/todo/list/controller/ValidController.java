@@ -1,5 +1,10 @@
 package com.todo.list.controller;
 
+/**
+ * 
+ * 프론트의 데이터 값을 미리 체크하는 클래스
+ * */
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

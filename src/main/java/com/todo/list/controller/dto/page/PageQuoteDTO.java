@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.QuoteDTO;
 
 public class PageQuoteDTO {
 	private List<QuoteDTO> dtos;

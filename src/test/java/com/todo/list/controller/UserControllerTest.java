@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.QuoteDTO;
 
 //@WebMvcTest(UserController.class)
 public class UserControllerTest {
@@ -55,13 +55,13 @@ public class UserControllerTest {
 
 	@Test
 	public void test2() throws IOException {
-		String pathname = "E:\\img\\defaultImage\\8b956be74df2ac6c6c8d79d6046de6d577c0185816904f6ebc629382503e9a39.jpg";
-		String type = Files.probeContentType(Path.of(pathname));
-
-		List<String> lines = Files.readAllLines(Path.of("E:\\img\\defaultImage"));
-
-		for (int i = 0; i < lines.size(); i++) {
-			System.out.println(lines.get(i));
-		}
+//		String pathname = "E:\\img\\defaultImage\\8b956be74df2ac6c6c8d79d6046de6d577c0185816904f6ebc629382503e9a39.jpg";
+//		String type = Files.probeContentType(Path.of(pathname));
+//
+//		//List<String> lines = Files.readAllLines(Path.of("E:\\img\\defaultImage"));
+//
+//		for (int i = 0; i < lines.size(); i++) {
+//			System.out.println(lines.get(i));
+//		}
 	}
 }

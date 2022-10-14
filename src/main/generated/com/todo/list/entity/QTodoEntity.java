@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QUserTodoEntity is a Querydsl query type for UserTodoEntity
+ * QTodoEntity is a Querydsl query type for TodoEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUserTodoEntity extends EntityPathBase<UserTodoEntity> {
+public class QTodoEntity extends EntityPathBase<TodoEntity> {
 
-    private static final long serialVersionUID = 2128000106L;
+    private static final long serialVersionUID = -1069704897L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QUserTodoEntity userTodoEntity = new QUserTodoEntity("userTodoEntity");
+    public static final QTodoEntity todoEntity = new QTodoEntity("todoEntity");
 
     public final StringPath content = createString("content");
 
@@ -38,23 +38,23 @@ public class QUserTodoEntity extends EntityPathBase<UserTodoEntity> {
 
     public final QUserEntity user;
 
-    public QUserTodoEntity(String variable) {
-        this(UserTodoEntity.class, forVariable(variable), INITS);
+    public QTodoEntity(String variable) {
+        this(TodoEntity.class, forVariable(variable), INITS);
     }
 
-    public QUserTodoEntity(Path<? extends UserTodoEntity> path) {
+    public QTodoEntity(Path<? extends TodoEntity> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QUserTodoEntity(PathMetadata metadata) {
+    public QTodoEntity(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QUserTodoEntity(PathMetadata metadata, PathInits inits) {
-        this(UserTodoEntity.class, metadata, inits);
+    public QTodoEntity(PathMetadata metadata, PathInits inits) {
+        this(TodoEntity.class, metadata, inits);
     }
 
-    public QUserTodoEntity(Class<? extends UserTodoEntity> type, PathMetadata metadata, PathInits inits) {
+    public QTodoEntity(Class<? extends TodoEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.user = inits.isInitialized("user") ? new QUserEntity(forProperty("user"), inits.get("user")) : null;
     }

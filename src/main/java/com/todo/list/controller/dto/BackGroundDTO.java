@@ -1,4 +1,4 @@
-package com.todo.list.controller.dto.service;
+package com.todo.list.controller.dto;
 
 import org.springframework.core.io.Resource;
 

@@ -30,31 +30,31 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
+import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.controller.dto.service.QuoteDTO;
-import com.todo.list.controller.dto.service.TodoDTO;
 import com.todo.list.controller.dto.user.LoginUserDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserTodoEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
-import com.todo.list.service.user.UserQuoteService;
+import com.todo.list.service.user.QuoteService;
 import com.todo.list.service.user.UserService;
-import com.todo.list.service.user.UserTodoService;
+import com.todo.list.service.user.TodoService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.UserAuthToken;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;
 
-
 /**
  * 
- * 해당 유저의 데이터를 가지고 있는 클래스
+ * 유저의 데이터를 저장,수정,삭제를 제공하는 클래스
  * 
+ * parm : id -> user identify
  */
 
 @RestController
@@ -66,22 +66,22 @@ public class UserController {
 
 	private UserService userService;
 
-	private UserQuoteService userQuoteService;
+	private QuoteService userQuoteService;
 	private ImageService imaegService;
-	private UserTodoService todoService;
+	private TodoService todoService;
 
 	@Autowired
 	private AuthenticationJwt jwtLoginToken;
 
 	@Autowired
-	public UserController(UserService userService, UserApiService userApiService, UserQuoteService userQuoteService) {
+	public UserController(UserService userService, UserApiService userApiService, QuoteService userQuoteService) {
 		this.userService = userService;
 		this.userQuoteService = userQuoteService;
 		this.imaegService = new UserImageUploadService();
 	}
 
 	@PostMapping("/update/intro/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
 
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(id);
@@ -89,7 +89,6 @@ public class UserController {
 		userService.userUpdate(userEntity);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	// User identify number
 
 	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
@@ -102,8 +101,9 @@ public class UserController {
 	// change password
 
 	@PostMapping("/changePassword/{id}")
-	public ResponseEntity<?> changePassword(@PathVariable Long id) {
-		// imaegService.deleteBackGroundImage(id);
+	public ResponseEntity<?> changePassword(@PathVariable Long id, UserDTO userDTO) {
+		
+		userService.changeUserPassword(id, userDTO);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

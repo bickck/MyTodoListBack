@@ -20,23 +20,23 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_QUOTE_ENTITY")
-public class UserQuoteEntity {
+public class QuoteEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id @Column(name ="QUOTE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
 	private UserEntity user;
 
@@ -50,8 +50,8 @@ public class UserQuoteEntity {
 	@Enumerated(value = EnumType.STRING)
 	private Publish isPublish;
 
-	@Column(name = "RECOMMAND")
-	private Long recommand;
+	@Column(name = "HEART")
+	private Long heart;
 
 	@CreationTimestamp
 	@Column(name = "CREATETIMESTAMP")
@@ -61,32 +61,44 @@ public class UserQuoteEntity {
 	@Column(name = "UPDATETIMESTAMP")
 	private Timestamp updateTimestamp;
 
-	public UserQuoteEntity() {
+	public QuoteEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
+	public QuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author) {
 		super();
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
 	}
 
-	public UserQuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
+	public QuoteEntity(@NotNull UserEntity user, @NotNull QuoteDTO quoteDTO) {
 		super();
 		this.user = user;
 		this.quote = quoteDTO.getQuote();
 		this.author = quoteDTO.getAuthor();
 	}
 
-	public UserQuoteEntity(@NotNull UserEntity user, @NotNull String quote, @NotNull String author,
-			@NotNull Publish isPublish, @NotNull Long recommand) {
+	public QuoteEntity(UserEntity user, String quote, String author, Publish isPublish, Long heart) {
 		super();
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
 		this.isPublish = isPublish;
-		this.recommand = recommand;
+		this.heart = heart;
+	}
+
+	public QuoteEntity(Long id, UserEntity user, String quote, String author, Publish isPublish, Long heart,
+			Timestamp creaTimestamp, Timestamp updateTimestamp) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.quote = quote;
+		this.author = author;
+		this.isPublish = isPublish;
+		this.heart = heart;
+		this.creaTimestamp = creaTimestamp;
+		this.updateTimestamp = updateTimestamp;
 	}
 
 	public Long getId() {
@@ -129,12 +141,12 @@ public class UserQuoteEntity {
 		this.isPublish = isPublish;
 	}
 
-	public Long getRecommand() {
-		return recommand;
+	public Long getHeart() {
+		return heart;
 	}
 
-	public void setRecommand(Long recommand) {
-		this.recommand = recommand;
+	public void setHeart(Long heart) {
+		this.heart = heart;
 	}
 
 	public Timestamp getCreaTimestamp() {

@@ -21,7 +21,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.todo.list.controller.dto.service.QuoteDTO;
+import com.todo.list.controller.dto.QuoteDTO;
 
 @Entity(name = "USER_ENTITY")
 public class UserEntity {
@@ -52,15 +52,14 @@ public class UserEntity {
 	private Timestamp updateDate;
 
 	@BatchSize(size = 10)
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<UserQuoteEntity> quotes = new ArrayList<UserQuoteEntity>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<QuoteEntity> quotes = new ArrayList<QuoteEntity>();
 
 	@BatchSize(size = 10)
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<UserTodoEntity> todos = new ArrayList<UserTodoEntity>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<TodoEntity> todos = new ArrayList<TodoEntity>();
 
-//	@BatchSize(size = 10)
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private UserImageEntity userImageEntity;
 
 	public UserEntity() {
@@ -87,13 +86,13 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public UserEntity(String username, String password, List<UserQuoteEntity> quotes) {
+	public UserEntity(String username, String password, List<QuoteEntity> quotes) {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
 	}
 
-	public UserEntity(String username, String password, List<UserQuoteEntity> quotes, List<UserTodoEntity> todos) {
+	public UserEntity(String username, String password, List<QuoteEntity> quotes, List<TodoEntity> todos) {
 		this.username = username;
 		this.password = password;
 		this.quotes = quotes;
@@ -147,19 +146,19 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public List<UserQuoteEntity> getQuotes() {
+	public List<QuoteEntity> getQuotes() {
 		return quotes;
 	}
 
-	public void setQuotes(List<UserQuoteEntity> quotes) {
+	public void setQuotes(List<QuoteEntity> quotes) {
 		this.quotes = quotes;
 	}
 
-	public List<UserTodoEntity> getTodos() {
+	public List<TodoEntity> getTodos() {
 		return todos;
 	}
 
-	public void setTodos(List<UserTodoEntity> todos) {
+	public void setTodos(List<TodoEntity> todos) {
 		this.todos = todos;
 	}
 
