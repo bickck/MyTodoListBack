@@ -14,11 +14,11 @@ import com.todo.list.service.user.TodoService;
 @Service
 public class TodoCacheService implements CacheStorageManager {
 
-	@Autowired
-	private RedisTemplate<Object, Object> redisTemplate;
-
-	@Autowired
-	private RedisCacheManager redisCacheManager;
+//	@Autowired
+//	private RedisTemplate<Object, Object> redisTemplate;
+//
+//	@Autowired
+//	private RedisCacheManager redisCacheManager;
 
 	@Autowired
 	private TodoService userTodoService;
@@ -45,14 +45,14 @@ public class TodoCacheService implements CacheStorageManager {
 	}
 	
 	
-	public void test() {
-		Map<String, RedisCacheConfiguration> redis = redisCacheManager.getCacheConfigurations();
-
-		redis.forEach((t, u) -> {
-			RedisCacheConfiguration redisConfiguration = u;
-			redisConfiguration.getTtl();
-			System.out.println("Key :" + t + "Value TTL : " + redisConfiguration.getTtl());
-		});
-	}
+//	public void test() {
+//		Map<String, RedisCacheConfiguration> redis = redisCacheManager.getCacheConfigurations();
+//
+//		redis.forEach((t, u) -> {
+//			RedisCacheConfiguration redisConfiguration = u;
+//			redisConfiguration.getTtl();
+//			System.out.println("Key :" + t + "Value TTL : " + redisConfiguration.getTtl());
+//		});
+//	}
 	
 }
