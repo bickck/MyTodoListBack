@@ -16,7 +16,6 @@ import org.springframework.context.event.EventListener;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.admin.AdminQuoteRepository;
 
-
 /**
  * 저장 수정 삭제는 *Controller
  * 
@@ -33,8 +32,7 @@ public class ProjectToDoListApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectToDoListApplication.class, args);
-		
-		// git hook build test
+
 	}
 
 }

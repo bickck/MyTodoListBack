@@ -22,9 +22,11 @@ public class QTodoEntity extends EntityPathBase<TodoEntity> {
 
     public static final QTodoEntity todoEntity = new QTodoEntity("todoEntity");
 
+    public final ListPath<TodoCommentEntity, QTodoCommentEntity> comments = this.<TodoCommentEntity, QTodoCommentEntity>createList("comments", TodoCommentEntity.class, QTodoCommentEntity.class, PathInits.DIRECT2);
+
     public final StringPath content = createString("content");
 
-    public final DateTimePath<java.sql.Timestamp> createDate = createDateTime("createDate", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> createTimeStamp = createDateTime("createTimeStamp", java.sql.Timestamp.class);
 
     public final NumberPath<Long> heart = createNumber("heart", Long.class);
 
@@ -32,9 +34,11 @@ public class QTodoEntity extends EntityPathBase<TodoEntity> {
 
     public final EnumPath<com.todo.list.entity.base.Publish> isPublish = createEnum("isPublish", com.todo.list.entity.base.Publish.class);
 
-    public final DateTimePath<java.sql.Timestamp> lastUpdate = createDateTime("lastUpdate", java.sql.Timestamp.class);
-
     public final StringPath title = createString("title");
+
+    public final ListPath<TodoImageEntity, QTodoImageEntity> todoImages = this.<TodoImageEntity, QTodoImageEntity>createList("todoImages", TodoImageEntity.class, QTodoImageEntity.class, PathInits.DIRECT2);
+
+    public final DateTimePath<java.sql.Timestamp> updateTimeStamp = createDateTime("updateTimeStamp", java.sql.Timestamp.class);
 
     public final QUserEntity user;
 

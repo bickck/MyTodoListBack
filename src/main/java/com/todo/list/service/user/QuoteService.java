@@ -1,5 +1,10 @@
 package com.todo.list.service.user;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +16,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
 
@@ -28,9 +34,18 @@ public class QuoteService {
 
 	@Autowired
 	private QuoteRepository userQuoteRepository;
-	
+
+//	@Autowired
+//	private JPAQueryFactory jpaQueryFactory;
+
+	private EntityManager entitiyManager;
+	private CriteriaBuilder criteriaBuilder;
+
 	@Autowired
-	private JPAQueryFactory jpaQueryFactory;
+	public QuoteService(EntityManager entityManager) {
+		criteriaBuilder = entityManager.getCriteriaBuilder();
+		this.entitiyManager = entityManager;
+	}
 
 	@Transactional
 	public QuoteEntity quoteSave(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
@@ -80,7 +95,47 @@ public class QuoteService {
 	}
 
 	@Transactional
-	public void updateQuerydsl(Long id) {
-		//jpaQueryFactory.update("");
+	public int testSaveHeartQuote(Long id) {
+		CriteriaUpdate<QuoteEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(QuoteEntity.class);
+		Root<QuoteEntity> root = criteriaUpdate.from(QuoteEntity.class);
+
+		// criteriaUpdate.set(root.get("HEART"), criteriaBuilder.sum(root.get("HEART"),
+		// 1));
+		criteriaUpdate.set("HEART", criteriaBuilder.sum(root.get("HEART"), 1));
+
+		int result = entitiyManager.createQuery(criteriaUpdate).executeUpdate();
+
+		return result;
 	}
+
+	@Transactional
+	public int testQuoteUpdate(Long id, QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
+
+		CriteriaUpdate<QuoteEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(QuoteEntity.class);
+		Root<QuoteEntity> root = criteriaUpdate.from(QuoteEntity.class);
+
+		if (quoteDTO.getIsPublish() != null) {
+
+			if (quoteDTO.getIsPublish().equals("private")) {
+				criteriaUpdate.set("ISAVAILABLEPUBLISH", Publish.PRIVATE);
+			} else {
+				criteriaUpdate.set("ISAVAILABLEPUBLISH", Publish.PUBLISH);
+			}
+		}
+
+		if (quoteDTO.getQuote() != null) {
+			criteriaUpdate.set("QUOTE", quoteDTO.getQuote());
+		}
+
+		if (quoteDTO.getAuthor() != null) {
+			criteriaUpdate.set("AUTHOR", quoteDTO.getAuthor());
+		}
+
+		criteriaUpdate.where(criteriaBuilder.equal(root.get("QUOTE_ID"), quoteDTO.getId()));
+
+		int result = entitiyManager.createQuery(criteriaUpdate).executeUpdate();
+
+		return result;
+	}
+
 }

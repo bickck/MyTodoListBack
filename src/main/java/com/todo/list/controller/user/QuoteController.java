@@ -1,5 +1,11 @@
 package com.todo.list.controller.user;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.auth.UserAuthToken;
@@ -29,6 +36,7 @@ public class QuoteController {
 
 	@Autowired
 	private QuoteService userQuoteService;
+	
 
 	@PostMapping("/save")
 	public ResponseEntity<?> savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
@@ -41,7 +49,7 @@ public class QuoteController {
 	@PostMapping("/upate/{id}")
 	public ResponseEntity<?> updateUserQuote(@PathVariable Long id, @RequestBody QuoteDTO quoteDTO,
 			@UserAuthToken UserTokenDTO tokenDTO) {
-
+		
 		userQuoteService.quoteUpdate(id, quoteDTO, tokenDTO);
 
 		return new ResponseEntity<>(HttpStatus.OK);

@@ -13,9 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.entity.TodoCommentEntity;
 import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.TodoImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
+import com.todo.list.repository.TodoCommentRepository;
+import com.todo.list.repository.TodoImageRepository;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserRepository;
 
@@ -30,6 +34,8 @@ public class TodoService {
 
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
+	private TodoCommentRepository todoCommentRepository;
+	private TodoImageRepository todoImageRepository;
 
 	@Autowired
 	public TodoService(UserRepository userRepository, TodoRepository todoRepository) {
@@ -46,8 +52,15 @@ public class TodoService {
 		if (todoDTO.getIsPublish().equals("private")) {
 			publish = Publish.PRIVATE;
 		}
-		return todoRepository
+		TodoEntity entity = todoRepository
 				.save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
+
+		if (todoDTO.getOriginalFileName() != null) {
+			todoImageRepository.save(new TodoImageEntity(entity, todoDTO.getFileName(), todoDTO.getOriginalFileName(),
+					todoDTO.getFilePath()));
+		}
+
+		return entity;
 	}
 
 	@Transactional

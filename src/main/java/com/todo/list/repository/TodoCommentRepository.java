@@ -1,0 +1,9 @@
+package com.todo.list.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.todo.list.entity.TodoCommentEntity;
+
+public interface TodoCommentRepository extends JpaRepository<TodoCommentEntity, Long>{
+
+}

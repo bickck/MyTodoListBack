@@ -49,44 +49,60 @@ public class QuoteApiController {
 		this.userApiService = userApiService;
 		this.quoteApiService = quoteApiService;
 	}
-
-	@GetMapping("/mainQuote")
-	public ResponseEntity<List<QuoteDTO>> requestQuotesApi() {
-		Iterator<QuoteEntity> list = quoteApiService.mainQuoteLists().iterator();
-		List<QuoteDTO> quoteDTOs = new ArrayList<QuoteDTO>();
-
-		while (list.hasNext()) {
-			quoteDTOs.add(new QuoteDTO(list.next()));
-		}
-
-		return new ResponseEntity<List<QuoteDTO>>(quoteDTOs, HttpStatus.OK);
-	}
-
-//	@GetMapping("/mainQuoteTest")
-//	public ResponseEntity<?> requestMainQuotePageApi(
-//			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
-//
-//		Iterator<QuoteEntity> list = quoteApiService.testMainQuotePage().iterator();
-//		List<QuoteDTO> quoteDTOs = new ArrayList<QuoteDTO>();
-//
-//		while (list.hasNext()) {
-//			quoteDTOs.add(new QuoteDTO(list.next()));
-//		}
-//
-//		Page<QuoteDTO> page = new PageImpl<QuoteDTO>(quoteDTOs, pageable, quoteDTOs.size());
-//
-//		return new ResponseEntity<Page<QuoteDTO>>(page, HttpStatus.OK);
-//	}
+	
+	/**
+	 * Quote의 자세한 정보를 가져옴
+	 * 
+	 * @param Quote Unique Id
+	 * @return Quote Detail
+	 */
 
 	@GetMapping("/{id}")
-	public ResponseEntity<QuoteDTO> requestQuoteApiById(@PathVariable Long id) {
+	public ResponseEntity<QuoteDTO> requestQuoteDetailById(@PathVariable Long id) {
 
 		QuoteDTO quoteDTOs = new QuoteDTO(quoteApiService.requestQuoteApiById(id));
 
 		return new ResponseEntity<QuoteDTO>(quoteDTOs, HttpStatus.OK);
 	}
 	
+	/**
+	 * Publish된 모든 Quote를 가져옴
+	 * 
+	 * @param pageable
+	 * @return All Quote
+	 */
+
+	@GetMapping("/mainQuote")
+	public ResponseEntity<List<QuoteDTO>> requestQuotesApi(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
+	}
 	
+	/**
+	 * HEART가 가장 많은 Quote List를 가져옴
+	 * 
+	 * @param pageable
+	 * @return Recommand All Quote
+	 */
+
+	@GetMapping("/recommand/quotes")
+	public ResponseEntity<List<QuoteDTO>> requestRecommandQuotes(
+			@PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
+	}
 	
+	/**
+	 * 해당 날짜에 HEART를 가장 많이 받은 Quote List를 가져옴
+	 * 
+	 * @param pageable
+	 * @return Recommand Daily All Quote
+	 */
+	
+	@GetMapping("/daily/quotes")
+	public ResponseEntity<List<QuoteDTO>> requestDailyQuotes(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
+	}
 
 }

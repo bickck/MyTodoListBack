@@ -2,6 +2,14 @@ package com.todo.list.service.api;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,8 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.todo.list.controller.dto.PostInterface;
+import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.TodoImageEntity;
+import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.repository.TodoRepository;
 
@@ -19,46 +31,63 @@ public class TodoApiService {
 
 	@Autowired
 	private TodoRepository todoRepository;
-	
+
 	@Autowired
 	private JPAQueryFactory jpaQueryFactory;
 
-	@Transactional(readOnly = true)
-	public Page<TodoEntity> getPublishedTodos(Pageable pageable) {
-		Page<TodoEntity> entities = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+	private EntityManager entitiyManager;
+	private CriteriaBuilder criteriaBuilder;
 
-		return entities;
+	@Autowired
+	public TodoApiService(EntityManager entityManager) {
+		criteriaBuilder = entityManager.getCriteriaBuilder();
+		this.entitiyManager = entityManager;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<TodoEntity> getMostRecommandDaily(Pageable pageable) {
-		Page<TodoEntity> entities = null;
+	public TodoEntity findPostDetailById(Long id) {
 
-		return entities;
-	}
-	
-	@Transactional(readOnly = true)
-	public List<TodoEntity> findAllPublishTodos() {
-		
-		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
-	}
-	
-	@Transactional(readOnly = true)
-	public List<TodoEntity> findMainPostByPublish(Long id) {
-		//todoRepository
-		return todoRepository.findAllEntitiesByIsPublish(Publish.PUBLISH);
+		return todoRepository.findTodoEntityById(id);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<TodoEntity> publishTodos(int pageNumber, Pageable pageable) {
-		return todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
+	public Page<PostInterface> findMainPost(Pageable pageable) {
+
+		return todoRepository.findTodoMainPostByPublish(Publish.PUBLISH, pageable);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<TodoEntity> recommandTodos(Pageable pageable) {
+	public Page<PostInterface> findRecommandPosts(Pageable pageable) {
 
 		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 
-		return pages;
+		return null;
 	}
+
+	@Transactional(readOnly = true)
+	public Page<PostInterface> findPostMostRecommandDaily(Pageable pageable) {
+
+		return null;
+	}
+
+//	@Transactional(readOnly = true)
+//	public Page<PostInterface> queryTest(Pageable pageable) {
+//
+//		return todoRepository.findTodoMainPostByPublish(Publish.PUBLISH, pageable);
+//	}
+
+//	@Transactional(readOnly = true)
+//	public TodoDTO queryTest() {
+//		CriteriaQuery<TodoEntity> criteriaQuery = criteriaBuilder.createQuery(TodoEntity.class);
+//		Root<TodoEntity> root = criteriaQuery.from(TodoEntity.class);
+//
+//		Join<TodoEntity, UserEntity> user = root.join("user", JoinType.INNER);
+//		Join<TodoEntity, TodoImageEntity> todoImage = root.join("image", JoinType.INNER);
+//
+//		criteriaQuery.multiselect(criteriaBuilder.construct(TodoDTO.class, 
+//				root.get(""))
+//		);
+
+//		return null;
+//	}
 }

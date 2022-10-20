@@ -1,6 +1,8 @@
 package com.todo.list.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
@@ -50,30 +52,25 @@ public class TodoEntity {
 	@Column(name = "HEART")
 	private Long heart;
 
-//	@OneToMany(mappedBy = "todoEntity")
-//	@Column(name = "COMMENT")
-//	private List<TodoCommentEntity> comments;
+	@OneToMany(mappedBy = "user")
+	@Column(name = "COMMENT")
+	private List<TodoCommentEntity> comments = new ArrayList<TodoCommentEntity>();
 
-//	@OneToMany(mappedBy = "todoEntity")
-//	@Column(name = "TODO_IMAGE")
-//	private List<TodoImageEntity> todoImages;
-
-	// private String tag;
+	@OneToMany(mappedBy = "todoBoard")
+	@Column(name = "TODO_IMAGE")
+	private List<TodoImageEntity> todoImages = new ArrayList<TodoImageEntity>();
 
 	@Column(name = "ISAVAILABLEPUBLISH", nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private Publish isPublish;
 
-//	@Embedded
-//	private UserTimeStamp stamp;
-
 	@CreationTimestamp
 	@Column(name = "CREATE_DATE")
-	private Timestamp createDate;
+	private Timestamp createTimeStamp;
 
 	@UpdateTimestamp
-	@Column(name = "LAST_UPDATE")
-	private Timestamp lastUpdate;
+	@Column(name = "UPDATE_DATE")
+	private Timestamp updateTimeStamp;
 
 	public TodoEntity() {
 		// TODO Auto-generated constructor stub
@@ -156,20 +153,36 @@ public class TodoEntity {
 		this.isPublish = isPublish;
 	}
 
-	public Timestamp getCreateDate() {
-		return createDate;
+	public Timestamp getCreateTimeStamp() {
+		return createTimeStamp;
 	}
 
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
+	public void setCreateTimeStamp(Timestamp createTimeStamp) {
+		this.createTimeStamp = createTimeStamp;
 	}
 
-	public Timestamp getLastUpdate() {
-		return lastUpdate;
+	public Timestamp getUpdateTimeStamp() {
+		return updateTimeStamp;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
+	public void setUpdateTimeStamp(Timestamp updateTimeStamp) {
+		this.updateTimeStamp = updateTimeStamp;
+	}
+
+	public List<TodoCommentEntity> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<TodoCommentEntity> comments) {
+		this.comments = comments;
+	}
+
+	public List<TodoImageEntity> getTodoImages() {
+		return todoImages;
+	}
+
+	public void setTodoImages(List<TodoImageEntity> todoImages) {
+		this.todoImages = todoImages;
 	}
 
 }

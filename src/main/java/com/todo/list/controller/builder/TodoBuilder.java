@@ -54,7 +54,8 @@ public class TodoBuilder {
 		List<TodoDTO> todoDTOs = new ArrayList<TodoDTO>();
 		Iterator<TodoEntity> iterator = list.iterator();
 		while (iterator.hasNext()) {
-			todoDTOs.add(new TodoDTO(iterator.next().getId(), iterator.next().getUser().getUsername(), iterator.next().getTitle(), iterator.next().getContent(), iterator.next().getCreateDate()));
+			todoDTOs.add(new TodoDTO(iterator.next().getId(), iterator.next().getUser().getUsername(),
+					iterator.next().getTitle(), iterator.next().getContent(), iterator.next().getCreateTimeStamp()));
 		}
 		return todoDTOs;
 	}

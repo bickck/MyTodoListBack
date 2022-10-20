@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -16,6 +17,8 @@ import com.querydsl.core.types.Path;
 public class QTodoCommentEntity extends EntityPathBase<TodoCommentEntity> {
 
     private static final long serialVersionUID = 1284834886L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QTodoCommentEntity todoCommentEntity = new QTodoCommentEntity("todoCommentEntity");
 
@@ -27,16 +30,27 @@ public class QTodoCommentEntity extends EntityPathBase<TodoCommentEntity> {
 
     public final DateTimePath<java.sql.Timestamp> updateTimeStamp = createDateTime("updateTimeStamp", java.sql.Timestamp.class);
 
+    public final QUserEntity user;
+
     public QTodoCommentEntity(String variable) {
-        super(TodoCommentEntity.class, forVariable(variable));
+        this(TodoCommentEntity.class, forVariable(variable), INITS);
     }
 
     public QTodoCommentEntity(Path<? extends TodoCommentEntity> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QTodoCommentEntity(PathMetadata metadata) {
-        super(TodoCommentEntity.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QTodoCommentEntity(PathMetadata metadata, PathInits inits) {
+        this(TodoCommentEntity.class, metadata, inits);
+    }
+
+    public QTodoCommentEntity(Class<? extends TodoCommentEntity> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.user = inits.isInitialized("user") ? new QUserEntity(forProperty("user"), inits.get("user")) : null;
     }
 
 }

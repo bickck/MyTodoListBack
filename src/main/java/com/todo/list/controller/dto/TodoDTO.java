@@ -32,19 +32,25 @@ public class TodoDTO implements Serializable {
 
 	private Long comment;
 
-	private Timestamp createDate;
+	private String filePath;
+
+	private String fileName;
+
+	private String originalFileName;
+
+	private Timestamp createTimeStamp;
 
 	public TodoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TodoDTO(Long id, String user, String title, String content, Timestamp createDate) {
+	public TodoDTO(Long id, String user, String title, String content, Timestamp createTimeStamp) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.createDate = createDate;
+		this.createTimeStamp = createTimeStamp;
 	}
 
 	public TodoDTO(String user, String title, String content, String isPublish, Long heart, Long comment) {
@@ -56,21 +62,24 @@ public class TodoDTO implements Serializable {
 		this.heart = heart;
 		this.comment = comment;
 	}
+	
+	
 
-	public TodoDTO(Long id, String user, String title, String content, String isPublish, Timestamp createDate) {
+	public TodoDTO(Long id, String user, String title, String content, String isPublish, Timestamp createTimeStamp) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.isPublish = isPublish;
-		this.createDate = createDate;
+		this.createTimeStamp = createTimeStamp;
 	}
 
 	@Override
 	public String toString() {
 		return "TodoDTO [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", isPublish="
-				+ isPublish + ", heart=" + heart + ", comment=" + comment + ", createDate=" + createDate + "]";
+				+ isPublish + ", heart=" + heart + ", comment=" + comment + ", createTimeStamp=" + createTimeStamp
+				+ "]";
 	}
 
 	public Long getId() {
@@ -113,12 +122,28 @@ public class TodoDTO implements Serializable {
 		this.isPublish = isPublish;
 	}
 
-	public Timestamp getCreateDate() {
-		return createDate;
+	public String getFilePath() {
+		return filePath;
 	}
 
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Timestamp getCreateTimeStamp() {
+		return createTimeStamp;
+	}
+
+	public void setCreateTimeStamp(Timestamp createTimeStamp) {
+		this.createTimeStamp = createTimeStamp;
 	}
 
 	public Long getHeart() {
@@ -135,6 +160,14 @@ public class TodoDTO implements Serializable {
 
 	public void setComment(Long comment) {
 		this.comment = comment;
+	}
+
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
 	}
 
 }

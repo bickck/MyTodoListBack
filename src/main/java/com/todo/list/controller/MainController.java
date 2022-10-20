@@ -38,11 +38,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageUserBuilder;
-import com.todo.list.controller.dto.BackGroundDTO;
 import com.todo.list.controller.dto.ImageInfoDTO;
-import com.todo.list.controller.dto.MainDataDTO;
 import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.controller.dto.QuoteInfoDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.AdminImageEntity;
@@ -100,13 +97,13 @@ public class MainController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-	@ResponseBody
-	@PostMapping("/manage/image/3/")
-	public ResponseEntity<String> requestImageDelete(@RequestBody BackGroundDTO backGroundDTO) {
-		backGroundImageService.delete(backGroundDTO.getId(), backGroundDTO.getFilename());
-
-		return new ResponseEntity<String>("success", HttpStatus.OK);
-	}
+//	@ResponseBody
+//	@PostMapping("/manage/image/3/")
+//	public ResponseEntity<String> requestImageDelete(@RequestBody BackGroundDTO backGroundDTO) {
+//		backGroundImageService.delete(backGroundDTO.getId(), backGroundDTO.getFilename());
+//
+//		return new ResponseEntity<String>("success", HttpStatus.OK);
+//	}
 
 	@ResponseBody
 	@GetMapping("/api/quotes")
@@ -115,21 +112,21 @@ public class MainController {
 		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
 	}
 
-	@ResponseBody
-	@GetMapping("/api/infos")
-	public ResponseEntity<MainDataDTO> responseMainDatas(@PageableDefault(size = 8) Pageable pageable) {
-
-		int quoteTotalSize = quoteService.getQuotesTotalSize(pageable);
-		Iterator<AdminImageEntity> adminImageEntities = backGroundImageService.imageNames().iterator();
-
-		List<ImageInfoDTO> list = new ArrayList<ImageInfoDTO>();
-
-		while (adminImageEntities.hasNext()) {
-			list.add(new ImageInfoDTO(adminImageEntities.next()));
-		}
-
-		return new ResponseEntity<MainDataDTO>(new MainDataDTO(list, quoteTotalSize), HttpStatus.OK);
-	}
+//	@ResponseBody
+//	@GetMapping("/api/infos")
+//	public ResponseEntity<MainDataDTO> responseMainDatas(@PageableDefault(size = 8) Pageable pageable) {
+//
+//		int quoteTotalSize = quoteService.getQuotesTotalSize(pageable);
+//		Iterator<AdminImageEntity> adminImageEntities = backGroundImageService.imageNames().iterator();
+//
+//		List<ImageInfoDTO> list = new ArrayList<ImageInfoDTO>();
+//
+//		while (adminImageEntities.hasNext()) {
+//			list.add(new ImageInfoDTO(adminImageEntities.next()));
+//		}
+//
+//		return new ResponseEntity<MainDataDTO>(new MainDataDTO(list, quoteTotalSize), HttpStatus.OK);
+//	}
 
 	@ResponseBody
 	@GetMapping("/")

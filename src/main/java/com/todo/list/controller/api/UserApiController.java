@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
-import com.todo.list.controller.dto.BackGroundDTO;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
@@ -108,7 +107,7 @@ public class UserApiController {
 
 		return new ResponseEntity<PageQuoteDTO>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 
 	 * 유저의 Quote 모든 정보 가져오기
@@ -132,31 +131,31 @@ public class UserApiController {
 //	}
 //	
 
-	@GetMapping("/{id}")
-	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
-		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-
-		List<BackGroundDTO> list = null;
-		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
-		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
-	}
+//	@GetMapping("/{id}")
+//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,
+//			@UserAuthToken UserTokenDTO userTokenDTO) {
+//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+//
+//		List<BackGroundDTO> list = null;
+//		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
+//		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
+//	}
 
 	/**
 	 * 
 	 * @param id
 	 * @param userTokenDTO
-	 * @return 
+	 * @return
 	 */
-	@GetMapping("/recommand")
-	public ResponseEntity<List<BackGroundDTO>> getUserRecommands(@PathVariable Integer id,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
-		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-
-		List<BackGroundDTO> list = null;
-		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
-		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
-	}
+//	@GetMapping("/recommand")
+//	public ResponseEntity<List<BackGroundDTO>> getUserRecommands(@PathVariable Integer id,
+//			@UserAuthToken UserTokenDTO userTokenDTO) {
+//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
+//
+//		List<BackGroundDTO> list = null;
+//		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
+//		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
+//	}
 
 //	@PostMapping("/backgrounds")
 //	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
