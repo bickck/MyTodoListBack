@@ -33,7 +33,7 @@ public class MethodConfig implements WebMvcConfigurer{
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		// TODO Auto-generated method stub
-		System.out.println("cors 설정");
+
 		registry.addMapping("/**")
 				.allowCredentials(false)
 				//.allowedOriginPatterns("http://127.0.0.1:5500/user/*,http://127.0.0.1:5500/auth/* ")
