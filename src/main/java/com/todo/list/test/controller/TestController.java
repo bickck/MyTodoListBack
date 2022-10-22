@@ -46,7 +46,7 @@ import com.todo.list.DummyData;
 import com.todo.list.configs.token.AuthenticationJwt;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
-import com.todo.list.controller.dto.FileDTO;
+import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.controller.dto.user.UserIntro;
 import com.todo.list.controller.dto.user.UserIntroDTO;

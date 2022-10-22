@@ -3,7 +3,7 @@ package com.todo.list.controller.builder;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.controller.dto.FileDTO;
+import com.todo.list.controller.dto.ImageDTO;
 
 public class BackGroundImgBuilder {
 	private Long id;
@@ -13,8 +13,8 @@ public class BackGroundImgBuilder {
 	private MultipartFile multipartFile;
 	private Long fileSize;
 	
-	public FileDTO builder() {
-		return new FileDTO(id, username, fileName, originName, multipartFile, fileSize);
+	public ImageDTO builder() {
+		return new ImageDTO(id, username, fileName, originName, multipartFile, fileSize);
 	}
 
 	public BackGroundImgBuilder setId(Long id) {

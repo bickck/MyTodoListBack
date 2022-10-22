@@ -64,6 +64,8 @@ public class QuoteService {
 		// UserEntity userEntity = repository.findByUsername(tokenDTO.getUsername());
 		QuoteEntity quoteEntity = userQuoteRepository.findById(id).get();
 		Publish publish = null;
+		String quote = quoteDTO.getQuote();
+		String author = quoteDTO.getAuthor();
 
 		if (quoteDTO.getIsPublish() != null) {
 			publish = quoteEntity.getIsPublish();
@@ -74,9 +76,13 @@ public class QuoteService {
 				quoteEntity.setIsPublish(publish.PUBLISH);
 			}
 		}
-
-		quoteEntity.setQuote(quoteDTO.getQuote());
-		quoteEntity.setAuthor(quoteDTO.getAuthor());
+		
+		if(quote != null) {
+			quoteEntity.setQuote(quoteDTO.getQuote());
+		}
+		if(author != null) {
+			quoteEntity.setAuthor(quoteDTO.getAuthor());
+		}
 
 		return userQuoteRepository.save(quoteEntity);
 	}
@@ -87,11 +93,18 @@ public class QuoteService {
 	}
 
 	@Transactional
-	public void saveHeartQuote(Long id) {
-		QuoteEntity quoteEntity = userQuoteRepository.getById(id);
-		long heart = quoteEntity.getHeart() + 1;
-		quoteEntity.setHeart(heart);
-		userQuoteRepository.save(quoteEntity);
+	public int saveHeartQuote(Long id) {
+		CriteriaUpdate<QuoteEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(QuoteEntity.class);
+		Root<QuoteEntity> root = criteriaUpdate.from(QuoteEntity.class);
+
+		// criteriaUpdate.set(root.get("HEART"), criteriaBuilder.sum(root.get("HEART"),
+		// 1));
+		criteriaUpdate.set("HEART", criteriaBuilder.sum(root.get("HEART"), 1));
+		criteriaUpdate.where(criteriaBuilder.equal(root.get("QUOTE_ID"), id));
+
+		int result = entitiyManager.createQuery(criteriaUpdate).executeUpdate();
+
+		return result;
 	}
 
 	@Transactional
@@ -102,6 +115,7 @@ public class QuoteService {
 		// criteriaUpdate.set(root.get("HEART"), criteriaBuilder.sum(root.get("HEART"),
 		// 1));
 		criteriaUpdate.set("HEART", criteriaBuilder.sum(root.get("HEART"), 1));
+		criteriaUpdate.where(criteriaBuilder.equal(root.get("QUOTE_ID"), id));
 
 		int result = entitiyManager.createQuery(criteriaUpdate).executeUpdate();
 

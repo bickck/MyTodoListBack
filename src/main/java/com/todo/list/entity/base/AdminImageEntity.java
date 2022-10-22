@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import com.todo.list.controller.dto.ImageInfoDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

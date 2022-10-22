@@ -23,14 +23,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.builder.TodoBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
+import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.controller.response.ResponseTodoEntity;
+import com.todo.list.entity.TodoCommentEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.service.api.UserApiService;
@@ -58,50 +60,51 @@ public class TodoController {
 	}
 
 	/*
-	 * To Do CRUD
+	 * Todo save
 	 */
 
 	@PostMapping("/save")
 	public ResponseEntity<?> saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		System.out.println(todoDTO.toString());
 		userTodoService.todoSave(userTokenDTO, todoDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	@PostMapping("/update/{id}")
 	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		TodoEntity todoEntity = new TodoEntity();
-		todoEntity.setId(id);
-		todoEntity.setContent(todoDTO.getContent());
+		userTodoService.todoUpdate(todoDTO);
 
-		// userTodoService.todoUpdate(todoEntity);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		userTodoService.todoDelete(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	@PostMapping("/heart/add/{id}")
 	public ResponseEntity<?> todoCommentHeartAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		// userTodoService.addRecommand(userTokenDTO, id);
+		userTodoService.addHeartUserTodo(id);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	@PostMapping("/comment/add/{id}")
-	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
+	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
+			@UserAuthToken UserTokenDTO dto) {
 
-//		userTodoService.addRecommand(dto, id);
+		TodoCommentEntity commentEntity = userTodoService.addCommentUserTodo(id, dto, commentDTO);
 
-		return new ResponseEntity<String>(HttpStatus.OK);
+		if (commentEntity == null) {
+
+		}
+
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 }

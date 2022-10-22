@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.page.PageUserBuilder;
-import com.todo.list.controller.dto.ImageInfoDTO;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.entity.UserEntity;

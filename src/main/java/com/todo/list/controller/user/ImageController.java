@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.builder.BackGroundImgBuilder;
-import com.todo.list.controller.dto.ImageInfoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.service.api.UserApiService;

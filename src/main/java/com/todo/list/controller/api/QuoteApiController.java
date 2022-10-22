@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -49,7 +50,7 @@ public class QuoteApiController {
 		this.userApiService = userApiService;
 		this.quoteApiService = quoteApiService;
 	}
-	
+
 	/**
 	 * Quote의 자세한 정보를 가져옴
 	 * 
@@ -58,13 +59,14 @@ public class QuoteApiController {
 	 */
 
 	@GetMapping("/{id}")
+	@ResponseBody
 	public ResponseEntity<QuoteDTO> requestQuoteDetailById(@PathVariable Long id) {
 
 		QuoteDTO quoteDTOs = new QuoteDTO(quoteApiService.requestQuoteApiById(id));
 
 		return new ResponseEntity<QuoteDTO>(quoteDTOs, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Publish된 모든 Quote를 가져옴
 	 * 
@@ -73,11 +75,12 @@ public class QuoteApiController {
 	 */
 
 	@GetMapping("/mainQuote")
+	@ResponseBody
 	public ResponseEntity<List<QuoteDTO>> requestQuotesApi(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * HEART가 가장 많은 Quote List를 가져옴
 	 * 
@@ -86,20 +89,21 @@ public class QuoteApiController {
 	 */
 
 	@GetMapping("/recommand/quotes")
-	public ResponseEntity<List<QuoteDTO>> requestRecommandQuotes(
-			@PageableDefault(size = 10, page = 0) Pageable pageable) {
+	@ResponseBody
+	public ResponseEntity<List<QuoteDTO>> requestRecommandQuotes(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 해당 날짜에 HEART를 가장 많이 받은 Quote List를 가져옴
 	 * 
 	 * @param pageable
 	 * @return Recommand Daily All Quote
 	 */
-	
+
 	@GetMapping("/daily/quotes")
+	@ResponseBody
 	public ResponseEntity<List<QuoteDTO>> requestDailyQuotes(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);

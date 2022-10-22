@@ -3,7 +3,7 @@ package com.todo.list.controller.dto;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileDTO {
+public class ImageDTO {
 
 	private Long id;
 	private String username;
@@ -12,18 +12,18 @@ public class FileDTO {
 	private MultipartFile multipartFile;
 	private Long fileSize;
 
-	public FileDTO() {
+	public ImageDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileDTO(String fileName, String originName, Resource resource, MultipartFile multipartFile, Long fileSize) {
+	public ImageDTO(String fileName, String originName, Resource resource, MultipartFile multipartFile, Long fileSize) {
 		this.fileName = fileName;
 		this.originName = originName;
 		this.multipartFile = multipartFile;
 		this.fileSize = fileSize;
 	}
 
-	public FileDTO(Long id, String username, String fileName, String originName, MultipartFile multipartFile,
+	public ImageDTO(Long id, String username, String fileName, String originName, MultipartFile multipartFile,
 			Long fileSize) {
 		super();
 		this.id = id;

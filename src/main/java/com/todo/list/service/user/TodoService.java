@@ -2,6 +2,11 @@ package com.todo.list.service.user;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,6 +16,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
@@ -32,15 +38,22 @@ import com.todo.list.repository.UserRepository;
 @Service
 public class TodoService {
 
+	private EntityManager entityManager;
+	private CriteriaBuilder criteriaBuilder;
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
 	private TodoCommentRepository todoCommentRepository;
 	private TodoImageRepository todoImageRepository;
 
 	@Autowired
-	public TodoService(UserRepository userRepository, TodoRepository todoRepository) {
+	public TodoService(EntityManager entityManager, UserRepository userRepository, TodoRepository todoRepository,
+			TodoCommentRepository todoCommentRepository, TodoImageRepository todoImageRepository) {
+		this.entityManager = entityManager;
+		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.userRepository = userRepository;
 		this.todoRepository = todoRepository;
+		this.todoCommentRepository = todoCommentRepository;
+		this.todoImageRepository = todoImageRepository;
 	}
 
 	@Transactional
@@ -66,11 +79,20 @@ public class TodoService {
 	@Transactional
 	public TodoEntity todoUpdate(TodoDTO todoDTO) {
 		TodoEntity entity = todoRepository.findTodoEntityById(todoDTO.getId());
-		entity.setContent(todoDTO.getContent());
-		entity.setTitle(todoDTO.getTitle());
+
+		String title = todoDTO.getTitle();
+		String content = todoDTO.getContent();
 
 		if (todoDTO.getIsPublish().equals("private")) {
 			entity.setIsPublish(Publish.PRIVATE);
+		}
+
+		if (title != null) {
+			entity.setTitle(title);
+		}
+
+		if (content != null) {
+			entity.setContent(content);
 		}
 
 		return todoRepository.save(entity);
@@ -94,23 +116,34 @@ public class TodoService {
 	}
 
 	/**
+	 * UPDATE QUERY
 	 * 
 	 * @param todo Id
 	 */
 
 	@Transactional
-	public void addHeartUserTodo(Long id) {
+	public int addHeartUserTodo(Long id) {
+		CriteriaUpdate<TodoEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(TodoEntity.class);
+		Root<TodoEntity> root = criteriaUpdate.from(TodoEntity.class);
+
+		criteriaUpdate.set("HEART", criteriaBuilder.sum(root.get("HEART"), 1));
+		criteriaUpdate.where(criteriaBuilder.equal(root.get("TODO_ID"), id));
+
+		int result = entityManager.createQuery(criteriaUpdate).executeUpdate();
+
+		return result;
 
 	}
 
 	/**
 	 * 
-	 * @param todoId, Comment DTO
+	 * @param Todo Id, Comment DTO
 	 */
 
 	@Transactional
-	public void addCommentUserTodo(Long id) {
+	public TodoCommentEntity addCommentUserTodo(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
 
+		return todoCommentRepository.save(null);
 	}
 
 }

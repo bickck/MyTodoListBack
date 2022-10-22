@@ -20,6 +20,7 @@ public class TodoImageEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+//	@Column(name="TO")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TODO_ID", nullable = false)
 	private TodoEntity todoBoard;

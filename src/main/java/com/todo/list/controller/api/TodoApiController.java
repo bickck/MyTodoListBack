@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.builder.TodoBuilder;
 import com.todo.list.controller.builder.page.PageTodoBuilder;
-import com.todo.list.controller.dto.PostInterface;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
+import com.todo.list.controller.dto.response.PostInterface;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.service.api.TodoApiService;
 import com.todo.list.service.user.TodoService;
@@ -46,7 +47,7 @@ public class TodoApiController {
 		this.userTodoService = userTodoService;
 		this.todoApiService = todoApiService;
 	}
-	
+
 	/**
 	 * Todo의 자세한 정보를 가져옴
 	 * 
@@ -54,14 +55,14 @@ public class TodoApiController {
 	 * @return Todo Detail
 	 */
 
-	@PostMapping("/{id}")
+	@GetMapping("/{id}")
+	@ResponseBody
 	public ResponseEntity<?> requestPostDetailByid(@PathVariable Long id) {
 
 		TodoEntity todoDetail = todoApiService.findPostDetailById(id);
 
 		return new ResponseEntity<TodoEntity>(todoDetail, HttpStatus.OK);
 	}
-	
 
 	/**
 	 * Publish된 모든 Todo를 가져옴
@@ -71,13 +72,14 @@ public class TodoApiController {
 	 */
 
 	@GetMapping("/mainpost")
+	@ResponseBody
 	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		Page<PostInterface> page = todoApiService.findMainPost(pageable);
 
 		return new ResponseEntity<Page<PostInterface>>(page, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * HEART가 가장 많은 Todo List를 가져옴
 	 * 
@@ -86,6 +88,7 @@ public class TodoApiController {
 	 */
 
 	@GetMapping("/recommand/todos")
+	@ResponseBody
 	public ResponseEntity<?> requestRecommandTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		Page<PostInterface> page = todoApiService.findPostMostRecommandDaily(pageable);
@@ -93,7 +96,7 @@ public class TodoApiController {
 		return new ResponseEntity<Page<PostInterface>>(page, HttpStatus.OK);
 
 	}
-	
+
 	/**
 	 * 해당 날짜에 HEART를 가장 많이 받은 Todo List를 가져옴
 	 * 
@@ -102,11 +105,12 @@ public class TodoApiController {
 	 */
 
 	@GetMapping("/daily/todos")
+	@ResponseBody
 	public ResponseEntity<?> requestDailyTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		Page<PostInterface> page = todoApiService.findRecommandPosts(pageable);
 
-		return new ResponseEntity<Page<PostInterface>>(page,HttpStatus.OK);
+		return new ResponseEntity<Page<PostInterface>>(page, HttpStatus.OK);
 	}
 
 }

@@ -17,13 +17,13 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.controller.dto.FileDTO;
+import com.todo.list.controller.dto.ImageDTO;
 
 @Service
 public class UserImageUploadService implements ImageService {
 
 	@Override
-	public void saveImageInDir(FileDTO fileDTO) {
+	public void saveImageInDir(ImageDTO fileDTO) {
 
 		String location = DEFAULT_PATH + fileDTO.getUsername();
 		Path path = Paths.get(location);

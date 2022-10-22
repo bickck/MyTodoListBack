@@ -6,13 +6,13 @@ import java.io.IOException;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.controller.dto.FileDTO;
+import com.todo.list.controller.dto.ImageDTO;
 
 public interface ImageService {
 
 	static String DEFAULT_PATH = "E:\\img" + File.separator;
 
-	void saveImageInDir(FileDTO filedto);
+	void saveImageInDir(ImageDTO filedto);
 
 	Resource findBackGroundImageInDir(String originalName, String folderName);
 
