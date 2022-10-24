@@ -71,8 +71,10 @@ public class UserApiController {
 	@ResponseBody
 	@PostMapping(value = "/intro")
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
+		Long id = userTokenDTO.getId();
 		String username = userTokenDTO.getUsername();
-		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(username);
+		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(id, username);
+		
 		return new ResponseEntity<UserIntroDTO>(introDTO, HttpStatus.OK);
 	}
 
@@ -81,16 +83,12 @@ public class UserApiController {
 	 * 유저의 Todo 모든 정보 가져오기
 	 */
 
+	@ResponseBody
 	@PostMapping("/todos")
 	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
 			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
 
-		Page<TodoEntity> entities = userApiService.getUserToDoLists(userTokenDTO, pageable);
-
-		PageTodoBuilder builder = new PageTodoBuilder().setLists(entities.getContent()).setNumber(entities.getNumber())
-				.setNumberOfElements(entities.getNumberOfElements()).setPageable(entities.getPageable())
-				.setSize(entities.getSize()).setTotalPages(entities.getTotalPages())
-				.setTotalElements(entities.getTotalElements());
+		
 
 		return new ResponseEntity<PageTodoDTO>(HttpStatus.OK);
 	}

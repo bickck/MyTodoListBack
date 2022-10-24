@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.repository.admin.AdminImageRepository;
-import com.todo.list.repository.mapper.ImageInfoMapper;
+import com.todo.list.repository.mapper.ImageMapper;
 import com.todo.list.service.image.MainImageUploadService;
 import com.todo.list.service.image.ImageService;
 

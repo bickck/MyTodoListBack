@@ -1,8 +1,8 @@
-package com.todo.list.controller.dto.response;
+package com.todo.list.repository.mapper;
 
 import java.sql.Timestamp;
 
-public interface PostInterface {
+public interface TodoMapper {
 
 	String getId();
 

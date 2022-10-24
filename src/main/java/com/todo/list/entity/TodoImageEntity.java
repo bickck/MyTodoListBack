@@ -1,5 +1,7 @@
 package com.todo.list.entity;
 
+import java.sql.Timestamp;
+
 import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "TODO_IMAGE_ENTITY")
 public class TodoImageEntity {
@@ -28,11 +33,22 @@ public class TodoImageEntity {
 	@Column(name = "FILENAME")
 	private String fileName;
 
+	@Column(name = "FILEPATH")
+	private String filePath;
+
 	@Column(name = "ORIGINALFILENAME")
 	private String originalFileName;
 
-	@Column(name = "FILEPATH")
-	private String filePath;
+	@Column(name = "FILESIZE")
+	private Long fileSize;
+
+	@CreationTimestamp
+	@Column(name = "CREATEDATE")
+	private Timestamp createDate;
+
+	@UpdateTimestamp
+	@Column(name = "UPDATEDATE")
+	private Timestamp updateDate;
 
 	public TodoImageEntity() {
 		// TODO Auto-generated constructor stub

@@ -22,15 +22,21 @@ public class QTodoImageEntity extends EntityPathBase<TodoImageEntity> {
 
     public static final QTodoImageEntity todoImageEntity = new QTodoImageEntity("todoImageEntity");
 
+    public final DateTimePath<java.sql.Timestamp> createDate = createDateTime("createDate", java.sql.Timestamp.class);
+
     public final StringPath fileName = createString("fileName");
 
     public final StringPath filePath = createString("filePath");
+
+    public final NumberPath<Long> fileSize = createNumber("fileSize", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath originalFileName = createString("originalFileName");
 
     public final QTodoEntity todoBoard;
+
+    public final DateTimePath<java.sql.Timestamp> updateDate = createDateTime("updateDate", java.sql.Timestamp.class);
 
     public QTodoImageEntity(String variable) {
         this(TodoImageEntity.class, forVariable(variable), INITS);

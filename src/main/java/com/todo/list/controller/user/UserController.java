@@ -61,34 +61,46 @@ import lombok.extern.java.Log;
 @RequestMapping(value = "/user/manage")
 public class UserController {
 
-	private static final String SEESION_NAME = "username";
-	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
+//	private static final String SEESION_NAME = "username";
+//	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
 
 	private UserService userService;
-
 	private QuoteService userQuoteService;
 	private ImageService imaegService;
 	private TodoService todoService;
-
-	@Autowired
 	private AuthenticationJwt jwtLoginToken;
 
 	@Autowired
-	public UserController(UserService userService, UserApiService userApiService, QuoteService userQuoteService) {
+	public UserController(UserService userService, UserApiService userApiService, QuoteService userQuoteService,
+			AuthenticationJwt jwtLoginToken) {
 		this.userService = userService;
 		this.userQuoteService = userQuoteService;
+		this.jwtLoginToken = jwtLoginToken;
 		this.imaegService = new UserImageUploadService();
 	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param userDTO
+	 * @return
+	 */
 
 	@PostMapping("/update/intro/{id}")
 	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
 
 		UserEntity userEntity = new UserEntity();
-		userEntity.setId(id);
+		userEntity.setId(id);	
 		userEntity.setIntroComment(userDTO.getIntroComment());
 		userService.userUpdate(userEntity);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
@@ -98,11 +110,16 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	// change password
+	/**
+	 * 
+	 * @param id
+	 * @param userDTO
+	 * @return
+	 */
 
 	@PostMapping("/changePassword/{id}")
 	public ResponseEntity<?> changePassword(@PathVariable Long id, UserDTO userDTO) {
-		
+
 		userService.changeUserPassword(id, userDTO);
 
 		return new ResponseEntity<>(HttpStatus.OK);

@@ -26,13 +26,13 @@ public class QUserImageEntity extends EntityPathBase<UserImageEntity> {
 
     public final StringPath fileName = createString("fileName");
 
+    public final StringPath filePath = createString("filePath");
+
     public final NumberPath<Long> fileSize = createNumber("fileSize", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath location = createString("location");
-
-    public final StringPath originName = createString("originName");
+    public final StringPath originalFileName = createString("originalFileName");
 
     public final DateTimePath<java.sql.Timestamp> updateDate = createDateTime("updateDate", java.sql.Timestamp.class);
 

@@ -47,7 +47,7 @@ public class UserEntity {
 	@CreationTimestamp
 	private Timestamp createDate;
 
-	@Column(name = "UPDATECREATE")
+	@Column(name = "UPDATEDATE")
 	@UpdateTimestamp
 	private Timestamp updateDate;
 

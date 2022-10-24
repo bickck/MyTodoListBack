@@ -32,7 +32,8 @@ public class QuoteEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id @Column(name ="QUOTE_ID")
+	@Id
+	@Column(name = "QUOTE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -55,7 +56,7 @@ public class QuoteEntity {
 
 	@CreationTimestamp
 	@Column(name = "CREATETIMESTAMP")
-	private Timestamp creaTimestamp;
+	private Timestamp createTimestamp;
 
 	@UpdateTimestamp
 	@Column(name = "UPDATETIMESTAMP")
@@ -88,8 +89,18 @@ public class QuoteEntity {
 		this.heart = heart;
 	}
 
+	public QuoteEntity(Long id, UserEntity user, String quote, String author, Long heart, Timestamp createTimestamp) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.quote = quote;
+		this.author = author;
+		this.heart = heart;
+		this.createTimestamp = createTimestamp;
+	}
+
 	public QuoteEntity(Long id, UserEntity user, String quote, String author, Publish isPublish, Long heart,
-			Timestamp creaTimestamp, Timestamp updateTimestamp) {
+			Timestamp createTimestamp, Timestamp updateTimestamp) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -97,7 +108,7 @@ public class QuoteEntity {
 		this.author = author;
 		this.isPublish = isPublish;
 		this.heart = heart;
-		this.creaTimestamp = creaTimestamp;
+		this.createTimestamp = createTimestamp;
 		this.updateTimestamp = updateTimestamp;
 	}
 
@@ -149,12 +160,12 @@ public class QuoteEntity {
 		this.heart = heart;
 	}
 
-	public Timestamp getCreaTimestamp() {
-		return creaTimestamp;
+	public Timestamp getCreateTimestamp() {
+		return createTimestamp;
 	}
 
-	public void setCreaTimestamp(Timestamp creaTimestamp) {
-		this.creaTimestamp = creaTimestamp;
+	public void setCreateTimestamp(Timestamp createTimestamp) {
+		this.createTimestamp = createTimestamp;
 	}
 
 	public Timestamp getUpdateTimestamp() {

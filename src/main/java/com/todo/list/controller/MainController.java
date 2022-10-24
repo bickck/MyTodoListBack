@@ -43,7 +43,7 @@ import com.todo.list.controller.dto.page.PageUserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
-import com.todo.list.repository.mapper.ImageInfoMapper;
+import com.todo.list.repository.mapper.ImageMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.MainImageUploadService;
 import com.todo.list.service.image.ImageService;

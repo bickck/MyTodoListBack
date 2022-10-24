@@ -48,13 +48,13 @@ public class QuoteRepositoryQueryTest {
 				"quote1234", "quote1234", Publish.PRIVATE, (long) 0));
 	}
 
-	@Test
-	public void getPublishedUserTodo() {
-		List<QuoteEntity> entity = userQuoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH);
-
-		List<QuoteEntity> entities = userQuoteRepository.findAll();
-
-		System.out.println(entities.toString());
-
-	}
+//	@Test
+//	public void getPublishedUserTodo() {
+//		List<QuoteEntity> entity = userQuoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH);
+//
+//		List<QuoteEntity> entities = userQuoteRepository.findAll();
+//
+//		System.out.println(entities.toString());
+//
+//	}
 }

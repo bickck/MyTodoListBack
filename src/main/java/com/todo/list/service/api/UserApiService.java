@@ -27,50 +27,40 @@ import com.todo.list.repository.UserRepository;
 @Service
 public class UserApiService {
 
-	@Autowired
 	private JPAQueryFactory jpaQueryFactory;
-
-	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private TodoRepository userTodoRepository;
-
-	@Autowired
-	private QuoteRepository userQuoteRepository;
-
-	@Autowired
+	private TodoRepository todoRepository;
+	private QuoteRepository quoteRepository;
 	private UserImageRepository userImageRepository;
-
 	private Utils utils = new Utils();
 
-	public Page<UserEntity> getUserList(Pageable pageable) {
-		return userRepository.findAll(pageable);
+	@Autowired
+	public UserApiService(JPAQueryFactory jpaQueryFactory, UserRepository userRepository, TodoRepository todoRepository,
+			QuoteRepository quoteRepository, UserImageRepository userImageRepository) {
+		this.jpaQueryFactory = jpaQueryFactory;
+		this.userRepository = userRepository;
+		this.todoRepository = todoRepository;
+		this.quoteRepository = quoteRepository;
+		this.userImageRepository = userImageRepository;
+
 	}
 
-	@Transactional(readOnly = true)
-	public UserEntity getUserApi(String username) {
+	/**
+	 * 
+	 * @param username
+	 * @param user id
+	 * @return User Intro Data
+	 */
 
-		return userRepository.findByUsername(username);
-	}
-
 	@Transactional(readOnly = true)
-	public UserIntroDTO getUserIntroDetailsApi(String username) {
+	public UserIntroDTO getUserIntroDetailsApi(Long id, String username) {
 		UserEntity userEntity = userRepository.findByUsername(username);
 		UserIntroDTO userIntroDTO = new UserIntroDTO();
 
 		userIntroDTO.setId(userEntity.getId());
 		userIntroDTO.setUsername(userEntity.getUsername());
-		String fileName = userEntity.getUserImageEntity().getFileName();
-		String location = userEntity.getUserImageEntity().getLocation();
 		String introComment = userEntity.getIntroComment();
 
-		if (fileName == null) {
-			userIntroDTO.setFileName(utils.nvl(fileName));
-		}
-		if (location == null) {
-			userIntroDTO.setLocation(utils.nvl(location));
-		}
 		if (introComment == null) {
 			userIntroDTO.setIntroComment(utils.nvl(introComment));
 		}
@@ -84,10 +74,17 @@ public class UserApiService {
 		return userRepository.findByUsername(username.getUsername());
 	}
 
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return User Quote List
+	 */
+
 	@Transactional(readOnly = true)
 	public Page<QuoteEntity> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
 		long id = userDTO.getId();
-		Page<QuoteEntity> entities = userQuoteRepository.findQuoteEntitiesByUserId(id, pageable);
+		Page<QuoteEntity> entities = quoteRepository.findQuoteEntitiesByUserId(id, pageable);
 		return entities;
 	}
 
@@ -97,17 +94,18 @@ public class UserApiService {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return User Todo List
+	 */
 	@Transactional(readOnly = true)
 	public Page<TodoEntity> getUserToDoLists(UserTokenDTO userDTO, Pageable pageable) {
 		Long id = userDTO.getId();
-		Page<TodoEntity> entities = userTodoRepository.findTodoEntitiesByUserId(id, pageable);
+		Page<TodoEntity> entities = todoRepository.findTodoEntitiesByUserId(id, pageable);
 
 		return entities;
-	}
-
-	@Transactional(readOnly = true)
-	public void usersQuoteList() {
-
 	}
 
 }

@@ -10,10 +10,10 @@ public interface QuoteMapper {
 
 	String getAuthor();
 
-	Timestamp getCreaTimestamp();
+	Timestamp getCreateTimestamp();
 
-	interface User {
-		String getUsername();
-	}
+	String getUsername();
+	
+	Long getHeart();
 
 }

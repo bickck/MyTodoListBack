@@ -48,7 +48,6 @@ import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.page.PageUserBuilder;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.page.PageUserDTO;
-import com.todo.list.controller.dto.user.UserIntro;
 import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
@@ -57,6 +56,7 @@ import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.mapper.UserIntroMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.UserImageUploadService;
 import com.todo.list.test.service.TestService;
@@ -143,17 +143,17 @@ public class TestController {
 		return token;
 	}
 
-	@Cacheable(cacheNames = "cacheStorage")
-	@GetMapping("/test/queryTest1")
-	public String userQuoteQueryTest() {
-
-		long startTime = System.currentTimeMillis();
-		int size = quoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH).size();
-		long endTime = System.currentTimeMillis();
-		System.out.println(size);
-
-		return endTime - startTime + "ms";
-	}
+//	@Cacheable(cacheNames = "cacheStorage")
+//	@GetMapping("/test/queryTest1")
+//	public String userQuoteQueryTest() {
+//
+//		long startTime = System.currentTimeMillis();
+//		int size = quoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH).size();
+//		long endTime = System.currentTimeMillis();
+//		System.out.println(size);
+//
+//		return endTime - startTime + "ms";
+//	}
 
 	@Cacheable(cacheNames = "cacheStorage")
 	@GetMapping("/test/quote/querytest1/{id}")
@@ -223,21 +223,21 @@ public class TestController {
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 
-	@GetMapping("/users")
-	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
-
-		Page<UserEntity> api = userApiService.getUserList(pageable);
-		PageUserBuilder builder = new PageUserBuilder();
-		builder.setNumber(api.getNumber());
-
-		builder.setNumberOfElements(api.getNumberOfElements());
-		builder.setTotalElements(api.getTotalElements());
-		builder.setSize(api.getSize());
-		builder.setTotalPages(api.getTotalPages());
-		builder.setPageable(api.getPageable());
-
-		// Page<String> apis = api.getContent();
-
-		return null;
-	}
+//	@GetMapping("/users")
+//	public PageUserDTO getUsers(@PageableDefault(size = 10, direction = Direction.DESC) Pageable pageable) {
+//
+//		Page<UserEntity> api = userApiService.getUserList(pageable);
+//		PageUserBuilder builder = new PageUserBuilder();
+//		builder.setNumber(api.getNumber());
+//
+//		builder.setNumberOfElements(api.getNumberOfElements());
+//		builder.setTotalElements(api.getTotalElements());
+//		builder.setSize(api.getSize());
+//		builder.setTotalPages(api.getTotalPages());
+//		builder.setPageable(api.getPageable());
+//
+//		// Page<String> apis = api.getContent();
+//
+//		return null;
+//	}
 }

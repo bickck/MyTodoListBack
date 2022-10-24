@@ -28,7 +28,7 @@ public class CorsFIlter implements Filter {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 
-		System.out.println("Come in CorsConfiguration");
+//		System.out.println("Come in CorsConfiguration");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 

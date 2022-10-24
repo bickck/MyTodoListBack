@@ -29,17 +29,20 @@ import com.todo.list.util.UserUtil;
 @Service
 public class UserService {
 
-	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
 	private UserImageRepository userImageRepository;
-
-	@Autowired
 	private UserUtil userUtil;
 
+	@Autowired
+	public UserService(UserRepository userRepository, UserImageRepository userImageRepository, UserUtil userUtil) {
+		// TODO Auto-generated constructor stub
+		this.userRepository = userRepository;
+		this.userImageRepository = userImageRepository;
+		this.userUtil = userUtil;
+	}
+
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void userSave(UserDTO userDTO) {
+	public UserEntity userSave(UserDTO userDTO) {
 		String email = userDTO.getEmail();
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
@@ -51,15 +54,17 @@ public class UserService {
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
 		userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
+		
+		return userEntity;
 	}
 
 	@Transactional
 	public UserEntity userUpdate(UserEntity user) {
-		UserEntity userEntityFromDB = userRepository.getById(user.getId());
+		UserEntity prevUserEntity = userRepository.getById(user.getId());
 
-		userEntityFromDB.setIntroComment(user.getIntroComment());
+		prevUserEntity.setIntroComment(user.getIntroComment());
 
-		return userRepository.save(userEntityFromDB);
+		return userRepository.save(prevUserEntity);
 	}
 
 	@Transactional

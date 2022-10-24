@@ -28,7 +28,7 @@ public class UserAuthJwtFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		System.out.println("Come in UserAuthJwtFilter");
+//		System.out.println("Come in UserAuthJwtFilter");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authorization = httpServletRequest.getHeader("Authorization");
 

@@ -24,7 +24,7 @@ public class QQuoteEntity extends EntityPathBase<QuoteEntity> {
 
     public final StringPath author = createString("author");
 
-    public final DateTimePath<java.sql.Timestamp> creaTimestamp = createDateTime("creaTimestamp", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> createTimestamp = createDateTime("createTimestamp", java.sql.Timestamp.class);
 
     public final NumberPath<Long> heart = createNumber("heart", Long.class);
 

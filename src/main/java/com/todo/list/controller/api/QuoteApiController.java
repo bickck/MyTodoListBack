@@ -60,7 +60,7 @@ public class QuoteApiController {
 
 	@GetMapping("/{id}")
 	@ResponseBody
-	public ResponseEntity<QuoteDTO> requestQuoteDetailById(@PathVariable Long id) {
+	public ResponseEntity<?> requestQuoteDetailById(@PathVariable Long id) {
 
 		QuoteDTO quoteDTOs = new QuoteDTO(quoteApiService.requestQuoteApiById(id));
 
@@ -74,11 +74,13 @@ public class QuoteApiController {
 	 * @return All Quote
 	 */
 
-	@GetMapping("/mainQuote")
+	@GetMapping("/mainquote")
 	@ResponseBody
-	public ResponseEntity<List<QuoteDTO>> requestQuotesApi(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+	public ResponseEntity<?> requestQuotesApi(@PageableDefault(size = 5, page = 0) Pageable pageable) {
 
-		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
+		Page<QuoteMapper> page = quoteApiService.mainQuoteLists(pageable);
+
+		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
 
 	/**
@@ -90,7 +92,8 @@ public class QuoteApiController {
 
 	@GetMapping("/recommand/quotes")
 	@ResponseBody
-	public ResponseEntity<List<QuoteDTO>> requestRecommandQuotes(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+	public ResponseEntity<List<QuoteDTO>> requestRecommandQuotes(
+			@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
 		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
 	}

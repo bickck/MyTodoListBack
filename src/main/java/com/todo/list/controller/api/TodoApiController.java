@@ -24,8 +24,8 @@ import com.todo.list.controller.builder.page.PageTodoBuilder;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.controller.dto.response.PostInterface;
 import com.todo.list.entity.TodoEntity;
+import com.todo.list.repository.mapper.TodoMapper;
 import com.todo.list.service.api.TodoApiService;
 import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
@@ -75,9 +75,9 @@ public class TodoApiController {
 	@ResponseBody
 	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<PostInterface> page = todoApiService.findMainPost(pageable);
+		Page<TodoMapper> page = todoApiService.findMainPost(pageable);
 
-		return new ResponseEntity<Page<PostInterface>>(page, HttpStatus.OK);
+		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 	}
 
 	/**
@@ -91,9 +91,9 @@ public class TodoApiController {
 	@ResponseBody
 	public ResponseEntity<?> requestRecommandTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<PostInterface> page = todoApiService.findPostMostRecommandDaily(pageable);
+		Page<TodoMapper> page = todoApiService.findPostMostRecommandDaily(pageable);
 
-		return new ResponseEntity<Page<PostInterface>>(page, HttpStatus.OK);
+		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 
 	}
 
@@ -108,9 +108,9 @@ public class TodoApiController {
 	@ResponseBody
 	public ResponseEntity<?> requestDailyTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<PostInterface> page = todoApiService.findRecommandPosts(pageable);
+		Page<TodoMapper> page = todoApiService.findRecommandPosts(pageable);
 
-		return new ResponseEntity<Page<PostInterface>>(page, HttpStatus.OK);
+		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 	}
 
 }

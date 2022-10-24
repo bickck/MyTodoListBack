@@ -22,7 +22,7 @@ public class UserLoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		System.out.println("Come in UserLoginFilter");
+//		System.out.println("Come in UserLoginFilter");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String authorization = httpServletRequest.getHeader("Authorization");
 		if (authorization == null) {

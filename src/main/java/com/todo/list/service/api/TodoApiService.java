@@ -19,12 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.controller.dto.response.PostInterface;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.mapper.TodoMapper;
 
 @Service
 public class TodoApiService {
@@ -51,13 +51,13 @@ public class TodoApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<PostInterface> findMainPost(Pageable pageable) {
+	public Page<TodoMapper> findMainPost(Pageable pageable) {
 
 		return todoRepository.findTodoMainPostByPublish(Publish.PUBLISH, pageable);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<PostInterface> findRecommandPosts(Pageable pageable) {
+	public Page<TodoMapper> findRecommandPosts(Pageable pageable) {
 
 		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
 
@@ -65,7 +65,7 @@ public class TodoApiService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<PostInterface> findPostMostRecommandDaily(Pageable pageable) {
+	public Page<TodoMapper> findPostMostRecommandDaily(Pageable pageable) {
 
 		return null;
 	}

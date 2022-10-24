@@ -16,16 +16,13 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity(name = "USER_IMAGE")
+@Entity(name = "USER_IMAGE_ENTITY")
 public class UserImageEntity {
 
 	@Id
+	@Column(name = "USER_IMAGE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "USER_ID")
-//	private UserEntity user;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
@@ -34,21 +31,21 @@ public class UserImageEntity {
 	@Column(name = "FILENAME")
 	private String fileName;
 
-	@Column(name = "LOCATION")
-	private String location;
+	@Column(name = "FILEPATH")
+	private String filePath;
 
-	@Column(name = "ORIGIN_NAME")
-	private String originName;
+	@Column(name = "ORIGINALFILENAME")
+	private String originalFileName;
 
 	@Column(name = "FILESIZE")
 	private Long fileSize;
 
 	@CreationTimestamp
-	@Column(name = "CREATE_DATE")
+	@Column(name = "CREATEDATE")
 	private Timestamp createDate;
-	
+
 	@UpdateTimestamp
-	@Column(name = "UPDATE_DATE")
+	@Column(name = "UPDATEDATE")
 	private Timestamp updateDate;
 
 	public UserImageEntity() {
@@ -64,25 +61,26 @@ public class UserImageEntity {
 //		this.fileSize = userImageEntity.getFileSize();
 //	}
 
-	public UserImageEntity(UserEntity user, String fileName, String location, String originName, Long fileSize) {
+	public UserImageEntity(UserEntity user, String fileName, String filePath, String originlFileName, Long fileSize) {
 		super();
 		this.user = user;
 		this.fileName = fileName;
-		this.location = location;
-		this.originName = originName;
+		this.filePath = filePath;
+		this.originalFileName = originlFileName;
 		this.fileSize = fileSize;
 	}
 
-	public UserImageEntity(String fileName, String location) {
+	public UserImageEntity(String fileName, String filePath) {
 		super();
 		this.fileName = fileName;
-		this.location = location;
+		this.filePath = filePath;
 	}
 
 	@Override
 	public String toString() {
-		return "UserImageEntity [id=" + id + ", user=" + user + ", fileName=" + fileName + ", location=" + location
-				+ ", originName=" + originName + ", fileSize=" + fileSize + ", createDate=" + createDate + "]";
+		return "UserImageEntity [id=" + id + ", user=" + user + ", fileName=" + fileName + ", filePath=" + filePath
+				+ ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", createDate=" + createDate
+				+ "]";
 	}
 
 	public Long getId() {
@@ -101,8 +99,12 @@ public class UserImageEntity {
 		this.user = user;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	public String getFileName() {
@@ -113,16 +115,20 @@ public class UserImageEntity {
 		this.fileName = fileName;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public String getOriginalFileName() {
+		return originalFileName;
 	}
 
-	public String getOriginName() {
-		return originName;
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
 	}
 
-	public void setOriginName(String originName) {
-		this.originName = originName;
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public Long getFileSize() {
