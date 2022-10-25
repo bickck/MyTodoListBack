@@ -44,11 +44,11 @@ import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.mapper.ImageMapper;
+import com.todo.list.service.admin.DefaultQuetoService;
+import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.MainImageUploadService;
 import com.todo.list.service.image.ImageService;
-import com.todo.list.service.image.admin.MainBackGroundImageService;
-import com.todo.list.service.queto.DefaultQuetoService;
 import com.todo.list.test.service.TestService;
 
 /**

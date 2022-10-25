@@ -1,4 +1,4 @@
-package com.todo.list.service.image.admin;
+package com.todo.list.service.admin;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

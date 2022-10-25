@@ -59,33 +59,58 @@ public class TodoController {
 		this.userTodoService = userTodoService;
 	}
 
-	/*
-	 * Todo save
+	/**
+	 * 
+	 * @param todoDTO
+	 * @param userTokenDTO
+	 * @return status
 	 */
 
 	@PostMapping("/save")
 	public ResponseEntity<?> saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userTodoService.todoSave(userTokenDTO, todoDTO);
+		userTodoService.saveTodo(userTokenDTO, todoDTO);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
+
+	/**
+	 *
+	 * @param id
+	 * @param todoDTO
+	 * @param userTokenDTO
+	 * @return status
+	 */
 
 	@PostMapping("/update/{id}")
 	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userTodoService.todoUpdate(todoDTO);
+		userTodoService.updateTodo(todoDTO);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param userTokenDTO
+	 * @return status
+	 */
 
 	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userTodoService.todoDelete(id);
+		userTodoService.deleteTodo(id);
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param userTokenDTO
+	 * @return status
+	 */
 
 	@PostMapping("/heart/add/{id}")
 	public ResponseEntity<?> todoCommentHeartAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
@@ -95,11 +120,21 @@ public class TodoController {
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * Todo Id의 코멘트를 저장
+	 * 
+	 * @param id
+	 * @param commentDTO
+	 * @param dto
+	 * @return status
+	 */
+
 	@PostMapping("/comment/add/{id}")
 	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
 
-		TodoCommentEntity commentEntity = userTodoService.addCommentUserTodo(id, dto, commentDTO);
+		TodoCommentEntity commentEntity = userTodoService.saveTodoComment(id, dto, commentDTO);
 
 		if (commentEntity == null) {
 
@@ -107,4 +142,39 @@ public class TodoController {
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
+
+	/**
+	 * Comment를 수정
+	 * 
+	 * @param id
+	 * @param commentDTO
+	 * @param dto
+	 * @return status
+	 */
+
+	@PostMapping("/comment/update/{id}")
+	public ResponseEntity<?> requestRecommandUpdate(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
+			@UserAuthToken UserTokenDTO dto) {
+		
+		userTodoService.updateTodoComment(id, dto, commentDTO);
+
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
+	/**
+	 * Comment를 삭제
+	 * 
+	 * @param id
+	 * @param dto
+	 * @return status
+	 */
+
+	@PostMapping("/comment/delete/{id}")
+	public ResponseEntity<?> requestRecommandDelete(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
+
+		userTodoService.deleteTodoComment(id);
+		
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
 }

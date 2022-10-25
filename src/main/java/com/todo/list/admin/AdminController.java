@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.service.EventLogService;
+import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.admin.MainBackGroundImageService;
 
 /**
  * @author DongHyeon_kim

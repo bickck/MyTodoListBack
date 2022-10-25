@@ -18,17 +18,33 @@ import com.todo.list.repository.mapper.QuoteMapper;
 @Service
 public class QuoteApiService {
 
-	@Autowired
+	
 	private QuoteRepository quoteRepository;
+	private JPAQueryFactory jpaQueryFactory;
 
 	@Autowired
-	private JPAQueryFactory jpaQueryFactory;
+	public QuoteApiService(QuoteRepository quoteRepository, JPAQueryFactory jpaQueryFactory) {
+		this.quoteRepository = quoteRepository;
+		this.jpaQueryFactory = jpaQueryFactory;
+	}
+
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
 
 	@Transactional(readOnly = true)
 	public Page<QuoteMapper> mainQuoteLists(Pageable pageable) {
 
 		return quoteRepository.findMainQuotes(pageable, Publish.PUBLISH);
 	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	@Transactional(readOnly = true)
 	public QuoteEntity requestQuoteApiById(Long id) {

@@ -57,7 +57,7 @@ public class TodoService {
 	}
 
 	@Transactional
-	public TodoEntity todoSave(UserTokenDTO dto, TodoDTO todoDTO) {
+	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO) {
 		UserEntity user = userRepository.findByUsername(dto.getUsername());
 		long defaultHeartValue = 0;
 		Publish publish = Publish.PUBLISH;
@@ -77,7 +77,7 @@ public class TodoService {
 	}
 
 	@Transactional
-	public TodoEntity todoUpdate(TodoDTO todoDTO) {
+	public TodoEntity updateTodo(TodoDTO todoDTO) {
 		TodoEntity entity = todoRepository.findTodoEntityById(todoDTO.getId());
 
 		String title = todoDTO.getTitle();
@@ -99,7 +99,7 @@ public class TodoService {
 	}
 
 	@Transactional
-	public void todoDelete(Long id) {
+	public void deleteTodo(Long id) {
 		todoRepository.deleteById(id);
 	}
 
@@ -137,13 +137,50 @@ public class TodoService {
 
 	/**
 	 * 
-	 * @param Todo Id, Comment DTO
+	 * @param id
+	 * @param userTokenDTO
+	 * @param commentDTO
+	 * @return
 	 */
 
 	@Transactional
-	public TodoCommentEntity addCommentUserTodo(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
+	public TodoCommentEntity saveTodoComment(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
 
 		return todoCommentRepository.save(null);
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param userTokenDTO
+	 * @param commentDTO
+	 */
+
+	@Transactional
+	public int updateTodoComment(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
+
+		CriteriaUpdate<TodoCommentEntity> criteriaUpdate = criteriaBuilder
+				.createCriteriaUpdate(TodoCommentEntity.class);
+
+		Root<TodoCommentEntity> root = criteriaUpdate.from(TodoCommentEntity.class);
+
+		criteriaUpdate.set("Comment", commentDTO.getComment());
+		criteriaUpdate.where(criteriaBuilder.equal(root.get("todo"), id));
+
+		int result = entityManager.createQuery(criteriaUpdate).executeUpdate();
+
+		return result;
+
+	}
+
+	/**
+	 * 
+	 * @param id
+	 */
+
+	@Transactional
+	public void deleteTodoComment(Long id) {
+		todoCommentRepository.deleteById(id);
 	}
 
 }

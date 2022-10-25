@@ -20,11 +20,23 @@ public class ImageApiService {
 		this.todoImageRepository = todoImageRepository;
 		this.userImageRepository = userImageRepository;
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	public ImageMapper findUserImageByUserId(Long id) {
 
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	public List<ImageMapper> findTodoImageByTodoId(Long id) {
 

@@ -1,4 +1,4 @@
-package com.todo.list.service.queto;
+package com.todo.list.service.admin;
 
 import java.util.ArrayList;
 import java.util.List;

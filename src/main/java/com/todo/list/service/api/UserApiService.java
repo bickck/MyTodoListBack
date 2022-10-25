@@ -48,7 +48,7 @@ public class UserApiService {
 	/**
 	 * 
 	 * @param username
-	 * @param user id
+	 * @param user     id
 	 * @return User Intro Data
 	 */
 
@@ -67,6 +67,12 @@ public class UserApiService {
 
 		return userIntroDTO;
 	}
+
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
 
 	@Transactional(readOnly = true)
 	public UserEntity getUserApi(UserTokenDTO username) {
@@ -87,6 +93,13 @@ public class UserApiService {
 		Page<QuoteEntity> entities = quoteRepository.findQuoteEntitiesByUserId(id, pageable);
 		return entities;
 	}
+
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return
+	 */
 
 	@Transactional(readOnly = true)
 	public Page<UserImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {

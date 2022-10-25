@@ -14,7 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.controller.dto.ImageDTO;
-import com.todo.list.service.image.admin.MainBackGroundImageService;
+import com.todo.list.service.admin.MainBackGroundImageService;
 
 public class MainImageUploadService implements ImageService {
 

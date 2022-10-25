@@ -28,6 +28,8 @@ public class QTodoCommentEntity extends EntityPathBase<TodoCommentEntity> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final QTodoEntity todo;
+
     public final DateTimePath<java.sql.Timestamp> updateTimeStamp = createDateTime("updateTimeStamp", java.sql.Timestamp.class);
 
     public final QUserEntity user;
@@ -50,6 +52,7 @@ public class QTodoCommentEntity extends EntityPathBase<TodoCommentEntity> {
 
     public QTodoCommentEntity(Class<? extends TodoCommentEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.todo = inits.isInitialized("todo") ? new QTodoEntity(forProperty("todo"), inits.get("todo")) : null;
         this.user = inits.isInitialized("user") ? new QUserEntity(forProperty("user"), inits.get("user")) : null;
     }
 

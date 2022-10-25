@@ -25,8 +25,10 @@ import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.entity.TodoEntity;
+import com.todo.list.repository.mapper.TodoCommentMapper;
 import com.todo.list.repository.mapper.TodoMapper;
 import com.todo.list.service.api.TodoApiService;
+import com.todo.list.service.api.TodoCommentApiService;
 import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
@@ -39,12 +41,12 @@ import com.todo.list.util.auth.UserAuthToken;
 @RequestMapping("/todo/api")
 public class TodoApiController {
 
-	private TodoService userTodoService;
 	private TodoApiService todoApiService;
+	private TodoCommentApiService todoCommentApiService;
 
 	@Autowired
-	public TodoApiController(TodoService userTodoService, TodoApiService todoApiService) {
-		this.userTodoService = userTodoService;
+	public TodoApiController(TodoCommentApiService todoCommentApiService, TodoApiService todoApiService) {
+		this.todoCommentApiService = todoCommentApiService;
 		this.todoApiService = todoApiService;
 	}
 
@@ -68,7 +70,7 @@ public class TodoApiController {
 	 * Publish된 모든 Todo를 가져옴
 	 * 
 	 * @param pageable
-	 * @return All Todo
+	 * @return All Todo list
 	 */
 
 	@GetMapping("/mainpost")
@@ -101,7 +103,7 @@ public class TodoApiController {
 	 * 해당 날짜에 HEART를 가장 많이 받은 Todo List를 가져옴
 	 * 
 	 * @param pageable
-	 * @return Recommand Daily All Todo
+	 * @return Recommand Daily All Todo List
 	 */
 
 	@GetMapping("/daily/todos")
@@ -111,6 +113,25 @@ public class TodoApiController {
 		Page<TodoMapper> page = todoApiService.findRecommandPosts(pageable);
 
 		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * Todo의 Comment를 가져옴
+	 * 
+	 * @param todo id
+	 * @param pageable
+	 * @return Comment List of Todo Id
+	 */
+
+	@GetMapping("/comment/{id}")
+	@ResponseBody
+	public ResponseEntity<?> requestCommentsByTodoId(@PathVariable Long id,
+			@PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+		Page<TodoCommentMapper> page = todoCommentApiService.findTodoCommentsByTodoId(id, pageable);
+
+		return new ResponseEntity<Page<TodoCommentMapper>>(page,HttpStatus.OK);
 	}
 
 }

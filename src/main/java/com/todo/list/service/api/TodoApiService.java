@@ -44,17 +44,35 @@ public class TodoApiService {
 		this.entitiyManager = entityManager;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+
 	@Transactional(readOnly = true)
 	public TodoEntity findPostDetailById(Long id) {
 
 		return todoRepository.findTodoEntityById(id);
 	}
 
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
+
 	@Transactional(readOnly = true)
 	public Page<TodoMapper> findMainPost(Pageable pageable) {
 
 		return todoRepository.findTodoMainPostByPublish(Publish.PUBLISH, pageable);
 	}
+
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
 
 	@Transactional(readOnly = true)
 	public Page<TodoMapper> findRecommandPosts(Pageable pageable) {
@@ -63,6 +81,12 @@ public class TodoApiService {
 
 		return null;
 	}
+
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
 
 	@Transactional(readOnly = true)
 	public Page<TodoMapper> findPostMostRecommandDaily(Pageable pageable) {

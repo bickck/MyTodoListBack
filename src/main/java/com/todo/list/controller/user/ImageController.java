@@ -27,12 +27,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.base.AdminImageEntity;
+import com.todo.list.service.admin.DefaultQuetoService;
+import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageService;
 import com.todo.list.service.image.UserImageUploadService;
-import com.todo.list.service.image.admin.MainBackGroundImageService;
 import com.todo.list.service.image.user.UserImageService;
-import com.todo.list.service.queto.DefaultQuetoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController

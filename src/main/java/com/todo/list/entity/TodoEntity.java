@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -52,11 +53,11 @@ public class TodoEntity {
 	@Column(name = "HEART")
 	private Long heart;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "todo",cascade = CascadeType.ALL)
 	@Column(name = "COMMENT")
 	private List<TodoCommentEntity> comments = new ArrayList<TodoCommentEntity>();
 
-	@OneToMany(mappedBy = "todoBoard")
+	@OneToMany(mappedBy = "todoBoard", cascade = CascadeType.ALL)
 	@Column(name = "TODO_IMAGE")
 	private List<TodoImageEntity> todoImages = new ArrayList<TodoImageEntity>();
 
