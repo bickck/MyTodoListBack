@@ -43,13 +43,13 @@ public class UserEntity {
 	@Column(name = "INTRO_COMMENT", length = 100)
 	private String introComment;
 
-	@Column(name = "CREATEDATE")
+	@Column(name = "CREATETIMESTAMP")
 	@CreationTimestamp
-	private Timestamp createDate;
+	private Timestamp createTimestamp;
 
-	@Column(name = "UPDATEDATE")
+	@Column(name = "UPDATETIMESTAMP")
 	@UpdateTimestamp
-	private Timestamp updateDate;
+	private Timestamp updateTimestamp;
 
 	@BatchSize(size = 10)
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -170,20 +170,22 @@ public class UserEntity {
 		this.userImageEntity = userImageEntity;
 	}
 
-	public Timestamp getCreateDate() {
-		return createDate;
+	public Timestamp getCreateTimestamp() {
+		return createTimestamp;
 	}
 
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
+	public void setCreateTimestamp(Timestamp createTimestamp) {
+		this.createTimestamp = createTimestamp;
 	}
 
-	public Timestamp getUpdateDate() {
-		return updateDate;
+	public Timestamp getUpdateTimestamp() {
+		return updateTimestamp;
 	}
 
-	public void setUpdateDate(Timestamp updateDate) {
-		this.updateDate = updateDate;
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
+
+	
 
 }

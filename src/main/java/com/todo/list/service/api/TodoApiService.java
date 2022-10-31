@@ -63,7 +63,7 @@ public class TodoApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public Page<TodoMapper> findMainPost(Pageable pageable) {
+	public Page<TodoMapper> findMainTodos(Pageable pageable) {
 
 		return todoRepository.findTodoMainPostByPublish(Publish.PUBLISH, pageable);
 	}
@@ -75,11 +75,10 @@ public class TodoApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public Page<TodoMapper> findRecommandPosts(Pageable pageable) {
+	public Page<TodoMapper> findRecommandTodos(Pageable pageable) {
 
-		Page<TodoEntity> pages = todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH, pageable);
-
-		return null;
+		Page<TodoMapper> page = todoRepository.findRecommandTodos(Publish.PUBLISH, pageable);
+		return page;
 	}
 
 	/**
@@ -89,10 +88,22 @@ public class TodoApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public Page<TodoMapper> findPostMostRecommandDaily(Pageable pageable) {
-
-		return null;
+	public Page<TodoMapper> findMostRecommandDailyTodos(Pageable pageable) {
+		
+		Page<TodoMapper> page = todoRepository.findDailyTodos(Publish.PUBLISH, pageable);
+		return page;
 	}
+	
+//	@Transactional(readOnly = true)
+//	public Page<TodoMapper> findRecommandTodos(Pageable pageable) {
+//
+//		 Page<TodoEntity> pages =
+//		 todoRepository.findTodoEntitiesByIsPublishOrderByIdDesc(Publish.PUBLISH,
+//		 pageable);
+//
+//		Page<TodoMapper> page = todoRepository.findRecommandTodos(Publish.PUBLISH, pageable);
+//		return page;
+//	}
 
 //	@Transactional(readOnly = true)
 //	public Page<PostInterface> queryTest(Pageable pageable) {

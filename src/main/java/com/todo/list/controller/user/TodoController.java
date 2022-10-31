@@ -86,7 +86,7 @@ public class TodoController {
 	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userTodoService.updateTodo(todoDTO);
+		userTodoService.updateTodo(id, todoDTO);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
@@ -115,7 +115,7 @@ public class TodoController {
 	@PostMapping("/heart/add/{id}")
 	public ResponseEntity<?> todoCommentHeartAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userTodoService.addHeartUserTodo(id);
+		userTodoService.addTodoHeart(id);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
@@ -155,7 +155,7 @@ public class TodoController {
 	@PostMapping("/comment/update/{id}")
 	public ResponseEntity<?> requestRecommandUpdate(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
-		
+
 		userTodoService.updateTodoComment(id, dto, commentDTO);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
@@ -173,7 +173,7 @@ public class TodoController {
 	public ResponseEntity<?> requestRecommandDelete(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
 		userTodoService.deleteTodoComment(id);
-		
+
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 

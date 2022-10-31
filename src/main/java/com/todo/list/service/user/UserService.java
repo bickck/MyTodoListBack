@@ -40,6 +40,13 @@ public class UserService {
 		this.userImageRepository = userImageRepository;
 		this.userUtil = userUtil;
 	}
+	
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public UserEntity userSave(UserDTO userDTO) {
@@ -57,6 +64,12 @@ public class UserService {
 		
 		return userEntity;
 	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 
 	@Transactional
 	public UserEntity userUpdate(UserEntity user) {
@@ -66,6 +79,11 @@ public class UserService {
 
 		return userRepository.save(prevUserEntity);
 	}
+	
+	/**
+	 * 
+	 * @param userID and Email
+	 */
 
 	@Transactional
 	public void userDelete(Long id) {
@@ -75,6 +93,13 @@ public class UserService {
 	}
 
 	// 이메일 확인 및 비밀번호 확인 로직 필요
+	
+	/**
+	 * 
+	 * @param requestUserArg
+	 * @throws AuthenticationException
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 
 	@Transactional
 	public UserEntity userLogin(UserDTO requestUserArg) throws AuthenticationException {
@@ -91,6 +116,13 @@ public class UserService {
 		return user;
 	}
 
+	
+	/**
+	 * 
+	 * @param id
+	 * @param requestUserArg
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 	@Transactional
 	public UserEntity changeUserPassword(Long id, UserDTO requestUserArg) {
 

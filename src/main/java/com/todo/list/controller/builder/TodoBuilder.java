@@ -50,14 +50,14 @@ public class TodoBuilder {
 		return new TodoDTO(id, username, title, content, createDate);
 	}
 
-	public List<TodoDTO> listBuilder(List<TodoEntity> list) {
-		List<TodoDTO> todoDTOs = new ArrayList<TodoDTO>();
-		Iterator<TodoEntity> iterator = list.iterator();
-		while (iterator.hasNext()) {
-			todoDTOs.add(new TodoDTO(iterator.next().getId(), iterator.next().getUser().getUsername(),
-					iterator.next().getTitle(), iterator.next().getContent(), iterator.next().getCreateTimeStamp()));
-		}
-		return todoDTOs;
-	}
+//	public List<TodoDTO> listBuilder(List<TodoEntity> list) {
+//		List<TodoDTO> todoDTOs = new ArrayList<TodoDTO>();
+//		Iterator<TodoEntity> iterator = list.iterator();
+//		while (iterator.hasNext()) {
+//			todoDTOs.add(new TodoDTO(iterator.next().getId(), iterator.next().getUser().getUsername(),
+//					iterator.next().getTitle(), iterator.next().getContent(), iterator.next().getCreateTimeStamp()));
+//		}
+//		return todoDTOs;
+//	}
 
 }

@@ -12,7 +12,7 @@ public interface TodoCommentRepository extends JpaRepository<TodoCommentEntity, 
 
 	
 	@Query(value ="SELECT TODO_COMMENT.id AS id, TODO_COMMENT.user.username AS USERNAME, "
-			+ "TODO_COMMENT.comment AS COMMENT, TODO_COMMENT.createTimeStamp AS CREATETIMESTAMP "
+			+ "TODO_COMMENT.comment AS COMMENT, TODO_COMMENT.createTimestamp AS CREATETIMESTAMP "
 			+ "FROM TODO_COMMENT_ENTITY AS TODO_COMMENT "
 			+ "WHERE TODO_COMMENT.todo.id = :id")
 	Page<TodoCommentMapper> findTodoCommentByTodoId(Long id,Pageable pageable);

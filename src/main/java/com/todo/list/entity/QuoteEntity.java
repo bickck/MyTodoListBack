@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -38,19 +39,21 @@ public class QuoteEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", nullable = false)
 	private UserEntity user;
 
-	@Column(name = "QUOTE")
+	@Column(name = "QUOTE", nullable = false)
 	private String quote;
 
-	@Column(name = "AUTHOR")
+	@Column(name = "AUTHOR", nullable = false)
 	private String author;
 
-	@Column(name = "ISAVAILABLEPUBLISH")
+//	@ColumnDefault(value = "PUBLISH")
+	@Column(name = "ISAVAILABLEPUBLISH", nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private Publish isPublish;
 
+//	@ColumnDefault(value = "0")
 	@Column(name = "HEART")
 	private Long heart;
 

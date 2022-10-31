@@ -26,7 +26,7 @@ public class QTodoEntity extends EntityPathBase<TodoEntity> {
 
     public final StringPath content = createString("content");
 
-    public final DateTimePath<java.sql.Timestamp> createTimeStamp = createDateTime("createTimeStamp", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> createTimestamp = createDateTime("createTimestamp", java.sql.Timestamp.class);
 
     public final NumberPath<Long> heart = createNumber("heart", Long.class);
 
@@ -38,7 +38,7 @@ public class QTodoEntity extends EntityPathBase<TodoEntity> {
 
     public final ListPath<TodoImageEntity, QTodoImageEntity> todoImages = this.<TodoImageEntity, QTodoImageEntity>createList("todoImages", TodoImageEntity.class, QTodoImageEntity.class, PathInits.DIRECT2);
 
-    public final DateTimePath<java.sql.Timestamp> updateTimeStamp = createDateTime("updateTimeStamp", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> updateTimestamp = createDateTime("updateTimestamp", java.sql.Timestamp.class);
 
     public final QUserEntity user;
 

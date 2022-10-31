@@ -77,7 +77,7 @@ public class TodoApiController {
 	@ResponseBody
 	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<TodoMapper> page = todoApiService.findMainPost(pageable);
+		Page<TodoMapper> page = todoApiService.findMainTodos(pageable);
 
 		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 	}
@@ -89,11 +89,11 @@ public class TodoApiController {
 	 * @return Recommand All Todo
 	 */
 
-	@GetMapping("/recommand/todos")
+	@GetMapping("/recommand")
 	@ResponseBody
 	public ResponseEntity<?> requestRecommandTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<TodoMapper> page = todoApiService.findPostMostRecommandDaily(pageable);
+		Page<TodoMapper> page = todoApiService.findMostRecommandDailyTodos(pageable);
 
 		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 
@@ -106,11 +106,11 @@ public class TodoApiController {
 	 * @return Recommand Daily All Todo List
 	 */
 
-	@GetMapping("/daily/todos")
+	@GetMapping("/daily")
 	@ResponseBody
 	public ResponseEntity<?> requestDailyTodos(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 
-		Page<TodoMapper> page = todoApiService.findRecommandPosts(pageable);
+		Page<TodoMapper> page = todoApiService.findRecommandTodos(pageable);
 
 		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 	}

@@ -41,12 +41,12 @@ public class UserImageEntity {
 	private Long fileSize;
 
 	@CreationTimestamp
-	@Column(name = "CREATEDATE")
-	private Timestamp createDate;
+	@Column(name = "CREATETIMESTAMP")
+	private Timestamp createTimestamp;
 
 	@UpdateTimestamp
-	@Column(name = "UPDATEDATE")
-	private Timestamp updateDate;
+	@Column(name = "UPDATETIMESTAMP")
+	private Timestamp updateTimestamp;
 
 	public UserImageEntity() {
 		// TODO Auto-generated constructor stub
@@ -79,7 +79,7 @@ public class UserImageEntity {
 	@Override
 	public String toString() {
 		return "UserImageEntity [id=" + id + ", user=" + user + ", fileName=" + fileName + ", filePath=" + filePath
-				+ ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", createDate=" + createDate
+				+ ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", createTimestamp=" + createTimestamp
 				+ "]";
 	}
 
@@ -123,14 +123,6 @@ public class UserImageEntity {
 		this.originalFileName = originalFileName;
 	}
 
-	public Timestamp getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Timestamp updateDate) {
-		this.updateDate = updateDate;
-	}
-
 	public Long getFileSize() {
 		return fileSize;
 	}
@@ -139,12 +131,20 @@ public class UserImageEntity {
 		this.fileSize = fileSize;
 	}
 
-	public Timestamp getCreateDate() {
-		return createDate;
+	public Timestamp getCreateTimestamp() {
+		return createTimestamp;
 	}
 
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
+	public void setCreateTimestamp(Timestamp createTimestamp) {
+		this.createTimestamp = createTimestamp;
+	}
+
+	public Timestamp getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
 
 }

@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity(name = "TODO_COMMENT_ENTITY")
 public class TodoCommentEntity {
 
@@ -36,11 +39,13 @@ public class TodoCommentEntity {
 	@Column(name = "COMMENT")
 	private String comment;
 
-	@Column(name = "CREATE_DATE")
-	private Timestamp createTimeStamp;
+	@CreationTimestamp
+	@Column(name = "CREATETIMESTAMP")
+	private Timestamp createTimestamp;
 
-	@Column(name = "UPDATE_DATE")
-	private Timestamp updateTimeStamp;
+	@UpdateTimestamp
+	@Column(name = "UPDATETIMESTAMP")
+	private Timestamp updateTimestamp;
 
 	public TodoCommentEntity() {
 		// TODO Auto-generated constructor stub
@@ -78,20 +83,20 @@ public class TodoCommentEntity {
 		this.comment = comment;
 	}
 
-	public Timestamp getCreateTimeStamp() {
-		return createTimeStamp;
+	public Timestamp getCreateTimestamp() {
+		return createTimestamp;
 	}
 
-	public void setCreateTimeStamp(Timestamp createTimeStamp) {
-		this.createTimeStamp = createTimeStamp;
+	public void setCreateTimestamp(Timestamp createTimestamp) {
+		this.createTimestamp = createTimestamp;
 	}
 
-	public Timestamp getUpdateTimeStamp() {
-		return updateTimeStamp;
+	public Timestamp getUpdateTimestamp() {
+		return updateTimestamp;
 	}
 
-	public void setUpdateTimeStamp(Timestamp updateTimeStamp) {
-		this.updateTimeStamp = updateTimeStamp;
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
 
 }

@@ -78,7 +78,7 @@ public class QuoteApiController {
 	@ResponseBody
 	public ResponseEntity<?> requestQuotesApi(@PageableDefault(size = 5, page = 0) Pageable pageable) {
 
-		Page<QuoteMapper> page = quoteApiService.mainQuoteLists(pageable);
+		Page<QuoteMapper> page = quoteApiService.mainQuotes(pageable);
 
 		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
@@ -90,12 +90,13 @@ public class QuoteApiController {
 	 * @return Recommand All Quote
 	 */
 
-	@GetMapping("/recommand/quotes")
+	@GetMapping("/recommand")
 	@ResponseBody
-	public ResponseEntity<List<QuoteDTO>> requestRecommandQuotes(
-			@PageableDefault(size = 10, page = 0) Pageable pageable) {
+	public ResponseEntity<?> requestRecommandQuotes(@PageableDefault(size = 3, page = 0) Pageable pageable) {
 
-		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
+		Page<QuoteMapper> page = quoteApiService.findRecommandQuotes(pageable);
+
+		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
 
 	/**
@@ -105,11 +106,13 @@ public class QuoteApiController {
 	 * @return Recommand Daily All Quote
 	 */
 
-	@GetMapping("/daily/quotes")
+	@GetMapping("/daily")
 	@ResponseBody
-	public ResponseEntity<List<QuoteDTO>> requestDailyQuotes(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+	public ResponseEntity<?> requestDailyQuotes(@PageableDefault(size = 3, page = 0) Pageable pageable) {
 
-		return new ResponseEntity<List<QuoteDTO>>(HttpStatus.OK);
+		Page<QuoteMapper> page = quoteApiService.findDaliyQuotes(pageable);
+
+		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
 
 }

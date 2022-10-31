@@ -13,7 +13,9 @@ import org.springframework.web.client.ResponseErrorHandler;
 
 import com.todo.list.controller.AuthController;
 
-@RestControllerAdvice(basePackageClasses = { AuthController.class })
+@RestControllerAdvice(basePackageClasses = { 
+		AuthController.class 
+})
 public class AuthtExcetionHandler {
 
 	@ExceptionHandler(NullPointerException.class)

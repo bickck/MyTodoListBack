@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.configs.token.AuthenticationJwt;
+import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
@@ -59,7 +60,7 @@ import lombok.extern.java.Log;
 
 @RestController
 @RequestMapping(value = "/user/manage")
-public class UserController {
+public class UserController implements ResponseStatus {
 
 //	private static final String SEESION_NAME = "username";
 //	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
@@ -90,10 +91,10 @@ public class UserController {
 	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
 
 		UserEntity userEntity = new UserEntity();
-		userEntity.setId(id);	
+		userEntity.setId(id);
 		userEntity.setIntroComment(userDTO.getIntroComment());
 		userService.userUpdate(userEntity);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -103,11 +104,11 @@ public class UserController {
 	 */
 
 	@PostMapping("/delete/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+	public ResponseEntity<?> deleteUser(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		userService.userDelete(id);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -122,7 +123,7 @@ public class UserController {
 
 		userService.changeUserPassword(id, userDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 }

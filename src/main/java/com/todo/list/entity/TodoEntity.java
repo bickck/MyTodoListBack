@@ -53,7 +53,7 @@ public class TodoEntity {
 	@Column(name = "HEART")
 	private Long heart;
 
-	@OneToMany(mappedBy = "todo",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "todo", cascade = CascadeType.ALL)
 	@Column(name = "COMMENT")
 	private List<TodoCommentEntity> comments = new ArrayList<TodoCommentEntity>();
 
@@ -66,12 +66,12 @@ public class TodoEntity {
 	private Publish isPublish;
 
 	@CreationTimestamp
-	@Column(name = "CREATE_DATE")
-	private Timestamp createTimeStamp;
+	@Column(name = "CREATETIMESTAMP")
+	private Timestamp createTimestamp;
 
 	@UpdateTimestamp
-	@Column(name = "UPDATE_DATE")
-	private Timestamp updateTimeStamp;
+	@Column(name = "UPDATETIMESTAMP")
+	private Timestamp updateTimestamp;
 
 	public TodoEntity() {
 		// TODO Auto-generated constructor stub
@@ -154,20 +154,20 @@ public class TodoEntity {
 		this.isPublish = isPublish;
 	}
 
-	public Timestamp getCreateTimeStamp() {
-		return createTimeStamp;
+	public Timestamp getCreateTimestamp() {
+		return createTimestamp;
 	}
 
-	public void setCreateTimeStamp(Timestamp createTimeStamp) {
-		this.createTimeStamp = createTimeStamp;
+	public void setCreateTimestamp(Timestamp createTimestamp) {
+		this.createTimestamp = createTimestamp;
 	}
 
-	public Timestamp getUpdateTimeStamp() {
-		return updateTimeStamp;
+	public Timestamp getUpdateTimestamp() {
+		return updateTimestamp;
 	}
 
-	public void setUpdateTimeStamp(Timestamp updateTimeStamp) {
-		this.updateTimeStamp = updateTimeStamp;
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
 
 	public List<TodoCommentEntity> getComments() {

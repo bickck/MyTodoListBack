@@ -22,7 +22,7 @@ public class QUserImageEntity extends EntityPathBase<UserImageEntity> {
 
     public static final QUserImageEntity userImageEntity = new QUserImageEntity("userImageEntity");
 
-    public final DateTimePath<java.sql.Timestamp> createDate = createDateTime("createDate", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> createTimestamp = createDateTime("createTimestamp", java.sql.Timestamp.class);
 
     public final StringPath fileName = createString("fileName");
 
@@ -34,7 +34,7 @@ public class QUserImageEntity extends EntityPathBase<UserImageEntity> {
 
     public final StringPath originalFileName = createString("originalFileName");
 
-    public final DateTimePath<java.sql.Timestamp> updateDate = createDateTime("updateDate", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> updateTimestamp = createDateTime("updateTimestamp", java.sql.Timestamp.class);
 
     public final QUserEntity user;
 

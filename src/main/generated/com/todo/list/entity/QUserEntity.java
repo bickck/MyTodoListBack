@@ -22,7 +22,7 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
 
     public static final QUserEntity userEntity = new QUserEntity("userEntity");
 
-    public final DateTimePath<java.sql.Timestamp> createDate = createDateTime("createDate", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> createTimestamp = createDateTime("createTimestamp", java.sql.Timestamp.class);
 
     public final StringPath email = createString("email");
 
@@ -36,7 +36,7 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
 
     public final ListPath<TodoEntity, QTodoEntity> todos = this.<TodoEntity, QTodoEntity>createList("todos", TodoEntity.class, QTodoEntity.class, PathInits.DIRECT2);
 
-    public final DateTimePath<java.sql.Timestamp> updateDate = createDateTime("updateDate", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> updateTimestamp = createDateTime("updateTimestamp", java.sql.Timestamp.class);
 
     public final QUserImageEntity userImageEntity;
 

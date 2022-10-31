@@ -15,5 +15,7 @@ public interface QuoteMapper {
 	String getUsername();
 	
 	Long getHeart();
+	
+	String getIsPublish();
 
 }

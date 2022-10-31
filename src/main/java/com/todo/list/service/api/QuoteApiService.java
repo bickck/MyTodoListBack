@@ -18,7 +18,6 @@ import com.todo.list.repository.mapper.QuoteMapper;
 @Service
 public class QuoteApiService {
 
-	
 	private QuoteRepository quoteRepository;
 	private JPAQueryFactory jpaQueryFactory;
 
@@ -35,7 +34,7 @@ public class QuoteApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public Page<QuoteMapper> mainQuoteLists(Pageable pageable) {
+	public Page<QuoteMapper> mainQuotes(Pageable pageable) {
 
 		return quoteRepository.findMainQuotes(pageable, Publish.PUBLISH);
 	}
@@ -50,6 +49,30 @@ public class QuoteApiService {
 	public QuoteEntity requestQuoteApiById(Long id) {
 
 		return quoteRepository.findById(id).get();
+	}
+
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
+
+	@Transactional(readOnly = true)
+	public Page<QuoteMapper> findRecommandQuotes(Pageable pageable) {
+
+		return quoteRepository.findRecommandQuotes(pageable, Publish.PUBLISH);
+	}
+
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
+
+	@Transactional(readOnly = true)
+	public Page<QuoteMapper> findDaliyQuotes(Pageable pageable) {
+
+		return quoteRepository.findDailyQuotes(pageable, Publish.PUBLISH);
 	}
 
 //	@Transactional(readOnly = true)

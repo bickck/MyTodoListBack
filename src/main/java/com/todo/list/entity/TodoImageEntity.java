@@ -43,12 +43,12 @@ public class TodoImageEntity {
 	private Long fileSize;
 
 	@CreationTimestamp
-	@Column(name = "CREATEDATE")
-	private Timestamp createDate;
+	@Column(name = "CREATETIMESTAMP")
+	private Timestamp createTimestamp;
 
 	@UpdateTimestamp
-	@Column(name = "UPDATEDATE")
-	private Timestamp updateDate;
+	@Column(name = "UPDATETIMESTAMP")
+	private Timestamp updateTimestamp;
 
 	public TodoImageEntity() {
 		// TODO Auto-generated constructor stub
@@ -100,6 +100,30 @@ public class TodoImageEntity {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public Long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public Timestamp getCreateTimestamp() {
+		return createTimestamp;
+	}
+
+	public void setCreateTimestamp(Timestamp createTimestamp) {
+		this.createTimestamp = createTimestamp;
+	}
+
+	public Timestamp getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Timestamp updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
 
 }

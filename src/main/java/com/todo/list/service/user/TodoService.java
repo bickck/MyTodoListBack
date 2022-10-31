@@ -55,6 +55,14 @@ public class TodoService {
 		this.todoCommentRepository = todoCommentRepository;
 		this.todoImageRepository = todoImageRepository;
 	}
+	
+	
+	/**
+	 * 
+	 * @param dto
+	 * @param todoDTO
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 
 	@Transactional
 	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO) {
@@ -75,10 +83,17 @@ public class TodoService {
 
 		return entity;
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param todoDTO
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 
 	@Transactional
-	public TodoEntity updateTodo(TodoDTO todoDTO) {
-		TodoEntity entity = todoRepository.findTodoEntityById(todoDTO.getId());
+	public TodoEntity updateTodo(Long id, TodoDTO todoDTO) {
+		TodoEntity entity = todoRepository.findTodoEntityById(id);
 
 		String title = todoDTO.getTitle();
 		String content = todoDTO.getContent();
@@ -97,14 +112,27 @@ public class TodoService {
 
 		return todoRepository.save(entity);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * 
+	 */
 
 	@Transactional
 	public void deleteTodo(Long id) {
 		todoRepository.deleteById(id);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param username
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
 
 	@Transactional
-	public void updatePublished(Long id, String username) {
+	public void updateTodoPublished(Long id, String username) {
 		TodoEntity entity = todoRepository.findById(id).get();
 		if (entity.getIsPublish().equals(Publish.PUBLISH)) {
 			entity.setIsPublish(Publish.PRIVATE);
@@ -119,10 +147,11 @@ public class TodoService {
 	 * UPDATE QUERY
 	 * 
 	 * @param todo Id
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
 	@Transactional
-	public int addHeartUserTodo(Long id) {
+	public int addTodoHeart(Long id) {
 		CriteriaUpdate<TodoEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(TodoEntity.class);
 		Root<TodoEntity> root = criteriaUpdate.from(TodoEntity.class);
 
@@ -140,7 +169,7 @@ public class TodoService {
 	 * @param id
 	 * @param userTokenDTO
 	 * @param commentDTO
-	 * @return
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
 	@Transactional
@@ -154,6 +183,7 @@ public class TodoService {
 	 * @param id
 	 * @param userTokenDTO
 	 * @param commentDTO
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
 	@Transactional

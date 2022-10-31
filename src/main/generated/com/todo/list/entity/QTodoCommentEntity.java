@@ -24,13 +24,13 @@ public class QTodoCommentEntity extends EntityPathBase<TodoCommentEntity> {
 
     public final StringPath comment = createString("comment");
 
-    public final DateTimePath<java.sql.Timestamp> createTimeStamp = createDateTime("createTimeStamp", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> createTimestamp = createDateTime("createTimestamp", java.sql.Timestamp.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final QTodoEntity todo;
 
-    public final DateTimePath<java.sql.Timestamp> updateTimeStamp = createDateTime("updateTimeStamp", java.sql.Timestamp.class);
+    public final DateTimePath<java.sql.Timestamp> updateTimestamp = createDateTime("updateTimestamp", java.sql.Timestamp.class);
 
     public final QUserEntity user;
 

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
@@ -31,42 +33,88 @@ import com.todo.list.util.auth.UserAuthToken;
  * 
  */
 @RestController
-@RequestMapping("/quote/manage")
-public class QuoteController {
+@RequestMapping("/user/quote/manage")
+public class QuoteController implements ResponseStatus {
 
 	@Autowired
 	private QuoteService userQuoteService;
-	
 
+	/**
+	 * 
+	 * @param quoteDTO
+	 * @param tokenDTO
+	 * @return
+	 */
+
+	@ResponseBody
 	@PostMapping("/save")
 	public ResponseEntity<?> savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
 
-		userQuoteService.quoteSave(quoteDTO, tokenDTO);
+		userQuoteService.saveQuote(quoteDTO, tokenDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
-	@PostMapping("/upate/{id}")
+	/**
+	 * 
+	 * @param id
+	 * @param quoteDTO
+	 * @param tokenDTO
+	 * @return
+	 */
+
+	@ResponseBody
+	@PostMapping("/update/{id}")
 	public ResponseEntity<?> updateUserQuote(@PathVariable Long id, @RequestBody QuoteDTO quoteDTO,
 			@UserAuthToken UserTokenDTO tokenDTO) {
-		
-		userQuoteService.quoteUpdate(id, quoteDTO, tokenDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		userQuoteService.updateQuote(id, quoteDTO, tokenDTO);
+
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param tokenDTO
+	 * @return
+	 */
+
+	@ResponseBody
 	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
 
-		userQuoteService.quoteDelete(id);
+		userQuoteService.deleteQuote(id);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
-	@PostMapping("/heartAdd/{id}")
-	public ResponseEntity<?> saveHeartUserQuote(@PathVariable Long quoteId, @UserAuthToken UserTokenDTO tokenDTO) {
-		userQuoteService.saveHeartQuote(quoteId);
-		return new ResponseEntity<String>(HttpStatus.OK);
+	/**
+	 * 
+	 * @param quoteId
+	 * @param tokenDTO
+	 * @return
+	 */
+
+	@ResponseBody
+	@PostMapping("/heart/save/{id}")
+	public ResponseEntity<?> saveHeartQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
+		userQuoteService.saveQuoteHeart(id);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param quoteId
+	 * @param tokenDTO
+	 * @return
+	 */
+
+	@ResponseBody
+	@PostMapping("/heart/update/{id}")
+	public ResponseEntity<?> updateHeartQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
+		userQuoteService.saveQuoteHeart(id);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 }
