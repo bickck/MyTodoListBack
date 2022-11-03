@@ -15,22 +15,22 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long> {
 
 	Page<QuoteEntity> findQuoteEntitiesByUserId(Long id, Pageable pageable);
 
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart as heart "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart as heart "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.id = :id")
 	List<QuoteMapper> findQuoteEntityById(Long id);
 
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.isPublish = :publish")
 	Page<QuoteMapper> findMainQuotes(Pageable pageable, Publish publish);
 	
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.isPublish = :publish")
 	Page<QuoteMapper> findDailyQuotes(Pageable pageable, Publish publish);
 	
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.isPublish = :publish")
 	Page<QuoteMapper> findRecommandQuotes(Pageable pageable, Publish publish);

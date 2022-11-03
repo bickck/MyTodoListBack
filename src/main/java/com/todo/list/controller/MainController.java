@@ -47,8 +47,8 @@ import com.todo.list.repository.mapper.ImageMapper;
 import com.todo.list.service.admin.DefaultQuetoService;
 import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.MainImageUploadService;
-import com.todo.list.service.image.ImageService;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.TodoImageUploadService;
 import com.todo.list.test.service.TestService;
 
 /**

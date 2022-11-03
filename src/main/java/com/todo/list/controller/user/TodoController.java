@@ -17,11 +17,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.QuoteBuilder;
@@ -66,10 +70,13 @@ public class TodoController {
 	 * @return status
 	 */
 
-	@PostMapping("/save")
-	public ResponseEntity<?> saveUserTodo(@RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
+	@PostMapping(value = "/save")
+	public ResponseEntity<?> saveUserTodo(@RequestPart(value = "todoDTO") TodoDTO todoDTO,
+			@UserAuthToken UserTokenDTO userTokenDTO, @RequestParam(value = "files") List<MultipartFile> todoImages) {
 
-		userTodoService.saveTodo(userTokenDTO, todoDTO);
+		System.out.println(todoDTO.toString());
+
+		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

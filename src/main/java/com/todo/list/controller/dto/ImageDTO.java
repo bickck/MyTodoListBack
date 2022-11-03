@@ -8,6 +8,7 @@ public class ImageDTO {
 	private Long id;
 	private String username;
 	private String fileName;
+	private String filePath;
 	private String originName;
 	private MultipartFile multipartFile;
 	private Long fileSize;
@@ -16,10 +17,10 @@ public class ImageDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ImageDTO(String fileName, String originName, Resource resource, MultipartFile multipartFile, Long fileSize) {
+	public ImageDTO(String fileName, String originName, String filePath, Long fileSize) {
 		this.fileName = fileName;
 		this.originName = originName;
-		this.multipartFile = multipartFile;
+		this.filePath = filePath;
 		this.fileSize = fileSize;
 	}
 
@@ -56,6 +57,14 @@ public class ImageDTO {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	public String getOriginName() {

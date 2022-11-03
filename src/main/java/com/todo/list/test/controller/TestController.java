@@ -58,7 +58,7 @@ import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.mapper.UserIntroMapper;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.UserImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.test.service.TestService;
 
 @RestController

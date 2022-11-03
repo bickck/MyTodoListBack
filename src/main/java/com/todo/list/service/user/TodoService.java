@@ -1,5 +1,6 @@
 package com.todo.list.service.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,8 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.CommentDTO;
+import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
@@ -28,6 +31,9 @@ import com.todo.list.repository.TodoCommentRepository;
 import com.todo.list.repository.TodoImageRepository;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.TodoImageUploadService;
+import com.todo.list.service.image.user.TodoImageService;
 
 /**
  * 
@@ -44,6 +50,10 @@ public class TodoService {
 	private TodoRepository todoRepository;
 	private TodoCommentRepository todoCommentRepository;
 	private TodoImageRepository todoImageRepository;
+	private ImageUploadService imageService;
+
+	@Autowired
+	private TodoImageService todoImageService;
 
 	@Autowired
 	public TodoService(EntityManager entityManager, UserRepository userRepository, TodoRepository todoRepository,
@@ -54,9 +64,9 @@ public class TodoService {
 		this.todoRepository = todoRepository;
 		this.todoCommentRepository = todoCommentRepository;
 		this.todoImageRepository = todoImageRepository;
+		imageService = new TodoImageUploadService();
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param dto
@@ -65,25 +75,30 @@ public class TodoService {
 	 */
 
 	@Transactional
-	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO) {
+	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, List<MultipartFile> todoImages) {
 		UserEntity user = userRepository.findByUsername(dto.getUsername());
+
 		long defaultHeartValue = 0;
 		Publish publish = Publish.PUBLISH;
 
 		if (todoDTO.getIsPublish().equals("private")) {
 			publish = Publish.PRIVATE;
 		}
+
 		TodoEntity entity = todoRepository
 				.save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
 
-		if (todoDTO.getOriginalFileName() != null) {
-			todoImageRepository.save(new TodoImageEntity(entity, todoDTO.getFileName(), todoDTO.getOriginalFileName(),
-					todoDTO.getFilePath()));
+		if (!todoImages.isEmpty() || todoImages != null) {
+
+			todoImages.forEach((data) -> {
+				ImageDTO imageDTO = imageService.saveImageInDir(data);
+				todoImageService.todoImageSave(entity, imageDTO);
+			});
 		}
 
 		return entity;
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -112,7 +127,7 @@ public class TodoService {
 
 		return todoRepository.save(entity);
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -123,7 +138,7 @@ public class TodoService {
 	public void deleteTodo(Long id) {
 		todoRepository.deleteById(id);
 	}
-	
+
 	/**
 	 * 
 	 * @param id

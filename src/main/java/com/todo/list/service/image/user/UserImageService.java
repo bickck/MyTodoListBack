@@ -13,8 +13,8 @@ import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
-import com.todo.list.service.image.ImageService;
-import com.todo.list.service.image.UserImageUploadService;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 
 @Service
 public class UserImageService {

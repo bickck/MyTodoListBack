@@ -39,8 +39,8 @@ import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.ImageService;
-import com.todo.list.service.image.UserImageUploadService;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.service.user.UserService;
@@ -67,7 +67,7 @@ public class UserController implements ResponseStatus {
 
 	private UserService userService;
 	private QuoteService userQuoteService;
-	private ImageService imaegService;
+	private ImageUploadService imaegService;
 	private TodoService todoService;
 	private AuthenticationJwt jwtLoginToken;
 

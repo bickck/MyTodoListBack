@@ -26,12 +26,14 @@ public class UserUtil implements BcryptHelper {
 	@Autowired
 	private UserRepository userRepository;
 
+	
 	@Override
 	public String bCrypt(String password) {
 		// TODO Auto-generated method stub
 		return BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
+	
 	@Override
 	public boolean isMatch(String rowPassword, String encPassword) {
 		// TODO Auto-generated method stub
@@ -44,9 +46,9 @@ public class UserUtil implements BcryptHelper {
 		return (user == null) ? true : false;
 	}
 
-	public boolean isPasswordValidCheck(String password) {
-		return true;
-	}
+//	public boolean isPasswordValidCheck(String password) {
+//		return true;
+//	}
 
 	@Deprecated
 	public boolean isFindCookie(Cookie[] cookies, String target) {

@@ -54,12 +54,14 @@ public class TodoImageEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TodoImageEntity(TodoEntity todoBoard, String fileName, String originalFileName, String filePath) {
+	public TodoImageEntity(TodoEntity todoBoard, String fileName, String originalFileName, String filePath,
+			Long fileSize) {
 		super();
 		this.todoBoard = todoBoard;
 		this.fileName = fileName;
 		this.originalFileName = originalFileName;
 		this.filePath = filePath;
+		this.fileSize = fileSize;
 	}
 
 	public Long getId() {

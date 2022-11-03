@@ -30,8 +30,8 @@ import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.service.admin.DefaultQuetoService;
 import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.ImageService;
-import com.todo.list.service.image.UserImageUploadService;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.util.auth.UserAuthToken;
 
@@ -40,19 +40,17 @@ import com.todo.list.util.auth.UserAuthToken;
 public class ImageController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-
-	private UserImageUploadService userImageUploadService;
 	
 	@Autowired
 	private UserImageService userBackGroundImgService;
 
 	@Autowired
-	private ImageService imaegService;
+	private ImageUploadService imaegService;
 
 	@Autowired
-	public ImageController(UserImageUploadService userImageUploadService) {
+	public ImageController() {
 
-		this.imaegService = userImageUploadService;
+		this.imaegService = new UserImageUploadService();
 
 	}
 
@@ -64,9 +62,9 @@ public class ImageController {
 	public ResponseEntity<?> saveUserIntroImage(@RequestParam(name = "file") MultipartFile multipartFile,
 			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO) throws IOException {
 
-		BackGroundImgBuilder backGroundImgBuilder = new BackGroundImgBuilder();
-		backGroundImgBuilder.setFileName(fileName).setMultipartFile(multipartFile).setUserName(tokenDTO.getUsername());
-		imaegService.saveImageInDir(backGroundImgBuilder.builder());
+//		BackGroundImgBuilder backGroundImgBuilder = new BackGroundImgBuilder();
+//		backGroundImgBuilder.setFileName(fileName).setMultipartFile(multipartFile).setUserName(tokenDTO.getUsername());
+//		imaegService.saveImageInDir(backGroundImgBuilder.builder());
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

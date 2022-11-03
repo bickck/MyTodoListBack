@@ -16,8 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.entity.base.AdminImageEntity;
 import com.todo.list.repository.admin.AdminImageRepository;
 import com.todo.list.repository.mapper.ImageMapper;
-import com.todo.list.service.image.MainImageUploadService;
-import com.todo.list.service.image.ImageService;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.TodoImageUploadService;
 
 @Service
 public class MainBackGroundImageService {
@@ -28,7 +28,7 @@ public class MainBackGroundImageService {
 
 	@Autowired
 	private AdminImageRepository imageRepository;
-	private ImageService adminImageUploadService = new MainImageUploadService();
+	private ImageUploadService adminImageUploadService = new TodoImageUploadService();
 
 	@Transactional
 	public String save(MultipartFile multipartFile) {
@@ -36,37 +36,37 @@ public class MainBackGroundImageService {
 		return null;
 	}
 
-	public void delete(Long id, String filename) {
-
-		try {
-			if (adminImageUploadService.deleteBackGroundImageInDir(filename, DEFAULT_FOLDER))
-				imageRepository.deleteById(id);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Transactional(readOnly = true)
-	public List<AdminImageEntity> backGroundImages() {
-
-		return imageRepository.findAll();
-	}
-
-	@Transactional(readOnly = true)
-	public List<AdminImageEntity> imageNames() {
-
-		return imageRepository.findAll();
-	}
-
-	@Cacheable(key = "#originalFileName", cacheNames = cacheName)
-	@Transactional(readOnly = true)
-	public Resource getResource(String originalFileName) throws FileNotFoundException {
-
-		if (imageRepository.existsByOriginalFileName(originalFileName)) {
-			return adminImageUploadService.findBackGroundImageInDir(originalFileName, DEFAULT_FOLDER);
-		}
-		throw new FileNotFoundException();
-	}
+//	public void delete(Long id, String filename) {
+//
+//		try {
+//			if (adminImageUploadService.deleteBackGroundImageInDir(filename, DEFAULT_FOLDER))
+//				imageRepository.deleteById(id);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	@Transactional(readOnly = true)
+//	public List<AdminImageEntity> backGroundImages() {
+//
+//		return imageRepository.findAll();
+//	}
+//
+//	@Transactional(readOnly = true)
+//	public List<AdminImageEntity> imageNames() {
+//
+//		return imageRepository.findAll();
+//	}
+//
+//	@Cacheable(key = "#originalFileName", cacheNames = cacheName)
+//	@Transactional(readOnly = true)
+//	public Resource getResource(String originalFileName) throws FileNotFoundException {
+//
+//		if (imageRepository.existsByOriginalFileName(originalFileName)) {
+//			return adminImageUploadService.findBackGroundImageInDir(originalFileName, DEFAULT_FOLDER);
+//		}
+//		throw new FileNotFoundException();
+//	}
 
 }
