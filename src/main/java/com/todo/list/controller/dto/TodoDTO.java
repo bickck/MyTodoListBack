@@ -3,6 +3,9 @@ package com.todo.list.controller.dto;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.todo.list.entity.UserEntity;
@@ -22,19 +25,19 @@ public class TodoDTO implements Serializable {
 
 	private String user;
 
+	@Size(max = 1000, message = "Check max size")
+	@NotEmpty(message = "Check your title")
 	private String title;
 
+	@NotEmpty(message = "Check your content")
 	private String content;
 
+	@NotEmpty(message = "Check is published")
 	private String isPublish;
 
 	private Long heart;
 
 	private Long comment;
-
-	private String filePath;
-
-	private String fileName;
 
 	private String originalFileName;
 
@@ -62,8 +65,6 @@ public class TodoDTO implements Serializable {
 		this.heart = heart;
 		this.comment = comment;
 	}
-	
-	
 
 	public TodoDTO(Long id, String user, String title, String content, String isPublish, Timestamp createTimeStamp) {
 		super();
@@ -120,22 +121,6 @@ public class TodoDTO implements Serializable {
 
 	public void setIsPublish(String isPublish) {
 		this.isPublish = isPublish;
-	}
-
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
 	}
 
 	public Timestamp getCreateTimeStamp() {

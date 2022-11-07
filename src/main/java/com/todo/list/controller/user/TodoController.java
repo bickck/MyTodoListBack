@@ -1,8 +1,13 @@
 package com.todo.list.controller.user;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.text.AbstractDocument.Content;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,7 +32,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.builder.TodoBuilder;
@@ -68,15 +78,24 @@ public class TodoController {
 	 * @param todoDTO
 	 * @param userTokenDTO
 	 * @return status
+	 * @throws IOException 
 	 */
 
-	@PostMapping(value = "/save")
-	public ResponseEntity<?> saveUserTodo(@RequestPart(value = "todoDTO") TodoDTO todoDTO,
-			@UserAuthToken UserTokenDTO userTokenDTO, @RequestParam(value = "files") List<MultipartFile> todoImages) {
+	@PostMapping(value = "/save", consumes = { 
+			MediaType.ALL_VALUE,
+			MediaType.MULTIPART_FORM_DATA_VALUE,
+			MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public ResponseEntity<?> saveUserTodo(@RequestPart(value="todos") String todoString, @RequestPart(value = "files") MultipartFile[] todoImages,
+			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
+		
+		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
+		// 제약 조건
+		if(todoImages.length > 2) {
+			return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		}
 
-		System.out.println(todoDTO.toString());
-
-		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
+	
+//		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

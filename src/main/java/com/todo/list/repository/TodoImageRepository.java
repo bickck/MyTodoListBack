@@ -11,6 +11,7 @@ import com.todo.list.repository.mapper.ImageMapper;
 public interface TodoImageRepository extends JpaRepository<TodoImageEntity, Long> {
 
 	@Query(value="SELECT i.id AS id, i.originalFileName AS originalFileName, i.fileName AS fileName, i.filePath AS filePath "
-			+ "FROM TODO_IMAGE_ENTITY i WHERE todoBoard.id = :todoBoard")
+			+ "FROM TODO_IMAGE_ENTITY i "
+			+ "WHERE todoBoard.id = :todoId")
 	List<ImageMapper> findTodoImageById(Long todoId);
 }
