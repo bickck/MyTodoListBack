@@ -78,24 +78,32 @@ public class TodoController {
 	 * @param todoDTO
 	 * @param userTokenDTO
 	 * @return status
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 
-	@PostMapping(value = "/save", consumes = { 
-			MediaType.ALL_VALUE,
+	@PostMapping(value = "/save", consumes = {
+			MediaType.ALL_VALUE, 
 			MediaType.MULTIPART_FORM_DATA_VALUE,
-			MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public ResponseEntity<?> saveUserTodo(@RequestPart(value="todos") String todoString, @RequestPart(value = "files") MultipartFile[] todoImages,
-			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
-		
-		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
-		// 제약 조건
-		if(todoImages.length > 2) {
-			return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
-		}
+			MediaType.APPLICATION_FORM_URLENCODED_VALUE ,
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> saveUserTodo(@RequestPart(value = "todos") String todoString,
+			@RequestPart(value = "files",required = false) MultipartFile[] todoImages, @UserAuthToken UserTokenDTO userTokenDTO)
+			throws IOException {
 
-	
-//		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
+		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
+		// 이미지 제약 조건
+//		if (todoImages.length > 2 && todoImages = null) {
+//			return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
+//		}
+		
+		if(todoImages != null) {
+			if(todoImages.length > 2) {
+				return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
+			}
+		}
+		System.out.println(todoImages);
+
+		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

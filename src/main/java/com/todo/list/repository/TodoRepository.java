@@ -31,7 +31,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
 			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH'", 
-			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = isPublish"
+			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = 'PUBLISH'"
 			,nativeQuery = true)
 	Page<TodoMapper> findTodoMainPostByPublish(@Param("isPublish") Publish publish,Pageable pageable);
 	
@@ -42,7 +42,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
 			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH'", 
-			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = isPublish"
+			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = 'PUBLISH'"
 			,nativeQuery = true)
 	Page<TodoMapper> findRecommandTodos(@Param("isPublish") Publish publish,Pageable pageable);
 	
@@ -53,7 +53,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
 			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH'", 
-			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = isPublish"
+			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = 'PUBLISH'"
 			,nativeQuery = true)
 	Page<TodoMapper> findDailyTodos(@Param("isPublish") Publish publish,Pageable pageable);
 

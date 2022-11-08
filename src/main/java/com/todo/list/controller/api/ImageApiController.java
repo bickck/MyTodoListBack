@@ -3,7 +3,10 @@ package com.todo.list.controller.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,5 +57,17 @@ public class ImageApiController {
 		ImageMapper userIntroImage = imageApiService.findUserImageByUserId(userTokenDTO.getId());
 
 		return new ResponseEntity<ImageMapper>(userIntroImage, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@GetMapping("/source/{filePath}/{fileName}")
+	public ResponseEntity<?> requestTodoRealResource(@PathVariable String filePath, @PathVariable String fileName) {
+
+		Resource resource = imageApiService.todoRealImageResource(filePath, fileName);
+
+		HttpHeaders httpheaders = new HttpHeaders();
+		httpheaders.setContentType(MediaType.IMAGE_JPEG);
+
+		return new ResponseEntity<Resource>(resource, httpheaders, HttpStatus.OK);
 	}
 }

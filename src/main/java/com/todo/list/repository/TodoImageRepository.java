@@ -1,6 +1,7 @@
 package com.todo.list.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,10 @@ public interface TodoImageRepository extends JpaRepository<TodoImageEntity, Long
 			+ "FROM TODO_IMAGE_ENTITY i "
 			+ "WHERE todoBoard.id = :todoId")
 	List<ImageMapper> findTodoImageById(Long todoId);
+	
+
+	@Query(value="SELECT i.filePath AS FILEPATH "
+			+ "FROM TODO_IMAGE_ENTITY i "
+			+ "WHERE i.originalFileName = :originalFileName AND i.fileName = :fileName")
+	String findFilePathByOriginalFileNameAndFileName(String originalFileName, String fileName);
 }

@@ -57,6 +57,10 @@ public class UserApiService {
 		UserEntity userEntity = userRepository.findByUsername(username);
 		UserIntroDTO userIntroDTO = new UserIntroDTO();
 
+		if (userEntity.equals(null)) {
+			return null;
+		}
+
 		userIntroDTO.setId(userEntity.getId());
 		userIntroDTO.setUsername(userEntity.getUsername());
 		String introComment = userEntity.getIntroComment();

@@ -71,6 +71,7 @@ public class UserApiController {
 	@ResponseBody
 	@PostMapping(value = "/intro")
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
+		
 		Long id = userTokenDTO.getId();
 		String username = userTokenDTO.getUsername();
 		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(id, username);

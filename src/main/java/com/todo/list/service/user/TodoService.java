@@ -75,7 +75,7 @@ public class TodoService {
 	 */
 
 	@Transactional
-	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, List<MultipartFile> todoImages) {
+	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, MultipartFile[] todoImages) {
 		UserEntity user = userRepository.findByUsername(dto.getUsername());
 
 		long defaultHeartValue = 0;
@@ -88,12 +88,13 @@ public class TodoService {
 		TodoEntity entity = todoRepository
 				.save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
 
-		if (!todoImages.isEmpty() || todoImages != null) {
+		if (todoImages != null && todoImages.length != 0) {
 
-			todoImages.forEach((data) -> {
+			for (int i = 0; i < todoImages.length; i++) {
+				MultipartFile data = todoImages[i];
 				ImageDTO imageDTO = imageService.saveImageInDir(data);
 				todoImageService.todoImageSave(entity, imageDTO);
-			});
+			}
 		}
 
 		return entity;

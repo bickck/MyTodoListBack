@@ -73,6 +73,8 @@ public class TodoImageUploadService implements ImageUploadService {
 		// TODO Auto-generated method stub
 
 		String path = DEFAULT_PATH + filePath + File.separator + originalFileName;
+		
+		System.out.println(path);
 
 		return new FileSystemResource(path);
 	}
