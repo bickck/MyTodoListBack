@@ -27,13 +27,16 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
 	List<UserEntity> findAllbyfetchJoin();
 
-//	@Query(name = "SELECT" + "u.id, u.username, u.introComment"
-//			+ "FROM USER_ENTITY u inner join USER_IMAGE i on u.id = i.id where=#{username}", 
-//			nativeQuery = true)
-//	UserEntity findUserIntroInfoByUsername(Long id, String username);
+	boolean existsByEmail(String email);
 
 	Page<UserEntity> findAll(Pageable pageable);
 
-	//void deleteByIdAndUsernameAndPassword(Long id, String username, String password);
+//	@Query(name = "SELECT" + "u.id, u.username, u.introComment"
+//	+ "FROM USER_ENTITY u inner join USER_IMAGE i on u.id = i.id where=#{username}", 
+//	nativeQuery = true)
+//UserEntity findUserIntroInfoByUsername(Long id, String username);
+
+	// void deleteByIdAndUsernameAndPassword(Long id, String username, String
+	// password);
 
 }

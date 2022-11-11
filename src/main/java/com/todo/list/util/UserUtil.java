@@ -23,8 +23,7 @@ public class UserUtil implements BcryptHelper {
 //	@Autowired
 //	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Autowired
-	private UserRepository userRepository;
+
 
 	
 	@Override
@@ -40,15 +39,6 @@ public class UserUtil implements BcryptHelper {
 		return BCrypt.checkpw(rowPassword, encPassword);
 	}
 
-	public boolean isCheckDuplicatedEmail(String email) {
-		UserEntity user = userRepository.findByEmail(email);
-
-		return (user == null) ? true : false;
-	}
-
-//	public boolean isPasswordValidCheck(String password) {
-//		return true;
-//	}
 
 	@Deprecated
 	public boolean isFindCookie(Cookie[] cookies, String target) {

@@ -13,29 +13,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.controller.dto.user.UserDTO;
+import com.todo.list.service.user.ValidService;
 import com.todo.list.util.UserUtil;
 
 @RestController
-public class ValidController {
+@RequestMapping(value = "/valid")
+public class ValidController implements ResponseStatus {
 
 	@Autowired
-	private UserUtil userUtil;
+	private ValidService validService;
 
-	@PostMapping("/valid/username")
-	public ResponseEntity<String> validUsernameCheck(String username) {
+	@PostMapping("/emailduplication")
+	public ResponseEntity<String> validEmailCheck(@RequestBody UserDTO emailDuplication) {
+		
+		String email = emailDuplication.getEmail();
+		if(email.equals("")) {
+			return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
+		}
+		System.out.println(!validService.emailDuplicationCheck(email));
+		if (validService.emailDuplicationCheck(email)) {
+			return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
+		}
 
-//		if (!userUtil.isUsernameDuplicatedCheck(username)) {
-//			return new ResponseEntity<String>("unvalid",HttpStatus.NOT_FOUND);
-//		}
-		return new ResponseEntity<String>("valid",HttpStatus.OK);
-	}
-
-	@PostMapping("/valid/password")
-	public String validPasswordCheck(String password) {
-
-		return "valid";
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	@PostMapping("/valid/token")

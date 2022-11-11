@@ -40,8 +40,7 @@ public class UserService {
 		this.userImageRepository = userImageRepository;
 		this.userUtil = userUtil;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param userDTO
@@ -55,16 +54,16 @@ public class UserService {
 		String password = userDTO.getPassword();
 		String passwordEncode = userUtil.bCrypt(password);
 
-		if (!userUtil.isCheckDuplicatedEmail(email)) {
+		if (!userRepository.existsByEmail(email)) {
 			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
 		userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
-		
+
 		return userEntity;
 	}
-	
+
 	/**
 	 * 
 	 * @param user
@@ -79,7 +78,7 @@ public class UserService {
 
 		return userRepository.save(prevUserEntity);
 	}
-	
+
 	/**
 	 * 
 	 * @param userID and Email
@@ -93,7 +92,7 @@ public class UserService {
 	}
 
 	// 이메일 확인 및 비밀번호 확인 로직 필요
-	
+
 	/**
 	 * 
 	 * @param requestUserArg
@@ -116,7 +115,6 @@ public class UserService {
 		return user;
 	}
 
-	
 	/**
 	 * 
 	 * @param id

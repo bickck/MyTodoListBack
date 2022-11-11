@@ -125,5 +125,5 @@ public class UserController implements ResponseStatus {
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
-
+	
 }
