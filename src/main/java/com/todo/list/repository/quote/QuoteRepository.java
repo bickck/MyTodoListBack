@@ -1,4 +1,4 @@
-package com.todo.list.repository;
+package com.todo.list.repository.quote;
 
 import java.util.List;
 

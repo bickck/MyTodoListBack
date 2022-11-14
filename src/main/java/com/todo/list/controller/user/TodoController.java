@@ -165,7 +165,7 @@ public class TodoController {
 	 */
 
 	@PostMapping("/comment/add/{id}")
-	public ResponseEntity<?> requestRecommandAdd(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
+	public ResponseEntity<?> requestSaveComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
 
 		TodoCommentEntity commentEntity = userTodoService.saveTodoComment(id, dto, commentDTO);

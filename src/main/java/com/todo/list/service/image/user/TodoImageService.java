@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoImageEntity;
-import com.todo.list.repository.TodoImageRepository;
+import com.todo.list.repository.image.TodoImageRepository;
 
 @Service
 public class TodoImageService {

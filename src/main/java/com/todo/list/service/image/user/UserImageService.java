@@ -11,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.UserImageUploadService;
 

@@ -18,11 +18,11 @@ import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
+import com.todo.list.repository.quote.QuoteRepository;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.Utils;
-import com.todo.list.repository.UserImageRepository;
-import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.image.UserImageRepository;
 
 @Service
 public class UserApiService {

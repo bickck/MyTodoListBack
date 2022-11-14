@@ -16,8 +16,8 @@ import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.TodoRepository;
-import com.todo.list.repository.UserImageRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.util.UserUtil;
 
 /**

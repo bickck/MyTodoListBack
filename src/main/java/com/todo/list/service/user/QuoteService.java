@@ -17,8 +17,8 @@ import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
-import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.quote.QuoteRepository;
 
 /**
  * 유저의 Quote 저장 수정 삭제를 제공하는 클래스

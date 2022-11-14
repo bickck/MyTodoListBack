@@ -8,8 +8,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.todo.list.repository.TodoImageRepository;
-import com.todo.list.repository.UserImageRepository;
+import com.todo.list.repository.image.TodoImageRepository;
+import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.repository.mapper.ImageMapper;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.TodoImageUploadService;

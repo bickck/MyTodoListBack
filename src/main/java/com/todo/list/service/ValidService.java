@@ -1,4 +1,4 @@
-package com.todo.list.service.user;
+package com.todo.list.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.dto.user.UserDTO;
-import com.todo.list.service.user.ValidService;
+import com.todo.list.service.ValidService;
 import com.todo.list.util.UserUtil;
 
 @RestController
