@@ -27,10 +27,10 @@ import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.repository.TodoCommentRepository;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.TodoImageRepository;
+import com.todo.list.repository.todo.TodoCommentRepository;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.TodoImageUploadService;
 import com.todo.list.service.image.user.TodoImageService;
@@ -48,7 +48,6 @@ public class TodoService {
 	private CriteriaBuilder criteriaBuilder;
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
-	private TodoCommentRepository todoCommentRepository;
 	private TodoImageRepository todoImageRepository;
 	private ImageUploadService imageService;
 
@@ -57,12 +56,11 @@ public class TodoService {
 
 	@Autowired
 	public TodoService(EntityManager entityManager, UserRepository userRepository, TodoRepository todoRepository,
-			TodoCommentRepository todoCommentRepository, TodoImageRepository todoImageRepository) {
+			TodoImageRepository todoImageRepository) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.userRepository = userRepository;
 		this.todoRepository = todoRepository;
-		this.todoCommentRepository = todoCommentRepository;
 		this.todoImageRepository = todoImageRepository;
 		imageService = new TodoImageUploadService();
 	}
@@ -178,55 +176,6 @@ public class TodoService {
 
 		return result;
 
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param userTokenDTO
-	 * @param commentDTO
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
-
-	@Transactional
-	public TodoCommentEntity saveTodoComment(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
-
-		return todoCommentRepository.save(null);
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param userTokenDTO
-	 * @param commentDTO
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
-
-	@Transactional
-	public int updateTodoComment(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
-
-		CriteriaUpdate<TodoCommentEntity> criteriaUpdate = criteriaBuilder
-				.createCriteriaUpdate(TodoCommentEntity.class);
-
-		Root<TodoCommentEntity> root = criteriaUpdate.from(TodoCommentEntity.class);
-
-		criteriaUpdate.set("Comment", commentDTO.getComment());
-		criteriaUpdate.where(criteriaBuilder.equal(root.get("todo"), id));
-
-		int result = entityManager.createQuery(criteriaUpdate).executeUpdate();
-
-		return result;
-
-	}
-
-	/**
-	 * 
-	 * @param id
-	 */
-
-	@Transactional
-	public void deleteTodoComment(Long id) {
-		todoCommentRepository.deleteById(id);
 	}
 
 }

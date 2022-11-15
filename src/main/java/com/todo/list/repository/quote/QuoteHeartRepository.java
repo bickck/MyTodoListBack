@@ -7,6 +7,6 @@ import com.todo.list.entity.QuoteHeartEntity;
 
 public interface QuoteHeartRepository extends JpaRepository<QuoteHeartEntity, Long>{
 
-	@Query(value = "",nativeQuery = true)
-	Long countQuoteHeartById(Long id);
+	//@Query(value = "",nativeQuery = true)
+	//Long countQuoteHeartById(Long id);
 }

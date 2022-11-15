@@ -32,7 +32,8 @@ import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
-
+import com.todo.list.repository.mapper.QuoteMapper;
+import com.todo.list.repository.mapper.TodoMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.auth.UserAuthToken;
@@ -71,11 +72,11 @@ public class UserApiController {
 	@ResponseBody
 	@PostMapping(value = "/intro")
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
-		
+
 		Long id = userTokenDTO.getId();
 		String username = userTokenDTO.getUsername();
 		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(id, username);
-		
+
 		return new ResponseEntity<UserIntroDTO>(introDTO, HttpStatus.OK);
 	}
 
@@ -86,12 +87,12 @@ public class UserApiController {
 
 	@ResponseBody
 	@PostMapping("/todos")
-	public ResponseEntity<PageTodoDTO> getUserApiTodos(@UserAuthToken UserTokenDTO userTokenDTO,
-			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
+	public ResponseEntity<?> getUserApiTodos(@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		
+		Page<TodoMapper> page = userApiService.getUserTodos(userTokenDTO, pageable);
 
-		return new ResponseEntity<PageTodoDTO>(HttpStatus.OK);
+		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 	}
 
 	/**
@@ -100,11 +101,12 @@ public class UserApiController {
 	 */
 
 	@PostMapping("/quotes")
-	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
-			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable,
+	public ResponseEntity<?> getUserApiQuotes(@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		return new ResponseEntity<PageQuoteDTO>(HttpStatus.OK);
+		Page<QuoteMapper> page = userApiService.getUserquotes(userTokenDTO, pageable);
+
+		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
 
 	/**

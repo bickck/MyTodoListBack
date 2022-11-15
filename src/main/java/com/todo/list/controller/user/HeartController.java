@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,11 +28,11 @@ public class HeartController {
 
 	/**
 	 * 
-	 * @param id
+	 * @param todo id
 	 * @return
 	 */
 
-	@RequestMapping(value = "/todo/{id}")
+	@PostMapping(value = "/todo/{id}")
 	public ResponseEntity<?> requestSaveTodoHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		heartService.saveTodoHeart(id, userTokenDTO);
@@ -41,11 +42,11 @@ public class HeartController {
 
 	/**
 	 * 
-	 * @param id
+	 * @param quote id
 	 * @return
 	 */
 
-	@RequestMapping(value = "/quote/{id}")
+	@PostMapping(value = "/quote/{id}")
 	public ResponseEntity<?> requestSaveQuoteHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		heartService.saveQuoteHeart(id, userTokenDTO);
@@ -59,7 +60,7 @@ public class HeartController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/cancle/todo/{id}")
+	@PostMapping(value = "/cancle/todo/{id}")
 	public ResponseEntity<?> requestCancleTodoHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		heartService.cancleTodoHeart(id, userTokenDTO);
@@ -73,7 +74,7 @@ public class HeartController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/cancle/todo/{id}")
+	@PostMapping(value = "/cancle/quote/{id}")
 	public ResponseEntity<?> requestCancleQuoteHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		heartService.cancleQuoteHeart(id, userTokenDTO);

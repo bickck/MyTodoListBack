@@ -6,8 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.todo.list.repository.TodoCommentRepository;
 import com.todo.list.repository.mapper.TodoCommentMapper;
+import com.todo.list.repository.todo.TodoCommentRepository;
 
 @Service
 public class TodoCommentApiService {

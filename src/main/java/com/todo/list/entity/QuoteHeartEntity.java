@@ -3,6 +3,7 @@ package com.todo.list.entity;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+@Entity(name = "QUOTE_HEART_ENTITY")
 public class QuoteHeartEntity {
 
 	@Id
@@ -27,7 +29,7 @@ public class QuoteHeartEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "QUOTE_ID", nullable = false)
-	private QuoteEntity todoEntity;
+	private QuoteEntity quoteEntity;
 
 	@Column(name = "CREATETIMESTAMP")
 	@CreationTimestamp
@@ -37,11 +39,11 @@ public class QuoteHeartEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuoteHeartEntity(String uuid, UserEntity user, QuoteEntity todoEntity) {
+	public QuoteHeartEntity(String uuid, UserEntity user, QuoteEntity quoteEntity) {
 		super();
 		this.uuid = uuid;
 		this.user = user;
-		this.todoEntity = todoEntity;
+		this.quoteEntity = quoteEntity;
 	}
 
 	public Long getId() {
@@ -68,12 +70,12 @@ public class QuoteHeartEntity {
 		this.user = user;
 	}
 
-	public QuoteEntity getTodoEntity() {
-		return todoEntity;
+	public QuoteEntity getQuoteEntity() {
+		return quoteEntity;
 	}
 
-	public void setTodoEntity(QuoteEntity todoEntity) {
-		this.todoEntity = todoEntity;
+	public void setQuoteEntity(QuoteEntity quoteEntity) {
+		this.quoteEntity = quoteEntity;
 	}
 
 	public Timestamp getCreateTimestamp() {

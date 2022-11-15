@@ -1,4 +1,4 @@
-package com.todo.list.repository;
+package com.todo.list.repository.todo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +8,6 @@ import com.todo.list.entity.TodoHeartEntity;
 public interface TodoHeartRepository extends JpaRepository<TodoHeartEntity, Long>{
 
 	
-	@Query(value = "",nativeQuery = true)
-	Long countTodoHeartById(Long id);
+	//@Query(value = "",nativeQuery = true)
+	//Long countTodoHeartById(Long id);
 }

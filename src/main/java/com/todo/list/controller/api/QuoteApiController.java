@@ -28,6 +28,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageQuoteDTO;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.repository.mapper.QuoteMapper;
+import com.todo.list.repository.quote.QuoteApiRepository;
 import com.todo.list.service.api.QuoteApiService;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
@@ -114,5 +115,5 @@ public class QuoteApiController {
 
 		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
-
+	
 }

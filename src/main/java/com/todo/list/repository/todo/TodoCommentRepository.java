@@ -1,4 +1,4 @@
-package com.todo.list.repository;
+package com.todo.list.repository.todo;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

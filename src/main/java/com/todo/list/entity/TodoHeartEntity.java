@@ -3,6 +3,7 @@ package com.todo.list.entity;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +14,14 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+@Entity(name="TODO_HEART_ENTITY")
 public class TodoHeartEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "HEART_UUID", nullable = false)
+	@Column(name = "TODO_UUID", nullable = false)
 	private String uuid;
 
 	@ManyToOne(fetch = FetchType.LAZY)

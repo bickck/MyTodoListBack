@@ -2,63 +2,33 @@ package com.todo.list.test.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.rmi.server.ServerCloneException;
-import java.util.Iterator;
-import java.util.List;
 
-import javax.imageio.stream.FileImageInputStream;
 
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.FileUrlResource;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.server.ServerErrorException;
 
-import com.todo.list.DummyData;
 import com.todo.list.configs.token.AuthenticationJwt;
-import com.todo.list.controller.builder.BackGroundImgBuilder;
-import com.todo.list.controller.builder.page.PageUserBuilder;
-import com.todo.list.controller.dto.ImageDTO;
-import com.todo.list.controller.dto.page.PageUserDTO;
-import com.todo.list.controller.dto.user.UserIntroDTO;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.UserImageEntity;
-import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
-import com.todo.list.repository.mapper.UserIntroMapper;
-import com.todo.list.repository.quote.QuoteRepository;
 import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.test.service.TestService;
 
 @RestController
@@ -101,47 +71,47 @@ public class TestController {
 //		return new ResponseEntity<String>("success", HttpStatus.OK);
 //	}
 
-	@PostMapping("/test/randomnumberAndPublish")
-	public String dummyTest() {
-		DummyData data = new DummyData();
-//		System.out.println(data.randomNumber());
-//		System.out.println(data.publish());
+//	@PostMapping("/test/randomnumberAndPublish")
+//	public String dummyTest() {
+//		DummyData data = new DummyData();
+////		System.out.println(data.randomNumber());
+////		System.out.println(data.publish());
+//
+//		return "success";
+//	}
 
-		return "success";
-	}
-
-	@PostMapping
-	public String imgUploadTest(@RequestParam(name = "file") MultipartFile multipartFile,
-			@RequestParam(name = "fileName") String fileName) {
-		UserEntity entity = repository.findByUsername("username0");
-		BackGroundImgBuilder mul = new BackGroundImgBuilder().setFileName(fileName).setMultipartFile(multipartFile);
-
-		// imageUploadService.saveImageInDir(mul.builder());
-		return "success";
-	}
-
-	@GetMapping("/test/insert")
-	public String testInsertTime() {
-		service.testInsert();
-		return "success";
-	}
-
-	@GetMapping("/test/select")
-	public String testSelectTime() {
-		long startTime = System.currentTimeMillis();
-		int size = service.testSelect().size();
-		long endTime = System.currentTimeMillis();
-		System.out.println(size);
-		return String.valueOf(endTime - startTime) + "ms";
-	}
-
-	@GetMapping("/test/jwtProblem")
-	public String testJwtProblem() {
-
-		String token = authenticationJwtToken.makeToken(repository.findByUsername("username0"));
-
-		return token;
-	}
+//	@PostMapping
+//	public String imgUploadTest(@RequestParam(name = "file") MultipartFile multipartFile,
+//			@RequestParam(name = "fileName") String fileName) {
+//		UserEntity entity = repository.findByUsername("username0");
+//		BackGroundImgBuilder mul = new BackGroundImgBuilder().setFileName(fileName).setMultipartFile(multipartFile);
+//
+//		// imageUploadService.saveImageInDir(mul.builder());
+//		return "success";
+//	}
+//
+//	@GetMapping("/test/insert")
+//	public String testInsertTime() {
+//		service.testInsert();
+//		return "success";
+//	}
+//
+//	@GetMapping("/test/select")
+//	public String testSelectTime() {
+//		long startTime = System.currentTimeMillis();
+//		int size = service.testSelect().size();
+//		long endTime = System.currentTimeMillis();
+//		System.out.println(size);
+//		return String.valueOf(endTime - startTime) + "ms";
+//	}
+//
+//	@GetMapping("/test/jwtProblem")
+//	public String testJwtProblem() {
+//
+//		String token = authenticationJwtToken.makeToken(repository.findByUsername("username0"));
+//
+//		return token;
+//	}
 
 //	@Cacheable(cacheNames = "cacheStorage")
 //	@GetMapping("/test/queryTest1")

@@ -5,38 +5,70 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.QuoteHeartEntity;
+import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoHeartEntity;
-import com.todo.list.repository.TodoHeartRepository;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.repository.QuoteRepository;
+import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.quote.QuoteHeartRepository;
+import com.todo.list.repository.todo.TodoHeartRepository;
+import com.todo.list.util.uuid.CommonUUID;
+
+/**
+ * 
+ * @author 3d193
+ *
+ */
 
 @Service
 public class HeartService {
 
-	@Autowired
+	private QuoteRepository quoteRepository;
+	private TodoRepository todoRepository;
+	private UserRepository userRepository;
 	private TodoHeartRepository todoHeartRepository;
+	private QuoteHeartRepository quoteHeartRepository;
+	private CommonUUID commonUUID = new CommonUUID();
 
 	@Autowired
-	private QuoteHeartRepository quoteHeartRepository;
+	public HeartService(QuoteRepository quoteRepository, TodoRepository todoRepository, UserRepository userRepository,
+			TodoHeartRepository todoHeartRepository, QuoteHeartRepository quoteHeartRepository) {
+		// TODO Auto-generated constructor stub
+		this.quoteRepository = quoteRepository;
+		this.todoRepository = todoRepository;
+		this.userRepository = userRepository;
+		this.todoHeartRepository = todoHeartRepository;
+		this.quoteHeartRepository = quoteHeartRepository;
+	}
 
 	/**
 	 * 
-	 * @param id
+	 * @param todo id
 	 */
 
 	@Transactional
 	public void saveTodoHeart(Long id, UserTokenDTO userTokenDTO) {
 
 		TodoHeartEntity todoHeartEntity = new TodoHeartEntity();
-		
+
+		TodoEntity todoEntity = todoRepository.findById(id).get();
+		UserEntity userEntity = userRepository.findById(userTokenDTO.getId()).get();
+
+		todoHeartEntity.setUuid(commonUUID.generatorCommentUUID());
+		todoHeartEntity.setTodoEntity(todoEntity);
+		todoHeartEntity.setUser(userEntity);
+
 		todoHeartRepository.save(todoHeartEntity);
 	}
 
 	/**
 	 * 
-	 * @param id
+	 * @param todo id
 	 */
-	
+
 	@Transactional
 	public void cancleTodoHeart(Long id, UserTokenDTO userTokenDTO) {
 
@@ -45,27 +77,33 @@ public class HeartService {
 
 	/**
 	 * 
-	 * @param id
+	 * @param quote id
 	 */
 
 	@Transactional
 	public void saveQuoteHeart(Long id, UserTokenDTO userTokenDTO) {
 
 		QuoteHeartEntity quoteHeartEntity = new QuoteHeartEntity();
-		
+
+		QuoteEntity quoteEntity = quoteRepository.findById(id).get();
+		UserEntity userEntity = userRepository.findById(userTokenDTO.getId()).get();
+
+		quoteHeartEntity.setUuid(commonUUID.generatorCommentUUID());
+		quoteHeartEntity.setQuoteEntity(quoteEntity);
+		quoteHeartEntity.setUser(userEntity);
+
 		quoteHeartRepository.save(quoteHeartEntity);
 	}
 
 	/**
 	 * 
-	 * @param id
+	 * @param quote id
 	 */
 
 	@Transactional
 	public void cancleQuoteHeart(Long id, UserTokenDTO userTokenDTO) {
-		
-		quoteHeartRepository.deleteById(id);
 
+		quoteHeartRepository.deleteById(id);
 	}
 
 }

@@ -14,6 +14,7 @@ import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
+import com.todo.list.service.user.TodoCommentService;
 import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
@@ -21,15 +22,14 @@ import com.todo.list.util.auth.UserAuthToken;
 @RequestMapping(value = "/comment", consumes = { MediaType.APPLICATION_JSON_VALUE })
 public class CommentController {
 
-	private TodoService userTodoService;
+	private TodoCommentService todoCommentService;
 
 	@Autowired
-	public CommentController(TodoService userTodoService) {
-		this.userTodoService = userTodoService;
+	public CommentController(TodoCommentService todoCommentService) {
+		this.todoCommentService = todoCommentService;
 	}
 
 	/**
-	 * 
 	 * Todo Id의 코멘트를 저장
 	 * 
 	 * @param id
@@ -42,7 +42,7 @@ public class CommentController {
 	public ResponseEntity<?> requestSaveComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
 
-		TodoCommentEntity commentEntity = userTodoService.saveTodoComment(id, dto, commentDTO);
+		TodoCommentEntity commentEntity = todoCommentService.saveTodoComment(id, dto, commentDTO);
 
 		if (commentEntity == null) {
 
@@ -64,7 +64,7 @@ public class CommentController {
 	public ResponseEntity<?> requestRecommandUpdate(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
 
-		userTodoService.updateTodoComment(id, dto, commentDTO);
+		todoCommentService.updateTodoComment(id, dto, commentDTO);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
@@ -80,7 +80,7 @@ public class CommentController {
 	@PostMapping(value = "/comment/delete/{id}")
 	public ResponseEntity<?> requestRecommandDelete(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
-		userTodoService.deleteTodoComment(id);
+		todoCommentService.deleteTodoComment(id);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
