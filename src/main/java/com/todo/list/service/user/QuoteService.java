@@ -59,7 +59,7 @@ public class QuoteService {
 		UserEntity userEntity = repository.findByUsername(userTokenDTO.getUsername());
 		Publish publish = Publish.PUBLISH;
 		long heart = 0;
-		if (quoteDTO.getIsPublish().equals("private")) {
+		if (quoteDTO.getIsPublish().equals("private") || quoteDTO.getIsPublish().equals("PRIVATE")) {
 			publish = Publish.PRIVATE;
 		}
 		return userQuoteRepository

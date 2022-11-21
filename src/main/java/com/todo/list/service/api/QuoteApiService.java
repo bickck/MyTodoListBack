@@ -60,6 +60,8 @@ public class QuoteApiService {
 	@Transactional(readOnly = true)
 	public Page<QuoteMapper> findRecommandQuotes(Pageable pageable) {
 
+//		quoteRepository.findRecommandQuotesApi(pageable);
+
 		return quoteRepository.findRecommandQuotes(pageable, Publish.PUBLISH);
 	}
 
@@ -72,9 +74,10 @@ public class QuoteApiService {
 	@Transactional(readOnly = true)
 	public Page<QuoteMapper> findDaliyQuotes(Pageable pageable) {
 
+//		quoteRepository.findDailyQuotesApi(pageable);
+
 		return quoteRepository.findDailyQuotes(pageable, Publish.PUBLISH);
 	}
-
 
 //	@Transactional(readOnly = true)
 //	public QuoteMapper testQuqery() {

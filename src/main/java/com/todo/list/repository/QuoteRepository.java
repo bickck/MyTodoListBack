@@ -9,19 +9,19 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.custom.QuoteApiCustomRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
-import com.todo.list.repository.quote.QuoteApiRepository;
 
-public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, QuoteApiRepository {
+public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, QuoteApiCustomRepository {
 
 	Page<QuoteEntity> findQuoteEntitiesByUserId(Long id, Pageable pageable);
 
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart as heart "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart as heart "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.id = :todoId")
 	List<QuoteMapper> findQuoteEntityById(Long todoId);
 	
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.user.email = :email "
 			+ "AND q.user.id = :userid")
@@ -29,17 +29,19 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, Quote
 	
 	// api query
 
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
-			+ "FROM USER_QUOTE_ENTITY q "
-			+ "WHERE q.isPublish = :publish")
+	@Query(value = "SELECT q.quote_id AS id, q.quote AS quote, q.author AS author, u.username AS username, q.createTimestamp AS createTimestamp, q.ISAVAILABLEPUBLISH AS isPublish, "
+			+ "(SELECT COUNT(sub_q_h.id) FROM QUOTE_HEART_ENTITY AS sub_q_h WHERE q.quote_id = sub_q_h.quote_id) AS heart "
+			+ "FROM USER_QUOTE_ENTITY AS q "
+			+ "LEFT JOIN USER_ENTITY AS U ON q.USER_ID = U.USER_ID "
+			+ "WHERE q.ISAVAILABLEPUBLISH = 'PUBLISH'", nativeQuery = true)
 	Page<QuoteMapper> findMainQuotes(Pageable pageable, Publish publish);
 	
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.isPublish = :publish")
 	Page<QuoteMapper> findDailyQuotes(Pageable pageable, Publish publish);
 	
-	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS CREATETIMESTAMP, q.heart AS heart, q.isPublish AS isPublish "
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
 			+ "WHERE q.isPublish = :publish")
 	Page<QuoteMapper> findRecommandQuotes(Pageable pageable, Publish publish);

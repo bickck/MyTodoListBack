@@ -77,6 +77,8 @@ public class TodoApiService {
 	@Transactional(readOnly = true)
 	public Page<TodoMapper> findRecommandTodos(Pageable pageable) {
 
+//		todoRepository.findRecommandTodosApi(pageable);
+
 		Page<TodoMapper> page = todoRepository.findRecommandTodos(Publish.PUBLISH, pageable);
 		return page;
 	}
@@ -90,10 +92,12 @@ public class TodoApiService {
 	@Transactional(readOnly = true)
 	public Page<TodoMapper> findMostRecommandDailyTodos(Pageable pageable) {
 		
+//		todoRepository.findDailyTodosApi(pageable);
+
 		Page<TodoMapper> page = todoRepository.findDailyTodos(Publish.PUBLISH, pageable);
 		return page;
 	}
-	
+
 //	@Transactional(readOnly = true)
 //	public Page<TodoMapper> findRecommandTodos(Pageable pageable) {
 //

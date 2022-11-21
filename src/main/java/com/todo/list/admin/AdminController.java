@@ -40,14 +40,14 @@ public class AdminController {
 	@Autowired
 	private EventLogService eventLogService;
 
-	// Save Queto or Queto List
-	@ResponseBody
-	@PostMapping("/save/queto")
-	public String saveQuetoList(@RequestBody QuoteDTO queto) {
-		managementService.quetoSave(queto);
-		
-		return "saveSuccess";
-	}
+//	// Save Queto or Queto List
+//	@ResponseBody
+//	@PostMapping("/save/queto")
+//	public String saveQuetoList(@RequestBody QuoteDTO queto) {
+//		managementService.quetoSave(queto);
+//		
+//		return "saveSuccess";
+//	}
 
 	// Save Image
 	@ResponseBody

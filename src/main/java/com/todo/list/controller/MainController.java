@@ -60,41 +60,41 @@ import com.todo.list.test.service.TestService;
 @RestController
 public class MainController {
 
-	private DefaultQuetoService quoteService;
-	private MainBackGroundImageService backGroundImageService;
-	private UserApiService apiService;
+//	private DefaultQuetoService quoteService;
+//	private MainBackGroundImageService backGroundImageService;
+//	private UserApiService apiService;
+//
+//	@Autowired
+//	public MainController(DefaultQuetoService quoteService, MainBackGroundImageService backGroundImageService,
+//			UserApiService apiService) {
+//		this.quoteService = quoteService;
+//		this.backGroundImageService = backGroundImageService;
+//		this.apiService = apiService;
+//	}
 
-	@Autowired
-	public MainController(DefaultQuetoService quoteService, MainBackGroundImageService backGroundImageService,
-			UserApiService apiService) {
-		this.quoteService = quoteService;
-		this.backGroundImageService = backGroundImageService;
-		this.apiService = apiService;
-	}
-
-	@ResponseBody
-	@PostMapping("/manage/quote/1")
-	public String requestQuoteSave(@RequestBody QuoteDTO quoteDTO) {
-		quoteService.saveQuote(quoteDTO);
-
-		return "success";
-	}
-
-	@ResponseBody
-	@PostMapping("/manage/quote/2")
-	public String requestQuoteUpdate(@RequestBody QuoteDTO quoteDTO) {
-		quoteService.updateQuote(quoteDTO);
-
-		return "success";
-	}
-
-	@ResponseBody
-	@PostMapping("/manage/quote/3/{id}")
-	public ResponseEntity<String> requestQuoteDelete(@PathVariable Long id) {
-		quoteService.deleteQuoteById(id);
-
-		return new ResponseEntity<String>("success", HttpStatus.OK);
-	}
+//	@ResponseBody
+//	@PostMapping("/manage/quote/1")
+//	public String requestQuoteSave(@RequestBody QuoteDTO quoteDTO) {
+//		quoteService.saveQuote(quoteDTO);
+//
+//		return "success";
+//	}
+//
+//	@ResponseBody
+//	@PostMapping("/manage/quote/2")
+//	public String requestQuoteUpdate(@RequestBody QuoteDTO quoteDTO) {
+//		quoteService.updateQuote(quoteDTO);
+//
+//		return "success";
+//	}
+//
+//	@ResponseBody
+//	@PostMapping("/manage/quote/3/{id}")
+//	public ResponseEntity<String> requestQuoteDelete(@PathVariable Long id) {
+//		quoteService.deleteQuoteById(id);
+//
+//		return new ResponseEntity<String>("success", HttpStatus.OK);
+//	}
 
 //	@ResponseBody
 //	@PostMapping("/manage/image/3/")
@@ -104,12 +104,12 @@ public class MainController {
 //		return new ResponseEntity<String>("success", HttpStatus.OK);
 //	}
 
-	@ResponseBody
-	@GetMapping("/api/quotes")
-	public ResponseEntity<List<AdminQuoteEntity>> responseQuotes() {
-		List<AdminQuoteEntity> entities = quoteService.getQuotes();
-		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
-	}
+//	@ResponseBody
+//	@GetMapping("/api/quotes")
+//	public ResponseEntity<List<AdminQuoteEntity>> responseQuotes() {
+//		List<AdminQuoteEntity> entities = quoteService.getQuotes();
+//		return new ResponseEntity<List<AdminQuoteEntity>>(entities, HttpStatus.OK);
+//	}
 
 //	@ResponseBody
 //	@GetMapping("/api/infos")

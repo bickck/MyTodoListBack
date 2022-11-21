@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.repository.admin.AdminQuoteRepository;
@@ -28,6 +29,7 @@ import com.todo.list.repository.admin.AdminQuoteRepository;
 @ServletComponentScan
 @EnableAspectJAutoProxy
 @SpringBootApplication
+//@EnableJpaRepositories(basePackages = "com.todo.list.repository.custom", repositoryImplementationPostfix = "CustomeImpl")
 public class ProjectToDoListApplication {
 
 	public static void main(String[] args) {

@@ -16,34 +16,34 @@ import com.todo.list.repository.admin.AdminQuoteRepository;
 @Service
 public class DefaultQuetoService {
 
-	@Autowired
-	private AdminQuoteRepository quetoRepository;
-
-	@Transactional(readOnly = true)
-	public List<AdminQuoteEntity> getQuotes() {
-		return quetoRepository.findAll();
-	}
-
-	@Transactional(readOnly = true)
-	public int getQuotesTotalSize(Pageable pageable) {
-
-		return quetoRepository.findAll(pageable).getTotalPages();
-	}
-
-	@Transactional
-	public AdminQuoteEntity saveQuote(QuoteDTO quoteDTO) {
-
-		return quetoRepository.save(new AdminQuoteEntity(quoteDTO));
-	}
-
-	@Transactional
-	public AdminQuoteEntity updateQuote(QuoteDTO quoteDTO) {
-
-		return quetoRepository.save(new AdminQuoteEntity(quoteDTO));
-	}
-
-	@Transactional
-	public void deleteQuoteById(Long id) {
-		quetoRepository.deleteById(id);
-	}
+//	@Autowired
+//	private AdminQuoteRepository quetoRepository;
+//
+//	@Transactional(readOnly = true)
+//	public List<AdminQuoteEntity> getQuotes() {
+//		return quetoRepository.findAll();
+//	}
+//
+//	@Transactional(readOnly = true)
+//	public int getQuotesTotalSize(Pageable pageable) {
+//
+//		return quetoRepository.findAll(pageable).getTotalPages();
+//	}
+//
+//	@Transactional
+//	public AdminQuoteEntity saveQuote(QuoteDTO quoteDTO) {
+//
+//		return quetoRepository.save(new AdminQuoteEntity(quoteDTO));
+//	}
+//
+//	@Transactional
+//	public AdminQuoteEntity updateQuote(QuoteDTO quoteDTO) {
+//
+//		return quetoRepository.save(new AdminQuoteEntity(quoteDTO));
+//	}
+//
+//	@Transactional
+//	public void deleteQuoteById(Long id) {
+//		quetoRepository.deleteById(id);
+//	}
 }

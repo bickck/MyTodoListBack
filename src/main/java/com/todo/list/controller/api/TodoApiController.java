@@ -75,7 +75,7 @@ public class TodoApiController {
 
 	@GetMapping("/mainpost")
 	@ResponseBody
-	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 5, page = 0) Pageable pageable) {
+	public ResponseEntity<?> requestPublishedTodos(@PageableDefault(size = 5, page = 0,direction = Direction.ASC) Pageable pageable) {
 
 		Page<TodoMapper> page = todoApiService.findMainTodos(pageable);
 

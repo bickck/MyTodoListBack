@@ -17,14 +17,14 @@ import com.todo.list.repository.admin.AdminQuoteRepository;
 
 @Service
 public class QuetoManagementService {
-
-	@Autowired
-	private AdminQuoteRepository quetoRepository;
-
-	
-	@Transactional(isolation = Isolation.DEFAULT)
-	public void quetoSave(QuoteDTO dto) {
-		quetoRepository.save(new AdminQuoteEntity(dto));
-	}
+//
+//	@Autowired
+//	private AdminQuoteRepository quetoRepository;
+//
+//	
+//	@Transactional(isolation = Isolation.DEFAULT)
+//	public void quetoSave(QuoteDTO dto) {
+//		quetoRepository.save(new AdminQuoteEntity(dto));
+//	}
 
 }

@@ -26,6 +26,9 @@ public class UserLikeApiService {
 
 	/**
 	 * 
+	 * @param userTokenDTO
+	 * @param pageable
+	 * @return
 	 */
 
 	@Transactional(readOnly = true)
@@ -33,18 +36,21 @@ public class UserLikeApiService {
 
 		Long userid = userTokenDTO.getId();
 		String email = userTokenDTO.getEmail();
-//		Page<TodoMapper> page = todoLikeRepository.findUserLikeTodoByUserIdAndEmail(userid, email, pageable);
-		Page<TodoMapper> page = null;
+		Page<TodoMapper> page = todoLikeRepository.findUserLikeTodoByUserIdAndEmail(userid, email, pageable);
+
 		return page;
 	}
 
 	/**
 	 * 
+	 * @param userTokenDTO
+	 * @param pageable
+	 * @return
 	 */
 
 	@Transactional(readOnly = true)
 	public Page<QuoteMapper> userLikeQuote(UserTokenDTO userTokenDTO, Pageable pageable) {
-		
+
 		Long userid = userTokenDTO.getId();
 		String email = userTokenDTO.getEmail();
 		Page<QuoteMapper> page = quoteLikeRepository.findUserLikeQuoteByUserIdAndEmail(userid, email, pageable);

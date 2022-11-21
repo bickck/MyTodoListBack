@@ -54,7 +54,8 @@ public class UserService {
 		String password = userDTO.getPassword();
 		String passwordEncode = userUtil.bCrypt(password);
 
-		if (!userRepository.existsByEmail(email)) {
+		System.out.println(userRepository.existsByEmail(email));
+		if (userRepository.existsByEmail(email)) {
 			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
 

@@ -97,7 +97,7 @@ public class QuoteController implements ResponseStatus {
 	 */
 
 	@ResponseBody
-	@PostMapping("/heart/save/{id}")
+	@PostMapping("/heart/add/{id}")
 	public ResponseEntity<?> saveHeartQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
 		userQuoteService.saveQuoteHeart(id);
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);

@@ -10,8 +10,10 @@ import com.todo.list.repository.mapper.TodoMapper;
 
 public interface TodoLikeRepository extends JpaRepository<TodoEntity, Long> {
 
-	@Query(value = "SELECT q.todo_id AS id, t.title AS title, t.content  AS content, u.username AS username, t.createTimestamp AS createTimestamp, t.isavailablepublish as isPublish, "
-			+ "(SELECT COUNT(sub_t_h.id) FROM TODO_HEART_ENTITY AS sub_t_h WHERE t.todo_id = sub_t_h.id) AS HEART "
+	@Query(value = 
+			"SELECT t.TODO_ID AS id, t.TITLE AS title, t.CONTENT  AS CONTENT, u.USERNAME AS USERNAME, t.CREATETIMESTAMP AS CREATETIMESTAMP, t.ISAVAILABLEPUBLISH as isPublish, "
+			+ "(SELECT COUNT(sub_t_h.id) FROM TODO_HEART_ENTITY AS sub_t_h WHERE t.todo_id = sub_t_h.id) AS HEART, "
+			+ "(SELECT COUNT(TODO_IMG.TODO_ID) FROM TODO_IMAGE_ENTITY AS TODO_IMG WHERE t.TODO_ID = TODO_IMG.TODO_ID AND todo_heart.todo_id = TODO_IMG.TODO_ID) AS POSTIMGCOUNT " 
 			+ "FROM USER_TODO_ENTITY t "
 			+ "INNER JOIN TODO_HEART_ENTITY AS todo_heart "
 			+ "ON todo_heart.todo_id = t.todo_id "

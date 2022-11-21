@@ -50,18 +50,20 @@ public class HeartService {
 	 */
 
 	@Transactional
-	public void saveTodoHeart(Long id, UserTokenDTO userTokenDTO) {
+	public String saveTodoHeart(Long id, UserTokenDTO userTokenDTO) {
 
 		TodoHeartEntity todoHeartEntity = new TodoHeartEntity();
-
+		String uuid = commonUUID.generatorCommentUUID();
 		TodoEntity todoEntity = todoRepository.findById(id).get();
 		UserEntity userEntity = userRepository.findById(userTokenDTO.getId()).get();
 
-		todoHeartEntity.setUuid(commonUUID.generatorCommentUUID());
+		todoHeartEntity.setUuid(uuid);
 		todoHeartEntity.setTodoEntity(todoEntity);
 		todoHeartEntity.setUser(userEntity);
 
 		todoHeartRepository.save(todoHeartEntity);
+		
+		return uuid;
 	}
 
 	/**
@@ -70,9 +72,9 @@ public class HeartService {
 	 */
 
 	@Transactional
-	public void cancleTodoHeart(Long id, UserTokenDTO userTokenDTO) {
+	public void cancleTodoHeart(String id, UserTokenDTO userTokenDTO) {
 
-		todoHeartRepository.deleteById(id);
+		todoHeartRepository.deleteByUuid(id);
 	}
 
 	/**
@@ -101,9 +103,9 @@ public class HeartService {
 	 */
 
 	@Transactional
-	public void cancleQuoteHeart(Long id, UserTokenDTO userTokenDTO) {
+	public void cancleQuoteHeart(String id, UserTokenDTO userTokenDTO) {
 
-		quoteHeartRepository.deleteById(id);
+		quoteHeartRepository.deleteByUuid(id);
 	}
 
 }

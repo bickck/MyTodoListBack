@@ -34,7 +34,7 @@ public class UserLikeApiController {
 	 * 
 	 */
 
-	@PostMapping(value = "/todo")
+	@PostMapping(value = "/todos")
 	public ResponseEntity<?> requestUserLikeTodoLists(
 			@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
@@ -48,7 +48,7 @@ public class UserLikeApiController {
 	 * 
 	 */
 
-	@PostMapping(value = "/quote")
+	@PostMapping(value = "/quotes")
 	public ResponseEntity<?> requestUserLikeQuoteLists(
 			@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {

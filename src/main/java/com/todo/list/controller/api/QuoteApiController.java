@@ -27,8 +27,8 @@ import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageQuoteDTO;
 import com.todo.list.entity.QuoteEntity;
+import com.todo.list.repository.custom.QuoteApiCustomRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
-import com.todo.list.repository.quote.QuoteApiRepository;
 import com.todo.list.service.api.QuoteApiService;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
@@ -36,6 +36,8 @@ import com.todo.list.util.auth.UserAuthToken;
 
 /**
  * 로그인 필요 없이 Quote API를 제공하는 클래스
+ * 
+ * PUBLISH가 되어 있는 Quote 리스트
  * 
  */
 
