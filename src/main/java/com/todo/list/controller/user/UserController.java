@@ -87,13 +87,16 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping("/update/intro/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+	@PostMapping("/update/{id}")
+	public ResponseEntity<?> updateUser(@RequestBody UserDTO comment, @UserAuthToken UserTokenDTO userDTO) {
 
-		UserEntity userEntity = new UserEntity();
-		userEntity.setId(id);
-		userEntity.setIntroComment(userDTO.getIntroComment());
-		userService.userUpdate(userEntity);
+//		String introComment = comment.getIntroComment();
+//
+//		if (introComment == null || introComment.isEmpty()) {
+//			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
+//		}
+		
+		
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
@@ -125,5 +128,26 @@ public class UserController implements ResponseStatus {
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
-	
+
+	/**
+	 * 
+	 * @param id
+	 * @param userDTO
+	 * @return
+	 */
+
+	@PostMapping("/update/intro")
+	public ResponseEntity<?> updateUserIntro(@RequestBody UserDTO comment, @UserAuthToken UserTokenDTO userDTO) {
+
+		String introComment = comment.getIntroComment();
+
+		if (introComment == null || introComment.isEmpty()) {
+			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
+		}
+
+		userService.updateUserIntroComment(introComment, userDTO);
+		
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
 }

@@ -56,6 +56,8 @@ public class UserApiService {
 	@Transactional(readOnly = true)
 	public UserIntroDTO getUserIntroDetailsApi(Long id, String username) {
 		UserEntity userEntity = userRepository.findByUsername(username);
+		
+		
 		UserIntroDTO userIntroDTO = new UserIntroDTO();
 
 		if (userEntity.equals(null)) {
@@ -69,7 +71,7 @@ public class UserApiService {
 		if (introComment == null) {
 			userIntroDTO.setIntroComment(utils.nvl(introComment));
 		}
-
+		userIntroDTO.setIntroComment(introComment);
 		return userIntroDTO;
 	}
 

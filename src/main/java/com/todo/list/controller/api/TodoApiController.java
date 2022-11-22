@@ -61,9 +61,9 @@ public class TodoApiController {
 	@ResponseBody
 	public ResponseEntity<?> requestPostDetailByid(@PathVariable Long id) {
 
-		TodoEntity todoDetail = todoApiService.findPostDetailById(id);
+		TodoMapper todoDetail = todoApiService.findPostDetailById(id);
 
-		return new ResponseEntity<TodoEntity>(todoDetail, HttpStatus.OK);
+		return new ResponseEntity<TodoMapper>(todoDetail, HttpStatus.OK);
 	}
 
 	/**

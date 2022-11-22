@@ -51,9 +51,9 @@ public class TodoApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public TodoEntity findPostDetailById(Long id) {
+	public TodoMapper findPostDetailById(Long id) {
 
-		return todoRepository.findTodoEntityById(id);
+		return todoRepository.findTodoById(id);
 	}
 
 	/**

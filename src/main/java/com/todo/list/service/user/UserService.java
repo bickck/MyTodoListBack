@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
@@ -60,7 +61,7 @@ public class UserService {
 		}
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
-		userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
+//		userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
 
 		return userEntity;
 	}
@@ -133,4 +134,19 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param requestUserArg
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
+	@Transactional
+	public UserEntity updateUserIntroComment(String comment, UserTokenDTO requestUserArg) {
+		
+		UserEntity entity = userRepository.findById(requestUserArg.getId()).get();
+		
+		entity.setIntroComment(comment);
+
+		return userRepository.save(entity);
+	}
 }
