@@ -18,7 +18,7 @@ public interface ImageUploadService {
 
 	Resource findImageInDirectory(String originalName, String folderName);
 
-	boolean deleteBackGroundImageInDirectory(String originalName, String folderName) throws IOException;
+	boolean deleteImageInDirectory(String originalName, String folderName) throws IOException;
 
 	//boolean existsImage(String originalName, String folderName);
 

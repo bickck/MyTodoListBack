@@ -36,7 +36,7 @@ public class HeartController {
 	public ResponseEntity<?> requestSaveTodoHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		String uuid = heartService.saveTodoHeart(id, userTokenDTO);
-
+		
 		return new ResponseEntity<String>(uuid, HttpStatus.OK);
 	}
 
@@ -61,7 +61,8 @@ public class HeartController {
 	 */
 
 	@PostMapping(value = "/cancle/todo/{uuid}")
-	public ResponseEntity<?> requestCancleTodoHeart(@PathVariable String uuid, @UserAuthToken UserTokenDTO userTokenDTO) {
+	public ResponseEntity<?> requestCancleTodoHeart(@PathVariable String uuid,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
 
 		System.out.println(uuid);
 		heartService.cancleTodoHeart(uuid, userTokenDTO);
@@ -76,7 +77,8 @@ public class HeartController {
 	 */
 
 	@PostMapping(value = "/cancle/quote/{uuid}")
-	public ResponseEntity<?> requestCancleQuoteHeart(@PathVariable String uuid, @UserAuthToken UserTokenDTO userTokenDTO) {
+	public ResponseEntity<?> requestCancleQuoteHeart(@PathVariable String uuid,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
 
 		heartService.cancleQuoteHeart(uuid, userTokenDTO);
 

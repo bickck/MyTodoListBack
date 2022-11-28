@@ -73,8 +73,6 @@ public class TodoImageUploadService implements ImageUploadService {
 		// TODO Auto-generated method stub
 
 		String path = DEFAULT_PATH + filePath + File.separator + originalFileName;
-		
-		System.out.println(path);
 
 		return new FileSystemResource(path);
 	}
@@ -85,18 +83,11 @@ public class TodoImageUploadService implements ImageUploadService {
 	 */
 
 	@Override
-	public boolean deleteBackGroundImageInDirectory(String originalName, String folderName) throws IOException {
+	public boolean deleteImageInDirectory(String originalName, String folderName) throws IOException {
 		// TODO Auto-generated method stub
 		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + originalName));
 
 		return resource.getFile().delete();
 	}
 
-//	@Override
-//	public boolean existsImage(String originalName, String folderName) {
-//		// TODO Auto-generated method stub
-//
-//		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + folderName));
-//		return resource.exists();
-//	}
 }

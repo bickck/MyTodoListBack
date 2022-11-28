@@ -29,7 +29,8 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, Quote
 	
 	// api query
 
-	@Query(value = "SELECT q.quote_id AS id, q.quote AS quote, q.author AS author, u.username AS username, q.createTimestamp AS createTimestamp, q.ISAVAILABLEPUBLISH AS isPublish, "
+	@Query(value = 
+			"SELECT q.quote_id AS id, q.quote AS quote, q.author AS author, u.username AS username, q.createTimestamp AS createTimestamp, q.ISAVAILABLEPUBLISH AS isPublish, "
 			+ "(SELECT COUNT(sub_q_h.id) FROM QUOTE_HEART_ENTITY AS sub_q_h WHERE q.quote_id = sub_q_h.quote_id) AS heart "
 			+ "FROM USER_QUOTE_ENTITY AS q "
 			+ "LEFT JOIN USER_ENTITY AS U ON q.USER_ID = U.USER_ID "

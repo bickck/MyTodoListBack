@@ -84,7 +84,7 @@ public class UserImageUploadService implements ImageUploadService {
 	 */
 
 	@Override
-	public boolean deleteBackGroundImageInDirectory(String originalName, String folderName) throws IOException {
+	public boolean deleteImageInDirectory(String originalName, String folderName) throws IOException {
 
 		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + folderName));
 		return resource.getFile().delete();

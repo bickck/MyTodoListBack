@@ -49,6 +49,7 @@ import com.todo.list.controller.dto.page.PageTodoDTO;
 import com.todo.list.entity.TodoCommentEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.base.Publish;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.service.user.TodoService;
@@ -81,27 +82,23 @@ public class TodoController {
 	 * @throws IOException
 	 */
 
-	@PostMapping(value = "/save", consumes = {
-			MediaType.ALL_VALUE, 
-			MediaType.MULTIPART_FORM_DATA_VALUE,
-			MediaType.APPLICATION_FORM_URLENCODED_VALUE ,
-			MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(value = "/save", consumes = { MediaType.ALL_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE,
+			MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<?> saveUserTodo(@RequestPart(value = "todos") String todoString,
-			@RequestPart(value = "files",required = false) MultipartFile[] todoImages, @UserAuthToken UserTokenDTO userTokenDTO)
-			throws IOException {
+			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
+			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
 
 		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
 		// 이미지 제약 조건
 //		if (todoImages.length > 2 && todoImages = null) {
 //			return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
 //		}
-		
-		if(todoImages != null) {
-			if(todoImages.length > 2) {
+
+		if (todoImages != null) {
+			if (todoImages.length > 2) {
 				return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
 			}
 		}
-		System.out.println(todoImages);
 
 		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
 
@@ -114,15 +111,40 @@ public class TodoController {
 	 * @param todoDTO
 	 * @param userTokenDTO
 	 * @return status
+	 * @throws JsonProcessingException
+	 * @throws JsonMappingException
 	 */
 
-	@PostMapping("/update/{id}")
-	public ResponseEntity<?> updateUserTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO,
-			@UserAuthToken UserTokenDTO userTokenDTO) {
+	@PostMapping(value = "/update/{id}", consumes = { MediaType.ALL_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE,
+			MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> updateUserTodo(@PathVariable(value = "id") Long id,
+			@RequestPart(value = "todos") String todoString,
+			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
+			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
 
-		userTodoService.updateTodo(id, todoDTO);
+		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
+//		Publish publish = Publish.PUBLISH;
+//		
+//		if (todoDTO.getIsPublish().equals("private")) {
+//			publish = Publish.PRIVATE;
+//		}
+//		
+//		todoDTO.setHeart((long) 0);
+
+		userTodoService.updateTodo(id, todoDTO, todoImages);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/update/publish/{id}")
+	public ResponseEntity<?> updateTodoPublished(@PathVariable(value = "id") Long id,
+			@UserAuthToken UserTokenDTO userTokenDTO) {
+
+		System.out.println("update pulished");
+		userTodoService.updateTodoPublished(id, userTokenDTO.getUsername());
+
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+
 	}
 
 	/**
@@ -135,7 +157,12 @@ public class TodoController {
 	@PostMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userTodoService.deleteTodo(id);
+		try {
+			userTodoService.deleteTodo(id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 

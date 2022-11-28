@@ -62,7 +62,7 @@ public class HeartService {
 		todoHeartEntity.setUser(userEntity);
 
 		todoHeartRepository.save(todoHeartEntity);
-		
+
 		return uuid;
 	}
 
@@ -106,6 +106,10 @@ public class HeartService {
 	public void cancleQuoteHeart(String id, UserTokenDTO userTokenDTO) {
 
 		quoteHeartRepository.deleteByUuid(id);
+	}
+
+	public void deleteHeartAllByTodoId(TodoEntity todoEntity) {
+//		todoHeartRepository.deleteAllByTodoId(todoEntity);
 	}
 
 }

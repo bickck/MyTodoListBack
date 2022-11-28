@@ -117,32 +117,4 @@ public class UserApiService {
 		Page<TodoMapper> entities = todoRepository.findUserTodoByUserIdAndEmail(userid, email, pageable);
 		return entities;
 	}
-
-//	/**
-//	 * 
-//	 * @param userDTO
-//	 * @param pageable
-//	 * @return
-//	 */
-//
-//	@Transactional(readOnly = true)
-//	public Page<UserImageEntity> getUserBackGrounds(UserTokenDTO userDTO, Pageable pageable) {
-//
-//		return null;
-//	}
-
-//	/**
-//	 * 
-//	 * @param userDTO
-//	 * @param pageable
-//	 * @return User Todo List
-//	 */
-//	@Transactional(readOnly = true)
-//	public Page<TodoEntity> getUserQuoteList(UserTokenDTO userDTO, Pageable pageable) {
-//		Long id = userDTO.getId();
-//		Page<TodoEntity> entities = todoRepository.findTodoEntitiesByUserId(id, pageable);
-//
-//		return entities;
-//	}
-
 }

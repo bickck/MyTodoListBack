@@ -1,5 +1,6 @@
 package com.todo.list.service.user;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,17 +50,19 @@ public class TodoService {
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
 	private TodoImageRepository todoImageRepository;
+	private HeartService heartService;
 	private ImageUploadService imageService;
 
 	@Autowired
 	private TodoImageService todoImageService;
 
 	@Autowired
-	public TodoService(EntityManager entityManager, UserRepository userRepository, TodoRepository todoRepository,
-			TodoImageRepository todoImageRepository) {
+	public TodoService(EntityManager entityManager, UserRepository userRepository, HeartService heartService,
+			TodoRepository todoRepository, TodoImageRepository todoImageRepository) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.userRepository = userRepository;
+		this.heartService = heartService;
 		this.todoRepository = todoRepository;
 		this.todoImageRepository = todoImageRepository;
 		imageService = new TodoImageUploadService();
@@ -100,19 +103,20 @@ public class TodoService {
 
 	/**
 	 * 
-	 * @param id
+	 * @param todo    id
 	 * @param todoDTO
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 * @throws IOException
 	 */
 
 	@Transactional
-	public TodoEntity updateTodo(Long id, TodoDTO todoDTO) {
+	public TodoEntity updateTodo(Long id, TodoDTO todoDTO, MultipartFile[] todoImages) throws IOException {
 		TodoEntity entity = todoRepository.findTodoEntityById(id);
 
 		String title = todoDTO.getTitle();
 		String content = todoDTO.getContent();
 
-		if (todoDTO.getIsPublish().equals("private")) {
+		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
 			entity.setIsPublish(Publish.PRIVATE);
 		}
 
@@ -124,18 +128,49 @@ public class TodoService {
 			entity.setContent(content);
 		}
 
+		// 새롭게 Todo Image를 추가하고자 한다면
+		if (todoImages != null && todoImages.length != 0) {
+
+			boolean result = deleteFiles(entity);
+
+			for (int i = 0; i < todoImages.length; i++) {
+				MultipartFile data = todoImages[i];
+				ImageDTO imageDTO = imageService.saveImageInDir(data);
+				todoImageService.todoImageSave(entity, imageDTO);
+			}
+
+		} else {
+			boolean hasImage = todoImageService.existsImageById(entity);
+			// 현재 데이터베이스 상 이미지 파일 정보는 존재하지만 요청에서 이미지 파일이 전부 제거 했다면 모든 기록 삭제
+			if (hasImage) {
+
+				boolean result = deleteFiles(entity);
+
+			}
+		}
+
 		return todoRepository.save(entity);
 	}
 
 	/**
 	 * 
 	 * @param id
+	 * @throws IOException
 	 * 
 	 */
 
-	@Transactional
-	public void deleteTodo(Long id) {
-		todoRepository.deleteById(id);
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteTodo(Long id) throws IOException {
+		TodoEntity entity = todoRepository.findById(id).get();
+
+		boolean isFileDelete = deleteFiles(entity);
+
+		if (isFileDelete) {
+
+			heartService.deleteHeartAllByTodoId(entity);
+			todoRepository.deleteById(id);
+		}
+
 	}
 
 	/**
@@ -148,11 +183,13 @@ public class TodoService {
 	@Transactional
 	public void updateTodoPublished(Long id, String username) {
 		TodoEntity entity = todoRepository.findById(id).get();
-		if (entity.getIsPublish().equals(Publish.PUBLISH)) {
-			entity.setIsPublish(Publish.PRIVATE);
-		} else {
+
+		if (entity.getIsPublish().equals(Publish.PRIVATE)) {
 			entity.setIsPublish(Publish.PUBLISH);
+		} else {
+			entity.setIsPublish(Publish.PRIVATE);
 		}
+
 		todoRepository.save(entity);
 
 	}
@@ -175,7 +212,32 @@ public class TodoService {
 		int result = entityManager.createQuery(criteriaUpdate).executeUpdate();
 
 		return result;
+	}
 
+	/**
+	 * 
+	 * @param entity
+	 * @throws IOException
+	 */
+
+	private boolean deleteFiles(TodoEntity entity) throws IOException {
+
+		List<TodoImageEntity> imageEntities = todoImageService.todoImageListByTodoId(entity);
+
+		for (int i = 0; i < imageEntities.size(); i++) {
+
+			String originalFileName = imageEntities.get(i).getOriginalFileName();
+			String filePath = imageEntities.get(i).getFilePath();
+
+			boolean deleteCheck = imageService.deleteImageInDirectory(originalFileName, filePath);
+
+			if (deleteCheck) {
+				todoImageService.todoImageDelete(imageEntities.get(i));
+			} else {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

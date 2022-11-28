@@ -26,12 +26,32 @@ public class TodoImageService {
 
 		return todoImageRepository.save(todoImage);
 	}
+	
+	public TodoImageEntity todoImageUpdate(TodoEntity todoEntity, ImageDTO imageDTO) {
 
-	public void todoImageDelete() {
+		TodoImageEntity todoImage = new TodoImageEntity(todoEntity, imageDTO.getFileName(), imageDTO.getOriginName(),
+				imageDTO.getFilePath(), imageDTO.getFileSize());
+
+		return todoImageRepository.save(todoImage);
+	}
+
+	public void todoImageDelete(TodoImageEntity todoImageEntity) {
+
+		todoImageRepository.delete(todoImageEntity);
+	}
+
+	public void todoImageUpdate(Long id, MultipartFile[] files) {
 
 	}
 
-	public void todoImageUpdate() {
+	@Transactional(readOnly = true)
+	public boolean existsImageById(TodoEntity id) {
 
+		return todoImageRepository.existsByTodoBoard(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<TodoImageEntity> todoImageListByTodoId(TodoEntity id) {
+		return todoImageRepository.findTodoImageEntityByTodoBoard(id);
 	}
 }
