@@ -59,7 +59,7 @@ import lombok.extern.java.Log;
  */
 
 @RestController
-@RequestMapping(value = "/user/manage")
+@RequestMapping(value = "/user/manage", headers = HttpHeaders.AUTHORIZATION)
 public class UserController implements ResponseStatus {
 
 //	private static final String SEESION_NAME = "username";
@@ -95,8 +95,7 @@ public class UserController implements ResponseStatus {
 //		if (introComment == null || introComment.isEmpty()) {
 //			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
 //		}
-		
-		
+
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
@@ -146,7 +145,7 @@ public class UserController implements ResponseStatus {
 		}
 
 		userService.updateUserIntroComment(introComment, userDTO);
-		
+
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 

@@ -36,11 +36,11 @@ import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
-@RequestMapping(value = "/image")
+@RequestMapping(value = "/image", headers = HttpHeaders.AUTHORIZATION)
 public class ImageController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	private UserImageService userBackGroundImgService;
 

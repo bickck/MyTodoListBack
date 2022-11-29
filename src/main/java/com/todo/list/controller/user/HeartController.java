@@ -1,6 +1,7 @@
 package com.todo.list.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import com.todo.list.util.auth.UserAuthToken;
  */
 
 @RestController
-@RequestMapping(value = "/heart", consumes = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/heart", consumes = { MediaType.APPLICATION_JSON_VALUE }, headers = HttpHeaders.AUTHORIZATION)
 public class HeartController {
 
 	@Autowired
@@ -36,7 +37,7 @@ public class HeartController {
 	public ResponseEntity<?> requestSaveTodoHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		String uuid = heartService.saveTodoHeart(id, userTokenDTO);
-		
+
 		return new ResponseEntity<String>(uuid, HttpStatus.OK);
 	}
 

@@ -1,6 +1,7 @@
 package com.todo.list.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
-@RequestMapping(value = "/comment", consumes = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/comment", consumes = { MediaType.APPLICATION_JSON_VALUE }, headers = HttpHeaders.AUTHORIZATION)
 public class CommentController {
 
 	private TodoCommentService todoCommentService;

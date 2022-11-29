@@ -29,22 +29,23 @@ import com.todo.list.repository.UserRepository;
 @Service
 public class QuoteService {
 
-	@Autowired
 	private UserRepository repository;
-
-	@Autowired
 	private QuoteRepository userQuoteRepository;
+	private EntityManager entitiyManager;
+	private CriteriaBuilder criteriaBuilder;
+	private HeartService heartService;
 
 //	@Autowired
 //	private JPAQueryFactory jpaQueryFactory;
 
-	private EntityManager entitiyManager;
-	private CriteriaBuilder criteriaBuilder;
-
 	@Autowired
-	public QuoteService(EntityManager entityManager) {
+	public QuoteService(EntityManager entityManager, UserRepository repository, QuoteRepository userQuoteRepository,
+			HeartService heartService) {
 		criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.entitiyManager = entityManager;
+		this.repository = repository;
+		this.userQuoteRepository = userQuoteRepository;
+		this.heartService = heartService;
 	}
 
 	/**
@@ -54,16 +55,14 @@ public class QuoteService {
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
-	@Transactional
-	public QuoteEntity saveQuote(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
+	@Transactional(rollbackFor = Exception.class)
+	public QuoteEntity saveQuote(QuoteEntity quoteEntity, UserTokenDTO userTokenDTO) {
+
 		UserEntity userEntity = repository.findByUsername(userTokenDTO.getUsername());
-		Publish publish = Publish.PUBLISH;
-		long heart = 0;
-		if (quoteDTO.getIsPublish().equals("private") || quoteDTO.getIsPublish().equals("PRIVATE")) {
-			publish = Publish.PRIVATE;
-		}
-		return userQuoteRepository
-				.save(new QuoteEntity(userEntity, quoteDTO.getQuote(), quoteDTO.getAuthor(), publish, heart));
+
+		quoteEntity.setUser(userEntity);
+
+		return userQuoteRepository.save(quoteEntity);
 	}
 
 	/**
@@ -74,7 +73,7 @@ public class QuoteService {
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public QuoteEntity updateQuote(Long id, QuoteDTO quoteDTO, UserTokenDTO tokenDTO) {
 
 		QuoteEntity quoteEntity = userQuoteRepository.findById(id).get();
@@ -108,8 +107,10 @@ public class QuoteService {
 	 * 
 	 */
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void deleteQuote(Long id) {
+		
+		heartService.deleteHeartAllByQuoteId(id);
 		userQuoteRepository.deleteById(id);
 	}
 
@@ -156,7 +157,6 @@ public class QuoteService {
 
 		return result;
 	}
-
 
 	/**
 	 * criteria query test

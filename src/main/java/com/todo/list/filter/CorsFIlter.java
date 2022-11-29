@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 @Component
 @Order(1)
-@WebFilter(urlPatterns = "/**",displayName = "Set CROS Filter")
+@WebFilter(urlPatterns = "/**", displayName = "Set CROS Filter")
 public class CorsFIlter implements Filter {
 
 	// https://wonit.tistory.com/572 이곳에서 cors에 대한 해결 방법이 적혀있음
@@ -28,14 +29,13 @@ public class CorsFIlter implements Filter {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 
-//		System.out.println("Come in CorsConfiguration");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-		httpServletResponse.setHeader("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
-		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "OPTIONS,POST,GET");
+		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
 		httpServletResponse.setHeader("Access-Control-Allow-Headers",
 				"Origin, X-Requested-With, Content-Type, Accept, Authorization");
 

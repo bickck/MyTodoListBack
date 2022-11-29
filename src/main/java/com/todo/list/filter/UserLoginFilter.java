@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -22,9 +23,8 @@ public class UserLoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-//		System.out.println("Come in UserLoginFilter");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		String authorization = httpServletRequest.getHeader("Authorization");
+		String authorization = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 		if (authorization == null) {
 			chain.doFilter(request, response);
 		} else {

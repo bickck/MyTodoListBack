@@ -75,7 +75,31 @@ public class TodoService {
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
+	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO) {
+		UserEntity user = userRepository.findByUsername(dto.getUsername());
+
+		long defaultHeartValue = 0;
+		Publish publish = Publish.PUBLISH;
+
+		if (todoDTO.getIsPublish().equals("private")) {
+			publish = Publish.PRIVATE;
+		}
+
+		TodoEntity entity = todoRepository
+				.save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
+
+		return entity;
+	}
+
+	/**
+	 * 
+	 * @param dto
+	 * @param todoDTO
+	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+	 */
+
+	@Transactional(rollbackFor = Exception.class)
 	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, MultipartFile[] todoImages) {
 		UserEntity user = userRepository.findByUsername(dto.getUsername());
 
@@ -109,7 +133,7 @@ public class TodoService {
 	 * @throws IOException
 	 */
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public TodoEntity updateTodo(Long id, TodoDTO todoDTO, MultipartFile[] todoImages) throws IOException {
 		TodoEntity entity = todoRepository.findTodoEntityById(id);
 
@@ -167,7 +191,8 @@ public class TodoService {
 
 		if (isFileDelete) {
 
-			heartService.deleteHeartAllByTodoId(entity);
+			heartService.deleteHeartAllByTodoId(entity.getId());
+			deleteFiles(entity);
 			todoRepository.deleteById(id);
 		}
 

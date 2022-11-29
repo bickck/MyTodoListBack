@@ -82,7 +82,7 @@ public class HeartService {
 	 * @param quote id
 	 */
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void saveQuoteHeart(Long id, UserTokenDTO userTokenDTO) {
 
 		QuoteHeartEntity quoteHeartEntity = new QuoteHeartEntity();
@@ -108,8 +108,19 @@ public class HeartService {
 		quoteHeartRepository.deleteByUuid(id);
 	}
 
-	public void deleteHeartAllByTodoId(TodoEntity todoEntity) {
-//		todoHeartRepository.deleteAllByTodoId(todoEntity);
+	/**
+	 * 
+	 * @param todoid
+	 */
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteHeartAllByTodoId(Long todoid) {
+		todoHeartRepository.deleteAllByTodoId(todoid);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteHeartAllByQuoteId(Long quoteid) {
+		quoteHeartRepository.deleteAllByQuoteId(quoteid);
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -28,9 +29,8 @@ public class UserAuthJwtFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-//		System.out.println("Come in UserAuthJwtFilter");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		String authorization = httpServletRequest.getHeader("Authorization");
+		String authorization = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
 		if (authorization == null) {
 			throw new AuthenticationException("승인받지 않는 접속자");

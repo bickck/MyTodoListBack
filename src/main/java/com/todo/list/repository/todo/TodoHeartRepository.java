@@ -2,7 +2,9 @@ package com.todo.list.repository.todo;
 
 import org.hibernate.annotations.SQLDeleteAll;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoHeartEntity;
@@ -14,7 +16,10 @@ public interface TodoHeartRepository extends JpaRepository<TodoHeartEntity, Long
 
 	void deleteByUuid(String uuid);
 	
-//	void deleteAllByTodoId(TodoEntity todoid);
+	@Modifying
+	@Query(value = "DELETE FROM TODO_HEART_ENTITY "
+			+ "WHERE TODO_ID = :todoid",nativeQuery = true)
+	void deleteAllByTodoId(@Param(value = "todoid")Long todoid);
 
 	boolean existsByTodoEntityIdAndUserId(Long todoid, Long userid);
 
