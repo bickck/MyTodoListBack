@@ -34,11 +34,11 @@ public class ValidController implements ResponseStatus {
 		
 		String email = emailDuplication.getEmail();
 		if(email.equals("")) {
-			return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 		System.out.println(!validService.emailDuplicationCheck(email));
 		if (validService.emailDuplicationCheck(email)) {
-			return new ResponseEntity<String>(ResponseStatus.FALIURE, HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);

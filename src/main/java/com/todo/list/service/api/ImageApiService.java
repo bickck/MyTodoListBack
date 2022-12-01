@@ -53,6 +53,13 @@ public class ImageApiService {
 
 		return userImageRepository.findUserIntroImageById(id);
 	}
+	
+	/**
+	 * 
+	 * @param filePath
+	 * @param originalName
+	 * @return
+	 */
 
 	public Resource todoRealImageResource(String filePath, String originalName) {
 
@@ -62,7 +69,20 @@ public class ImageApiService {
 		if (storageFilePath == null) {
 			return null;
 		}
+		
 		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
-
 	}
+	
+	public Resource userRealImageResource(String filePath, String originalName) {
+
+		String storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName,
+				filePath);
+
+		if (storageFilePath == null) {
+			return null;
+		}
+		
+		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
+	}
+
 }

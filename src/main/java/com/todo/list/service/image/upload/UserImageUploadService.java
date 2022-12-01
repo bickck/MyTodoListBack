@@ -29,42 +29,44 @@ public class UserImageUploadService implements ImageUploadService {
 	private CommonUUID commonUUID = new CommonUUID();
 	private FileSupport fileSupport = new FileSupportImpl();
 	
+
 	/**
 	 * 
 	 * 
 	 */
-	
+
 	@Override
-	public ImageDTO saveImageInDir(MultipartFile todoImage) {
+	public ImageDTO saveImageInDir(MultipartFile userImage) {
 		// TODO Auto-generated method stub
 
-		
-		String uuid = commonUUID.generatorImageUUID();
-		String filePath = fileSupport.generatorFilePath(uuid);
-		
-		Path path = Paths.get(filePath);
+		String originalFileName = userImage.getOriginalFilename();
+		String fileName = commonUUID.generatorImageUUID();
+		String filePath = fileSupport.generatorFilePath(fileName);
+		Long fileSize = userImage.getSize();
+
+		Path path = Paths.get(DEFAULT_PATH + filePath);
 
 		if (Files.isExecutable(path) == false) {
 			try {
-				Path directories =  Files.createDirectories(path);			
+				Files.createDirectories(path);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
-//		try {
-//			InputStream inputStream = fileDTO.getMultipartFile().getInputStream();
-//			Path dirPath = path.resolve(fileDTO.getMultipartFile().getOriginalFilename());
-//			Files.copy(inputStream, dirPath, StandardCopyOption.REPLACE_EXISTING);
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
-		
+		try {
+			InputStream inputStream = userImage.getInputStream();
+			Path dirPath = path.resolve(userImage.getOriginalFilename());
+			Files.copy(inputStream, dirPath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -74,27 +76,29 @@ public class UserImageUploadService implements ImageUploadService {
 	public Resource findImageInDirectory(String originalName, String folderName) {
 
 		String path = DEFAULT_PATH + folderName + File.separator + originalName;
+
 		return new FileSystemResource(path);
 	}
-	
-	
+
 	/**
+	 * @throws Exception
 	 * 
 	 * 
 	 */
 
 	@Override
-	public boolean deleteImageInDirectory(String originalName, String folderName) throws IOException {
+	public boolean deleteImageInDirectory(String originalName, String folderName) throws Exception {
 
 		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + folderName));
+
+		try {
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new Exception();
+		}
+		
 		return resource.getFile().delete();
 	}
-
-//	@Override
-//	public boolean existsImage(String originalName, String folderName) {
-//		// TODO Auto-generated method stub
-//		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + originalName));
-//		return resource.exists();
-//	}
 
 }

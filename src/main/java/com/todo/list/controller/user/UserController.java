@@ -3,6 +3,7 @@ package com.todo.list.controller.user;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Enumeration;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.LoginUserDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageUploadService;
@@ -62,9 +65,6 @@ import lombok.extern.java.Log;
 @RequestMapping(value = "/user/manage", headers = HttpHeaders.AUTHORIZATION)
 public class UserController implements ResponseStatus {
 
-//	private static final String SEESION_NAME = "username";
-//	private static final String CLIENT_SERVER_ADDRESS = "http://127.0.0.1:5501/";
-
 	private UserService userService;
 	private QuoteService userQuoteService;
 	private ImageUploadService imaegService;
@@ -87,14 +87,14 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping("/update/{id}")
-	public ResponseEntity<?> updateUser(@RequestBody UserDTO comment, @UserAuthToken UserTokenDTO userDTO) {
+	@PostMapping("/update/intro/comment")
+	public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-//		String introComment = comment.getIntroComment();
-//
-//		if (introComment == null || introComment.isEmpty()) {
-//			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
-//		}
+		String introComment = userDTO.getIntroComment();
+
+		if (introComment == null || introComment.isEmpty()) {
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+		}
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
@@ -136,15 +136,52 @@ public class UserController implements ResponseStatus {
 	 */
 
 	@PostMapping("/update/intro")
-	public ResponseEntity<?> updateUserIntro(@RequestBody UserDTO comment, @UserAuthToken UserTokenDTO userDTO) {
+	public ResponseEntity<?> updateUserIntro(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
-		String introComment = comment.getIntroComment();
+		userService.userUpdate(userDTO, userTokenDTO);
 
-		if (introComment == null || introComment.isEmpty()) {
-			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param userDTO
+	 * @param file
+	 * @return
+	 */
+
+	@PostMapping(value = "/update/intro/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.ALL_VALUE })
+	public ResponseEntity<?> updateUserImage(@UserAuthToken UserTokenDTO userDTO,
+			@RequestParam("file") MultipartFile file) {
+
+		if (file == null) {
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 
-		userService.updateUserIntroComment(introComment, userDTO);
+		UserImageEntity userImageEntity = userService.updateUserIntroImage(userDTO.getId(), file);
+
+		if (userImageEntity == null) {
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param userDTO
+	 * @return
+	 */
+
+	@PostMapping(value = "/delete/intro/image")
+	public ResponseEntity<?> deleteUserImage(@UserAuthToken UserTokenDTO userDTO) {
+
+		try {
+			userService.deleteUserIntroImage(userDTO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

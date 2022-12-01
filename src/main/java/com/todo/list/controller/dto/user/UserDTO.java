@@ -1,5 +1,7 @@
 package com.todo.list.controller.dto.user;
 
+import java.sql.Timestamp;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +17,10 @@ public class UserDTO {
 	private String password;
 
 	private String introComment;
+
+	private String nickName;
+
+	private Timestamp birth;
 
 	private String userImageName;
 
@@ -91,6 +97,14 @@ public class UserDTO {
 		this.password = password;
 	}
 
+	public Timestamp getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Timestamp birth) {
+		this.birth = birth;
+	}
+
 	public String getIntroComment() {
 		return introComment;
 	}
@@ -113,6 +127,14 @@ public class UserDTO {
 
 	public void setUserIagePath(String userIagePath) {
 		this.userIagePath = userIagePath;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 }

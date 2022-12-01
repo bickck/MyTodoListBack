@@ -130,11 +130,11 @@ public class TodoService {
 	 * @param todo    id
 	 * @param todoDTO
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public TodoEntity updateTodo(Long id, TodoDTO todoDTO, MultipartFile[] todoImages) throws IOException {
+	public TodoEntity updateTodo(Long id, TodoDTO todoDTO, MultipartFile[] todoImages) throws Exception {
 		TodoEntity entity = todoRepository.findTodoEntityById(id);
 
 		String title = todoDTO.getTitle();
@@ -179,12 +179,12 @@ public class TodoService {
 	/**
 	 * 
 	 * @param id
-	 * @throws IOException
+	 * @throws Exception 
 	 * 
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public void deleteTodo(Long id) throws IOException {
+	public void deleteTodo(Long id) throws Exception {
 		TodoEntity entity = todoRepository.findById(id).get();
 
 		boolean isFileDelete = deleteFiles(entity);
@@ -242,10 +242,10 @@ public class TodoService {
 	/**
 	 * 
 	 * @param entity
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 
-	private boolean deleteFiles(TodoEntity entity) throws IOException {
+	private boolean deleteFiles(TodoEntity entity) throws Exception {
 
 		List<TodoImageEntity> imageEntities = todoImageService.todoImageListByTodoId(entity);
 

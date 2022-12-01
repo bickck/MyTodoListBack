@@ -16,6 +16,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.todo.list.controller.dto.ImageDTO;
+
 @Entity(name = "USER_IMAGE_ENTITY")
 public class UserImageEntity {
 
@@ -52,14 +54,14 @@ public class UserImageEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-//	public UserImageEntity(UserImageEntity userImageEntity) {
-//		super();
-//		this.user = userImageEntity.getUser();
-//		this.fileName = userImageEntity.getFileName();
-//		this.location = userImageEntity.getLocation();
-//		this.originName = userImageEntity.getOriginName();
-//		this.fileSize = userImageEntity.getFileSize();
-//	}
+	public UserImageEntity(UserEntity user, ImageDTO imageDTO) {
+		super();
+		this.user = user;
+		this.fileName = imageDTO.getFileName();
+		this.filePath = imageDTO.getFilePath();
+		this.originalFileName = imageDTO.getOriginName();
+		this.fileSize = imageDTO.getFileSize();
+	}
 
 	public UserImageEntity(UserEntity user, String fileName, String filePath, String originlFileName, Long fileSize) {
 		super();
@@ -70,8 +72,9 @@ public class UserImageEntity {
 		this.fileSize = fileSize;
 	}
 
-	public UserImageEntity(String fileName, String filePath) {
+	public UserImageEntity(UserEntity user,String fileName, String filePath) {
 		super();
+		this.user = user;
 		this.fileName = fileName;
 		this.filePath = filePath;
 	}
@@ -79,8 +82,8 @@ public class UserImageEntity {
 	@Override
 	public String toString() {
 		return "UserImageEntity [id=" + id + ", user=" + user + ", fileName=" + fileName + ", filePath=" + filePath
-				+ ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", createTimestamp=" + createTimestamp
-				+ "]";
+				+ ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", createTimestamp="
+				+ createTimestamp + "]";
 	}
 
 	public Long getId() {

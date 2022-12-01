@@ -12,14 +12,11 @@ import com.todo.list.controller.dto.ImageDTO;
 public interface ImageUploadService {
 
 	static String DEFAULT_PATH = "E:\\img";
-	
 
-	ImageDTO saveImageInDir(MultipartFile todoImage);
+	ImageDTO saveImageInDir(MultipartFile images);
 
 	Resource findImageInDirectory(String originalName, String folderName);
 
-	boolean deleteImageInDirectory(String originalName, String folderName) throws IOException;
-
-	//boolean existsImage(String originalName, String folderName);
+	boolean deleteImageInDirectory(String originalName, String folderName) throws Exception;
 
 }

@@ -4,5 +4,5 @@ public interface ResponseStatus {
 
 	static final String SUCCESS = "SUCCESS";
 	
-	static final String FALIURE = "FAILURE";
+	static final String FAILURE = "FAILURE";
 }

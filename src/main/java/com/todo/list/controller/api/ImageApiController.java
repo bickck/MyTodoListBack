@@ -61,9 +61,24 @@ public class ImageApiController {
 
 	@ResponseBody
 	@GetMapping("/source/{filePath}/{fileName}")
-	public ResponseEntity<?> requestTodoRealResource(@PathVariable String filePath, @PathVariable String fileName) {
+	public ResponseEntity<?> requestTodoImageRealResource(@PathVariable String filePath,
+			@PathVariable String fileName) {
 
 		Resource resource = imageApiService.todoRealImageResource(filePath, fileName);
+
+		HttpHeaders httpheaders = new HttpHeaders();
+		httpheaders.setContentType(MediaType.IMAGE_JPEG);
+
+		return new ResponseEntity<Resource>(resource, httpheaders, HttpStatus.OK);
+
+	}
+
+	@ResponseBody
+	@GetMapping("/user/source/{filePath}/{fileName}")
+	public ResponseEntity<?> requestUserImageRealResource(@PathVariable String filePath,
+			@PathVariable String fileName) {
+
+		Resource resource = imageApiService.userRealImageResource(filePath, fileName);
 
 		HttpHeaders httpheaders = new HttpHeaders();
 		httpheaders.setContentType(MediaType.IMAGE_JPEG);

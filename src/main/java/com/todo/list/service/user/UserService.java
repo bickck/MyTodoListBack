@@ -1,25 +1,26 @@
 package com.todo.list.service.user;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
-import javax.annotation.PostConstruct;
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
-import com.todo.list.entity.QuoteEntity;
-import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
+import com.todo.list.service.image.ImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.util.UserUtil;
+import com.todo.list.util.uuid.CommonUUID;
 
 /**
  * @author DongHyeon_kim
@@ -30,8 +31,12 @@ import com.todo.list.util.UserUtil;
 @Service
 public class UserService {
 
+	private static String defaultUserImagePath = "E:\\img\\defaultImage";
+	private static String defaultUserImageName = "blank-profile-picture-gdf6b93f73_640.png";
+
 	private UserRepository userRepository;
 	private UserImageRepository userImageRepository;
+	private ImageUploadService imageUploadService = new UserImageUploadService();
 	private UserUtil userUtil;
 
 	@Autowired
@@ -55,13 +60,12 @@ public class UserService {
 		String password = userDTO.getPassword();
 		String passwordEncode = userUtil.bCrypt(password);
 
-		System.out.println(userRepository.existsByEmail(email));
 		if (userRepository.existsByEmail(email)) {
 			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
-//		userImageRepository.save(new UserImageEntity(userEntity, "", "", "", (long) 0));
+		userImageRepository.save(new UserImageEntity(userEntity, defaultUserImageName, defaultUserImagePath));
 
 		return userEntity;
 	}
@@ -73,12 +77,21 @@ public class UserService {
 	 */
 
 	@Transactional
-	public UserEntity userUpdate(UserEntity user) {
-		UserEntity prevUserEntity = userRepository.getById(user.getId());
+	public UserEntity userUpdate(UserDTO userDTO, UserTokenDTO userTokenDTO) {
 
-		prevUserEntity.setIntroComment(user.getIntroComment());
+		UserEntity userEntity = userRepository.findById(userTokenDTO.getId()).get();
 
-		return userRepository.save(prevUserEntity);
+		if (userDTO.getIntroComment() != null) {
+			userEntity.setIntroComment(userDTO.getIntroComment());
+		}
+		if (userDTO.getNickName() != null) {
+			
+		}
+		if (userDTO.getBirth() != null) {
+
+		}
+
+		return userRepository.save(userEntity);
 	}
 
 	/**
@@ -87,10 +100,9 @@ public class UserService {
 	 */
 
 	@Transactional
-	public void userDelete(Long id) {
-		// userRepository.deleteByUsernameAndPassword(userDTO.getUsername(),
-		// userDTO.getPassword());
-		userRepository.deleteById(id);
+	public void userDelete(Long userid) {
+
+		userRepository.deleteById(userid);
 	}
 
 	// 이메일 확인 및 비밀번호 확인 로직 필요
@@ -140,13 +152,45 @@ public class UserService {
 	 * @param requestUserArg
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public UserEntity updateUserIntroComment(String comment, UserTokenDTO requestUserArg) {
-		
+
 		UserEntity entity = userRepository.findById(requestUserArg.getId()).get();
-		
+
 		entity.setIntroComment(comment);
 
 		return userRepository.save(entity);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public UserImageEntity updateUserIntroImage(Long id, MultipartFile userImage) {
+
+		UserEntity user = userRepository.findById(id).get();
+
+		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
+
+		UserImageEntity userImageEntity = new UserImageEntity(user, imageDTO);
+
+		return userImageRepository.save(userImageEntity);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteUserIntroImage(UserTokenDTO userDTO) throws Exception {
+
+		Long id = userDTO.getId();
+
+		UserEntity user = userRepository.findById(id).get();
+
+		UserImageEntity userImage = userImageRepository.findUserIntroImageByUserId(id);
+
+		try {
+			userImageRepository.delete(userImage);
+			imageUploadService.deleteImageInDirectory(userImage.getOriginalFileName(), userImage.getFilePath());
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			throw new Exception();
+		}
+
 	}
 }

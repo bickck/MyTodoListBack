@@ -43,50 +43,83 @@ import com.todo.list.util.auth.UserAuthToken;
 public class AuthController {
 
 	private UserService userService;
-
-	@Autowired
 	private UserUtil userUtil;
-
+	private AuthenticationJwt jwtLoginToken;
 	private Utils utils = new Utils();
 
 	@Autowired
-	private AuthenticationJwt jwtLoginToken;
-
-	@Autowired
-	public AuthController(UserService userService) {
+	public AuthController(UserUtil userUtil, UserService userService, AuthenticationJwt jwtLoginToken) {
+		this.userUtil = userUtil;
 		this.userService = userService;
+		this.jwtLoginToken = jwtLoginToken;
 	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @return
+	 * @throws AuthenticationException
+	 */
 
 	@ResponseBody
 	@PostMapping("/login")
 	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO) throws AuthenticationException {
 
-		System.out.println(userDTO.getEmail());
-		System.out.println(userDTO.getPassword());
+		if(userDTO == null) {
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
+		}
+		if(userDTO.getEmail() == null) {
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
+		}
+		
+		if(userDTO.getPassword() == null) {
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
+		}
+		
 		UserEntity user = userService.userLogin(userDTO);
 		String userToken = jwtLoginToken.makeToken(user);
 
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Authorization", userToken);
-//		headers.
-
 		return new ResponseEntity<String>(userToken, HttpStatus.ACCEPTED);
 	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @return
+	 */
 
 	@ResponseBody
 	@PostMapping("/register")
 	public synchronized ResponseEntity<String> registerRequest(@RequestBody UserDTO userDTO) {
 
+		if (userDTO == null) {
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.CREATED);
+		}
+
 		userService.userSave(userDTO);
 
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param dto
+	 * @return
+	 */
 
 	@PostMapping("/logout")
 	public ResponseEntity<String> logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param dto
+	 * @return
+	 */
 
 	@PostMapping("/findPassword")
 	public ResponseEntity<String> findUserPassword(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {

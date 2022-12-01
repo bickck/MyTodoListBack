@@ -57,7 +57,7 @@ public class QuoteController implements ResponseStatus {
 		QuoteEntity quoteEntity = null;
 		
 		if (quoteDTO.getIsPublish() == null && quoteDTO.getQuote() == null && quoteDTO.getAuthor() == null) {
-			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 		
 		if (quoteDTO.getIsPublish().equals("private") || quoteDTO.getIsPublish().equals("PRIVATE")) {
@@ -83,7 +83,7 @@ public class QuoteController implements ResponseStatus {
 			@UserAuthToken UserTokenDTO tokenDTO) {
 		
 		if (quoteDTO.getIsPublish() == null && quoteDTO.getQuote() == null && quoteDTO.getAuthor() == null) {
-			return new ResponseEntity<>(ResponseStatus.FALIURE, HttpStatus.OK);
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 
 		userQuoteService.updateQuote(id, quoteDTO, tokenDTO);
