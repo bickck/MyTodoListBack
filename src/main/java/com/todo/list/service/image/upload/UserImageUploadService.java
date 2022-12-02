@@ -64,7 +64,7 @@ public class UserImageUploadService implements ImageUploadService {
 			e.printStackTrace();
 		}
 
-		return null;
+		return new ImageDTO(fileName, originalFileName, filePath, fileSize);
 	}
 
 	/**

@@ -19,6 +19,7 @@ import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.UserImageUploadService;
+import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.uuid.CommonUUID;
 
@@ -34,14 +35,17 @@ public class UserService {
 	private static String defaultUserImagePath = "E:\\img\\defaultImage";
 	private static String defaultUserImageName = "blank-profile-picture-gdf6b93f73_640.png";
 
+	private UserImageService userImageService;
 	private UserRepository userRepository;
 	private UserImageRepository userImageRepository;
 	private ImageUploadService imageUploadService = new UserImageUploadService();
 	private UserUtil userUtil;
 
 	@Autowired
-	public UserService(UserRepository userRepository, UserImageRepository userImageRepository, UserUtil userUtil) {
+	public UserService(UserImageService userImageService, UserRepository userRepository,
+			UserImageRepository userImageRepository, UserUtil userUtil) {
 		// TODO Auto-generated constructor stub
+		this.userImageService = userImageService;
 		this.userRepository = userRepository;
 		this.userImageRepository = userImageRepository;
 		this.userUtil = userUtil;
@@ -85,7 +89,7 @@ public class UserService {
 			userEntity.setIntroComment(userDTO.getIntroComment());
 		}
 		if (userDTO.getNickName() != null) {
-			
+
 		}
 		if (userDTO.getBirth() != null) {
 
@@ -165,32 +169,65 @@ public class UserService {
 	@Transactional(rollbackFor = Exception.class)
 	public UserImageEntity updateUserIntroImage(Long id, MultipartFile userImage) {
 
-		UserEntity user = userRepository.findById(id).get();
+		UserImageEntity userIntroImage = userImageService.findById(id);
 
+		// 디폴트 이미지일 경우 DB 내용은 삭제하되 디스크에 저장된 이미지는 삭제되면 안됌
+		if (!userIntroImage.getFileName().equals(defaultUserImageName)
+				&& !userIntroImage.getFilePath().equals(defaultUserImagePath)) {
+			deleteUserImageAtStorage(userIntroImage.getFilePath(), userIntroImage.getFilePath());
+			userImageService.deleteUserIntroImage(id);
+		}
+		
 		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
 
-		UserImageEntity userImageEntity = new UserImageEntity(user, imageDTO);
+		UserImageEntity userImageEntity = new UserImageEntity(userIntroImage.getUser(), imageDTO);
 
-		return userImageRepository.save(userImageEntity);
+		return userImageService.userImageSave(userImageEntity);
 	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @throws Exception
+	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public void deleteUserIntroImage(UserTokenDTO userDTO) throws Exception {
+	public boolean deleteUserIntroImage(UserTokenDTO userDTO) throws Exception {
 
-		Long id = userDTO.getId();
+		Long userid = userDTO.getId();
 
-		UserEntity user = userRepository.findById(id).get();
+		UserEntity user = userRepository.findById(userid).get();
 
-		UserImageEntity userImage = userImageRepository.findUserIntroImageByUserId(id);
+		UserImageEntity userIntroImage = userImageRepository.findUserIntroImageByUserId(userid);
+		// 삭제할 이미지가 디폴트 이미지일 경우 리턴
+		
+		if (userIntroImage.getFileName().equals(defaultUserImageName)
+				&& userIntroImage.getFilePath().equals(defaultUserImagePath)) {
+			return false;
+		}
 
 		try {
-			userImageRepository.delete(userImage);
-			imageUploadService.deleteImageInDirectory(userImage.getOriginalFileName(), userImage.getFilePath());
+			
+			imageUploadService.deleteImageInDirectory(userIntroImage.getOriginalFileName(), userIntroImage.getFilePath());
+			
+			// 디폴트 유저 이미지는 저장되어있기 때문에 DB에만 정보를 저장함
+			userImageService.updateDefaultUserIntroImage(userIntroImage, defaultUserImageName, defaultUserImagePath);
 		} catch (Exception e) {
 			// TODO: handle exception
-
 			throw new Exception();
 		}
 
+		return true;
+	}
+
+	private boolean deleteUserImageAtStorage(String filePath, String fileName) {
+		try {
+			return imageUploadService.deleteImageInDirectory(filePath, fileName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 }

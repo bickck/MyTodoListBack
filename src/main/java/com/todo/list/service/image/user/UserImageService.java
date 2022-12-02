@@ -27,19 +27,62 @@ public class UserImageService {
 		this.imageRepository = imageRepository;
 		this.userRepository = userRepository;
 	}
+	
+	/**
+	 * 
+	 * @param userImageEntity
+	 * @return
+	 */
 
-	@Transactional
-	public void userImageSave(UserImageEntity userImageEntity) {
-		imageRepository.save(userImageEntity);
+	@Transactional(rollbackFor = Exception.class)
+	public UserImageEntity userImageSave(UserImageEntity userImageEntity) {
+		return imageRepository.save(userImageEntity);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 */
 
-	public UserImageEntity userImgDelete(Long id) {
-		UserImageEntity backGroundImageEntity = imageRepository.getById(id);
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteUserIntroImage(Long id) {
+		UserImageEntity userIntroImage = imageRepository.getById(id);
 		imageRepository.deleteById(id);
-		return backGroundImageEntity;
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
-	public UserImageEntity findById(long id) {
+	@Transactional(readOnly = true)
+	public UserImageEntity findById(Long id) {
 		return imageRepository.findById(id).get();
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @param fileName
+	 * @param filePath
+	 */
+
+	@Transactional(rollbackFor = Exception.class)
+	public void updateDefaultUserIntroImage(UserImageEntity userIntroImage, String fileName, String filePath) {
+		
+//		UserImageEntity userIntroImage = imageRepository.findUserIntroImageByUserId(userid);
+		
+		userIntroImage.setFileName(fileName);
+		
+		userIntroImage.setFilePath(filePath);
+		
+		userIntroImage.setFileSize((long) 0);
+		
+		userIntroImage.setOriginalFileName("");
+		
+
+		imageRepository.save(userIntroImage);
+
 	}
 }

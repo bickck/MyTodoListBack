@@ -152,15 +152,11 @@ public class UserController implements ResponseStatus {
 
 	@PostMapping(value = "/update/intro/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.ALL_VALUE })
 	public ResponseEntity<?> updateUserImage(@UserAuthToken UserTokenDTO userDTO,
-			@RequestParam("file") MultipartFile file) {
+			@RequestParam(value = "file") MultipartFile file) {
 
-		if (file == null) {
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
-		}
+		UserImageEntity entity = userService.updateUserIntroImage(userDTO.getId(), file);
 
-		UserImageEntity userImageEntity = userService.updateUserIntroImage(userDTO.getId(), file);
-
-		if (userImageEntity == null) {
+		if (entity == null) {
 			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 
@@ -176,13 +172,21 @@ public class UserController implements ResponseStatus {
 	@PostMapping(value = "/delete/intro/image")
 	public ResponseEntity<?> deleteUserImage(@UserAuthToken UserTokenDTO userDTO) {
 
+		boolean result;
+		
 		try {
-			userService.deleteUserIntroImage(userDTO);
+			result = userService.deleteUserIntroImage(userDTO);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
+		
+		if(!result) {
+			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 
+		}
+		
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
