@@ -175,15 +175,19 @@ public class UserService {
 		if (!userIntroImage.getFileName().equals(defaultUserImageName)
 				&& !userIntroImage.getFilePath().equals(defaultUserImagePath)) {
 			deleteUserImageAtStorage(userIntroImage.getFilePath(), userIntroImage.getFilePath());
-			userImageService.deleteUserIntroImage(id);
+			//userImageService.deleteUserIntroImage(id);
+		} else {
+			
 		}
 		
+		// 물리적 저장
 		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
 		
-		userIntroImage.setFileName(imageDTO.getOriginName());
+		userIntroImage.setFileName(imageDTO.getFileName());
 		userIntroImage.setFilePath(imageDTO.getFilePath());
+		userIntroImage.setOriginalFileName(imageDTO.getOriginName());
 
-
+		// DB 내용 변경
 		return userImageService.userImageSave(userIntroImage);
 	}
 	
