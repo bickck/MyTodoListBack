@@ -58,7 +58,7 @@ public class UserImageService {
 
 	@Transactional(readOnly = true)
 	public UserImageEntity findById(Long id) {
-		return imageRepository.findById(id).get();
+		return imageRepository.findUserIntroImageByUserId(id);
 	}
 	
 	/**

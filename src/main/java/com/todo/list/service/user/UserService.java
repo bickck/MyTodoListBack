@@ -179,10 +179,12 @@ public class UserService {
 		}
 		
 		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
+		
+		userIntroImage.setFileName(imageDTO.getOriginName());
+		userIntroImage.setFilePath(imageDTO.getFilePath());
 
-		UserImageEntity userImageEntity = new UserImageEntity(userIntroImage.getUser(), imageDTO);
 
-		return userImageService.userImageSave(userImageEntity);
+		return userImageService.userImageSave(userIntroImage);
 	}
 	
 	/**
