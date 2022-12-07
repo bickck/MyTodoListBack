@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "slack.token",
+    "type": "java.lang.String",
+    "description": "A description for 'slack.token'"
+  },
+  {
+    "name": "slack.channel.monitor",
+    "type": "java.lang.String",
+    "description": "A description for 'slack.channel.monitor'"
+  }
+]}

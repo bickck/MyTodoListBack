@@ -127,7 +127,7 @@ public class TodoApiController {
 	@GetMapping("/comment/{id}")
 	@ResponseBody
 	public ResponseEntity<?> requestCommentsByTodoId(@PathVariable Long id,
-			@PageableDefault(size = 10, page = 0) Pageable pageable) {
+			@PageableDefault(size = 5, page = 0) Pageable pageable) {
 
 		Page<TodoCommentMapper> page = todoCommentApiService.findTodoCommentsByTodoId(id, pageable);
 

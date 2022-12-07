@@ -51,6 +51,13 @@ public class TodoCommentEntity {
 		// TODO Auto-generated constructor stub
 	}
 
+	public TodoCommentEntity(TodoEntity todo, UserEntity user, String comment) {
+		super();
+		this.todo = todo;
+		this.user = user;
+		this.comment = comment;
+	}
+
 	public Long getId() {
 		return id;
 	}

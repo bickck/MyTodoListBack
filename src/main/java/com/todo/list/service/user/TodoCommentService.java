@@ -12,6 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
+import com.todo.list.entity.TodoEntity;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.todo.TodoCommentRepository;
 
 @Service
@@ -20,12 +24,17 @@ public class TodoCommentService {
 	private EntityManager entityManager;
 	private CriteriaBuilder criteriaBuilder;
 	private TodoCommentRepository todoCommentRepository;
+	private TodoRepository todoRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	public TodoCommentService(EntityManager entityManager, TodoCommentRepository todoCommentRepository) {
+	public TodoCommentService(EntityManager entityManager, TodoCommentRepository todoCommentRepository,
+			TodoRepository todoRepository, UserRepository userRepository) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.todoCommentRepository = todoCommentRepository;
+		this.todoRepository = todoRepository;
+		this.userRepository = userRepository;
 
 	}
 
@@ -40,7 +49,19 @@ public class TodoCommentService {
 	@Transactional
 	public TodoCommentEntity saveTodoComment(Long id, UserTokenDTO userTokenDTO, CommentDTO commentDTO) {
 
-		return todoCommentRepository.save(null);
+		TodoEntity todoEntity = todoRepository.findTodoEntityById(id);
+
+		UserEntity userEntity = userRepository.findById(userTokenDTO.getId()).get();
+
+		TodoCommentEntity commentEntity = new TodoCommentEntity();
+
+		commentEntity.setComment(commentDTO.getComment());
+
+		commentEntity.setTodo(todoEntity);
+
+		commentEntity.setUser(userEntity);
+
+		return todoCommentRepository.save(commentEntity);
 	}
 
 	/**

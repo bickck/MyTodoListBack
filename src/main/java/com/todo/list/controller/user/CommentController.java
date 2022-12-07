@@ -39,14 +39,14 @@ public class CommentController {
 	 * @return status
 	 */
 
-	@PostMapping(value = "/comment/add/{id}")
+	@PostMapping(value = "/add/{id}")
 	public ResponseEntity<?> requestSaveComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
 
 		TodoCommentEntity commentEntity = todoCommentService.saveTodoComment(id, dto, commentDTO);
 
 		if (commentEntity == null) {
-
+			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
@@ -61,7 +61,7 @@ public class CommentController {
 	 * @return status
 	 */
 
-	@PostMapping(value = "/comment/update/{id}")
+	@PostMapping(value = "/update/{id}")
 	public ResponseEntity<?> requestRecommandUpdate(@PathVariable Long id, @RequestBody CommentDTO commentDTO,
 			@UserAuthToken UserTokenDTO dto) {
 
@@ -78,7 +78,7 @@ public class CommentController {
 	 * @return status
 	 */
 
-	@PostMapping(value = "/comment/delete/{id}")
+	@PostMapping(value = "/delete/{id}")
 	public ResponseEntity<?> requestRecommandDelete(@PathVariable Long id, @UserAuthToken UserTokenDTO dto) {
 
 		todoCommentService.deleteTodoComment(id);
