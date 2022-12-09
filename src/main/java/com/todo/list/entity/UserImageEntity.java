@@ -72,11 +72,12 @@ public class UserImageEntity {
 		this.fileSize = fileSize;
 	}
 
-	public UserImageEntity(UserEntity user,String fileName, String filePath) {
+	public UserImageEntity(UserEntity user,String originalFileName, String filePath,String fileName) {
 		super();
 		this.user = user;
-		this.fileName = fileName;
+		this.originalFileName = originalFileName;
 		this.filePath = filePath;
+		this.fileName = fileName;
 	}
 
 	@Override

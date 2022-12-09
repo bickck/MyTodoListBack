@@ -10,6 +10,9 @@ public interface UserIntroMapper {
 
 	String getIntroComment();
 	
-	String userImageCount();
+	String getOriginalFileName();
 	
+	String getFileName();
+	
+	String getFilePath();
 }

@@ -40,6 +40,8 @@ public class GlobalExceptionHandler {
 		
 		slackService.postSlackMessage(errorMessage);
 		
+		exception.printStackTrace();
+		
 		return new ResponseEntity<String>("server error", HttpStatus.NOT_FOUND);
 	}
 }

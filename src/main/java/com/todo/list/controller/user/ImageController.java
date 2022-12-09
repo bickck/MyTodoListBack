@@ -58,7 +58,7 @@ public class ImageController {
 	 * BackGroundImg CRUD
 	 */
 
-	@PostMapping("/save/userImage")
+	@PostMapping("/userimage")
 	public ResponseEntity<?> saveUserIntroImage(@RequestParam(name = "file") MultipartFile multipartFile,
 			@RequestParam(name = "fileName") String fileName, @UserAuthToken UserTokenDTO tokenDTO) throws IOException {
 
@@ -69,18 +69,18 @@ public class ImageController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PostMapping("/background/2/{id}")
-	public ResponseEntity<?> updateUserIntroImage(@PathVariable Long id) {
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@PostMapping("/background/3/{id}")
-	public ResponseEntity<?> deleteUserIntroImage(@PathVariable Long id) {
-		// imaegService.deleteBackGroundImage(id);
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+//	@PostMapping("/background/2/{id}")
+//	public ResponseEntity<?> updateUserIntroImage(@PathVariable Long id) {
+//
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
+//
+//	@PostMapping("/background/3/{id}")
+//	public ResponseEntity<?> deleteUserIntroImage(@PathVariable Long id) {
+//		// imaegService.deleteBackGroundImage(id);
+//
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
 
 //	@ResponseBody
 //	@GetMapping("/api/img")

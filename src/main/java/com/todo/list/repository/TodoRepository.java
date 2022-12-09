@@ -8,11 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.repository.custom.TodoApiCustomRepository;
 import com.todo.list.repository.mapper.TodoMapper;
-import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.entity.TodoEntity;
 
 public interface TodoRepository extends JpaRepository<TodoEntity, Long>, TodoApiCustomRepository {

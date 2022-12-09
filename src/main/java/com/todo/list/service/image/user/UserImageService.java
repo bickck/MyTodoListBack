@@ -27,7 +27,7 @@ public class UserImageService {
 		this.imageRepository = imageRepository;
 		this.userRepository = userRepository;
 	}
-	
+
 	/**
 	 * 
 	 * @param userImageEntity
@@ -38,7 +38,7 @@ public class UserImageService {
 	public UserImageEntity userImageSave(UserImageEntity userImageEntity) {
 		return imageRepository.save(userImageEntity);
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -49,7 +49,7 @@ public class UserImageService {
 		UserImageEntity userIntroImage = imageRepository.getById(id);
 		imageRepository.deleteById(id);
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -57,10 +57,10 @@ public class UserImageService {
 	 */
 
 	@Transactional(readOnly = true)
-	public UserImageEntity findById(Long id) {
+	public UserImageEntity findUserImageByUserId(Long id) {
 		return imageRepository.findUserIntroImageByUserId(id);
 	}
-	
+
 	/**
 	 * 
 	 * @param user
@@ -69,18 +69,15 @@ public class UserImageService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public void updateDefaultUserIntroImage(UserImageEntity userIntroImage, String fileName, String filePath) {
-		
-//		UserImageEntity userIntroImage = imageRepository.findUserIntroImageByUserId(userid);
-		
-		userIntroImage.setFileName(fileName);
-		
+	public void updateDefaultUserIntroImage(UserImageEntity userIntroImage, String originalFileName, String filePath) {
+
+		userIntroImage.setFileName("DEFAULT");
+
 		userIntroImage.setFilePath(filePath);
-		
+
 		userIntroImage.setFileSize((long) 0);
-		
-		userIntroImage.setOriginalFileName("");
-		
+
+		userIntroImage.setOriginalFileName(originalFileName);
 
 		imageRepository.save(userIntroImage);
 

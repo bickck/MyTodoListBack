@@ -41,7 +41,7 @@ public class UserEntity {
 	private String password;
 
 	@Column(name = "INTRO_COMMENT", length = 100)
-	private String introComment;
+	private String introComment = "";
 
 	@Column(name = "CREATETIMESTAMP")
 	@CreationTimestamp
@@ -185,7 +185,5 @@ public class UserEntity {
 	public void setUpdateTimestamp(Timestamp updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
 	}
-
-	
 
 }

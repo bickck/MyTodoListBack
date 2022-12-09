@@ -20,9 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,7 +64,7 @@ import lombok.extern.java.Log;
  */
 
 @RestController
-@RequestMapping(value = "/user/manage", headers = HttpHeaders.AUTHORIZATION)
+@RequestMapping(value = "/user", headers = HttpHeaders.AUTHORIZATION)
 public class UserController implements ResponseStatus {
 
 	private UserService userService;
@@ -87,7 +89,7 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping("/update/intro/comment")
+	@PutMapping("/intro/comment")
 	public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		String introComment = userDTO.getIntroComment();
@@ -95,6 +97,8 @@ public class UserController implements ResponseStatus {
 		if (introComment == null || introComment.isEmpty()) {
 			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
+
+		userService.updateUserIntroComment(introComment, userTokenDTO);
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
@@ -105,7 +109,7 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		userService.userDelete(id);
@@ -120,7 +124,7 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping("/changePassword/{id}")
+	@PutMapping("/changePassword/{id}")
 	public ResponseEntity<?> changePassword(@PathVariable Long id, UserDTO userDTO) {
 
 		userService.changeUserPassword(id, userDTO);
@@ -135,7 +139,7 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping("/update/intro")
+	@PutMapping("/intro")
 	public ResponseEntity<?> updateUserIntro(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		userService.userUpdate(userDTO, userTokenDTO);
@@ -150,7 +154,7 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping(value = "/update/intro/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.ALL_VALUE })
+	@PutMapping(value = "/intro/image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.ALL_VALUE })
 	public ResponseEntity<?> updateUserImage(@UserAuthToken UserTokenDTO userDTO,
 			@RequestParam(value = "file") MultipartFile file) {
 
@@ -169,11 +173,11 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PostMapping(value = "/delete/intro/image")
+	@DeleteMapping(value = "/intro/image")
 	public ResponseEntity<?> deleteUserImage(@UserAuthToken UserTokenDTO userDTO) {
 
 		boolean result;
-		
+
 		try {
 			result = userService.deleteUserIntroImage(userDTO);
 		} catch (Exception e) {
@@ -181,12 +185,12 @@ public class UserController implements ResponseStatus {
 			e.printStackTrace();
 			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
-		
-		if(!result) {
+
+		if (!result) {
 			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 
 		}
-		
+
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 

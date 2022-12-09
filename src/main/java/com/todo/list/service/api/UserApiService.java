@@ -20,6 +20,7 @@ import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.mapper.TodoMapper;
+import com.todo.list.repository.mapper.UserIntroMapper;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.Utils;
 import com.todo.list.repository.UserRepository;
@@ -54,25 +55,16 @@ public class UserApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public UserIntroDTO getUserIntroDetailsApi(Long id, String username) {
-		UserEntity userEntity = userRepository.findByUsername(username);
-		
-		
-		UserIntroDTO userIntroDTO = new UserIntroDTO();
+	public UserIntroMapper getUserIntroDetailsApi(Long id, String email) {
+//		UserEntity userEntity = userRepository.findUserIntroInfoByIdAndEmail(id, email);
+//
+//		UserIntroDTO userIntroDTO = new UserIntroDTO();
+//
+//		if (userEntity.equals(null)) {
+//			return null;
+//		}
 
-		if (userEntity.equals(null)) {
-			return null;
-		}
-
-		userIntroDTO.setId(userEntity.getId());
-		userIntroDTO.setUsername(userEntity.getUsername());
-		String introComment = userEntity.getIntroComment();
-
-		if (introComment == null) {
-			userIntroDTO.setIntroComment(utils.nvl(introComment));
-		}
-		userIntroDTO.setIntroComment(introComment);
-		return userIntroDTO;
+		return userRepository.findUserIntroInfoByIdAndEmail(id, email);
 	}
 
 	/**

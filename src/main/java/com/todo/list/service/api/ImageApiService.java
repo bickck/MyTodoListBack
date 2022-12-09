@@ -1,9 +1,11 @@
 package com.todo.list.service.api;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,12 @@ import com.todo.list.service.image.upload.TodoImageUploadService;
 
 @Service
 public class ImageApiService {
+
+	@Value(value = "${image.user.originalFileName}")
+	private String defaultUserImagePath;
+
+	@Value(value = "${image.user.filePath}")
+	private String defaultUserImageName = "blank-profile-picture-gdf6b93f73_640.png";
 
 	private TodoImageRepository todoImageRepository;
 	private UserImageRepository userImageRepository;
@@ -53,7 +61,7 @@ public class ImageApiService {
 
 		return userImageRepository.findUserIntroImageById(id);
 	}
-	
+
 	/**
 	 * 
 	 * @param filePath
@@ -63,26 +71,46 @@ public class ImageApiService {
 
 	public Resource todoRealImageResource(String filePath, String originalName) {
 
-		String storageFilePath = todoImageRepository.findFilePathByOriginalFileNameAndFileName(originalName,
-				filePath);
+		String storageFilePath = todoImageRepository.findFilePathByOriginalFileNameAndFileName(originalName, filePath);
 
 		if (storageFilePath == null) {
 			return null;
 		}
-		
+
 		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
 	}
 	
+	/**
+	 * 
+	 * @param filePath
+	 * @param originalName
+	 * @return
+	 */
+
 	public Resource userRealImageResource(String filePath, String originalName) {
 
-		String storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName,
-				filePath);
+		String storageFilePath = filePath;
 
-		if (storageFilePath == null) {
-			return null;
+		if (filePath.equals("DEFAULT")) {
+			storageFilePath = File.separator + "defaultImage";
+		} else {
+			storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName, filePath);
 		}
-		
+
+		// storageFilePath =
+		// userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName,
+		// filePath);
+
 		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 
+	public Resource userRealDefaultImageResource() {
+
+		return imageUploadService.findImageInDirectory(defaultUserImageName, defaultUserImagePath);
+	}
 }

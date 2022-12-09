@@ -23,10 +23,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +67,7 @@ import io.netty.handler.codec.Headers;
  */
 
 @RestController
-@RequestMapping(value = "/user/todo/manage", headers = HttpHeaders.AUTHORIZATION)
+@RequestMapping(value = "/user", headers = HttpHeaders.AUTHORIZATION)
 public class TodoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -109,7 +111,7 @@ public class TodoController {
 	 * @throws IOException
 	 */
 
-	@PostMapping(value = "/save", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+	@PostMapping(value = "/todo", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
 			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestSaveUserTodoForMultiPartForm(@RequestPart(value = "todos") String todoString,
 			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
@@ -177,7 +179,7 @@ public class TodoController {
 	 * @throws JsonMappingException
 	 */
 
-	@PostMapping(value = "/update/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+	@PutMapping(value = "/todo/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
 			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestUpdateUserTodoForMultipart(@PathVariable(value = "id") Long id,
 			@RequestPart(value = "todos") String todoString,
@@ -204,7 +206,7 @@ public class TodoController {
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/update/publish/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/todo/publish/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateTodoPublished(@PathVariable(value = "id") Long id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
@@ -222,7 +224,7 @@ public class TodoController {
 	 * @throws Exception 
 	 */
 
-	@PostMapping("/delete/{id}")
+	@DeleteMapping("/todo/{id}")
 	public ResponseEntity<?> requestDeleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) throws Exception {
 
 		try {

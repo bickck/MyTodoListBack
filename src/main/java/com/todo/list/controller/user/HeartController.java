@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +62,7 @@ public class HeartController {
 	 * @return
 	 */
 
-	@PostMapping(value = "/cancle/todo/{uuid}")
+	@DeleteMapping(value = "/todo/{uuid}")
 	public ResponseEntity<?> requestCancleTodoHeart(@PathVariable String uuid,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
@@ -77,7 +78,7 @@ public class HeartController {
 	 * @return
 	 */
 
-	@PostMapping(value = "/cancle/quote/{uuid}")
+	@DeleteMapping(value = "/quote/{uuid}")
 	public ResponseEntity<?> requestCancleQuoteHeart(@PathVariable String uuid,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResponseErrorHandler;
 
 import com.todo.list.controller.AuthController;
+import com.todo.list.controller.ResponseStatus;
 
 @RestControllerAdvice(basePackageClasses = { 
 		AuthController.class 
@@ -21,14 +22,15 @@ public class AuthtExcetionHandler {
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<String> unExsistUser(Exception exception) {
 		exception.printStackTrace();
-		return new ResponseEntity<String>("not user fail", HttpStatus.BAD_REQUEST);
+		String exceptionMessage = "존재하지 않는 계정입니다.";
+		return new ResponseEntity<String>(exceptionMessage, HttpStatus.BAD_REQUEST);
 
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
 	public ResponseEntity<String> notAcceptAuthentication(Exception exception) {
 		exception.printStackTrace();
-		return new ResponseEntity<String>("auth Fail", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 
 	}
 }

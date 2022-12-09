@@ -59,6 +59,7 @@ public class UserService {
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public UserEntity userSave(UserDTO userDTO) {
+
 		String email = userDTO.getEmail();
 		String username = userDTO.getUsername();
 		String password = userDTO.getPassword();
@@ -69,7 +70,9 @@ public class UserService {
 		}
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
-		userImageRepository.save(new UserImageEntity(userEntity, defaultUserImageName, defaultUserImagePath));
+
+		userImageRepository
+				.save(new UserImageEntity(userEntity, defaultUserImageName, defaultUserImagePath, "DEFAULT"));
 
 		return userEntity;
 	}
@@ -109,8 +112,6 @@ public class UserService {
 		userRepository.deleteById(userid);
 	}
 
-	// 이메일 확인 및 비밀번호 확인 로직 필요
-
 	/**
 	 * 
 	 * @param requestUserArg
@@ -122,7 +123,6 @@ public class UserService {
 	public UserEntity userLogin(UserDTO requestUserArg) throws AuthenticationException {
 
 		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail());
-
 		String password = requestUserArg.getPassword();
 		String encPassword = user.getPassword();
 
@@ -167,30 +167,28 @@ public class UserService {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public UserImageEntity updateUserIntroImage(Long id, MultipartFile userImage) {
+	public UserImageEntity updateUserIntroImage(Long userId, MultipartFile userImage) {
 
-		UserImageEntity userIntroImage = userImageService.findById(id);
+		UserImageEntity userIntroImage = userImageService.findUserImageByUserId(userId);
 
 		// 디폴트 이미지일 경우 DB 내용은 삭제하되 디스크에 저장된 이미지는 삭제되면 안됌
-		if (!userIntroImage.getFileName().equals(defaultUserImageName)
-				&& !userIntroImage.getFilePath().equals(defaultUserImagePath)) {
+		if (!userIntroImage.getFileName().equals("DEFAULT")) {
 			deleteUserImageAtStorage(userIntroImage.getFilePath(), userIntroImage.getFilePath());
-			//userImageService.deleteUserIntroImage(id);
-		} else {
 			
 		}
-		
+
 		// 물리적 저장
 		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
-		
+
 		userIntroImage.setFileName(imageDTO.getFileName());
 		userIntroImage.setFilePath(imageDTO.getFilePath());
 		userIntroImage.setOriginalFileName(imageDTO.getOriginName());
+		userIntroImage.setFileSize(imageDTO.getFileSize());
 
 		// DB 내용 변경
 		return userImageService.userImageSave(userIntroImage);
 	}
-	
+
 	/**
 	 * 
 	 * @param userDTO
@@ -201,21 +199,19 @@ public class UserService {
 	public boolean deleteUserIntroImage(UserTokenDTO userDTO) throws Exception {
 
 		Long userid = userDTO.getId();
-
-		UserEntity user = userRepository.findById(userid).get();
-
+		
 		UserImageEntity userIntroImage = userImageRepository.findUserIntroImageByUserId(userid);
 		// 삭제할 이미지가 디폴트 이미지일 경우 리턴
-		
-		if (userIntroImage.getFileName().equals(defaultUserImageName)
-				&& userIntroImage.getFilePath().equals(defaultUserImagePath)) {
+
+		if (userIntroImage.getFileName().equals("DEFAULT")) {
 			return false;
 		}
 
 		try {
-			
-			imageUploadService.deleteImageInDirectory(userIntroImage.getOriginalFileName(), userIntroImage.getFilePath());
-			
+
+			imageUploadService.deleteImageInDirectory(userIntroImage.getOriginalFileName(),
+					userIntroImage.getFilePath());
+
 			// 디폴트 유저 이미지는 저장되어있기 때문에 DB에만 정보를 저장함
 			userImageService.updateDefaultUserIntroImage(userIntroImage, defaultUserImageName, defaultUserImagePath);
 		} catch (Exception e) {

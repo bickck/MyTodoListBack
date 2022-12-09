@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,7 +54,7 @@ public class AuthController {
 		this.userService = userService;
 		this.jwtLoginToken = jwtLoginToken;
 	}
-	
+
 	/**
 	 * 
 	 * @param userDTO
@@ -62,26 +63,26 @@ public class AuthController {
 	 */
 
 	@ResponseBody
-	@PostMapping("/login")
-	public ResponseEntity<String> loginRequest(@RequestBody UserDTO userDTO) throws AuthenticationException {
+	@PostMapping(value = "/login")
+	public ResponseEntity<String> requestLogin(@RequestBody UserDTO userDTO) throws AuthenticationException {
 
-		if(userDTO == null) {
+		if (userDTO == null) {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
 		}
-		if(userDTO.getEmail() == null) {
+		if (userDTO.getEmail() == null) {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
 		}
-		
-		if(userDTO.getPassword() == null) {
+
+		if (userDTO.getPassword() == null) {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
 		}
-		
+
 		UserEntity user = userService.userLogin(userDTO);
 		String userToken = jwtLoginToken.makeToken(user);
 
 		return new ResponseEntity<String>(userToken, HttpStatus.ACCEPTED);
 	}
-	
+
 	/**
 	 * 
 	 * @param userDTO
@@ -89,8 +90,8 @@ public class AuthController {
 	 */
 
 	@ResponseBody
-	@PostMapping("/register")
-	public synchronized ResponseEntity<String> registerRequest(@RequestBody UserDTO userDTO) {
+	@PostMapping(value = "/register")
+	public synchronized ResponseEntity<String> requestRegister(@RequestBody UserDTO userDTO) {
 
 		if (userDTO == null) {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.CREATED);
@@ -100,7 +101,7 @@ public class AuthController {
 
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
-	
+
 	/**
 	 * 
 	 * @param userDTO
@@ -113,7 +114,7 @@ public class AuthController {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
-	
+
 	/**
 	 * 
 	 * @param userDTO
@@ -121,7 +122,7 @@ public class AuthController {
 	 * @return
 	 */
 
-	@PostMapping("/findPassword")
+	@PutMapping("/findPassword")
 	public ResponseEntity<String> findUserPassword(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);

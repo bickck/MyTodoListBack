@@ -34,6 +34,7 @@ import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.mapper.TodoMapper;
+import com.todo.list.repository.mapper.UserIntroMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.auth.UserAuthToken;
@@ -74,10 +75,10 @@ public class UserApiController {
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
 
 		Long id = userTokenDTO.getId();
-		String username = userTokenDTO.getUsername();
-		UserIntroDTO introDTO = userApiService.getUserIntroDetailsApi(id, username);
+		String email = userTokenDTO.getEmail();
+		UserIntroMapper userIntroMapper = userApiService.getUserIntroDetailsApi(id, email);
 
-		return new ResponseEntity<UserIntroDTO>(introDTO, HttpStatus.OK);
+		return new ResponseEntity<UserIntroMapper>(userIntroMapper, HttpStatus.OK);
 	}
 
 	/**
