@@ -142,6 +142,8 @@ public class UserController implements ResponseStatus {
 	@PutMapping("/intro")
 	public ResponseEntity<?> updateUserIntro(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
+		System.out.println(userDTO.getIntroComment());
+		
 		userService.userUpdate(userDTO, userTokenDTO);
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
