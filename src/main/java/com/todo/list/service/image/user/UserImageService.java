@@ -69,15 +69,15 @@ public class UserImageService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public void updateDefaultUserIntroImage(UserImageEntity userIntroImage, String originalFileName, String filePath) {
+	public void updateDefaultUserIntroImage(UserImageEntity userIntroImage) {
 
 		userIntroImage.setFileName("DEFAULT");
 
-		userIntroImage.setFilePath(filePath);
+		userIntroImage.setFilePath("");
 
 		userIntroImage.setFileSize((long) 0);
 
-		userIntroImage.setOriginalFileName(originalFileName);
+		userIntroImage.setOriginalFileName("");
 
 		imageRepository.save(userIntroImage);
 

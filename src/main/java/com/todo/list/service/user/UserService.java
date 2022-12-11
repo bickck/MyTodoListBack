@@ -32,9 +32,6 @@ import com.todo.list.util.uuid.CommonUUID;
 @Service
 public class UserService {
 
-	private static String defaultUserImagePath = "E:\\img\\defaultImage";
-	private static String defaultUserImageName = "blank-profile-picture-gdf6b93f73_640.png";
-
 	private UserImageService userImageService;
 	private UserRepository userRepository;
 	private UserImageRepository userImageRepository;
@@ -206,7 +203,7 @@ public class UserService {
 					userIntroImage.getFilePath());
 
 			// 디폴트 유저 이미지는 저장되어있기 때문에 DB에만 정보를 저장함
-			userImageService.updateDefaultUserIntroImage(userIntroImage, defaultUserImageName, defaultUserImagePath);
+			userImageService.updateDefaultUserIntroImage(userIntroImage);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new Exception();
