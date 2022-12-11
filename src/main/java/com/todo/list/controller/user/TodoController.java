@@ -117,7 +117,7 @@ public class TodoController {
 			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
 			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
 
-		long defaultHeartValue = 0;
+//		long defaultHeartValue = 0;
 		Publish defaultPublishValue = Publish.PUBLISH;
 		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
 

@@ -71,8 +71,8 @@ public class UserService {
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
 
-		userImageRepository
-				.save(new UserImageEntity(userEntity, defaultUserImageName, defaultUserImagePath, "DEFAULT"));
+		userImageRepository.save(
+				new UserImageEntity(userEntity, userDTO.getUserImageName(), userDTO.getUserImageName(), "DEFAULT"));
 
 		return userEntity;
 	}
@@ -171,13 +171,6 @@ public class UserService {
 
 		UserImageEntity userIntroImage = userImageService.findUserImageByUserId(userId);
 
-		// 디폴트 이미지일 경우 DB 내용은 삭제하되 디스크에 저장된 이미지는 삭제되면 안됌
-		if (!userIntroImage.getFileName().equals("DEFAULT")) {
-			deleteUserImageAtStorage(userIntroImage.getFilePath(), userIntroImage.getFilePath());
-			
-		}
-
-		// 물리적 저장
 		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
 
 		userIntroImage.setFileName(imageDTO.getFileName());
@@ -199,7 +192,7 @@ public class UserService {
 	public boolean deleteUserIntroImage(UserTokenDTO userDTO) throws Exception {
 
 		Long userid = userDTO.getId();
-		
+
 		UserImageEntity userIntroImage = userImageRepository.findUserIntroImageByUserId(userid);
 		// 삭제할 이미지가 디폴트 이미지일 경우 리턴
 
@@ -222,14 +215,14 @@ public class UserService {
 		return true;
 	}
 
-	private boolean deleteUserImageAtStorage(String filePath, String fileName) {
-		try {
-			return imageUploadService.deleteImageInDirectory(filePath, fileName);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return false;
-	}
+//	private boolean deleteUserImageAtStorage(String filePath, String fileName) {
+//		try {
+//			return imageUploadService.deleteImageInDirectory(filePath, fileName);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return false;
+//	}
 }

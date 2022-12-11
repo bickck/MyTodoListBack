@@ -19,12 +19,6 @@ import com.todo.list.service.image.upload.TodoImageUploadService;
 @Service
 public class ImageApiService {
 
-	@Value(value = "${image.user.originalFileName}")
-	private String defaultUserImagePath;
-
-	@Value(value = "${image.user.filePath}")
-	private String defaultUserImageName = "blank-profile-picture-gdf6b93f73_640.png";
-
 	private TodoImageRepository todoImageRepository;
 	private UserImageRepository userImageRepository;
 	private ImageUploadService imageUploadService;
@@ -79,7 +73,7 @@ public class ImageApiService {
 
 		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
 	}
-	
+
 	/**
 	 * 
 	 * @param filePath
@@ -89,28 +83,9 @@ public class ImageApiService {
 
 	public Resource userRealImageResource(String filePath, String originalName) {
 
-		String storageFilePath = filePath;
-
-		if (filePath.equals("DEFAULT")) {
-			storageFilePath = File.separator + "defaultImage";
-		} else {
-			storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName, filePath);
-		}
-
-		// storageFilePath =
-		// userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName,
-		// filePath);
+		String storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName, filePath);
 
 		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
 
-	public Resource userRealDefaultImageResource() {
-
-		return imageUploadService.findImageInDirectory(defaultUserImageName, defaultUserImagePath);
-	}
 }

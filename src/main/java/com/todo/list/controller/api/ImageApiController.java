@@ -85,16 +85,5 @@ public class ImageApiController {
 
 		return new ResponseEntity<Resource>(resource, httpheaders, HttpStatus.OK);
 	}
-	
-	@ResponseBody
-	@GetMapping("/user/source/default")
-	public ResponseEntity<?> requestDefaultUserImageRealResource() {
 
-		Resource resource = imageApiService.userRealDefaultImageResource();
-
-		HttpHeaders httpheaders = new HttpHeaders();
-		httpheaders.setContentType(MediaType.IMAGE_JPEG);
-
-		return new ResponseEntity<Resource>(resource, httpheaders, HttpStatus.OK);
-	}
 }
