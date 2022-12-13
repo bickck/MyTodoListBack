@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ import com.todo.list.util.uuid.CommonUUID;
 @Service
 public class TodoImageUploadService implements ImageUploadService {
 
+	@Value(value = "${image.todo.path}")
+	private String physicalAddress;
+
 	private CommonUUID commonUUID = new CommonUUID();
 	private FileSupport fileSupport = new FileSupportImpl();
 
@@ -38,10 +42,10 @@ public class TodoImageUploadService implements ImageUploadService {
 
 		String originalFileName = todoImage.getOriginalFilename();
 		String fileName = commonUUID.generatorImageUUID();
-		String filePath = fileSupport.generatorFilePath(fileName);
+		String filePath = fileSupport.generatorFilePath(fileName, physicalAddress);
 		Long fileSize = todoImage.getSize();
 
-		Path path = Paths.get(DEFAULT_PATH + filePath);
+		Path path = Paths.get(physicalAddress + filePath);
 
 		if (Files.isExecutable(path) == false) {
 			try {
@@ -72,7 +76,7 @@ public class TodoImageUploadService implements ImageUploadService {
 	public Resource findImageInDirectory(String originalFileName, String filePath) {
 		// TODO Auto-generated method stub
 
-		String path = DEFAULT_PATH + filePath + File.separator + originalFileName;
+		String path = physicalAddress + filePath + File.separator + originalFileName;
 
 		return new FileSystemResource(path);
 	}
@@ -85,7 +89,8 @@ public class TodoImageUploadService implements ImageUploadService {
 	@Override
 	public boolean deleteImageInDirectory(String originalName, String folderName) throws IOException {
 		// TODO Auto-generated method stub
-		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + originalName));
+		Resource resource = new FileSystemResource(
+				Path.of(physicalAddress + folderName + File.separator + originalName));
 
 		return resource.getFile().delete();
 	}

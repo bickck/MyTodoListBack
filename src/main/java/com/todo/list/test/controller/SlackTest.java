@@ -16,6 +16,6 @@ public class SlackTest {
 	@GetMapping(value = "/slack")
 	public void slackTest() {
 
-		slackService.postSlackMessage("Slack Test");
+		slackService.postSlackMessage("Slack Test","slack Cause");
 	}
 }

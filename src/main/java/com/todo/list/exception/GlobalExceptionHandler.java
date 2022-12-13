@@ -13,7 +13,7 @@ import com.todo.list.exception.slack.SlackService;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	
+
 	@Autowired
 	private SlackService slackService;
 
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> IllegalAccessErrorHandler(Exception exception) {
 		return new ResponseEntity<String>("", HttpStatus.NOT_FOUND);
 	}
-	
+
 	/**
 	 * 모든 에러를 클라이언트에 보내지 않음
 	 * 
@@ -35,13 +35,14 @@ public class GlobalExceptionHandler {
 	 */
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> globalExceptionErrorHandler(Exception exception){
+	public ResponseEntity<String> globalExceptionErrorHandler(Exception exception) {
 		String errorMessage = exception.getMessage();
-		
-		slackService.postSlackMessage(errorMessage);
-		
+		String cause = "";
+
+		slackService.postSlackMessage(errorMessage, cause);
+
 		exception.printStackTrace();
-		
+
 		return new ResponseEntity<String>("server error", HttpStatus.NOT_FOUND);
 	}
 }

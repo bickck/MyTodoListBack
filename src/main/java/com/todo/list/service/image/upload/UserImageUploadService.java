@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,11 @@ import com.todo.list.util.uuid.CommonUUID;
 
 public class UserImageUploadService implements ImageUploadService {
 
+	@Value(value = "${image.user.path}")
+	private String physicalAddress;
+
 	private CommonUUID commonUUID = new CommonUUID();
 	private FileSupport fileSupport = new FileSupportImpl();
-	
 
 	/**
 	 * 
@@ -41,10 +44,10 @@ public class UserImageUploadService implements ImageUploadService {
 
 		String originalFileName = userImage.getOriginalFilename();
 		String fileName = commonUUID.generatorImageUUID();
-		String filePath = fileSupport.generatorFilePath(fileName);
+		String filePath = fileSupport.generatorFilePath(fileName, physicalAddress);
 		Long fileSize = userImage.getSize();
 
-		Path path = Paths.get(DEFAULT_PATH + filePath);
+		Path path = Paths.get(physicalAddress + filePath);
 
 		if (Files.isExecutable(path) == false) {
 			try {
@@ -75,7 +78,7 @@ public class UserImageUploadService implements ImageUploadService {
 	@Override
 	public Resource findImageInDirectory(String originalName, String folderName) {
 
-		String path = DEFAULT_PATH + folderName + File.separator + originalName;
+		String path = physicalAddress + folderName + File.separator + originalName;
 
 		return new FileSystemResource(path);
 	}
@@ -89,7 +92,7 @@ public class UserImageUploadService implements ImageUploadService {
 	@Override
 	public boolean deleteImageInDirectory(String originalName, String folderName) throws Exception {
 
-		Resource resource = new FileSystemResource(Path.of(DEFAULT_PATH + folderName + File.separator + folderName));
+		Resource resource = new FileSystemResource(Path.of(physicalAddress + folderName + File.separator + folderName));
 
 		try {
 
@@ -97,7 +100,7 @@ public class UserImageUploadService implements ImageUploadService {
 			// TODO: handle exception
 			throw new Exception();
 		}
-		
+
 		return resource.getFile().delete();
 	}
 

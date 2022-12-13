@@ -49,7 +49,6 @@ public class TodoService {
 	private CriteriaBuilder criteriaBuilder;
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
-	private TodoImageRepository todoImageRepository;
 	private HeartService heartService;
 	private ImageUploadService imageService;
 
@@ -58,13 +57,12 @@ public class TodoService {
 
 	@Autowired
 	public TodoService(EntityManager entityManager, UserRepository userRepository, HeartService heartService,
-			TodoRepository todoRepository, TodoImageRepository todoImageRepository) {
+			TodoRepository todoRepository) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.userRepository = userRepository;
 		this.heartService = heartService;
 		this.todoRepository = todoRepository;
-		this.todoImageRepository = todoImageRepository;
 		imageService = new TodoImageUploadService();
 	}
 
@@ -82,7 +80,7 @@ public class TodoService {
 		long defaultHeartValue = 0;
 		Publish publish = Publish.PUBLISH;
 
-		if (todoDTO.getIsPublish().equals("private")) {
+		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
 			publish = Publish.PRIVATE;
 		}
 
@@ -106,7 +104,7 @@ public class TodoService {
 		long defaultHeartValue = 0;
 		Publish publish = Publish.PUBLISH;
 
-		if (todoDTO.getIsPublish().equals("private")) {
+		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
 			publish = Publish.PRIVATE;
 		}
 
@@ -130,7 +128,7 @@ public class TodoService {
 	 * @param todo    id
 	 * @param todoDTO
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
@@ -179,7 +177,7 @@ public class TodoService {
 	/**
 	 * 
 	 * @param id
-	 * @throws Exception 
+	 * @throws Exception
 	 * 
 	 */
 
@@ -242,7 +240,7 @@ public class TodoService {
 	/**
 	 * 
 	 * @param entity
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 
 	private boolean deleteFiles(TodoEntity entity) throws Exception {
