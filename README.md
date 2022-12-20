@@ -120,5 +120,7 @@ REST API
 
 
 ### Todo 요구 사항
-  - 
+  - Todo 이미지는 2개만 저장
+  - Todo 이미지용 UUID와 Unique ID를 사용 
+  - UUID는 유저에게 보여주는 filePath로 사용되며 서버의 Physical Path 경로 사용
 
