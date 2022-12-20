@@ -11,6 +11,13 @@
 
 <br/>
 
+## 전체적인 개발 조건
+ #### 1. 2만원이내의 서버를 설계해야됨
+ #### 2. DB 쿼리 요청은 최대 2번, 이미지 요청은 3번 이내로 설계해야됨
+
+
+<br/>
+
 ## 설계 조건
 ### Login 요구 사항
   - Redis에 위치한 IP와 접속한 IP가 불일치 일경우 이전 Token으로 접근 불가
@@ -42,24 +49,46 @@
   - Todo 이미지용 UUID와 Unique ID를 사용 
   - UUID는 유저에게 보여주는 filePath로 사용되며 서버의 Physical Path 경로 사용
 
+<br/>
+
+### Image 관리 요구 사항
+  - Todo 이미지는 UUID를 사용하여 이미지 Physical Path 관리
+  - Todo 이미지 삭제는 Physical 삭제 O, update를 사용하여 내용 변경, UUID로 생성된 경로는 재사용
+  - User 이미지는 회원가입이 진행되면 기본 이미지를 생성 (front blank-profile-picture-gdf6b93f73_640.png 사용)
+  - User 이미지 삭제는 Physical 삭제 x, update를 사용하여 내용 변경, UUID로 생성된 경로는 재사용
+
+
+<br/>
+
 ### Quote 요구 사항
   - 
 
 <br/>
 
+### Comment 요구 사항
+  -
+
+<br/>
+
+### UUID 생성 조건
+  - 1 : N개의 생성이 필요할 때
+  - Physical Path가 필요한 경우
+
+<br/>
+
 ## Authroity ( /auth/* )
 ### Login
-  - /login, Method.POST
+  - /login, Method.POST => redis token save
 
 <br/>
 
 ### Logout
-  - /logout, Method.POST
+  - /logout, Method.POST => redis token delete
 
 <br/>
 
 ### Register
-  - /register, Method.POST
+  - /register, Method.POST => save
 
 <br/>
 
@@ -98,8 +127,8 @@
 ### TODO /todo/api
   - /{id}, Method.GET
   - /mainpost, Method.GET
-  - /recommand, Method.GET 계발중
-  - /daily, Method.GET 계발중
+  - /recommand, Method.GET 개발중
+  - /daily, Method.GET 개발중
   - /comment/{id}, Method.GET
 
 <br/>
