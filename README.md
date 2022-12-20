@@ -5,7 +5,7 @@ REST API
 <br/>
 
 ## Authroity ( /auth/* )
-### Login /login
+### Login
   - /login, Method.POST
 
 <br/>
