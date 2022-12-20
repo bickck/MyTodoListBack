@@ -73,6 +73,8 @@ REST API
   - /todo/{id}, Method.POST => todo exist check
   - /quote/{id}, Method.POST => quote exist check
 
+<br/>
+
 ### IMAGE /image/api
   - /user/source/{filePath}/{fileName}, Method.GET => Todo Image
   - /source/{filePath}/{fileName}, Method.GET => User Profile Image
@@ -117,7 +119,6 @@ REST API
   - 유저당 하나의 Heart를 누를 수 있음
 
 <br/>
-
 
 ### Todo 요구 사항
   - Todo 이미지는 2개만 저장
