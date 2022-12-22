@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.configs.token.AuthenticationJwt;
+import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
@@ -68,18 +68,11 @@ import lombok.extern.java.Log;
 public class UserController implements ResponseStatus {
 
 	private UserService userService;
-	private QuoteService userQuoteService;
-	private ImageUploadService imaegService;
-	private TodoService todoService;
-	private AuthenticationJwt jwtLoginToken;
 
 	@Autowired
 	public UserController(UserService userService, UserApiService userApiService, QuoteService userQuoteService,
-			AuthenticationJwt jwtLoginToken) {
+			AuthenticationJwtProvider jwtLoginToken, UserImageUploadService imaegService) {
 		this.userService = userService;
-		this.userQuoteService = userQuoteService;
-		this.jwtLoginToken = jwtLoginToken;
-		this.imaegService = new UserImageUploadService();
 	}
 
 	/**

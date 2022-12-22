@@ -12,31 +12,32 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.todo.list.configs.token.AuthenticationJwt;
+import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.redis.service.AuthRedisService;
 
 @Aspect
 @Component
-public class UserAuthLog {
+public class UserAuthTokenResolver {
 
-	private static final String AUTHTOKENNAME = "authorization";
-	private static final String logExecution = "execution(* com.todo.list.controller.*..*(.., @UserAuthToken (*), ..))";
+	private static final String AUTHTOKENNAME = HttpHeaders.AUTHORIZATION;
+	private static final String AuthAnnotationExecution = "execution(* com.todo.list.controller.*..*(.., @UserAuthToken (*), ..))";
 
 	@Autowired
-	private AuthenticationJwt authenticationJwt;
+	private AuthenticationJwtProvider authenticationJwt;
 
-	private Logger logger = LoggerFactory.getLogger(UserAuthLog.class);
+	private Logger logger = LoggerFactory.getLogger(UserAuthTokenResolver.class);
 
-	@Pointcut(logExecution)
-	public void authLogPointCut() {
-	}
+	@Pointcut(AuthAnnotationExecution)
+	public void userAuthPointCut() {}
 
-	@Around(value = "authLogPointCut()")
-	public Object userAuthLogEvent(ProceedingJoinPoint joinPoint) throws Throwable {
+	@Around(value = "userAuthPointCut()")
+	public Object resolver(ProceedingJoinPoint joinPoint) throws Throwable {
 
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
@@ -45,7 +46,7 @@ public class UserAuthLog {
 
 		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
 			if (data instanceof UserTokenDTO) {
-				data = authenticationJwt.getUserTokenDTO(token);
+				data = authenticationJwt.resolveTokenToUserTokenDTO(token);
 				logger.info("USER ACCESS : {}, TIME : {}, ", data.toString(), new Date().getTime());
 			}
 			return data;

@@ -1,10 +1,5 @@
 package com.todo.list.controller.user;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,17 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.ResponseStatus;
-import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.TodoEntity;
-import com.todo.list.entity.UserEntity;
-import com.todo.list.entity.base.Publish;
+
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.auth.UserAuthToken;
 
@@ -54,21 +44,11 @@ public class QuoteController implements ResponseStatus {
 	@PostMapping(value = "/quote")
 	public ResponseEntity<?> savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
 
-		long defaultHeartValue = 0;
-		Publish defaultPublishValue = Publish.PUBLISH;
-		QuoteEntity quoteEntity = null;
-		
 		if (quoteDTO.getIsPublish() == null && quoteDTO.getQuote() == null && quoteDTO.getAuthor() == null) {
 			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
+		userQuoteService.saveQuote(quoteDTO, tokenDTO);
 		
-		if (quoteDTO.getIsPublish().equals("private") || quoteDTO.getIsPublish().equals("PRIVATE")) {
-			defaultPublishValue = Publish.PRIVATE;
-		}
-		
-		quoteEntity = new QuoteEntity(null, quoteDTO.getQuote(), quoteDTO.getAuthor(), defaultPublishValue, defaultHeartValue);
-		userQuoteService.saveQuote(quoteEntity, tokenDTO);
-
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
@@ -83,13 +63,13 @@ public class QuoteController implements ResponseStatus {
 	@PutMapping(value = "/quote/{id}")
 	public ResponseEntity<?> updateUserQuote(@PathVariable Long id, @RequestBody QuoteDTO quoteDTO,
 			@UserAuthToken UserTokenDTO tokenDTO) {
-		
+
 		if (quoteDTO.getIsPublish() == null && quoteDTO.getQuote() == null && quoteDTO.getAuthor() == null) {
 			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
 		}
 
 		userQuoteService.updateQuote(id, quoteDTO, tokenDTO);
-		
+
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
@@ -107,5 +87,5 @@ public class QuoteController implements ResponseStatus {
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
-	
+
 }

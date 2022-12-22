@@ -32,6 +32,8 @@ public class QUserImageEntity extends EntityPathBase<UserImageEntity> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath imageUUID = createString("imageUUID");
+
     public final StringPath originalFileName = createString("originalFileName");
 
     public final DateTimePath<java.sql.Timestamp> updateTimestamp = createDateTime("updateTimestamp", java.sql.Timestamp.class);

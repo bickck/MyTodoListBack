@@ -1,8 +1,6 @@
 package com.todo.list.controller.api;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.todo.list.controller.builder.page.PageQuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.page.PageQuoteDTO;

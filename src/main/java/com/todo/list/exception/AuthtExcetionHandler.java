@@ -23,14 +23,14 @@ public class AuthtExcetionHandler {
 	public ResponseEntity<String> unExsistUser(Exception exception) {
 		exception.printStackTrace();
 		String exceptionMessage = "존재하지 않는 계정입니다.";
-		return new ResponseEntity<String>(exceptionMessage, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(exceptionMessage, HttpStatus.FORBIDDEN);
 
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
 	public ResponseEntity<String> notAcceptAuthentication(Exception exception) {
 		exception.printStackTrace();
-		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.FORBIDDEN);
 
 	}
 }

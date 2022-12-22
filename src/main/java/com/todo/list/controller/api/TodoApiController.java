@@ -1,36 +1,24 @@
 package com.todo.list.controller.api;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.builder.TodoBuilder;
-import com.todo.list.controller.builder.page.PageTodoBuilder;
-import com.todo.list.controller.dto.TodoDTO;
-import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.entity.TodoEntity;
+
 import com.todo.list.repository.mapper.TodoCommentMapper;
 import com.todo.list.repository.mapper.TodoMapper;
 import com.todo.list.service.api.TodoApiService;
 import com.todo.list.service.api.TodoCommentApiService;
-import com.todo.list.service.user.TodoService;
-import com.todo.list.util.auth.UserAuthToken;
 
 /**
  * 로그인 필요 없이 Todo API를 제공하는 클래스

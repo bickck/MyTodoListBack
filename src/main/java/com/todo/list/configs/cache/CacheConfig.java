@@ -39,8 +39,20 @@ import com.todo.list.redis.RedisCacheNames;
 
 //@EnableCaching
 //@EnableRedisRepositories
-//@Configuration
+@Configuration
 public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, RedisCacheNames {
+
+	@Value(value = "${spring.redis.host}")
+	private String host;
+
+	@Value(value = "${spring.redis.port}")
+	private int port;
+
+	@Bean
+	public RedisConnectionFactory redisConnectionFactory() {
+
+		return new LettuceConnectionFactory(host, port);
+	}
 
 //	private final Logger logger = LoggerFactory.getLogger(getClass());
 //	private static long TtlMinutes = 30;

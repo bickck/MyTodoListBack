@@ -13,6 +13,8 @@ public interface TodoMapper {
 	String getContent();
 
 	String getIsPublish();
+	
+	String getUserImageUUID();
 
 	Long getHeart();
 

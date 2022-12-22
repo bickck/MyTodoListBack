@@ -12,6 +12,11 @@ public interface UserImageRepository extends JpaRepository<UserImageEntity, Long
 			+ "FROM USER_IMAGE_ENTITY i WHERE i.id = :id")
 	ImageMapper findUserIntroImageById(Long id);
 	
+	
+	@Query(value="SELECT i.id AS id, i.originalFileName AS originalFileName, i.fileName AS fileName, i.filePath AS filePath "
+			+ "FROM USER_IMAGE_ENTITY i WHERE i.imageUUID = :uuid")
+	ImageMapper findUserImageByImageUUID(String uuid);
+	
 	@Query(value="SELECT i "
 			+ "FROM USER_IMAGE_ENTITY i WHERE i.user.id = :id")
 	UserImageEntity findUserIntroImageByUserId(Long id);

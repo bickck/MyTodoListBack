@@ -30,6 +30,9 @@ public class UserImageEntity {
 	@JoinColumn(name = "USER_ID")
 	private UserEntity user;
 
+	@Column(name = "USER_IMAGE_UUID")
+	private String imageUUID;
+
 	@Column(name = "FILENAME")
 	private String fileName;
 
@@ -72,9 +75,10 @@ public class UserImageEntity {
 		this.fileSize = fileSize;
 	}
 
-	public UserImageEntity(UserEntity user,String originalFileName, String filePath,String fileName) {
+	public UserImageEntity(UserEntity user, String uuid, String originalFileName, String filePath, String fileName) {
 		super();
 		this.user = user;
+		this.imageUUID = uuid;
 		this.originalFileName = originalFileName;
 		this.filePath = filePath;
 		this.fileName = fileName;
@@ -133,6 +137,14 @@ public class UserImageEntity {
 
 	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public String getImageUUID() {
+		return imageUUID;
+	}
+
+	public void setImageUUID(String imageUUID) {
+		this.imageUUID = imageUUID;
 	}
 
 	public Timestamp getCreateTimestamp() {

@@ -15,19 +15,23 @@ import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.repository.mapper.ImageMapper;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.TodoImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 
 @Service
 public class ImageApiService {
 
 	private TodoImageRepository todoImageRepository;
 	private UserImageRepository userImageRepository;
-	private ImageUploadService imageUploadService;
+	private TodoImageUploadService imageUploadService;
+	private UserImageUploadService userImageUploadService;
 
 	@Autowired
-	public ImageApiService(TodoImageRepository todoImageRepository, UserImageRepository userImageRepository) {
+	public ImageApiService(TodoImageRepository todoImageRepository, UserImageRepository userImageRepository,
+			TodoImageUploadService todoImageUploadService, UserImageUploadService userImageUploadService) {
 		this.todoImageRepository = todoImageRepository;
 		this.userImageRepository = userImageRepository;
-		this.imageUploadService = new TodoImageUploadService();
+		this.imageUploadService = todoImageUploadService;
+		this.userImageUploadService = userImageUploadService;
 	}
 
 	/**
@@ -54,6 +58,19 @@ public class ImageApiService {
 	public ImageMapper findUserImageByUserId(Long id) {
 
 		return userImageRepository.findUserIntroImageById(id);
+	}
+
+	/**
+	 * User 이미지 가져오는 메소드
+	 * 
+	 * @param UserId
+	 * @return
+	 */
+
+	@Transactional
+	public ImageMapper findUserImageByImageUUID(String uuid) {
+
+		return userImageRepository.findUserImageByImageUUID(uuid);
 	}
 
 	/**
@@ -85,7 +102,7 @@ public class ImageApiService {
 
 		String storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName, filePath);
 
-		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
+		return userImageUploadService.findImageInDirectory(originalName, storageFilePath);
 	}
 
 }

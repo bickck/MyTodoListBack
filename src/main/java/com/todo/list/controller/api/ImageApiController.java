@@ -51,10 +51,26 @@ public class ImageApiController {
 	 */
 
 	@ResponseBody
-	@PostMapping("/user")
+	@PostMapping("/user/")
 	public ResponseEntity<?> requestUserIntroImage(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		ImageMapper userIntroImage = imageApiService.findUserImageByUserId(userTokenDTO.getId());
+
+		return new ResponseEntity<ImageMapper>(userIntroImage, HttpStatus.OK);
+	}
+
+	/**
+	 * User Intro 이미지 정보를 가져옴
+	 * 
+	 * @param User unique id
+	 * @return User Image Path and Image Name
+	 */
+
+	@ResponseBody
+	@GetMapping("/user/{uuid}")
+	public ResponseEntity<?> requestUserImage(@PathVariable String uuid) {
+
+		ImageMapper userIntroImage = imageApiService.findUserImageByImageUUID(uuid);
 
 		return new ResponseEntity<ImageMapper>(userIntroImage, HttpStatus.OK);
 	}

@@ -50,20 +50,20 @@ public class TodoService {
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
 	private HeartService heartService;
-	private ImageUploadService imageService;
+	private TodoImageUploadService imageService;
 
 	@Autowired
 	private TodoImageService todoImageService;
 
 	@Autowired
 	public TodoService(EntityManager entityManager, UserRepository userRepository, HeartService heartService,
-			TodoRepository todoRepository) {
+			TodoRepository todoRepository,TodoImageUploadService imageUploadService) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 		this.userRepository = userRepository;
 		this.heartService = heartService;
 		this.todoRepository = todoRepository;
-		imageService = new TodoImageUploadService();
+		this.imageService = imageUploadService;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class TodoService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, MultipartFile[] todoImages) {
-		UserEntity user = userRepository.findByUsername(dto.getUsername());
+		UserEntity user = userRepository.findById(dto.getId()).get();
 
 		long defaultHeartValue = 0;
 		Publish publish = Publish.PUBLISH;

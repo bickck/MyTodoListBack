@@ -1,7 +1,5 @@
 package com.todo.list.service.user;
 
-import java.io.IOException;
-
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +8,15 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
+import com.todo.list.redis.service.AuthRedisService;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
-import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.util.UserUtil;
@@ -35,17 +34,23 @@ public class UserService {
 	private UserImageService userImageService;
 	private UserRepository userRepository;
 	private UserImageRepository userImageRepository;
-	private ImageUploadService imageUploadService = new UserImageUploadService();
+	private UserImageUploadService imageUploadService;
+	private AuthenticationJwtProvider jwtLoginToken;
+	private AuthRedisService authRedisService;
 	private UserUtil userUtil;
 
 	@Autowired
 	public UserService(UserImageService userImageService, UserRepository userRepository,
-			UserImageRepository userImageRepository, UserUtil userUtil) {
+			UserImageRepository userImageRepository, UserUtil userUtil, UserImageUploadService imageUploadService,
+			AuthenticationJwtProvider jwtLoginToken, AuthRedisService authRedisService) {
 		// TODO Auto-generated constructor stub
 		this.userImageService = userImageService;
 		this.userRepository = userRepository;
 		this.userImageRepository = userImageRepository;
 		this.userUtil = userUtil;
+		this.imageUploadService = imageUploadService;
+		this.jwtLoginToken = jwtLoginToken;
+		this.authRedisService = authRedisService;
 	}
 
 	/**
@@ -55,7 +60,7 @@ public class UserService {
 	 */
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public UserEntity userSave(UserDTO userDTO) {
+	public UserEntity register(UserDTO userDTO) {
 
 		String email = userDTO.getEmail();
 		String username = userDTO.getUsername();
@@ -68,8 +73,9 @@ public class UserService {
 
 		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
 
-		userImageRepository.save(
-				new UserImageEntity(userEntity, userDTO.getUserImageName(), userDTO.getUserImageName(), "DEFAULT"));
+		String createUUID = new CommonUUID().generatorImageUUID();
+
+		userImageRepository.save(new UserImageEntity(userEntity, createUUID, "", "", "DEFAULT"));
 
 		return userEntity;
 	}
@@ -117,9 +123,12 @@ public class UserService {
 	 */
 
 	@Transactional
-	public UserEntity userLogin(UserDTO requestUserArg) throws AuthenticationException {
+	public String login(UserDTO requestUserArg) throws AuthenticationException {
 
-		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail());
+		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail())
+				.orElseThrow(() -> new NullPointerException("존재하지 않는 아이디 입니다."));
+
+		String userEmail = user.getEmail();
 		String password = requestUserArg.getPassword();
 		String encPassword = user.getPassword();
 
@@ -127,7 +136,12 @@ public class UserService {
 			throw new AuthenticationException("이메일 및 비밀번호가 맞지 않습니다.");
 		}
 
-		return user;
+		String accessToken = jwtLoginToken.createAccessToken(user);
+		String refreshToken = jwtLoginToken.createRefreshToken(user);
+
+		authRedisService.saveRefreshedLoginUserToken(accessToken, refreshToken);
+
+		return accessToken;
 	}
 
 	/**
@@ -139,7 +153,8 @@ public class UserService {
 	@Transactional
 	public UserEntity changeUserPassword(Long id, UserDTO requestUserArg) {
 
-		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail());
+		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail())
+				.orElseThrow(() -> new NullPointerException("존재하지 않는 아이디 입니다."));
 
 		String encPassword = userUtil.bCrypt(requestUserArg.getPassword());
 		user.setPassword(encPassword);

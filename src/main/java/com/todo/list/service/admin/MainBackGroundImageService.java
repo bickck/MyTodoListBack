@@ -28,7 +28,6 @@ public class MainBackGroundImageService {
 
 	@Autowired
 	private AdminImageRepository imageRepository;
-	private ImageUploadService adminImageUploadService = new TodoImageUploadService();
 
 	@Transactional
 	public String save(MultipartFile multipartFile) {

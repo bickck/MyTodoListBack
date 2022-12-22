@@ -25,9 +25,10 @@ import com.todo.list.file.FileSupportImpl;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.util.uuid.CommonUUID;
 
-public class UserImageUploadService implements ImageUploadService {
+@Service
+public class UserImageUploadService {
 
-	@Value(value = "${image.user.path}")
+	@Value(value = "${image.path.user}")
 	private String physicalAddress;
 
 	private CommonUUID commonUUID = new CommonUUID();
@@ -38,7 +39,6 @@ public class UserImageUploadService implements ImageUploadService {
 	 * 
 	 */
 
-	@Override
 	public ImageDTO saveImageInDir(MultipartFile userImage) {
 		// TODO Auto-generated method stub
 
@@ -47,7 +47,7 @@ public class UserImageUploadService implements ImageUploadService {
 		String filePath = fileSupport.generatorFilePath(fileName, physicalAddress);
 		Long fileSize = userImage.getSize();
 
-		Path path = Paths.get(physicalAddress + filePath);
+		Path path = Paths.get(filePath);
 
 		if (Files.isExecutable(path) == false) {
 			try {
@@ -75,10 +75,9 @@ public class UserImageUploadService implements ImageUploadService {
 	 * 
 	 */
 
-	@Override
 	public Resource findImageInDirectory(String originalName, String folderName) {
 
-		String path = physicalAddress + folderName + File.separator + originalName;
+		String path = folderName + File.separator + originalName;
 
 		return new FileSystemResource(path);
 	}
@@ -89,7 +88,6 @@ public class UserImageUploadService implements ImageUploadService {
 	 * 
 	 */
 
-	@Override
 	public boolean deleteImageInDirectory(String originalName, String folderName) throws Exception {
 
 		Resource resource = new FileSystemResource(Path.of(physicalAddress + folderName + File.separator + folderName));

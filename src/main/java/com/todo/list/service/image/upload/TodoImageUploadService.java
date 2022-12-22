@@ -24,9 +24,9 @@ import com.todo.list.service.image.user.TodoImageService;
 import com.todo.list.util.uuid.CommonUUID;
 
 @Service
-public class TodoImageUploadService implements ImageUploadService {
+public class TodoImageUploadService {
 
-	@Value(value = "${image.todo.path}")
+	@Value(value = "${image.path.todo}")
 	private String physicalAddress;
 
 	private CommonUUID commonUUID = new CommonUUID();
@@ -36,7 +36,6 @@ public class TodoImageUploadService implements ImageUploadService {
 	 * 
 	 */
 
-	@Override
 	public ImageDTO saveImageInDir(MultipartFile todoImage) {
 		// TODO Auto-generated method stub
 
@@ -72,7 +71,6 @@ public class TodoImageUploadService implements ImageUploadService {
 	 * 
 	 */
 
-	@Override
 	public Resource findImageInDirectory(String originalFileName, String filePath) {
 		// TODO Auto-generated method stub
 
@@ -86,7 +84,6 @@ public class TodoImageUploadService implements ImageUploadService {
 	 * 
 	 */
 
-	@Override
 	public boolean deleteImageInDirectory(String originalName, String folderName) throws IOException {
 		// TODO Auto-generated method stub
 		Resource resource = new FileSystemResource(

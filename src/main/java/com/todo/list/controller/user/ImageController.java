@@ -44,15 +44,15 @@ public class ImageController {
 	@Autowired
 	private UserImageService userBackGroundImgService;
 
-	@Autowired
-	private ImageUploadService imaegService;
+//	@Autowired
+//	private ImageUploadService imaegService;
 
-	@Autowired
-	public ImageController() {
-
-		this.imaegService = new UserImageUploadService();
-
-	}
+//	@Autowired
+//	public ImageController() {
+//
+//		this.imaegService = new UserImageUploadService();
+//
+//	}
 
 	/*
 	 * BackGroundImg CRUD

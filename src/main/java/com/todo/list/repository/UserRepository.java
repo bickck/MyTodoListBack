@@ -1,6 +1,7 @@
 package com.todo.list.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	UserEntity findByUsernameAndPassword(String username, String password);
 
-	UserEntity findByEmail(String email);
+	Optional<UserEntity> findByEmail(String email);
 
 	@Query("SELECT u FROM USER_ENTITY u join fetch u.quotes")
 	List<UserEntity> findAllbyfetchJoin();
@@ -26,13 +27,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	Page<UserEntity> findAll(Pageable pageable);
 
-	@Query(value = 
-			"SELECT u.USER_ID AS id, u.USERNAME AS username, u.INTRO_COMMENT AS introComment, "
-			+ "i.FILENAME AS fileName, i.FILEPATH AS filePath , i.ORIGINALFILENAME AS originalFileName " 
-			+ "FROM USER_ENTITY AS u "
-			+ "LEFT JOIN USER_IMAGE_ENTITY AS i ON u.USER_ID = i.USER_ID "
-			+ "WHERE u.USER_ID = :id and u.EMAIL= :email ", 
-			nativeQuery = true)
+	@Query(value = "SELECT u.USER_ID AS id, u.USERNAME AS username, u.INTRO_COMMENT AS introComment, "
+			+ "i.FILENAME AS fileName, i.FILEPATH AS filePath , i.ORIGINALFILENAME AS originalFileName "
+			+ "FROM USER_ENTITY AS u " + "LEFT JOIN USER_IMAGE_ENTITY AS i ON u.USER_ID = i.USER_ID "
+			+ "WHERE u.USER_ID = :id and u.EMAIL= :email ", nativeQuery = true)
 	UserIntroMapper findUserIntroInfoByIdAndEmail(@Param(value = "id") Long id, @Param(value = "email") String email);
 
 	// void deleteByIdAndUsernameAndPassword(Long id, String username, String

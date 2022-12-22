@@ -1,64 +1,37 @@
 package com.todo.list.controller.user;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.swing.text.AbstractDocument.Content;
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.todo.list.controller.ResponseStatus;
-import com.todo.list.controller.builder.QuoteBuilder;
-import com.todo.list.controller.builder.TodoBuilder;
-import com.todo.list.controller.builder.page.PageTodoBuilder;
-import com.todo.list.controller.dto.CommentDTO;
-import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.controller.dto.page.PageTodoDTO;
-import com.todo.list.entity.TodoCommentEntity;
-import com.todo.list.entity.TodoEntity;
-import com.todo.list.entity.UserEntity;
+
 import com.todo.list.entity.base.Publish;
-import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.user.QuoteService;
+
 import com.todo.list.service.user.TodoService;
+
 import com.todo.list.util.auth.UserAuthToken;
 
-import io.netty.handler.codec.Headers;
 
 /**
  * 

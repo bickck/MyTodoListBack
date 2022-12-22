@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,11 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.CookieGenerator;
 
-import com.todo.list.configs.token.AuthenticationJwt;
+import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
+import com.todo.list.redis.service.AuthRedisService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.Utils;
@@ -46,15 +48,29 @@ import com.todo.list.util.auth.UserAuthToken;
 public class AuthController {
 
 	private UserService userService;
-	private UserUtil userUtil;
-	private AuthenticationJwt jwtLoginToken;
-	private Utils utils = new Utils();
+	private AuthenticationJwtProvider authenticationJwtProvider;
+	private AuthRedisService authRedisService;
 
 	@Autowired
-	public AuthController(UserUtil userUtil, UserService userService, AuthenticationJwt jwtLoginToken) {
-		this.userUtil = userUtil;
+	public AuthController(UserService userService, AuthenticationJwtProvider authenticationJwtProvider, AuthRedisService authRedisService) {
 		this.userService = userService;
-		this.jwtLoginToken = jwtLoginToken;
+		this.authenticationJwtProvider = authenticationJwtProvider;
+		this.authRedisService = authRedisService;
+	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param dto
+	 * @return
+	 */
+
+	@PostMapping("/filterTest")
+	public ResponseEntity<String> filterTest() {
+		
+		System.out.println("Login Logic~");
+
+		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
 
 	/**
@@ -79,10 +95,9 @@ public class AuthController {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
 		}
 
-		UserEntity user = userService.userLogin(userDTO);
-		String userToken = jwtLoginToken.makeToken(user);
+		String accessToken = userService.login(userDTO);
 
-		return new ResponseEntity<String>(userToken, HttpStatus.ACCEPTED);
+		return new ResponseEntity<String>(accessToken, HttpStatus.OK);
 	}
 
 	/**
@@ -99,7 +114,7 @@ public class AuthController {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.CREATED);
 		}
 
-		userService.userSave(userDTO);
+		userService.register(userDTO);
 
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
@@ -112,9 +127,13 @@ public class AuthController {
 	 */
 
 	@PostMapping("/logout")
-	public ResponseEntity<String> logoutRequest(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
+	public ResponseEntity<String> logoutRequest(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String accessToken) {
+		
+		String payLoad = authenticationJwtProvider.seperatorPayLoad(accessToken);
+		
+		authRedisService.deleteLoginUserToken(payLoad);
 
-		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	/**
@@ -126,6 +145,19 @@ public class AuthController {
 
 	@PutMapping("/findPassword")
 	public ResponseEntity<String> findUserPassword(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
+
+		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param dto
+	 * @return
+	 */
+
+	@PutMapping("/reissue")
+	public ResponseEntity<String> renewAccessToken(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}

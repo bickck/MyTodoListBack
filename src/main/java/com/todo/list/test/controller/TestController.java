@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-
+import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,110 +20,111 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerErrorException;
 
-import com.todo.list.configs.token.AuthenticationJwt;
+import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.UserImageEntity;
+import com.todo.list.redis.entity.LoginUserRedisEntity;
+import com.todo.list.redis.repository.LoginUserJwtRepository;
+import com.todo.list.redis.service.AuthRedisService;
 import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.service.api.UserApiService;
+import com.todo.list.service.image.upload.TodoImageUploadService;
+import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.test.service.TestService;
+import com.todo.list.util.uuid.CommonUUID;
 
 @RestController
 public class TestController {
 
 	@Autowired
-	private TestService service;
-
-	@Autowired
 	private UserRepository repository;
 
 	@Autowired
-	private QuoteRepository quoteRepository;
+	private AuthenticationJwtProvider authenticationJwtToken;
 
 	@Autowired
-	private AuthenticationJwt authenticationJwtToken;
-
-	@Autowired
-	private UserApiService userApiService;
+	private AuthRedisService authRedisService;
 
 	@Autowired
 	private UserImageRepository userImageRepository;
 
-//	@Autowired
-//	private UserImageUploadService imageUploadService;
+	@Autowired
+	private LoginUserJwtRepository loginUserJwtRepository;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-//	@GetMapping("/test/findUserIntroInfoByUsername")
-//	@ResponseBody
-//	public ResponseEntity<?> testFindUserIntroInfoByUsername() {
-//		UserEntity user = new UserEntity("username1234", "1234");
-//		user.setUserImageEntity(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
-//		repository.save(user);
-//		//userImageRepository.save(new UserImageEntity(user, "1234", "1234", "1234", Long.valueOf(5332)));
-//		UserEntity dto = repository.findUserIntroInfoByUsername("username1234");
-//		
-//		System.out.println(dto.getUserImageEntity().toString());
-//
-//		return new ResponseEntity<String>("success", HttpStatus.OK);
-//	}
+	@GetMapping("/injector/imageUUID")
+	@ResponseBody
+	public ResponseEntity<?> testFindUserIntroInfoByUsername() {
 
-//	@PostMapping("/test/randomnumberAndPublish")
-//	public String dummyTest() {
-//		DummyData data = new DummyData();
-////		System.out.println(data.randomNumber());
-////		System.out.println(data.publish());
-//
-//		return "success";
-//	}
+		List<UserImageEntity> images = userImageRepository.findAll();
 
-//	@PostMapping
-//	public String imgUploadTest(@RequestParam(name = "file") MultipartFile multipartFile,
-//			@RequestParam(name = "fileName") String fileName) {
-//		UserEntity entity = repository.findByUsername("username0");
-//		BackGroundImgBuilder mul = new BackGroundImgBuilder().setFileName(fileName).setMultipartFile(multipartFile);
-//
-//		// imageUploadService.saveImageInDir(mul.builder());
-//		return "success";
-//	}
-//
-//	@GetMapping("/test/insert")
-//	public String testInsertTime() {
-//		service.testInsert();
-//		return "success";
-//	}
-//
-//	@GetMapping("/test/select")
-//	public String testSelectTime() {
-//		long startTime = System.currentTimeMillis();
-//		int size = service.testSelect().size();
-//		long endTime = System.currentTimeMillis();
-//		System.out.println(size);
-//		return String.valueOf(endTime - startTime) + "ms";
-//	}
-//
-//	@GetMapping("/test/jwtProblem")
-//	public String testJwtProblem() {
-//
-//		String token = authenticationJwtToken.makeToken(repository.findByUsername("username0"));
-//
-//		return token;
-//	}
+		for (int i = 0; i < images.size(); i++) {
+			images.get(i).setImageUUID(new CommonUUID().generatorImageUUID());
 
-//	@Cacheable(cacheNames = "cacheStorage")
-//	@GetMapping("/test/queryTest1")
-//	public String userQuoteQueryTest() {
-//
-//		long startTime = System.currentTimeMillis();
-//		int size = quoteRepository.findQuoteEntitiesByIsPublish(Publish.PUBLISH).size();
-//		long endTime = System.currentTimeMillis();
-//		System.out.println(size);
-//
-//		return endTime - startTime + "ms";
-//	}
+			userImageRepository.save(images.get(i));
+		}
+
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+
+	@GetMapping("/test/auth")
+	@ResponseBody
+	public ResponseEntity<?> test() {
+
+		UserEntity entity = new UserEntity();
+
+		entity.setId((long) 1);
+		entity.setUsername("kim");
+		entity.setEmail("3d19357@gmail.com");
+		String accessToken = authenticationJwtToken.createAccessToken(entity);
+		String refreshToken = authenticationJwtToken.createRefreshToken(entity);
+		
+		System.out.println(accessToken);
+
+		authRedisService.saveRefreshedLoginUserToken(accessToken, refreshToken);
+
+		return new ResponseEntity<String>(accessToken, HttpStatus.OK);
+	}
+
+	@GetMapping("/test/redis/findAll")
+	@ResponseBody
+	public ResponseEntity<?> testRedisFindAll() {
+
+		List<LoginUserRedisEntity> lists = loginUserJwtRepository.findAll();
+
+		return new ResponseEntity<List<LoginUserRedisEntity>>(lists, HttpStatus.OK);
+	}
+
+	@GetMapping("/test/token/detail")
+	@ResponseBody
+	public ResponseEntity<?> testTokenDetail() {
+
+		// okenDetails lists = authenticationJwtToken.getTokenDetails(token);
+
+		Date now = new Date(1671420939);
+		now.setTime(1671420939);
+
+		System.out.println(now);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("/user/token/detail")
+	@ResponseBody
+	public ResponseEntity<?> userPathTest() {
+
+		System.out.println("USER PATH");
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 	@Cacheable(cacheNames = "cacheStorage")
 	@GetMapping("/test/quote/querytest1/{id}")

@@ -56,11 +56,21 @@ public class QuoteService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public QuoteEntity saveQuote(QuoteEntity quoteEntity, UserTokenDTO userTokenDTO) {
+	public QuoteEntity saveQuote(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
 
-		UserEntity userEntity = repository.findByUsername(userTokenDTO.getUsername());
+		QuoteEntity quoteEntity = new QuoteEntity();
+		UserEntity userEntity = repository.findById(userTokenDTO.getId()).get();
+		Publish defaultPublishValue = Publish.PUBLISH;
 
 		quoteEntity.setUser(userEntity);
+		quoteEntity.setAuthor(quoteDTO.getAuthor());
+		quoteEntity.setQuote(quoteDTO.getQuote());
+		quoteEntity.setIsPublish(defaultPublishValue);
+		quoteEntity.setHeart((long) 0);
+
+		if (quoteDTO.getIsPublish().equals("private") || quoteDTO.getIsPublish().equals("PRIVATE")) {
+			quoteEntity.setIsPublish(Publish.PRIVATE);
+		}
 
 		return userQuoteRepository.save(quoteEntity);
 	}
@@ -77,18 +87,14 @@ public class QuoteService {
 	public QuoteEntity updateQuote(Long id, QuoteDTO quoteDTO, UserTokenDTO tokenDTO) {
 
 		QuoteEntity quoteEntity = userQuoteRepository.findById(id).get();
-		Publish publish = null;
+		Publish publish = quoteEntity.getIsPublish();
 		String quote = quoteDTO.getQuote();
 		String author = quoteDTO.getAuthor();
 
-		if (quoteDTO.getIsPublish() != null) {
-			publish = quoteEntity.getIsPublish();
-
-			if (quoteDTO.getIsPublish().equals("private")) {
-				quoteEntity.setIsPublish(publish.PRIVATE);
-			} else {
-				quoteEntity.setIsPublish(publish.PUBLISH);
-			}
+		if (quoteDTO.getIsPublish().equals("private")) {
+			quoteEntity.setIsPublish(publish.PRIVATE);
+		} else {
+			quoteEntity.setIsPublish(publish.PUBLISH);
 		}
 
 		if (quote != null) {
@@ -109,7 +115,7 @@ public class QuoteService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteQuote(Long id) {
-		
+
 		heartService.deleteHeartAllByQuoteId(id);
 		userQuoteRepository.deleteById(id);
 	}

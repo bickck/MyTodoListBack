@@ -22,6 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
+import com.todo.list.controller.dto.auth.UserTokenDTO;
 
 @Entity(name = "USER_ENTITY")
 public class UserEntity {
