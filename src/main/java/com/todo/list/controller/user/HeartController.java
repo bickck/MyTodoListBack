@@ -1,5 +1,7 @@
 package com.todo.list.controller.user;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.service.user.HeartService;
 import com.todo.list.util.auth.UserAuthToken;
@@ -53,7 +56,7 @@ public class HeartController {
 
 		heartService.saveQuoteHeart(id, userTokenDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -66,10 +69,9 @@ public class HeartController {
 	public ResponseEntity<?> requestCancleTodoHeart(@PathVariable String uuid,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		System.out.println(uuid);
 		heartService.cancleTodoHeart(uuid, userTokenDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -84,6 +86,6 @@ public class HeartController {
 
 		heartService.cancleQuoteHeart(uuid, userTokenDTO);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 }

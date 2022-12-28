@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 public interface TodoMapper {
 
 	String getId();
+	
+//	String getUserId();
 
 	String getUsername();
 

@@ -29,21 +29,16 @@ import com.todo.list.repository.image.UserImageRepository;
 @Service
 public class UserApiService {
 
-	private JPAQueryFactory jpaQueryFactory;
 	private UserRepository userRepository;
 	private TodoRepository todoRepository;
 	private QuoteRepository quoteRepository;
-	private UserImageRepository userImageRepository;
-	private Utils utils = new Utils();
 
 	@Autowired
 	public UserApiService(JPAQueryFactory jpaQueryFactory, UserRepository userRepository, TodoRepository todoRepository,
-			QuoteRepository quoteRepository, UserImageRepository userImageRepository) {
-		this.jpaQueryFactory = jpaQueryFactory;
+			QuoteRepository quoteRepository) {
 		this.userRepository = userRepository;
 		this.todoRepository = todoRepository;
 		this.quoteRepository = quoteRepository;
-		this.userImageRepository = userImageRepository;
 
 	}
 
@@ -70,6 +65,19 @@ public class UserApiService {
 	/**
 	 * 
 	 * @param username
+	 * @param user     id
+	 * @return User Intro Data
+	 */
+
+	@Transactional(readOnly = true)
+	public UserIntroMapper getUserIntroDetailsApi(String username) {
+
+		return userRepository.findUserIntroInfoByUsername(username);
+	}
+
+	/**
+	 * 
+	 * @param username
 	 * @return
 	 */
 
@@ -87,7 +95,7 @@ public class UserApiService {
 	 */
 
 	@Transactional(readOnly = true)
-	public Page<QuoteMapper> getUserquotes(UserTokenDTO userDTO, Pageable pageable) {
+	public Page<QuoteMapper> getUserQuotes(UserTokenDTO userDTO, Pageable pageable) {
 		long userid = userDTO.getId();
 		String email = userDTO.getEmail();
 		Page<QuoteMapper> page = quoteRepository.findUserQuoteByUserIdAndUserEmail(userid, email, pageable);

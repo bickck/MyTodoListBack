@@ -44,7 +44,7 @@ public class TodoImageUploadService {
 		String filePath = fileSupport.generatorFilePath(fileName, physicalAddress);
 		Long fileSize = todoImage.getSize();
 
-		Path path = Paths.get(physicalAddress + filePath);
+		Path path = Paths.get(filePath);
 
 		if (Files.isExecutable(path) == false) {
 			try {
@@ -74,7 +74,7 @@ public class TodoImageUploadService {
 	public Resource findImageInDirectory(String originalFileName, String filePath) {
 		// TODO Auto-generated method stub
 
-		String path = physicalAddress + filePath + File.separator + originalFileName;
+		String path = filePath + File.separator + originalFileName;
 
 		return new FileSystemResource(path);
 	}

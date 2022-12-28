@@ -21,6 +21,8 @@ public class HeartApiService {
 	@Transactional(readOnly = true)
 	public HeartDTO existsTodoHeart(Long id, UserTokenDTO userTokenDTO) {
 
+		System.out.println(id);
+		System.out.println(userTokenDTO.getId());
 		String todoHeartUUID = null;
 		boolean exists = todoHeartRepository.existsByTodoEntityIdAndUserId(id, userTokenDTO.getId());
 

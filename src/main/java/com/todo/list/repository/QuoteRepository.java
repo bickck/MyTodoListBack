@@ -27,10 +27,15 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, Quote
 			+ "AND q.user.id = :userid")
 	Page<QuoteMapper> findUserQuoteByUserIdAndUserEmail(Long userid, String email, Pageable pageable);
 	
+	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
+			+ "FROM USER_QUOTE_ENTITY q "
+			+ "WHERE q.user.username = :username ")
+	Page<QuoteMapper> findUserQuoteByUsername(String username, Pageable pageable);
+	
 	// api query
 
 	@Query(value = 
-			"SELECT q.quote_id AS id, q.quote AS quote, q.author AS author, U.username AS username, q.createTimestamp AS createTimestamp, q.ISAVAILABLEPUBLISH AS isPublish, "
+			"SELECT q.quote_id AS id, q.quote AS quote, q.author AS author, U.username AS username, q.createTimestamp AS createTimestamp, q.ISAVAILABLEPUBLISH AS isPublish,"
 			+ "(SELECT COUNT(sub_q_h.id) FROM QUOTE_HEART_ENTITY AS sub_q_h WHERE q.quote_id = sub_q_h.quote_id) AS heart "
 			+ "FROM USER_QUOTE_ENTITY AS q "
 			+ "LEFT JOIN USER_ENTITY AS U ON q.USER_ID = U.USER_ID "

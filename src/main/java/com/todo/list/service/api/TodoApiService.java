@@ -25,12 +25,16 @@ import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.TodoMapper;
+import com.todo.list.repository.todo.TodoLikeRepository;
 
 @Service
 public class TodoApiService {
 
 	@Autowired
 	private TodoRepository todoRepository;
+	
+	@Autowired
+	private TodoLikeRepository todoLikeRepository;
 
 	@Autowired
 	private JPAQueryFactory jpaQueryFactory;
@@ -96,6 +100,38 @@ public class TodoApiService {
 
 		Page<TodoMapper> page = todoRepository.findDailyTodos(Publish.PUBLISH, pageable);
 		return page;
+	}
+	
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return
+	 */
+
+	@Transactional(readOnly = true)
+	public Page<TodoMapper> getUserTodosByUsername(String username, Pageable pageable) {
+	
+		Page<TodoMapper> entities = todoRepository.findUserTodoByUsername(username, pageable);
+		
+		return entities;
+	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return
+	 */
+
+	@Transactional(readOnly = true)
+	public Page<TodoMapper> getUserTodoLikesByUsername(String username, Pageable pageable) {
+	
+		Page<TodoMapper> entities = null;
+		//= todoLikeRepository.findUserLikeTodoByUserIdAndEmail(username, pageable);
+		
+		return entities;
 	}
 
 //	@Transactional(readOnly = true)

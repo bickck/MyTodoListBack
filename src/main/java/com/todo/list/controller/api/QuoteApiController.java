@@ -115,4 +115,35 @@ public class QuoteApiController {
 		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * 유저의 Quote 모든 정보 가져오기
+	 */
+
+	@GetMapping("/{username}/quotes")
+	public ResponseEntity<?> getUserApiQuotes(
+			@PathVariable String username,
+			@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable) {
+
+		Page<QuoteMapper> page = quoteApiService.getUserQuotesByUsername(username, pageable);
+
+		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * 
+	 */
+
+	@GetMapping(value = "/like/{username}")
+	public ResponseEntity<?> requestUserLikeQuotesByUsername(
+			@PathVariable String username,
+			@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable) {
+
+		Page<QuoteMapper> page = null;
+				//quoteApiService.getUserQuotesByUsername(userTokenDTO, pageable);
+
+		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
+	}
+	
 }

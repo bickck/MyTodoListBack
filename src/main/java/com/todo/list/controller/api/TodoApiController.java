@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -120,6 +121,37 @@ public class TodoApiController {
 		Page<TodoCommentMapper> page = todoCommentApiService.findTodoCommentsByTodoId(id, pageable);
 
 		return new ResponseEntity<Page<TodoCommentMapper>>(page,HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * 유저의 Todo 모든 정보 가져오기
+	 */
+
+	@ResponseBody
+	@GetMapping("/{username}/todos")
+	public ResponseEntity<?> getUserApiTodosByUsername(
+			@PathVariable String username,
+			@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable) {
+
+		Page<TodoMapper> page = todoApiService.getUserTodosByUsername(username, pageable);
+
+		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 */
+
+	@GetMapping(value = "/like/{username}")
+	public ResponseEntity<?> requestUserLikeTodoListByUsername(
+			@PathVariable String username,
+			@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable) {
+
+		Page<TodoMapper> page = null;
+				//userLikeApiService.userLikeTodo(userTokenDTO, pageable);
+
+		return new ResponseEntity<Page<TodoMapper>>(page, HttpStatus.OK);
 	}
 
 }

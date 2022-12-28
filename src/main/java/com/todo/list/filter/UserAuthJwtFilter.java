@@ -54,8 +54,6 @@ public class UserAuthJwtFilter implements Filter {
 		boolean isImage = accept.equals("image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8");
 		String ip = httpServletRequest.getHeader("X-FORWARDE-FOR");
 
-		System.out.println(accessToken);
-
 		if (ip == null) {
 			ip = httpServletRequest.getRemoteAddr();
 		}

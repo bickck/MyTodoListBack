@@ -40,7 +40,7 @@ import com.todo.list.util.auth.UserAuthToken;
  */
 
 @RestController
-@RequestMapping(value = "/user", headers = HttpHeaders.AUTHORIZATION)
+@RequestMapping(value = "/user/todo", headers = HttpHeaders.AUTHORIZATION)
 public class TodoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -84,21 +84,18 @@ public class TodoController {
 	 * @throws IOException
 	 */
 
-	@PostMapping(value = "/todo", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+	@PostMapping(value = "/", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
 			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestSaveUserTodoForMultiPartForm(@RequestPart(value = "todos") String todoString,
 			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
 			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
 
-//		long defaultHeartValue = 0;
 		Publish defaultPublishValue = Publish.PUBLISH;
 		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
 
 		// 이미지가 2개 이상 넘어갈 경우
 		if (todoImages != null && todoImages.length > 2) {
-
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
-
 		}
 
 		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
@@ -152,7 +149,7 @@ public class TodoController {
 	 * @throws JsonMappingException
 	 */
 
-	@PutMapping(value = "/todo/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+	@PutMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
 			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestUpdateUserTodoForMultipart(@PathVariable(value = "id") Long id,
 			@RequestPart(value = "todos") String todoString,
@@ -179,7 +176,7 @@ public class TodoController {
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
-	@PutMapping(value = "/todo/publish/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/publish/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateTodoPublished(@PathVariable(value = "id") Long id,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
@@ -197,7 +194,7 @@ public class TodoController {
 	 * @throws Exception 
 	 */
 
-	@DeleteMapping("/todo/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> requestDeleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) throws Exception {
 
 		try {

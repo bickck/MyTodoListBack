@@ -14,16 +14,20 @@ import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
+import com.todo.list.repository.quote.QuoteLikeRepository;
 
 @Service
 public class QuoteApiService {
 
 	private QuoteRepository quoteRepository;
+	private QuoteLikeRepository quoteLikeRepository;
 	private JPAQueryFactory jpaQueryFactory;
 
 	@Autowired
-	public QuoteApiService(QuoteRepository quoteRepository, JPAQueryFactory jpaQueryFactory) {
+	public QuoteApiService(QuoteRepository quoteRepository, QuoteLikeRepository quoteLikeRepository,
+			JPAQueryFactory jpaQueryFactory) {
 		this.quoteRepository = quoteRepository;
+		this.quoteLikeRepository = quoteLikeRepository;
 		this.jpaQueryFactory = jpaQueryFactory;
 	}
 
@@ -77,6 +81,37 @@ public class QuoteApiService {
 //		quoteRepository.findDailyQuotesApi(pageable);
 
 		return quoteRepository.findDailyQuotes(pageable, Publish.PUBLISH);
+	}
+
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return User Quote List
+	 */
+
+	@Transactional(readOnly = true)
+	public Page<QuoteMapper> getUserQuotesByUsername(String username, Pageable pageable) {
+
+		Page<QuoteMapper> page = quoteRepository.findUserQuoteByUsername(username, pageable);
+
+		return page;
+	}
+
+	/**
+	 * 
+	 * @param userDTO
+	 * @param pageable
+	 * @return User Quote List
+	 */
+
+	@Transactional(readOnly = true)
+	public Page<QuoteMapper> getUserLikeQuotesByUsername(String username, Pageable pageable) {
+
+		Page<QuoteMapper> page = null;
+				//quoteRepository.findUserQuoteByUsername(username, pageable);
+
+		return page;
 	}
 
 //	@Transactional(readOnly = true)

@@ -35,9 +35,8 @@ public class UserLikeApiService {
 	public Page<TodoMapper> userLikeTodo(UserTokenDTO userTokenDTO, Pageable pageable) {
 
 		Long userid = userTokenDTO.getId();
-		System.out.println(userid);
 
-		Page<TodoMapper> page = todoLikeRepository.findUserLikeTodoByUserIdAndEmail(userid, pageable);
+		Page<TodoMapper> page = todoLikeRepository.findUserLikeTodoByUserId(userid, pageable);
 
 		return page;
 	}

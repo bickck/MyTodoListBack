@@ -1,12 +1,11 @@
 package com.todo.list.redis.entity;
 
-import java.sql.Timestamp;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import com.todo.list.entity.TodoEntity;
 
+// 1시간
 @RedisHash(value = "AccessAuthority", timeToLive = 360000)
 public class LoginUserRedisEntity {
 

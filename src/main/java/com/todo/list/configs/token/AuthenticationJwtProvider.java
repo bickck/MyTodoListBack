@@ -25,7 +25,7 @@ public class AuthenticationJwtProvider {
 	private final String USERNAME = "username";
 	private final String EMAIL = "email";
 	private final String USERID = "userid";
-	private long accessTokenValidTime = 60 * 60 * 100L;
+	private long accessTokenValidTime = 60 * 60 * 1000L;
 	private long refreshTokeValidTime = 60 * 60 * 100000000L;//
 
 	public String createToken(UserEntity userEntity, Long expireTime) {

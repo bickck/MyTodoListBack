@@ -36,7 +36,7 @@ import com.todo.list.util.auth.UserAuthToken;
  */
 //@CrossOrigin(originPatterns = "http://localhost:5501",exposedHeaders = "")
 @RestController
-@RequestMapping(value = "/user/api")
+//@RequestMapping(value = "/user/api")
 public class UserApiController {
 
 	private UserService userService;
@@ -62,12 +62,31 @@ public class UserApiController {
 	 */
 
 	@ResponseBody
-	@PostMapping(value = "/intro")
+	@PostMapping(value = "/user/api/intro")
 	public ResponseEntity<?> getUserIntroInfo(@UserAuthToken UserTokenDTO userTokenDTO) {
 
 		Long id = userTokenDTO.getId();
 		String email = userTokenDTO.getEmail();
 		UserIntroMapper userIntroMapper = userApiService.getUserIntroDetailsApi(id, email);
+
+		return new ResponseEntity<UserIntroMapper>(userIntroMapper, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * 유저의 Intro 정보 가져오기
+	 * 
+	 * header에 유저의 Jwt으로 판별
+	 * 
+	 * return username, userIntro, userImagePath
+	 */
+
+	@ResponseBody
+	@GetMapping(value = "/api/intro/{username}")
+	public ResponseEntity<?> getUserIntroInfo(@PathVariable String username) {
+
+		
+		UserIntroMapper userIntroMapper = userApiService.getUserIntroDetailsApi(username);
 
 		return new ResponseEntity<UserIntroMapper>(userIntroMapper, HttpStatus.OK);
 	}
@@ -78,7 +97,7 @@ public class UserApiController {
 	 */
 
 	@ResponseBody
-	@PostMapping("/todos")
+	@PostMapping("/user/api/todos")
 	public ResponseEntity<?> getUserApiTodos(@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
@@ -92,70 +111,12 @@ public class UserApiController {
 	 * 유저의 Quote 모든 정보 가져오기
 	 */
 
-	@PostMapping("/quotes")
+	@PostMapping("/user/api/quotes")
 	public ResponseEntity<?> getUserApiQuotes(@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		Page<QuoteMapper> page = userApiService.getUserquotes(userTokenDTO, pageable);
+		Page<QuoteMapper> page = userApiService.getUserQuotes(userTokenDTO, pageable);
 
 		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
 	}
-
-	/**
-	 * 
-	 * 유저의 Quote 모든 정보 가져오기
-	 */
-
-//	@PostMapping("/quotes")
-//	public ResponseEntity<PageQuoteDTO> getUserApiQuotes(
-//			@PageableDefault(size = 8, direction = Direction.ASC) Pageable pageable) {
-//		UserTokenDTO userTokenDTO = new UserTokenDTO((long) 1, "username0");
-//
-//		Page<QuoteEntity> entities = userApiService.getUserquotes(userTokenDTO, pageable);
-//		PageQuoteBuilder builder = new PageQuoteBuilder();
-//		builder.setLists(entities.getContent());
-//		builder.setNumber(entities.getNumber());
-//		builder.setNumberOfElements(entities.getNumberOfElements());
-//		builder.setPageable(entities.getPageable());
-//		builder.setSize(entities.getSize());
-//		builder.setTotalPages(entities.getTotalPages());
-//		builder.setTotalElements(entities.getTotalElements());
-//		return new ResponseEntity<PageQuoteDTO>(builder.builder(), HttpStatus.OK);
-//	}
-//	
-
-//	@GetMapping("/{id}")
-//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGroundsByid(@PathVariable Integer id,
-//			@UserAuthToken UserTokenDTO userTokenDTO) {
-//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-//
-//		List<BackGroundDTO> list = null;
-//		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
-//		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
-//	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param userTokenDTO
-	 * @return
-	 */
-//	@GetMapping("/recommand")
-//	public ResponseEntity<List<BackGroundDTO>> getUserRecommands(@PathVariable Integer id,
-//			@UserAuthToken UserTokenDTO userTokenDTO) {
-//		PageRequest pageRequest = PageRequest.of(id, 10, Sort.Direction.ASC, "id");
-//
-//		List<BackGroundDTO> list = null;
-//		userApiService.getUserBackGrounds(userTokenDTO, pageRequest);
-//		return new ResponseEntity<List<BackGroundDTO>>(list, HttpStatus.OK);
-//	}
-
-//	@PostMapping("/backgrounds")
-//	public ResponseEntity<List<BackGroundDTO>> getUserApiBackGrounds(@UserAuthToken UserTokenDTO userTokenDTO,
-//			@PageableDefault(size = 10, direction = Direction.ASC) Pageable pageable) {
-//
-//		Page<UserBackGroundImageEntity> entities = userApiService.getUserBackGrounds(userTokenDTO, pageable);
-//
-//		return new ResponseEntity<List<BackGroundDTO>>(null, HttpStatus.OK);
-//	}
 }

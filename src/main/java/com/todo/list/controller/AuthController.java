@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -147,6 +148,24 @@ public class AuthController {
 	public ResponseEntity<String> findUserPassword(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+	}
+	
+	/**
+	 * 
+	 * @param userDTO
+	 * @param dto
+	 * @return
+	 */
+
+	@PutMapping("/permission/{username}")
+	public ResponseEntity<String> isCheckuserPermission(@PathVariable String username, @UserAuthToken UserTokenDTO dto) {
+		
+		
+		if(username != dto.getUsername()) {
+			return new ResponseEntity<String>(ResponseStatus.SUCCESS,HttpStatus.ACCEPTED); 
+		}
+
+		return new ResponseEntity<String>(ResponseStatus.SUCCESS,HttpStatus.ACCEPTED);
 	}
 	
 	/**

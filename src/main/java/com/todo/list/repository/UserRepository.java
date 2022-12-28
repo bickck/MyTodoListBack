@@ -29,9 +29,18 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	@Query(value = "SELECT u.USER_ID AS id, u.USERNAME AS username, u.INTRO_COMMENT AS introComment, "
 			+ "i.FILENAME AS fileName, i.FILEPATH AS filePath , i.ORIGINALFILENAME AS originalFileName "
-			+ "FROM USER_ENTITY AS u " + "LEFT JOIN USER_IMAGE_ENTITY AS i ON u.USER_ID = i.USER_ID "
+			+ "FROM USER_ENTITY AS u " 
+			+ "LEFT JOIN USER_IMAGE_ENTITY AS i ON u.USER_ID = i.USER_ID "
 			+ "WHERE u.USER_ID = :id and u.EMAIL= :email ", nativeQuery = true)
 	UserIntroMapper findUserIntroInfoByIdAndEmail(@Param(value = "id") Long id, @Param(value = "email") String email);
+	
+	@Query(value = 
+			"SELECT u.USER_ID AS id, u.USERNAME AS username, u.INTRO_COMMENT AS introComment, "
+			+ "i.FILENAME AS fileName, i.FILEPATH AS filePath , i.ORIGINALFILENAME AS originalFileName "
+			+ "FROM USER_ENTITY AS u " 
+			+ "LEFT JOIN USER_IMAGE_ENTITY AS i ON u.USER_ID = i.USER_ID "
+			+ "WHERE u.USERNAME = :username ", nativeQuery = true)
+	UserIntroMapper findUserIntroInfoByUsername(@Param(value = "username") String id);
 
 	// void deleteByIdAndUsernameAndPassword(Long id, String username, String
 	// password);
