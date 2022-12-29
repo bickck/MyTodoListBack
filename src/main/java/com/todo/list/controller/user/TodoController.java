@@ -60,31 +60,7 @@ public class TodoController {
 	 * @throws IOException
 	 */
 
-//	@PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<?> requestSaveUserTodoForJson(@RequestBody TodoDTO todoDTO,
-//			@UserAuthToken UserTokenDTO userTokenDTO) {
-//
-//		long defaultHeartValue = 0;
-//		Publish defaultPublishValue = Publish.PUBLISH;
-//
-//		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
-//			defaultPublishValue = Publish.PRIVATE;
-//		}
-//
-//		userTodoService.saveTodo(userTokenDTO, todoDTO);
-//
-//		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
-//	}
-
-	/**
-	 * 
-	 * @param todoDTO
-	 * @param userTokenDTO
-	 * @return status
-	 * @throws IOException
-	 */
-
-	@PostMapping(value = "/", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+	@PostMapping(value = "/post", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
 			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestSaveUserTodoForMultiPartForm(@RequestPart(value = "todos") String todoString,
 			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
@@ -107,36 +83,6 @@ public class TodoController {
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
-	/**
-	 *
-	 * @param id
-	 * @param todoDTO
-	 * @param userTokenDTO
-	 * @return status
-	 * @throws JsonProcessingException
-	 * @throws JsonMappingException
-	 */
-
-//	@PostMapping(value = "/update/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-//			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<?> requestUpdateUserTodoForJson(@PathVariable(value = "id") Long id,
-//			@RequestPart(value = "todos") String todoString, @UserAuthToken UserTokenDTO userTokenDTO)
-//			throws IOException {
-//
-//		System.out.println("APPLICATION_JSON_VALUE");
-//		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
-//		Publish publish = Publish.PUBLISH;
-//
-//		if (todoDTO.getIsPublish().equals("private")) {
-//			publish = Publish.PRIVATE;
-//		}
-//
-//		todoDTO.setHeart((long) 0);
-//
-//		userTodoService.updateTodo(id, todoDTO, todoImages);
-//
-//		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
-//	}
 
 	/**
 	 *
@@ -149,7 +95,7 @@ public class TodoController {
 	 * @throws JsonMappingException
 	 */
 
-	@PutMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
+	@PutMapping(value = "/post/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE,
 			MediaType.ALL_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> requestUpdateUserTodoForMultipart(@PathVariable(value = "id") Long id,
 			@RequestPart(value = "todos") String todoString,
