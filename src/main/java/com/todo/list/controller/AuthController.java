@@ -158,10 +158,10 @@ public class AuthController {
 	 */
 
 	@PutMapping("/permission/{username}")
-	public ResponseEntity<String> isCheckuserPermission(@PathVariable String username, @UserAuthToken UserTokenDTO dto) {
+	public ResponseEntity<String> isCheckuserPermission(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO dto) {
 		
 		
-		if(username != dto.getUsername()) {
+		if(!userDTO.getUsername().equals(dto.getUsername())) {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE,HttpStatus.ACCEPTED); 
 		}
 
