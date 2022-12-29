@@ -47,7 +47,5 @@ public class CorsFIlter implements Filter {
 		} else {
 			chain.doFilter(httpServletRequest, httpServletResponse);
 		}
-
 	}
-
 }
