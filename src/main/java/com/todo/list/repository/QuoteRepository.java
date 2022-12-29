@@ -29,7 +29,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, Quote
 	
 	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
-			+ "WHERE q.user.username = :username by q.id desc")
+			+ "WHERE q.user.username = :username")
 	Page<QuoteMapper> findUserQuoteByUsername(String username, Pageable pageable);
 	
 	// api query
@@ -39,7 +39,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, Quote
 			+ "(SELECT COUNT(sub_q_h.id) FROM QUOTE_HEART_ENTITY AS sub_q_h WHERE q.quote_id = sub_q_h.quote_id) AS heart "
 			+ "FROM USER_QUOTE_ENTITY AS q "
 			+ "LEFT JOIN USER_ENTITY AS U ON q.USER_ID = U.USER_ID "
-			+ "WHERE q.ISAVAILABLEPUBLISH = 'PUBLISH' by q.id desc", nativeQuery = true)
+			+ "WHERE q.ISAVAILABLEPUBLISH = 'PUBLISH' order by q.id desc", nativeQuery = true)
 	Page<QuoteMapper> findMainQuotes(Pageable pageable, Publish publish);
 	
 	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
@@ -49,7 +49,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, Long>, Quote
 	
 	@Query(value = "SELECT q.id AS id, q.quote AS quote, q.author AS author, q.user.username AS username, q.createTimestamp AS createTimestamp, q.heart AS heart, q.isPublish AS isPublish "
 			+ "FROM USER_QUOTE_ENTITY q "
-			+ "WHERE q.isPublish = :publish by q.id desc")
+			+ "WHERE q.isPublish = :publish order by q.id desc")
 	Page<QuoteMapper> findRecommandQuotes(Pageable pageable, Publish publish);
 	
 }
