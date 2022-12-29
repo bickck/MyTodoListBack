@@ -162,7 +162,7 @@ public class AuthController {
 		
 		
 		if(username != dto.getUsername()) {
-			return new ResponseEntity<String>(ResponseStatus.SUCCESS,HttpStatus.ACCEPTED); 
+			return new ResponseEntity<String>(ResponseStatus.FAILURE,HttpStatus.ACCEPTED); 
 		}
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS,HttpStatus.ACCEPTED);
