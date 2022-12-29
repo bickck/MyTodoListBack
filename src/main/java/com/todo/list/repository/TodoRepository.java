@@ -50,7 +50,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long>, TodoApi
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
 			+ "LEFT JOIN USER_IMAGE_ENTITY AS USER_IMAGE ON USER_IMAGE.USER_ID = U.USER_ID "
 			+ "WHERE U.USER_ID = :userid "
-			+ "AND U.EMAIL = :email", 
+			+ "AND U.EMAIL = :email ORDER BY DESC", 
 			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY"
 			,nativeQuery = true)
 	Page<TodoMapper> findUserTodoByUserIdAndEmail(@Param("userid") Long userid,@Param("email") String email, Pageable pageable);
@@ -70,7 +70,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long>, TodoApi
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
 			+ "LEFT JOIN USER_IMAGE_ENTITY AS USER_IMAGE ON USER_IMAGE.USER_ID = U.USER_ID "
-			+ "WHERE U.USERNAME = :username ", 
+			+ "WHERE U.USERNAME = :username ORDER BY DESC ", 
 			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY"
 			,nativeQuery = true)
 	Page<TodoMapper> findUserTodoByUsername(@Param("username") String username, Pageable pageable);
@@ -92,7 +92,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long>, TodoApi
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
 			+ "LEFT JOIN USER_IMAGE_ENTITY AS USER_IMAGE ON USER_IMAGE.USER_ID = U.USER_ID "
-			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH'", 
+			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH' ORDER BY DESC ", 
 			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = 'PUBLISH'"
 			,nativeQuery = true)
 	Page<TodoMapper> findTodoMainPostByPublish(@Param("isPublish") Publish publish, Pageable pageable);
@@ -103,7 +103,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long>, TodoApi
 			+ "(SELECT COUNT(id) FROM TODO_IMAGE_ENTITY AS TODO_IMG WHERE TODO.TODO_ID = TODO_IMG.TODO_ID) AS POSTIMGCOUNT " 
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
-			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH'", 
+			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH' ORDER BY DESC", 
 			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = 'PUBLISH'"
 			,nativeQuery = true)
 	Page<TodoMapper> findRecommandTodos(@Param("isPublish") Publish publish, Pageable pageable);
@@ -114,7 +114,7 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long>, TodoApi
 			+ "(SELECT COUNT(id) FROM TODO_IMAGE_ENTITY AS TODO_IMG WHERE TODO.TODO_ID = TODO_IMG.TODO_ID) AS POSTIMGCOUNT " 
 			+ "FROM USER_TODO_ENTITY AS TODO "
 			+ "LEFT JOIN USER_ENTITY AS U ON TODO.USER_ID = U.USER_ID "
-			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH'", 
+			+ "WHERE ISAVAILABLEPUBLISH = 'PUBLISH' ORDER BY DESC", 
 			countQuery = "SELECT COUNT(*) FROM USER_TODO_ENTITY WHERE ISAVAILABLEPUBLISH = 'PUBLISH'"
 			,nativeQuery = true)
 	Page<TodoMapper> findDailyTodos(@Param("isPublish") Publish publish, Pageable pageable);
