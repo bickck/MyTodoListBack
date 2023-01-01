@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.builder.BackGroundImgBuilder;
 import com.todo.list.controller.builder.QuoteBuilder;
@@ -52,6 +51,7 @@ import com.todo.list.service.user.UserService;
 import com.todo.list.service.user.TodoService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.UserAuthToken;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;

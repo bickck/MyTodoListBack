@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.file.FileSupport;
 import com.todo.list.file.FileSupportImpl;
-import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.user.TodoImageService;
 import com.todo.list.util.uuid.CommonUUID;

@@ -37,8 +37,7 @@ import com.todo.list.cache.TestCacheKeyGenerator;
 import com.todo.list.redis.RedisCacheManagerName;
 import com.todo.list.redis.RedisCacheNames;
 
-//@EnableCaching
-//@EnableRedisRepositories
+
 @Configuration
 public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, RedisCacheNames {
 
@@ -53,72 +52,4 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 
 		return new LettuceConnectionFactory(host, port);
 	}
-
-//	private final Logger logger = LoggerFactory.getLogger(getClass());
-//	private static long TtlMinutes = 30;
-//
-//	@Autowired
-//	private RedisProperties properties;
-//
-//	@Bean
-//	public RedisConnectionFactory redisConnectionFactory() {
-//		return new LettuceConnectionFactory(properties.getHost(), properties.getPort());
-//	}
-//
-//	@Bean
-//	public RedisTemplate<Object, Object> redisTemplate() {
-//		RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
-//		redisTemplate.setConnectionFactory(redisConnectionFactory());
-//		redisTemplate.setKeySerializer(new GenericJackson2JsonRedisSerializer());
-//		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-//
-//		return redisTemplate;
-//	}
-//
-//	@Primary
-//	@Bean(name = TodoCacheManagerName)
-//	public RedisCacheManager todoCacheManager() {
-//		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
-//				.fromConnectionFactory(redisConnectionFactory());
-//
-//		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-//				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
-//				.entryTtl(Duration.ofMinutes(TtlMinutes));
-//
-//		// new GenericJackson2JsonRedisSerializer();
-//		// RedisSerializer.java()
-//		cacheManager.withCacheConfiguration(TodoCacheName, cacheConfiguration);
-//
-//		return cacheManager.build();
-//	}
-//
-//	@Bean(name = QuoteCacheManagerName)
-//	public RedisCacheManager quoteCacheManager() {
-//		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
-//				.fromConnectionFactory(redisConnectionFactory());
-//
-//		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-//				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
-//				.entryTtl(Duration.ofMinutes(TtlMinutes));
-//		cacheManager.withCacheConfiguration(QuoteCacheName, cacheConfiguration);
-//		return cacheManager.build();
-//	}
-//
-//	@Bean(name = TestCacheManagerName)
-//	public RedisCacheManager testCacheeManager() {
-//		RedisCacheManager.RedisCacheManagerBuilder cacheManager = RedisCacheManager.RedisCacheManagerBuilder
-//				.fromConnectionFactory(redisConnectionFactory());
-//
-//		RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-//				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java()))
-//				.entryTtl(Duration.ofMinutes(TtlMinutes));
-//		cacheManager.withCacheConfiguration(TestCacheName, cacheConfiguration);
-//		return cacheManager.build();
-//	}
-//
-//	@Bean
-//	public KeyGenerator testCacheKeyGenerator() {
-//		return new TestCacheKeyGenerator();
-//	}
-
 }

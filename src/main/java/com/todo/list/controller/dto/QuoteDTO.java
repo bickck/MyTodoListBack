@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.base.AdminQuoteEntity;
 import com.todo.list.entity.base.Publish;
 
 import lombok.Data;
@@ -34,18 +33,6 @@ public class QuoteDTO implements Serializable {
 		this.id = id;
 		this.quote = quote;
 		this.author = author;
-	}
-
-	public QuoteDTO(@NotNull Long id, @NotNull AdminQuoteEntity quote) {
-		this.id = id;
-		this.quote = quote.getQuote();
-		this.author = quote.getAuthor();
-	}
-
-	public QuoteDTO(@NotNull AdminQuoteEntity queto) {
-		this.id = queto.getId();
-		this.quote = queto.getQuote();
-		this.author = queto.getAuthor();
 	}
 
 	public QuoteDTO(String quote, String author, String isPublish, Long heart) {

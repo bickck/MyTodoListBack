@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.redis.service.AuthRedisService;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 @Aspect
 @Component

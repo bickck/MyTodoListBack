@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
@@ -20,6 +19,7 @@ import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.util.UserUtil;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 import com.todo.list.util.uuid.CommonUUID;
 
 /**

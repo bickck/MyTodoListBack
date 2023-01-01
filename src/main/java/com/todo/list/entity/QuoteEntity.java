@@ -23,7 +23,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_QUOTE_ENTITY")
 public class QuoteEntity {

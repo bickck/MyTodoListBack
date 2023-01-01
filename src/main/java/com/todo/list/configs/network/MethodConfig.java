@@ -16,20 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //@EnableWebMvc
 public class MethodConfig implements WebMvcConfigurer{
 
-//	@Bean
-//	public WebMvcConfigurer configurer() {
-//		return new WebMvcConfigurer() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				// TODO Auto-generated method stub
-//				registry.addMapping("/**").allowCredentials(false).allowedOriginPatterns("http://localhost:5500")
-//						.exposedHeaders("Authorization").allowedMethods(HttpMethod.PATCH.name(), HttpMethod.HEAD.name(),
-//								HttpMethod.TRACE.name(), HttpMethod.PUT.name(), HttpMethod.OPTIONS.name());
-//
-//			}
-//		};
-//	}
-	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		// TODO Auto-generated method stub
@@ -47,27 +33,4 @@ public class MethodConfig implements WebMvcConfigurer{
 				)
 				.maxAge(3600);
 	}
-	
-	
-
-//	@Bean
-//	public CorsConfigurationSource configurationSource() {
-//		long maxAge = 3600;
-//		CorsConfiguration configuration = new CorsConfiguration();
-//		configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500"));
-//		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-//		configuration.setMaxAge(maxAge);
-//		configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-auth-token"));
-//		configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		source.registerCorsConfiguration("/user", configuration);
-//		return source;
-//	}
-
-//	@Bean
-//	public WebMvcConfigurer mvcConfigurer() {
-//		return new WebMvcConfigurer() {
-//
-//		};
-//	}
 }

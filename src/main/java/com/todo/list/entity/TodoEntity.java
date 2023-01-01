@@ -26,7 +26,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.entity.base.UserTimeStamp;
 
 @Entity(name = "USER_TODO_ENTITY")
 public class TodoEntity {

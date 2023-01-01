@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.todo.list.configs.token.AuthenticationJwtProvider;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 import io.jsonwebtoken.ExpiredJwtException;
 

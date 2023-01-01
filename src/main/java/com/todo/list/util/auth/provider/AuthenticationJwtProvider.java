@@ -1,4 +1,4 @@
-package com.todo.list.configs.token;
+package com.todo.list.util.auth.provider;
 
 import java.util.Date;
 

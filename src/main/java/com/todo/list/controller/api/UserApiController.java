@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.mapper.TodoMapper;
@@ -29,6 +28,7 @@ import com.todo.list.repository.mapper.UserIntroMapper;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.auth.UserAuthToken;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 /**
  * 로그인이 되었을 시 유저 브라우저에 있는 토큰 정보를 가지고 데이터를 제공하는 파일

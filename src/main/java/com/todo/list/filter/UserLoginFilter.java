@@ -25,11 +25,11 @@ import org.springframework.web.filter.GenericFilterBean;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.user.LoginUserDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.redis.entity.LoginUserRedisEntity;
 import com.todo.list.redis.service.AuthRedisService;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 @WebFilter(urlPatterns = "/auth/*", displayName = "Check User Jwt")
 public class UserLoginFilter implements Filter {

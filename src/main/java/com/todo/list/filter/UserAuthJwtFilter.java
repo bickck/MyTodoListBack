@@ -22,11 +22,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.todo.list.configs.token.AuthenticationJwtProvider;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.redis.entity.LoginUserRedisEntity;
 import com.todo.list.redis.service.AuthRedisService;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 import antlr.collections.Enumerator;
 import io.jsonwebtoken.ExpiredJwtException;
