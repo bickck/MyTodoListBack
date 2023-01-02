@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.service.EventLogService;
-import com.todo.list.service.admin.MainBackGroundImageService;
 import com.todo.list.service.api.UserApiService;
 
 /**
@@ -30,9 +29,6 @@ public class AdminController {
 
 	@Autowired
 	private QuetoManagementService managementService;
-
-	@Autowired
-	private MainBackGroundImageService backGroundImageService;
 	
 	@Autowired
 	private UserApiService userApiService;
@@ -49,14 +45,7 @@ public class AdminController {
 //		return "saveSuccess";
 //	}
 
-	// Save Image
-	@ResponseBody
-	@PostMapping("/save/backGroundImage")
-	public String saveBackGroundImages(@RequestParam MultipartFile multipartFile) {
-		backGroundImageService.save(multipartFile);
-		return "saveSuccess";
-	}
-	
+
 	@ResponseBody
 	@PostMapping("/user/total")
 	public ResponseEntity<?> getTotalUser() {

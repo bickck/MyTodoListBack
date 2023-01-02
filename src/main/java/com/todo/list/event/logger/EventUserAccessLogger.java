@@ -1,4 +1,4 @@
-package com.todo.list.event.log;
+package com.todo.list.event.logger;
 
 import java.util.Date;
 
@@ -22,14 +22,14 @@ import com.todo.list.event.record.EventLogCallee;
 
 //@Aspect
 //@Component
-public class UserAccessEventLog extends EventLogListener {
+public class EventUserAccessLogger extends EventLogListener {
 
 	private final static String CLIENT_ACCESS_EXECUTION = "execution(* com.todo.list.*.*..*(@UserAuthToken))";
 
 	@Autowired
 	private EventLogCallee eventLogCallee;
 	
-	public UserAccessEventLog() {
+	public EventUserAccessLogger() {
 		super.setEventLogger(getClass());
 	}
 

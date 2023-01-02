@@ -1,4 +1,4 @@
-package com.todo.list.event.log;
+package com.todo.list.event.logger;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;

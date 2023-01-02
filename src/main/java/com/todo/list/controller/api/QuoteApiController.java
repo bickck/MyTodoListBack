@@ -76,7 +76,7 @@ public class QuoteApiController {
 
 	@GetMapping("/mainquote")
 	@ResponseBody
-	public ResponseEntity<?> requestQuotesApi(@PageableDefault(size = 5, page = 0) Pageable pageable) {
+	public ResponseEntity<?> requestQuotesApi(@PageableDefault(size = 3, page = 0) Pageable pageable) {
 
 		Page<QuoteMapper> page = quoteApiService.mainQuotes(pageable);
 

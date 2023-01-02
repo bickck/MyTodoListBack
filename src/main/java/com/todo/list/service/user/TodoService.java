@@ -28,6 +28,7 @@ import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
+import com.todo.list.message.EventMessage;
 import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.TodoImageRepository;
@@ -97,6 +98,7 @@ public class TodoService {
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
+	@EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 저장하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, MultipartFile[] todoImages) {
 		UserEntity user = userRepository.findById(dto.getId()).get();
@@ -131,6 +133,7 @@ public class TodoService {
 	 * @throws Exception
 	 */
 
+	@EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 수정하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public TodoEntity updateTodo(Long id, TodoDTO todoDTO, MultipartFile[] todoImages) throws Exception {
 		TodoEntity entity = todoRepository.findTodoEntityById(id);
@@ -181,6 +184,7 @@ public class TodoService {
 	 * 
 	 */
 
+	@EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 삭제하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteTodo(Long id) throws Exception {
 		TodoEntity entity = todoRepository.findById(id).get();

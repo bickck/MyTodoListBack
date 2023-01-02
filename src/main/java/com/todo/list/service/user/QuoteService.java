@@ -15,6 +15,7 @@ import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
+import com.todo.list.message.EventMessage;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.QuoteRepository;
@@ -55,6 +56,7 @@ public class QuoteService {
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
+	@EventMessage(repositoryClass = QuoteRepository.class ,message = "Quote를 저장하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public QuoteEntity saveQuote(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
 
@@ -82,7 +84,7 @@ public class QuoteService {
 	 * @param tokenDTO
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
-
+	@EventMessage(repositoryClass = QuoteRepository.class ,message = "Quote를 수정하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public QuoteEntity updateQuote(Long id, QuoteDTO quoteDTO, UserTokenDTO tokenDTO) {
 
@@ -112,7 +114,7 @@ public class QuoteService {
 	 * @param QuoteID
 	 * 
 	 */
-
+	@EventMessage(repositoryClass = QuoteRepository.class ,message = "Quote를 삭제하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteQuote(Long id) {
 

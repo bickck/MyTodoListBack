@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.repository.admin.AdminQuoteRepository;
 
 @Service
 public class QuetoManagementService {

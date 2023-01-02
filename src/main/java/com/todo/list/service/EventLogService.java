@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.todo.list.entity.log.EventLogRecordEntity;
-import com.todo.list.repository.event.EventLogRepository;
+import com.todo.list.repository.event.EventLoggerRepository;
 
 @Service
 public class EventLogService {
@@ -26,7 +26,7 @@ public class EventLogService {
 //	}
 
 	@Autowired
-	private EventLogRepository eventLogRepository;
+	private EventLoggerRepository eventLogRepository;
 
 	//@Transactional
 	@Async

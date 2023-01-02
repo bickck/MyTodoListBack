@@ -2,15 +2,20 @@ package com.todo.list.util.uuid;
 
 import java.util.UUID;
 
-public class CommonUUID {
+public class CommonUUID{
+	
+	
+	private String generator() {
+		return UUID.randomUUID().toString();
+	}
 
 	public String generatorCommentUUID() {
-		return UUID.randomUUID().toString().replace("-", "");
+		return generator().replace("-", "");
 
 	}
 
 	public String generatorImageUUID() {
-		return UUID.randomUUID().toString().replace("-", "");
+		return generator().replace("-", "");
 	}
 
 }
