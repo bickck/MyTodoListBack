@@ -44,6 +44,9 @@ public class UserEntity {
 	@Column(name = "INTRO_COMMENT", length = 100)
 	private String introComment = "";
 
+	@Column(name = "PERSONAL_MESSAGE_CHANNEL")
+	private String personalMessageChannelName;
+
 	@Column(name = "CREATETIMESTAMP")
 	@CreationTimestamp
 	private Timestamp createTimestamp;
@@ -73,11 +76,12 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public UserEntity(String email, String username, String password) {
+	public UserEntity(String email, String username, String password, String personalChannelName) {
 		super();
 		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.personalMessageChannelName = personalChannelName;
 	}
 
 	public UserEntity(Long id, String username, String password) {
@@ -145,6 +149,14 @@ public class UserEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPersonalMessageChannelName() {
+		return personalMessageChannelName;
+	}
+
+	public void setPersonalMessageChannelName(String personalMessageChannelName) {
+		this.personalMessageChannelName = personalMessageChannelName;
 	}
 
 	public List<QuoteEntity> getQuotes() {

@@ -49,7 +49,7 @@ public class CacheConfig implements CachingConfigurer, RedisCacheManagerName, Re
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-
+		
 		return new LettuceConnectionFactory(host, port);
 	}
 }

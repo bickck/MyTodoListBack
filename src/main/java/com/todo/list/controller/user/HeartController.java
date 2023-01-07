@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.entity.UserEntity;
+import com.todo.list.message.MessageSender;
+import com.todo.list.redis.service.MessageChannelService;
+import com.todo.list.service.EventMessageService;
 import com.todo.list.service.user.HeartService;
 import com.todo.list.util.auth.UserAuthToken;
 
 /**
  * 
- * @author 3d193
+ * @author 3d1935
  *
  */
 
@@ -30,6 +36,9 @@ public class HeartController {
 
 	@Autowired
 	private HeartService heartService;
+
+	@Autowired
+	private MessageSender messageSender;
 
 	/**
 	 * 
@@ -41,6 +50,8 @@ public class HeartController {
 	public ResponseEntity<?> requestSaveTodoHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		String uuid = heartService.saveTodoHeart(id, userTokenDTO);
+
+		messageSender.sendTodoHeartEventMessage(id, userTokenDTO.getUsername() + "님이 좋아요를 눌르셨습니다.");
 
 		return new ResponseEntity<String>(uuid, HttpStatus.OK);
 	}
@@ -55,6 +66,8 @@ public class HeartController {
 	public ResponseEntity<?> requestSaveQuoteHeart(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		heartService.saveQuoteHeart(id, userTokenDTO);
+
+		messageSender.sendQuoteHeartEventMessage(id, userTokenDTO.getUsername() + "님이 좋아요를 눌르셨습니다.");
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

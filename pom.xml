@@ -48,6 +48,12 @@
 			<version>${querydsl.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.slack.api</groupId>
 			<artifactId>bolt</artifactId>
@@ -58,6 +64,13 @@
 			<artifactId>bolt-servlet</artifactId>
 			<version>1.27.2</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/org.ehcache/ehcache -->
 		<!-- <dependency> <groupId>org.ehcache</groupId> <artifactId>ehcache</artifactId> 

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+@Entity(name = "MESSAGE_ENTITY")
 public class MessageEntity {
 
 	@Id

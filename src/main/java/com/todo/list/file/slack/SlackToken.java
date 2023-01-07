@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 public class SlackToken {
 
 	private static String slackToken;
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Value(value = "${slack.token.location}")
 	public void setSlackToken(String tokeLocation) {
@@ -34,7 +38,7 @@ public class SlackToken {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(result);
+		logger.info("Slack Token Value => {}", result);
 		slackToken = result;
 	}
 

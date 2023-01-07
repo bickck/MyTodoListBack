@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.service.MessageService;
+import com.todo.list.service.EventMessageService;
 import com.todo.list.util.auth.UserAuthTokenResolver;
 
 import antlr.debug.Event;
@@ -23,7 +23,7 @@ public class MessageRecordListenerImpl {
 	private Logger logger = LoggerFactory.getLogger(MessageRecordListenerImpl.class);
 
 	@Autowired
-	private MessageService messageService;
+	private EventMessageService messageService;
 
 	@Around(value = "@annotation(com.todo.list.message.EventMessage)")
 	public Object messageRecorder(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -39,8 +39,7 @@ public class MessageRecordListenerImpl {
 				userTokenDTO = (UserTokenDTO) arg;
 			}
 		}
-
-
+		
 		// 쓰레드를 사용한다면 이곳 부터 사용
 		Object object = proceedingJoinPoint.proceed();
 		messageService.saveMessage(eventMessage.message(), userTokenDTO.getId());

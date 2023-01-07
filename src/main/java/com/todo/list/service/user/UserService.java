@@ -18,6 +18,7 @@ import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
+import com.todo.list.service.message.GeneratorChannel;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 import com.todo.list.util.uuid.CommonUUID;
@@ -38,6 +39,9 @@ public class UserService {
 	private AuthenticationJwtProvider jwtLoginToken;
 	private AuthRedisService authRedisService;
 	private UserUtil userUtil;
+
+	@Autowired
+	private GeneratorChannel generatorChannel;
 
 	@Autowired
 	public UserService(UserImageService userImageService, UserRepository userRepository,
@@ -63,21 +67,20 @@ public class UserService {
 	public UserEntity register(UserDTO userDTO) {
 
 		String email = userDTO.getEmail();
-		String username = userDTO.getUsername();
-		String password = userDTO.getPassword();
-		String passwordEncode = userUtil.bCrypt(password);
 
 		if (userRepository.existsByEmail(email)) {
 			throw new IllegalAccessError("중복된 아이디입니다.");
 		}
 
-		UserEntity userEntity = userRepository.save(new UserEntity(email, username, passwordEncode));
+		String username = userDTO.getUsername();
+		String password = userDTO.getPassword();
+		String passwordEncode = userUtil.bCrypt(password);
+		String personalUserChannel = generatorChannel.personalUserMessageChannel(username);
 
-		String createUUID = new CommonUUID().generatorImageUUID();
+		UserEntity userEntity = userRepository
+				.save(new UserEntity(email, username, passwordEncode, personalUserChannel));
 
-		userImageRepository.save(new UserImageEntity(userEntity, createUUID, "", "", "DEFAULT"));
-
-		return userEntity;
+		return userImageService.saveRegistedUserImage(userEntity);
 	}
 
 	/**

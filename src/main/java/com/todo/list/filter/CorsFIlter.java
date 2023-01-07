@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 public class CorsFIlter implements Filter {
 
 	// https://wonit.tistory.com/572 이곳에서 cors에 대한 해결 방법이 적혀있음
+	private String frontOrigin = "http://127.0.0.1:5501";
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -31,13 +32,11 @@ public class CorsFIlter implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, frontOrigin);
 		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
-
 		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "OPTIONS,POST,GET,DELETE,PUT");
 		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
 		httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
-		
 
 		httpServletResponse.setHeader("Access-Control-Allow-Headers",
 				"Origin, X-Requested-With, Content-Type, Accept, Authorization");

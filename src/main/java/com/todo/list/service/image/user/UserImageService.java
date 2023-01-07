@@ -15,17 +15,32 @@ import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.UserImageUploadService;
+import com.todo.list.util.uuid.CommonUUID;
 
 @Service
 public class UserImageService {
 
 	private UserImageRepository imageRepository;
-	private UserRepository userRepository;
 
 	@Autowired
-	public UserImageService(UserImageRepository imageRepository, UserRepository userRepository) {
+	public UserImageService(UserImageRepository imageRepository) {
 		this.imageRepository = imageRepository;
-		this.userRepository = userRepository;
+
+	}
+
+	/**
+	 * 
+	 * @param userImageEntity
+	 * @return
+	 */
+
+	public UserEntity saveRegistedUserImage(UserEntity userEntity) {
+
+		String createImageUUID = new CommonUUID().generatorImageUUID();
+
+		userImageSave(new UserImageEntity(userEntity, createImageUUID, "", "", "DEFAULT"));
+
+		return userEntity;
 	}
 
 	/**
