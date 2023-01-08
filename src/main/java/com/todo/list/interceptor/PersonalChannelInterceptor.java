@@ -23,6 +23,10 @@ public class PersonalChannelInterceptor implements ChannelInterceptor {
 
 	@Autowired
 	private AuthenticationJwtProvider authenticationJwtProvider;
+	
+	/**
+	 * 접속 세션은 headerAccessor에서 얻을 수 있음
+	 */
 
 	@Override
 	public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -46,7 +50,7 @@ public class PersonalChannelInterceptor implements ChannelInterceptor {
 	}
 	
 	
-
+	
 	private void requestConnectedAction(StompHeaderAccessor headerAccessor) {
 
 		String token = headerAccessor.getNativeHeader(HttpHeaders.AUTHORIZATION).get(0);
@@ -54,7 +58,7 @@ public class PersonalChannelInterceptor implements ChannelInterceptor {
 
 		Long userId = authenticationJwtProvider.resolveTokenToUserTokenDTO(token).getId();
 
-		messageChannelService.saveChannel(userId, token, session);
+		messageChannelService.saveChannel(userId, session);
 	}
 
 	private void requestSubscribeAction(StompHeaderAccessor headerAccessor) {

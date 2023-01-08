@@ -230,14 +230,4 @@ public class UserService {
 		return true;
 	}
 
-//	private boolean deleteUserImageAtStorage(String filePath, String fileName) {
-//		try {
-//			return imageUploadService.deleteImageInDirectory(filePath, fileName);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return false;
-//	}
 }

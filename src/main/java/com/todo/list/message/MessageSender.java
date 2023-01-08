@@ -44,8 +44,9 @@ public class MessageSender {
 	 */
 
 	private void isExsistLoginUserOnServer(UserEntity userEntity, String message) {
-		String userPersonalChannelName = userEntity.getPersonalMessageChannelName();
+		
 		if (messageChannelService.isExsistUserInRedis(userEntity.getId())) {
+			String userPersonalChannelName = userEntity.getPersonalMessageChannelName();
 			sendMessage(userPersonalChannelName, message);
 		} else {
 			eventMessageService.saveMessage(message, userEntity.getId());

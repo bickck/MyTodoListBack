@@ -73,4 +73,8 @@ public class EventMessageService {
 
 		return optional.get().getPersonalMessageChannelName();
 	}
+
+	public void deleteUserMessageById(Long id) {
+		eventMessageRepository.deleteByUserId(id);
+	}
 }

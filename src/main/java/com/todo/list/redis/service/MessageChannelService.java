@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.todo.list.redis.entity.MessageChannelEntity;
 import com.todo.list.redis.repository.MessageChannelRepository;
+import com.todo.list.service.EventMessageService;
+import com.todo.list.service.api.UserApiService;
 
 @Service
 public class MessageChannelService {
@@ -12,11 +14,30 @@ public class MessageChannelService {
 	@Autowired
 	private MessageChannelRepository messageChannelRepository;
 
-	public void saveChannel(Long userid, String userMessageChannel, String session) {
+	@Autowired
+	private UserApiService userApiService;
+
+	@Autowired
+	private EventMessageService eventMessageService;
+
+	/**
+	 * 
+	 * @param userid
+	 * @param session
+	 */
+
+	public void saveChannel(Long userid, String session) {
+
+		String userMessageChannel = userApiService.findUserPersonalChannelName(userid);
 
 		messageChannelRepository.save(new MessageChannelEntity(userid, userMessageChannel, session));
-
 	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	public boolean isExsistUserInRedis(Long id) {
 		MessageChannelEntity messageChannelEntity = messageChannelRepository.findById(id).get();
@@ -26,6 +47,20 @@ public class MessageChannelService {
 		}
 
 		return true;
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+
+	public MessageChannelEntity findUserChannelInfo(Long id) {
+		return messageChannelRepository.findById(id).get();
+	}
+	
+	public void deleteUserChannelById(Long id) {
+		messageChannelRepository.deleteById(id);
 	}
 
 }

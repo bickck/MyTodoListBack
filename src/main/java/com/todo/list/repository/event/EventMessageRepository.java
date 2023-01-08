@@ -11,4 +11,7 @@ public interface EventMessageRepository extends JpaRepository<MessageEntity, UUI
 
 	
 	List<MessageEntity> findMessageByUserId(Long userId);
+	
+	
+	void deleteByUserId(Long userid);
 }

@@ -32,6 +32,8 @@ import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.redis.service.AuthRedisService;
+import com.todo.list.redis.service.MessageChannelService;
+import com.todo.list.service.EventMessageService;
 import com.todo.list.service.user.UserService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.Utils;
@@ -51,6 +53,12 @@ public class AuthController {
 	private UserService userService;
 	private AuthenticationJwtProvider authenticationJwtProvider;
 	private AuthRedisService authRedisService;
+	
+	@Autowired
+	private MessageChannelService messageChannelService;
+	
+	@Autowired
+	private EventMessageService eventMessageService;
 
 	@Autowired
 	public AuthController(UserService userService, AuthenticationJwtProvider authenticationJwtProvider, AuthRedisService authRedisService) {
@@ -131,8 +139,12 @@ public class AuthController {
 	public ResponseEntity<String> logoutRequest(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String accessToken) {
 		
 		String payLoad = authenticationJwtProvider.seperatorPayLoad(accessToken);
+		UserTokenDTO userTokenDTO = authenticationJwtProvider.resolveTokenToUserTokenDTO(accessToken);
+		
 		
 		authRedisService.deleteLoginUserToken(payLoad);
+		eventMessageService.deleteUserMessageById(userTokenDTO.getId());
+		messageChannelService.deleteUserChannelById(userTokenDTO.getId());
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

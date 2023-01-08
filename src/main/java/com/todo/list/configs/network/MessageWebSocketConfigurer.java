@@ -51,10 +51,4 @@ public class MessageWebSocketConfigurer implements WebSocketMessageBrokerConfigu
 		registration.interceptors(new PersonalChannelInterceptor());
 	}
 
-//	@Override
-//	protected void configureClientInboundChannel(ChannelRegistration registration) {
-//		// TODO Auto-generated method stub
-//		super.configureClientInboundChannel(registration);
-//	}
-
 }

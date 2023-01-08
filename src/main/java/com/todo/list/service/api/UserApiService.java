@@ -117,4 +117,27 @@ public class UserApiService {
 		Page<TodoMapper> entities = todoRepository.findUserTodoByUserIdAndEmail(userid, email, pageable);
 		return entities;
 	}
+	
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+
+	public UserEntity findUserEntityByUserId(Long id) {
+
+		return userRepository.findById(id).get();
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+
+	public String findUserPersonalChannelName(Long id) {
+
+		return userRepository.findUserPersonalMessageChannelNameByUserId(id);
+	}
 }
