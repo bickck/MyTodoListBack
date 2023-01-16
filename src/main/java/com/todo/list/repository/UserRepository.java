@@ -42,7 +42,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 			+ "WHERE u.USERNAME = :username ", nativeQuery = true)
 	UserIntroMapper findUserIntroInfoByUsername(@Param(value = "username") String id);
 	
-	@Query(value = "SELECT u.PERSONAL_MESSAGE_CHANNEL FROM USER_ENTITY u WHERE u.USER_ID = :id")
+	@Query(value = "SELECT u.personalMessageChannelName FROM USER_ENTITY u WHERE u.id = :id")
 	String findUserPersonalMessageChannelNameByUserId(Long id);
 
 	// void deleteByIdAndUsernameAndPassword(Long id, String username, String

@@ -21,7 +21,7 @@ import com.todo.list.service.api.MessageApiService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
-//@RequestMapping(value = "/message/api")
+@RequestMapping(value = "/message/api")
 public class MessageApiController {
 
 	@Autowired
@@ -38,14 +38,4 @@ public class MessageApiController {
 		return new ResponseEntity<List<MessageEntity>>(lists, HttpStatus.OK);
 	}
 
-	@GetMapping("/messageTest")
-	public void setMessage() {
-
-		HashMap<String, Object> payLoad = new HashMap<String, Object>();
-		System.out.println("Message Test");
-
-		payLoad.put("message", "hello");
-
-		messagingTemplate.convertAndSend("/message/user", payLoad);
-	}
 }

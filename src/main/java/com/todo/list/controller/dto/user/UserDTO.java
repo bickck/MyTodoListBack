@@ -2,20 +2,34 @@ package com.todo.list.controller.dto.user;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.todo.list.util.validation.annotation.Password;
+import com.todo.list.util.validation.group.Comment;
+import com.todo.list.util.validation.group.LoginAccessArgumentGroup;
+import com.todo.list.util.validation.group.RegisterAccessArgumentGroup;
 
 public class UserDTO {
 
 	private Long id;
 
-	@NotEmpty
+	@Email(groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
 	private String email;
 
+	@NotNull(groups = { RegisterAccessArgumentGroup.class })
 	private String username;
 
+	@Password(groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
 	private String password;
 
+	@Size(max = 255, groups = Comment.class)
+	@NotNull(groups = Comment.class)
+	@NotBlank(groups = Comment.class)
+	@NotEmpty(groups = Comment.class)
 	private String introComment;
 
 	private String nickName;

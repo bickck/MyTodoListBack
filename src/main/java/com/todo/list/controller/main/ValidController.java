@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.main;
 
 /**
  * 
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.service.ValidService;
 import com.todo.list.util.UserUtil;

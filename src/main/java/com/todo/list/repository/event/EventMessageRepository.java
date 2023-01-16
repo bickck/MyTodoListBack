@@ -9,9 +9,7 @@ import com.todo.list.entity.MessageEntity;
 
 public interface EventMessageRepository extends JpaRepository<MessageEntity, UUID> {
 
-	
 	List<MessageEntity> findMessageByUserId(Long userId);
-	
-	
+
 	void deleteByUserId(Long userid);
 }

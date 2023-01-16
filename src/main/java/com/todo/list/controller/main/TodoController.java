@@ -1,4 +1,4 @@
-package com.todo.list.controller.user;
+package com.todo.list.controller.main;
 
 import java.io.IOException;
 

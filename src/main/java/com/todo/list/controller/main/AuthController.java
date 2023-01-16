@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.main;
 
 import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.Cookie;
@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.CookieGenerator;
 
+import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
@@ -65,21 +66,6 @@ public class AuthController {
 		this.userService = userService;
 		this.authenticationJwtProvider = authenticationJwtProvider;
 		this.authRedisService = authRedisService;
-	}
-	
-	/**
-	 * 
-	 * @param userDTO
-	 * @param dto
-	 * @return
-	 */
-
-	@PostMapping("/filterTest")
-	public ResponseEntity<String> filterTest() {
-		
-		System.out.println("Login Logic~");
-
-		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
 
 	/**

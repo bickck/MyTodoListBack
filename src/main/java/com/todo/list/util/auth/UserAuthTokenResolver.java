@@ -47,7 +47,7 @@ public class UserAuthTokenResolver {
 		Object[] args = Arrays.stream(joinPoint.getArgs()).map(data -> {
 			if (data instanceof UserTokenDTO) {
 				data = authenticationJwt.resolveTokenToUserTokenDTO(token);
-				logger.info("USER ACCESS : {}, TIME : {}, ", data.toString(), new Date().getTime());
+				logger.info("USER ACCESS => {}, TIME : {}, ", data.toString(), new Date(System.currentTimeMillis()));
 			}
 			return data;
 		}).toArray();

@@ -2,17 +2,17 @@ package com.todo.list.controller;
 
 import org.springframework.http.HttpStatus;
 
-public class ResponseMessage<T> {
+public class ResponseMessageEntity<T> {
 
 	T returnValue;
 
 	ResponseStatus responseStatus;
 
-	public ResponseMessage() {
+	public ResponseMessageEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResponseMessage(T returnValue, ResponseStatus responseStatus) {
+	public ResponseMessageEntity(T returnValue, ResponseStatus responseStatus) {
 		super();
 		this.returnValue = returnValue;
 		this.responseStatus = responseStatus;

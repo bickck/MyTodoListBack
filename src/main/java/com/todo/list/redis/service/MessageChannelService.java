@@ -29,7 +29,6 @@ public class MessageChannelService {
 	public void saveChannel(Long userid, String session) {
 
 		String userMessageChannel = userApiService.findUserPersonalChannelName(userid);
-
 		messageChannelRepository.save(new MessageChannelEntity(userid, userMessageChannel, session));
 	}
 
@@ -58,7 +57,7 @@ public class MessageChannelService {
 	public MessageChannelEntity findUserChannelInfo(Long id) {
 		return messageChannelRepository.findById(id).get();
 	}
-	
+
 	public void deleteUserChannelById(Long id) {
 		messageChannelRepository.deleteById(id);
 	}

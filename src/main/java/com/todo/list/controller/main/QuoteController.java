@@ -1,4 +1,4 @@
-package com.todo.list.controller.user;
+package com.todo.list.controller.main;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

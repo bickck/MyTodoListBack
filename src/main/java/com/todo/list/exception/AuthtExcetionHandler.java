@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResponseErrorHandler;
 
-import com.todo.list.controller.AuthController;
 import com.todo.list.controller.ResponseStatus;
+import com.todo.list.controller.main.AuthController;
 
 @RestControllerAdvice(basePackageClasses = { 
 		AuthController.class 

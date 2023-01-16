@@ -34,7 +34,6 @@ import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
  * 로그인이 되었을 시 유저 브라우저에 있는 토큰 정보를 가지고 데이터를 제공하는 파일
  * 
  */
-//@CrossOrigin(originPatterns = "http://localhost:5501",exposedHeaders = "")
 @RestController
 //@RequestMapping(value = "/user/api")
 public class UserApiController {
@@ -71,7 +70,7 @@ public class UserApiController {
 
 		return new ResponseEntity<UserIntroMapper>(userIntroMapper, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 
 	 * 유저의 Intro 정보 가져오기
@@ -85,7 +84,6 @@ public class UserApiController {
 	@GetMapping(value = "/api/intro/{username}")
 	public ResponseEntity<?> getUserIntroInfo(@PathVariable String username) {
 
-		
 		UserIntroMapper userIntroMapper = userApiService.getUserIntroDetailsApi(username);
 
 		return new ResponseEntity<UserIntroMapper>(userIntroMapper, HttpStatus.OK);
@@ -97,7 +95,7 @@ public class UserApiController {
 	 */
 
 	@ResponseBody
-	@PostMapping("/user/api/todos")
+	@PostMapping(value = "/user/api/todos")
 	public ResponseEntity<?> getUserApiTodos(@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
@@ -111,12 +109,20 @@ public class UserApiController {
 	 * 유저의 Quote 모든 정보 가져오기
 	 */
 
-	@PostMapping("/user/api/quotes")
+	@PostMapping(value = "/user/api/quotes")
 	public ResponseEntity<?> getUserApiQuotes(@PageableDefault(size = 5, direction = Direction.ASC) Pageable pageable,
 			@UserAuthToken UserTokenDTO userTokenDTO) {
 
 		Page<QuoteMapper> page = userApiService.getUserQuotes(userTokenDTO, pageable);
 
 		return new ResponseEntity<Page<QuoteMapper>>(page, HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/user/api/channel")
+	public ResponseEntity<?> getUserChannelName(@UserAuthToken UserTokenDTO userTokenDTO) {
+
+		String personalChannelName = userApiService.findUserPersonalChannelName(userTokenDTO.getId());
+
+		return new ResponseEntity<String>(personalChannelName, HttpStatus.OK);
 	}
 }

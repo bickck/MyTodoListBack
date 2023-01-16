@@ -2,6 +2,7 @@ package com.todo.list.configs.network;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -13,6 +14,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import com.todo.list.interceptor.PersonalChannelInterceptor;
+import com.todo.list.redis.service.MessageChannelService;
+import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -32,23 +35,29 @@ public class MessageWebSocketConfigurer implements WebSocketMessageBrokerConfigu
 	@Value(value = "${broker.dest.prex}")
 	private String destPrefiexsChannelName;
 
+	@Autowired
+	private MessageChannelService messageChannelService;
+
+	@Autowired
+	private AuthenticationJwtProvider authenticationJwtProvider;
+
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		// TODO Auto-generated method stub
-		registry.enableSimpleBroker(subBrokerChannelName, messageBrokerChannelName);
-		registry.setApplicationDestinationPrefixes(destPrefiexsChannelName);
+		registry.enableSimpleBroker("/message", "/sub");
+		registry.setApplicationDestinationPrefixes("/pub");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		// TODO Auto-generated method stub
-		registry.addEndpoint(weSoketServer).setAllowedOriginPatterns("*").withSockJS();
+		registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
 	}
-	
+
 	@Override
 	public void configureClientInboundChannel(ChannelRegistration registration) {
 		// TODO Auto-generated method stub
-		registration.interceptors(new PersonalChannelInterceptor());
+		registration.interceptors(new PersonalChannelInterceptor(messageChannelService, authenticationJwtProvider));
 	}
 
 }

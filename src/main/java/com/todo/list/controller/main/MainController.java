@@ -1,4 +1,4 @@
-package com.todo.list.controller;
+package com.todo.list.controller.main;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

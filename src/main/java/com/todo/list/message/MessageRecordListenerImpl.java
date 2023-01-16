@@ -34,9 +34,11 @@ public class MessageRecordListenerImpl {
 		Object[] args = proceedingJoinPoint.getArgs();
 		UserTokenDTO userTokenDTO = null;
 
-		for (Object arg : args) {
-			if (arg.getClass().equals(UserTokenDTO.class)) {
-				userTokenDTO = (UserTokenDTO) arg;
+		for (Object arg : args) {			
+			if(arg != null) {
+				if (arg.getClass().equals(UserTokenDTO.class)) {
+					userTokenDTO = (UserTokenDTO) arg;
+				}
 			}
 		}
 		

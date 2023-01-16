@@ -1,4 +1,4 @@
-package com.todo.list.controller.user;
+package com.todo.list.controller.main;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +54,7 @@ import com.todo.list.service.user.TodoService;
 import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.UserAuthToken;
 import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
+import com.todo.list.util.validation.group.Comment;
 
 import io.jsonwebtoken.Claims;
 import lombok.extern.java.Log;
@@ -63,6 +66,7 @@ import lombok.extern.java.Log;
  * parm : id -> user identify
  */
 
+@Validated
 @RestController
 @RequestMapping(value = "/user", headers = HttpHeaders.AUTHORIZATION)
 public class UserController implements ResponseStatus {
@@ -82,8 +86,9 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
+	@Validated(Comment.class)
 	@PutMapping("/intro/comment")
-	public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
+	public ResponseEntity<?> updateUserIntroComment(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
 
 		String introComment = userDTO.getIntroComment();
 
