@@ -32,7 +32,6 @@ import com.todo.list.service.user.TodoService;
 
 import com.todo.list.util.auth.UserAuthToken;
 
-
 /**
  * 
  * 해당 유저의 Todo 데이터를 저장,수정,삭제를 제공하는 클래스
@@ -66,16 +65,11 @@ public class TodoController {
 			@RequestPart(value = "files", required = false) MultipartFile[] todoImages,
 			@UserAuthToken UserTokenDTO userTokenDTO) throws IOException {
 
-		Publish defaultPublishValue = Publish.PUBLISH;
 		TodoDTO todoDTO = new ObjectMapper().readValue(todoString, TodoDTO.class);
 
 		// 이미지가 2개 이상 넘어갈 경우
-		if (todoImages != null && todoImages.length > 2) {
+		if (todoImages.length > 2) {
 			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
-		}
-
-		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
-			defaultPublishValue = Publish.PRIVATE;
 		}
 
 		userTodoService.saveTodo(userTokenDTO, todoDTO, todoImages);
@@ -83,14 +77,13 @@ public class TodoController {
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
-
 	/**
 	 *
 	 * @param id
 	 * @param todoDTO
 	 * @param userTokenDTO
 	 * @return status
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws JsonProcessingException
 	 * @throws JsonMappingException
 	 */
@@ -115,8 +108,6 @@ public class TodoController {
 
 		}
 
-		todoDTO.setHeart((long) 0);
-
 		userTodoService.updateTodo(id, todoDTO, todoImages);
 
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
@@ -137,11 +128,12 @@ public class TodoController {
 	 * @param id
 	 * @param userTokenDTO
 	 * @return status
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> requestDeleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) throws Exception {
+	public ResponseEntity<?> requestDeleteUserTodo(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO)
+			throws Exception {
 
 		try {
 			userTodoService.deleteTodo(id);
@@ -151,20 +143,5 @@ public class TodoController {
 		}
 		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param userTokenDTO
-	 * @return status
-	 */
-
-//	@PostMapping("/heart/add/{id}")
-//	public ResponseEntity<?> requestTodoCommentHeartAdd(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
-//
-//		userTodoService.addTodoHeart(id);
-//
-//		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
-//	}
 
 }

@@ -23,7 +23,7 @@ public class AuthRedisService {
 
 	@Autowired
 	private AuthenticationJwtProvider authenticationJwtProvider;
-	
+
 	/**
 	 * 
 	 * @param payLoad
@@ -33,7 +33,7 @@ public class AuthRedisService {
 	public LoginUserRedisEntity findTokenByPayLoad(String payLoad) {
 
 		Optional<LoginUserRedisEntity> entity = loginUserJwtRepository.findById(payLoad);
-				
+
 		if (entity.isEmpty()) {
 			return null;
 		}
@@ -41,15 +41,19 @@ public class AuthRedisService {
 		return entity.get();
 
 	}
-	
+
 	/**
+	 * redis에 로그인하는 정보를 넣기
 	 * 
 	 * @param accessToken
 	 * @param refreshToken
+	 * @return accessToken
 	 */
 
-	public void saveRefreshedLoginUserToken(String accessToken, String refreshToken) {
+	public String saveLoginedUserToken(UserEntity userEntity) {
 
+		String accessToken = authenticationJwtProvider.createAccessToken(userEntity);
+		String refreshToken = authenticationJwtProvider.createRefreshToken(userEntity);
 		String payload = authenticationJwtProvider.seperatorPayLoad(accessToken);
 
 		LoginUserRedisEntity loginUserRedisEntity = new LoginUserRedisEntity();
@@ -60,8 +64,10 @@ public class AuthRedisService {
 		loginUserRedisEntity.setAccessAddressIP("");
 
 		loginUserJwtRepository.save(loginUserRedisEntity);
+
+		return accessToken;
 	}
-	
+
 	/**
 	 * 
 	 * @param payLoad
@@ -70,7 +76,7 @@ public class AuthRedisService {
 	public void deleteLoginUserToken(String payLoad) {
 		loginUserJwtRepository.deleteById(payLoad);
 	}
-	
+
 	/**
 	 * 
 	 * @param prevPayload
@@ -79,7 +85,7 @@ public class AuthRedisService {
 	 */
 
 	public String renewAccessTokenByRefreshToken(String prevPayload, String refreshToken) {
-		
+
 		LoginUserRedisEntity loginUserRedisEntity = findTokenByPayLoad(prevPayload);
 		deleteLoginUserToken(prevPayload);
 
@@ -89,15 +95,15 @@ public class AuthRedisService {
 		userEntity.setEmail(refreshTokenDTO.getEmail());
 		userEntity.setId(refreshTokenDTO.getId());
 		userEntity.setUsername(refreshTokenDTO.getUsername());
-		
+
 		String accessToken = authenticationJwtProvider.createAccessToken(userEntity);
-		
+
 		loginUserRedisEntity.setId(authenticationJwtProvider.seperatorPayLoad(accessToken));
 		loginUserRedisEntity.setAccessToken(accessToken);
 		loginUserRedisEntity.setRefreshToken(refreshToken);
 
 		loginUserJwtRepository.save(loginUserRedisEntity);
-		
+
 		return accessToken;
 	}
 

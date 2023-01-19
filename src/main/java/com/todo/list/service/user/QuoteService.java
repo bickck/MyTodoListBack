@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
@@ -56,7 +55,7 @@ public class QuoteService {
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
-	@EventMessage(repositoryClass = QuoteRepository.class ,message = "Quote를 저장하였습니다.")
+	@EventMessage(repositoryClass = QuoteRepository.class, message = "Quote를 저장하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public QuoteEntity saveQuote(QuoteDTO quoteDTO, UserTokenDTO userTokenDTO) {
 
@@ -84,7 +83,7 @@ public class QuoteService {
 	 * @param tokenDTO
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
-	@EventMessage(repositoryClass = QuoteRepository.class ,message = "Quote를 수정하였습니다.")
+	@EventMessage(repositoryClass = QuoteRepository.class, message = "Quote를 수정하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public QuoteEntity updateQuote(Long id, QuoteDTO quoteDTO, UserTokenDTO tokenDTO) {
 
@@ -114,7 +113,7 @@ public class QuoteService {
 	 * @param QuoteID
 	 * 
 	 */
-	@EventMessage(repositoryClass = QuoteRepository.class ,message = "Quote를 삭제하였습니다.")
+	@EventMessage(repositoryClass = QuoteRepository.class, message = "Quote를 삭제하였습니다.")
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteQuote(Long id) {
 
@@ -153,7 +152,7 @@ public class QuoteService {
 		CriteriaUpdate<QuoteEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(QuoteEntity.class);
 		Root<QuoteEntity> root = criteriaUpdate.from(QuoteEntity.class);
 
-		String currPublish = quoteDTO.getIsPublish();
+		Publish currPublish = quoteDTO.getIsPublish();
 
 		if (currPublish.equals(Publish.PUBLISH.toString())) {
 			criteriaUpdate.set("isPublish", Publish.PRIVATE);

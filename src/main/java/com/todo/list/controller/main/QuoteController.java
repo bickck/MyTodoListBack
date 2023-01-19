@@ -1,10 +1,11 @@
 package com.todo.list.controller.main;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-
+import com.todo.list.controller.response.message.ResponseMessageEntity;
+import com.todo.list.exception.custom.ArgumentValidException;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.auth.UserAuthToken;
+import com.todo.list.util.validation.group.QuoteAccessArgumentGroup;
 
 /**
  * 
@@ -28,7 +31,7 @@ import com.todo.list.util.auth.UserAuthToken;
  * 
  */
 @RestController
-@RequestMapping(value = "/user", headers = HttpHeaders.AUTHORIZATION)
+@RequestMapping(value = "/user/quote", headers = HttpHeaders.AUTHORIZATION)
 public class QuoteController implements ResponseStatus {
 
 	@Autowired
@@ -39,17 +42,21 @@ public class QuoteController implements ResponseStatus {
 	 * @param quoteDTO
 	 * @param tokenDTO
 	 * @return
+	 * @throws Exception
 	 */
 
-	@PostMapping(value = "/quote")
-	public ResponseEntity<?> savetUserQuote(@RequestBody QuoteDTO quoteDTO, @UserAuthToken UserTokenDTO tokenDTO) {
+	@PostMapping(value = "/post")
+	public ResponseMessageEntity<?> savetUserQuote(@UserAuthToken UserTokenDTO tokenDTO,
+			@Validated(value = QuoteAccessArgumentGroup.class) @RequestBody QuoteDTO quoteDTO,
+			BindingResult bindingResult) throws Exception {
 
-		if (quoteDTO.getIsPublish() == null && quoteDTO.getQuote() == null && quoteDTO.getAuthor() == null) {
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+		if (bindingResult.hasErrors()) {
+			throw new ArgumentValidException(bindingResult.getFieldError());
 		}
+
 		userQuoteService.saveQuote(quoteDTO, tokenDTO);
-		
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+
+		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -60,17 +67,18 @@ public class QuoteController implements ResponseStatus {
 	 * @return
 	 */
 
-	@PutMapping(value = "/quote/{id}")
-	public ResponseEntity<?> updateUserQuote(@PathVariable Long id, @RequestBody QuoteDTO quoteDTO,
-			@UserAuthToken UserTokenDTO tokenDTO) {
+	@PutMapping(value = "/post/{id}")
+	public ResponseMessageEntity<?> updateUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO,
+			@Validated(value = QuoteAccessArgumentGroup.class) @RequestBody QuoteDTO quoteDTO,
+			BindingResult bindingResult) throws Exception {
 
-		if (quoteDTO.getIsPublish() == null && quoteDTO.getQuote() == null && quoteDTO.getAuthor() == null) {
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+		if (bindingResult.hasErrors()) {
+			throw new ArgumentValidException(bindingResult.getFieldError());
 		}
 
 		userQuoteService.updateQuote(id, quoteDTO, tokenDTO);
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -80,7 +88,7 @@ public class QuoteController implements ResponseStatus {
 	 * @return
 	 */
 
-	@DeleteMapping(value = "/quote/{id}")
+	@DeleteMapping(value = "/post/{id}")
 	public ResponseEntity<?> deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
 
 		userQuoteService.deleteQuote(id);

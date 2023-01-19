@@ -5,13 +5,13 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
-public enum Publish {
+public enum PlatForm {
 
-	PUBLISH("PUBLISH"), PRIVATE("PRIVATE");
+	KAKAO("KAKAO");
 
 	private final String code;
 
-	Publish(String code) {
+	PlatForm(String code) {
 		this.code = code;
 	}
 
@@ -20,8 +20,8 @@ public enum Publish {
 	}
 
 	@JsonCreator(mode = Mode.DELEGATING)
-	public static Publish findByCode(String code) {
+	public static PlatForm findByCode(String code) {
 
-		return Stream.of(Publish.values()).filter(t -> t.code.equals(code)).findFirst().orElse(null);
+		return Stream.of(PlatForm.values()).filter(t -> t.code.equals(code)).findFirst().orElse(null);
 	}
 }

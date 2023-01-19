@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.todo.list.entity.UserEntity;
+import com.todo.list.entity.base.Publish;
+import com.todo.list.util.validation.annotation.PublishType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,55 +34,37 @@ public class TodoDTO implements Serializable {
 	@NotEmpty(message = "Check your content")
 	private String content;
 
+	@PublishType
 	@NotEmpty(message = "Check is published")
-	private String isPublish;
-
-	private Long heart;
-
-	private Long comment;
-
-	private String originalFileName;
-
-	private Timestamp createTimeStamp;
+	private Publish isPublish;
 
 	public TodoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TodoDTO(Long id, String user, String title, String content, Timestamp createTimeStamp) {
+	public TodoDTO(Long id, String user, String title, String content) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.createTimeStamp = createTimeStamp;
 	}
 
-	public TodoDTO(String user, String title, String content, String isPublish, Long heart, Long comment) {
+	public TodoDTO(String user, String title, String content, Publish isPublish) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.isPublish = isPublish;
-		this.heart = heart;
-		this.comment = comment;
 	}
 
-	public TodoDTO(Long id, String user, String title, String content, String isPublish, Timestamp createTimeStamp) {
+	public TodoDTO(Long id, String user, String title, String content, Publish isPublish) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.isPublish = isPublish;
-		this.createTimeStamp = createTimeStamp;
-	}
-
-	@Override
-	public String toString() {
-		return "TodoDTO [id=" + id + ", user=" + user + ", title=" + title + ", content=" + content + ", isPublish="
-				+ isPublish + ", heart=" + heart + ", comment=" + comment + ", createTimeStamp=" + createTimeStamp
-				+ "]";
 	}
 
 	public Long getId() {
@@ -115,44 +99,11 @@ public class TodoDTO implements Serializable {
 		this.content = content;
 	}
 
-	public String getIsPublish() {
+	public Publish getIsPublish() {
 		return isPublish;
 	}
 
-	public void setIsPublish(String isPublish) {
+	public void setIsPublish(Publish isPublish) {
 		this.isPublish = isPublish;
 	}
-
-	public Timestamp getCreateTimeStamp() {
-		return createTimeStamp;
-	}
-
-	public void setCreateTimeStamp(Timestamp createTimeStamp) {
-		this.createTimeStamp = createTimeStamp;
-	}
-
-	public Long getHeart() {
-		return heart;
-	}
-
-	public void setHeart(Long heart) {
-		this.heart = heart;
-	}
-
-	public Long getComment() {
-		return comment;
-	}
-
-	public void setComment(Long comment) {
-		this.comment = comment;
-	}
-
-	public String getOriginalFileName() {
-		return originalFileName;
-	}
-
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
-	}
-
 }

@@ -34,6 +34,8 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
 
     public final StringPath personalMessageChannelName = createString("personalMessageChannelName");
 
+    public final EnumPath<com.todo.list.entity.base.PlatForm> platform = createEnum("platform", com.todo.list.entity.base.PlatForm.class);
+
     public final ListPath<QuoteEntity, QQuoteEntity> quotes = this.<QuoteEntity, QQuoteEntity>createList("quotes", QuoteEntity.class, QQuoteEntity.class, PathInits.DIRECT2);
 
     public final ListPath<TodoEntity, QTodoEntity> todos = this.<TodoEntity, QTodoEntity>createList("todos", TodoEntity.class, QTodoEntity.class, PathInits.DIRECT2);

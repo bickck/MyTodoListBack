@@ -1,31 +1,20 @@
 package com.todo.list.controller.main;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Enumeration;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,16 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todo.list.controller.ResponseStatus;
-import com.todo.list.controller.builder.BackGroundImgBuilder;
-import com.todo.list.controller.builder.QuoteBuilder;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.controller.dto.user.LoginUserDTO;
 import com.todo.list.controller.dto.user.UserDTO;
-import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
-import com.todo.list.entity.TodoEntity;
+import com.todo.list.exception.custom.ArgumentValidException;
 import com.todo.list.service.api.UserApiService;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.UserImageUploadService;
@@ -74,8 +59,7 @@ public class UserController implements ResponseStatus {
 	private UserService userService;
 
 	@Autowired
-	public UserController(UserService userService, UserApiService userApiService, QuoteService userQuoteService,
-			AuthenticationJwtProvider jwtLoginToken, UserImageUploadService imaegService) {
+	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
@@ -84,19 +68,18 @@ public class UserController implements ResponseStatus {
 	 * @param id
 	 * @param userDTO
 	 * @return
+	 * @throws Exception
 	 */
 
-	@Validated(Comment.class)
 	@PutMapping("/intro/comment")
-	public ResponseEntity<?> updateUserIntroComment(@RequestBody UserDTO userDTO, @UserAuthToken UserTokenDTO userTokenDTO) {
+	public ResponseEntity<?> updateUserIntroComment(@Validated(Comment.class) @RequestBody UserDTO userDTO,
+			@UserAuthToken UserTokenDTO userTokenDTO, BindingResult bindingResult) throws Exception {
 
-		String introComment = userDTO.getIntroComment();
-
-		if (introComment == null || introComment.isEmpty()) {
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+		if (bindingResult.hasErrors()) {
+			throw new ArgumentValidException(bindingResult.getFieldError());
 		}
 
-		userService.updateUserIntroComment(introComment, userTokenDTO);
+		userService.updateUserIntroComment(userDTO.getIntroComment(), userTokenDTO);
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
@@ -107,25 +90,10 @@ public class UserController implements ResponseStatus {
 	 * @return
 	 */
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Long id, @UserAuthToken UserTokenDTO userTokenDTO) {
+	@DeleteMapping("/account/{id}")
+	public ResponseEntity<?> deleteUser(@UserAuthToken UserTokenDTO userTokenDTO) {
 
-		userService.userDelete(id);
-
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param userDTO
-	 * @return
-	 */
-
-	@PutMapping("/changePassword/{id}")
-	public ResponseEntity<?> changePassword(@PathVariable Long id, UserDTO userDTO) {
-
-		userService.changeUserPassword(id, userDTO);
+		userService.userDelete(userTokenDTO.getId());
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

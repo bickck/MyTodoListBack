@@ -23,6 +23,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
+import com.todo.list.entity.base.PlatForm;
 
 @Entity(name = "USER_ENTITY")
 public class UserEntity {
@@ -40,6 +41,9 @@ public class UserEntity {
 
 	@Column(name = "PASSWORD")
 	private String password;
+
+	@Column(name = "LOGIN_PLATFORM")
+	private PlatForm platform;
 
 	@Column(name = "INTRO_COMMENT", length = 100)
 	private String introComment = "";
@@ -133,6 +137,14 @@ public class UserEntity {
 
 	public void setIntroComment(String introComment) {
 		this.introComment = introComment;
+	}
+
+	public PlatForm getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(PlatForm platform) {
+		this.platform = platform;
 	}
 
 	public String getUsername() {

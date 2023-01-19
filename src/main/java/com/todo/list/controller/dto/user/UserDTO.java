@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.todo.list.entity.base.PlatForm;
 import com.todo.list.util.validation.annotation.Password;
 import com.todo.list.util.validation.group.Comment;
 import com.todo.list.util.validation.group.LoginAccessArgumentGroup;
@@ -17,12 +18,16 @@ public class UserDTO {
 
 	private Long id;
 
-	@Email(groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
+	@NotNull(message = "이메일을 입력해주세요.", groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
+	@NotEmpty(message = "이메일을 입력해주세요.", groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
+	@Email(message = "이메일 형식이 맞지 않습니다.", groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
 	private String email;
 
-	@NotNull(groups = { RegisterAccessArgumentGroup.class })
+	@NotEmpty(message = "이름 입력해주세요.", groups = { RegisterAccessArgumentGroup.class })
+	@NotNull(message = "이름을 입력해주세요.", groups = { RegisterAccessArgumentGroup.class })
 	private String username;
 
+	@NotEmpty(message = "이메일을 입력해주세요.", groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
 	@Password(groups = { RegisterAccessArgumentGroup.class, LoginAccessArgumentGroup.class })
 	private String password;
 
@@ -31,6 +36,8 @@ public class UserDTO {
 	@NotBlank(groups = Comment.class)
 	@NotEmpty(groups = Comment.class)
 	private String introComment;
+
+	private PlatForm platForm;
 
 	private String nickName;
 
@@ -44,14 +51,14 @@ public class UserDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(@NotEmpty String email, String password) {
+	public UserDTO(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;
 	}
 
-	public UserDTO(Long id, @NotEmpty String email, String username, String password, String introComment,
-			String userImageName, String userIagePath) {
+	public UserDTO(Long id, String email, String username, String password, String introComment, String userImageName,
+			String userIagePath) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -62,8 +69,7 @@ public class UserDTO {
 		this.userIagePath = userIagePath;
 	}
 
-	public UserDTO(@NotEmpty String username, String password, String introComment, String userImageName,
-			String userIagePath) {
+	public UserDTO(String username, String password, String introComment, String userImageName, String userIagePath) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -109,6 +115,14 @@ public class UserDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public PlatForm getPlatForm() {
+		return platForm;
+	}
+
+	public void setPlatForm(PlatForm platForm) {
+		this.platForm = platForm;
 	}
 
 	public Timestamp getBirth() {

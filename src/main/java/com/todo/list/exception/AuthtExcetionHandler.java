@@ -13,24 +13,28 @@ import org.springframework.web.client.ResponseErrorHandler;
 
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.main.AuthController;
+import com.todo.list.controller.response.message.ResponseErrorMessageEntity;
+import com.todo.list.exception.custom.ArgumentValidException;
+import com.todo.list.service.user.UserAuthService;
 
-@RestControllerAdvice(basePackageClasses = { 
-		AuthController.class 
-})
+@RestControllerAdvice(basePackageClasses = { AuthController.class, UserAuthService.class })
 public class AuthtExcetionHandler {
 
 	@ExceptionHandler(NullPointerException.class)
-	public ResponseEntity<String> unExsistUser(Exception exception) {
-		exception.printStackTrace();
-		String exceptionMessage = "존재하지 않는 계정입니다.";
-		return new ResponseEntity<String>(exceptionMessage, HttpStatus.FORBIDDEN);
+	public ResponseErrorMessageEntity<?> isNotExsistUserAccount(Exception exception) {
 
+		return new ResponseErrorMessageEntity<String>(exception.getMessage(), HttpStatus.FORBIDDEN);
+	}
+
+	@ExceptionHandler(ArgumentValidException.class)
+	public ResponseErrorMessageEntity<?> argumentValidException(Exception exception) {
+
+		return new ResponseErrorMessageEntity<String>(exception.getMessage(), HttpStatus.FORBIDDEN);
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
-	public ResponseEntity<String> notAcceptAuthentication(Exception exception) {
-		exception.printStackTrace();
-		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.FORBIDDEN);
+	public ResponseErrorMessageEntity<?> doesNotSameUserEmailException(Exception exception) {
 
+		return new ResponseErrorMessageEntity<String>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
 	}
 }

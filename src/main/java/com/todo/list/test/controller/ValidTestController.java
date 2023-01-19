@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.dto.user.UserDTO;
+import com.todo.list.exception.custom.ArgumentValidException;
 import com.todo.list.util.validation.group.Comment;
 import com.todo.list.util.validation.group.LoginAccessArgumentGroup;
 import com.todo.list.util.validation.group.RegisterAccessArgumentGroup;
@@ -29,19 +30,16 @@ public class ValidTestController {
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		System.out.println(userDTO.getEmail());
-
-		System.out.println(userDTO.getIntroComment());
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}
 
 	@GetMapping("/createUser")
 	public ResponseEntity<?> loginUserValidated(@Validated(LoginAccessArgumentGroup.class) @RequestBody UserDTO userDTO,
-			BindingResult bindingResult) {
+			BindingResult bindingResult) throws Exception {
 
 		if (bindingResult.hasErrors()) {
-			return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.OK);
+			throw new ArgumentValidException(bindingResult.getFieldError());
 		}
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
@@ -54,9 +52,6 @@ public class ValidTestController {
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
 		}
-
-		System.out.println(userDTO.getEmail());
-		System.out.println(userDTO.getPassword());
 
 		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
 	}

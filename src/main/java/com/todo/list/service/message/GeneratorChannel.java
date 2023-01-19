@@ -9,8 +9,17 @@ public class GeneratorChannel {
 	@Value(value = "${broker.name.message}")
 	private String messageBrokerChannelName;
 
+	private String createChannel() {
+		return messageBrokerChannelName + "/";
+	}
+
 	public String personalUserMessageChannel(String username) {
 
-		return messageBrokerChannelName + "/" + username;
+		return createChannel() + username;
+	}
+
+	public String personalUserMessageChannel(Long userID) {
+
+		return createChannel() + userID;
 	}
 }

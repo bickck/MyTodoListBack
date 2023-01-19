@@ -8,16 +8,16 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.todo.list.util.validation.PasswordValidatorImpl;
+import com.todo.list.util.validation.PublishValidImpl;
 
-@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {PasswordValidatorImpl.class})
-public @interface Password {
+@Target(ElementType.FIELD)
+@Constraint(validatedBy = { PublishValidImpl.class })
+public @interface PublishType {
 
-	String message() default "특수문자, 대문자, 소문자를 입력해주세요.";
-	
+	String message() default "유효하지 않는 문자열입니다.";
+
 	Class<?>[] groups() default {};
-	
+
 	Class<? extends Payload>[] payload() default {};
 }

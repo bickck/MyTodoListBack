@@ -13,6 +13,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
+import com.todo.list.entity.base.PlatForm;
 import com.todo.list.redis.service.AuthRedisService;
 import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.UserImageRepository;
@@ -20,8 +21,6 @@ import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.service.message.GeneratorChannel;
 import com.todo.list.util.UserUtil;
-import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
-import com.todo.list.util.uuid.CommonUUID;
 
 /**
  * @author DongHyeon_kim
@@ -36,51 +35,14 @@ public class UserService {
 	private UserRepository userRepository;
 	private UserImageRepository userImageRepository;
 	private UserImageUploadService imageUploadService;
-	private AuthenticationJwtProvider jwtLoginToken;
-	private AuthRedisService authRedisService;
-	private UserUtil userUtil;
-
-	@Autowired
-	private GeneratorChannel generatorChannel;
 
 	@Autowired
 	public UserService(UserImageService userImageService, UserRepository userRepository,
-			UserImageRepository userImageRepository, UserUtil userUtil, UserImageUploadService imageUploadService,
-			AuthenticationJwtProvider jwtLoginToken, AuthRedisService authRedisService) {
-		// TODO Auto-generated constructor stub
+			UserImageRepository userImageRepository, UserImageUploadService imageUploadService) {
 		this.userImageService = userImageService;
 		this.userRepository = userRepository;
 		this.userImageRepository = userImageRepository;
-		this.userUtil = userUtil;
 		this.imageUploadService = imageUploadService;
-		this.jwtLoginToken = jwtLoginToken;
-		this.authRedisService = authRedisService;
-	}
-
-	/**
-	 * 
-	 * @param userDTO
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
-
-	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public UserEntity register(UserDTO userDTO) {
-
-		String email = userDTO.getEmail();
-
-		if (userRepository.existsByEmail(email)) {
-			throw new IllegalAccessError("중복된 아이디입니다.");
-		}
-
-		String username = userDTO.getUsername();
-		String password = userDTO.getPassword();
-		String passwordEncode = userUtil.bCrypt(password);
-		String personalUserChannel = generatorChannel.personalUserMessageChannel(username);
-
-		UserEntity userEntity = userRepository
-				.save(new UserEntity(email, username, passwordEncode, personalUserChannel));
-
-		return userImageService.saveRegistedUserImage(userEntity);
 	}
 
 	/**
@@ -120,53 +82,6 @@ public class UserService {
 
 	/**
 	 * 
-	 * @param requestUserArg
-	 * @throws AuthenticationException
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
-
-	@Transactional
-	public String login(UserDTO requestUserArg) throws AuthenticationException {
-
-		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail())
-				.orElseThrow(() -> new NullPointerException("존재하지 않는 아이디 입니다."));
-
-		String userEmail = user.getEmail();
-		String password = requestUserArg.getPassword();
-		String encPassword = user.getPassword();
-
-		if (!userUtil.isMatch(password, encPassword) && user != null) {
-			throw new AuthenticationException("이메일 및 비밀번호가 맞지 않습니다.");
-		}
-
-		String accessToken = jwtLoginToken.createAccessToken(user);
-		String refreshToken = jwtLoginToken.createRefreshToken(user);
-
-		authRedisService.saveRefreshedLoginUserToken(accessToken, refreshToken);
-
-		return accessToken;
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param requestUserArg
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
-	@Transactional
-	public UserEntity changeUserPassword(Long id, UserDTO requestUserArg) {
-
-		UserEntity user = userRepository.findByEmail(requestUserArg.getEmail())
-				.orElseThrow(() -> new NullPointerException("존재하지 않는 아이디 입니다."));
-
-		String encPassword = userUtil.bCrypt(requestUserArg.getPassword());
-		user.setPassword(encPassword);
-
-		return userRepository.save(user);
-	}
-
-	/**
-	 * 
 	 * @param id
 	 * @param requestUserArg
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
@@ -180,6 +95,13 @@ public class UserService {
 
 		return userRepository.save(entity);
 	}
+
+	/**
+	 * 
+	 * @param userId
+	 * @param userImage
+	 * @return
+	 */
 
 	@Transactional(rollbackFor = Exception.class)
 	public UserImageEntity updateUserIntroImage(Long userId, MultipartFile userImage) {

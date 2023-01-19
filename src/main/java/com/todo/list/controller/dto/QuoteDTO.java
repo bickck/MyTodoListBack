@@ -2,28 +2,39 @@ package com.todo.list.controller.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.base.Publish;
-
-import lombok.Data;
-import lombok.Getter;
+import com.todo.list.util.validation.annotation.PublishType;
+import com.todo.list.util.validation.group.QuoteAccessArgumentGroup;
 
 public class QuoteDTO implements Serializable {
 
 	private Long id;
+
+	@NotNull(message = "QUOTE를 입력해주세요.", groups = { QuoteAccessArgumentGroup.class })
+	@NotEmpty(message = "입력 조건이 맞지 않습니다.", groups = { QuoteAccessArgumentGroup.class })
 	private String quote;
+
+	@NotEmpty(message = "QUOTE를 입력해주세요.", groups = { QuoteAccessArgumentGroup.class })
+	@NotNull(message = "입력 조건이 맞지 않습니다.", groups = { QuoteAccessArgumentGroup.class })
 	private String author;
-	private String isPublish;
+
+	@NotNull(groups = QuoteAccessArgumentGroup.class)
+	@PublishType(groups = QuoteAccessArgumentGroup.class)
+	private Publish isPublish;
+
 	private String username;
+
 	private Long heart;
 
 	public QuoteDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuoteDTO(@NotNull String quote, @NotNull String author) {
+	public QuoteDTO(String quote, String author) {
 		super();
 		this.quote = quote;
 		this.author = author;
@@ -35,7 +46,7 @@ public class QuoteDTO implements Serializable {
 		this.author = author;
 	}
 
-	public QuoteDTO(String quote, String author, String isPublish, Long heart) {
+	public QuoteDTO(String quote, String author, Publish isPublish, Long heart) {
 		super();
 		this.quote = quote;
 		this.author = author;
@@ -43,7 +54,7 @@ public class QuoteDTO implements Serializable {
 		this.heart = heart;
 	}
 
-	public QuoteDTO(Long id, String quote, String author, String isPublish, String username, Long heart) {
+	public QuoteDTO(Long id, String quote, String author, Publish isPublish, String username, Long heart) {
 		super();
 		this.id = id;
 		this.quote = quote;
@@ -52,13 +63,13 @@ public class QuoteDTO implements Serializable {
 		this.username = username;
 		this.heart = heart;
 	}
-	
+
 	public QuoteDTO(QuoteEntity quoteEntity) {
 		super();
 		this.id = quoteEntity.getId();
 		this.quote = quoteEntity.getQuote();
 		this.author = quoteEntity.getAuthor();
-		this.isPublish = quoteEntity.getIsPublish().toString();
+		this.isPublish = quoteEntity.getIsPublish();
 		this.username = quoteEntity.getUser().getUsername();
 		this.heart = quoteEntity.getHeart();
 	}
@@ -87,11 +98,11 @@ public class QuoteDTO implements Serializable {
 		this.author = author;
 	}
 
-	public String getIsPublish() {
+	public Publish getIsPublish() {
 		return isPublish;
 	}
 
-	public void setIsPublish(String isPublish) {
+	public void setIsPublish(Publish isPublish) {
 		this.isPublish = isPublish;
 	}
 

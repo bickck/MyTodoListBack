@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/image", headers = HttpHeaders.AUTHORIZATION)
-public class ImageController {
+public class TodoImageController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
