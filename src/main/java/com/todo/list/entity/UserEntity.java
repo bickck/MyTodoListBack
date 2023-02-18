@@ -2,27 +2,23 @@ package com.todo.list.entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.base.PlatForm;
 
 @Entity(name = "USER_ENTITY")
@@ -42,6 +38,7 @@ public class UserEntity {
 	@Column(name = "PASSWORD")
 	private String password;
 
+	@Enumerated(value = EnumType.STRING)
 	@Column(name = "LOGIN_PLATFORM")
 	private PlatForm platform;
 
@@ -80,12 +77,13 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public UserEntity(String email, String username, String password, String personalChannelName) {
+	public UserEntity(String email, String username, String password, String personalChannelName, PlatForm platForm) {
 		super();
 		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.personalMessageChannelName = personalChannelName;
+		this.platform = platForm;
 	}
 
 	public UserEntity(Long id, String username, String password) {

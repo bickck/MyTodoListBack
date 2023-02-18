@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.ResponseStatus;
+import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
 import com.todo.list.service.user.TodoCommentService;
-import com.todo.list.service.user.TodoService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController
@@ -48,10 +47,10 @@ public class CommentController {
 		TodoCommentEntity commentEntity = todoCommentService.saveTodoComment(id, dto, commentDTO);
 
 		if (commentEntity == null) {
-			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseStatusMessage.FAILURE, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -69,7 +68,7 @@ public class CommentController {
 
 		todoCommentService.updateTodoComment(id, dto, commentDTO);
 
-		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -85,6 +84,6 @@ public class CommentController {
 
 		todoCommentService.deleteTodoComment(id);
 
-		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 }

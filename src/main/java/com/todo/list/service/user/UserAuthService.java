@@ -11,7 +11,7 @@ import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.PlatForm;
 import com.todo.list.redis.service.AuthRedisService;
-import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.user.UserRepository;
 import com.todo.list.service.image.user.UserImageService;
 import com.todo.list.service.message.GeneratorChannel;
 import com.todo.list.util.UserUtil;
@@ -105,7 +105,7 @@ public class UserAuthService {
 		}
 
 		UserEntity userEntity = userRepository
-				.save(new UserEntity(email, username, passwordEncode, personalUserChannel));
+				.save(new UserEntity(email, username, passwordEncode, personalUserChannel, PlatForm.DEFAULT));
 
 		return userImageService.saveRegistedUserImage(userEntity);
 	}

@@ -47,7 +47,6 @@ public class QuoteEntity {
 	@Column(name = "AUTHOR", nullable = false)
 	private String author;
 
-//	@ColumnDefault(value = "PUBLISH")
 	@Column(name = "ISAVAILABLEPUBLISH", nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private Publish isPublish;

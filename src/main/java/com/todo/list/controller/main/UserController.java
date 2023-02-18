@@ -1,10 +1,5 @@
 package com.todo.list.controller.main;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpHeaders;
@@ -14,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,27 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.controller.ResponseStatus;
-import com.todo.list.controller.dto.QuoteDTO;
-import com.todo.list.controller.dto.TodoDTO;
+import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.exception.custom.ArgumentValidException;
-import com.todo.list.service.api.UserApiService;
-import com.todo.list.service.image.ImageUploadService;
-import com.todo.list.service.image.upload.UserImageUploadService;
-import com.todo.list.service.image.user.UserImageService;
-import com.todo.list.service.user.QuoteService;
 import com.todo.list.service.user.UserService;
-import com.todo.list.service.user.TodoService;
-import com.todo.list.util.UserUtil;
 import com.todo.list.util.auth.UserAuthToken;
-import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 import com.todo.list.util.validation.group.Comment;
-
-import io.jsonwebtoken.Claims;
-import lombok.extern.java.Log;
 
 /**
  * 
@@ -54,7 +35,7 @@ import lombok.extern.java.Log;
 @Validated
 @RestController
 @RequestMapping(value = "/user", headers = HttpHeaders.AUTHORIZATION)
-public class UserController implements ResponseStatus {
+public class UserController implements ResponseStatusMessage {
 
 	private UserService userService;
 
@@ -81,7 +62,7 @@ public class UserController implements ResponseStatus {
 
 		userService.updateUserIntroComment(userDTO.getIntroComment(), userTokenDTO);
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -95,7 +76,7 @@ public class UserController implements ResponseStatus {
 
 		userService.userDelete(userTokenDTO.getId());
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -110,7 +91,7 @@ public class UserController implements ResponseStatus {
 
 		userService.userUpdate(userDTO, userTokenDTO);
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -127,10 +108,10 @@ public class UserController implements ResponseStatus {
 		UserImageEntity entity = userService.updateUserIntroImage(userDTO.getId(), file);
 
 		if (entity == null) {
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+			return new ResponseEntity<>(ResponseStatusMessage.FAILURE, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -149,15 +130,15 @@ public class UserController implements ResponseStatus {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+			return new ResponseEntity<>(ResponseStatusMessage.FAILURE, HttpStatus.OK);
 		}
 
 		if (!result) {
-			return new ResponseEntity<>(ResponseStatus.FAILURE, HttpStatus.OK);
+			return new ResponseEntity<>(ResponseStatusMessage.FAILURE, HttpStatus.OK);
 
 		}
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 }

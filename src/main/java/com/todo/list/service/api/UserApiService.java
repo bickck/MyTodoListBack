@@ -16,15 +16,15 @@ import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
-import com.todo.list.repository.QuoteRepository;
-import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.mapper.TodoMapper;
 import com.todo.list.repository.mapper.UserIntroMapper;
+import com.todo.list.repository.quote.QuoteRepository;
+import com.todo.list.repository.todo.TodoRepository;
+import com.todo.list.repository.user.UserRepository;
 import com.todo.list.service.user.QuoteService;
 import com.todo.list.util.Utils;
-import com.todo.list.repository.UserRepository;
-import com.todo.list.repository.image.UserImageRepository;
 
 @Service
 public class UserApiService {

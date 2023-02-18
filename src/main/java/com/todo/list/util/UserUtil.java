@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.todo.list.entity.UserEntity;
-import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.user.UserRepository;
 import com.todo.list.util.auth.BcryptHelper;
 
 /**

@@ -17,7 +17,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity(name="TODO_HEART_ENTITY")
 public class TodoHeartEntity {
 
-	@Id
+	@Id @Column(name = "TODO_HEART_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

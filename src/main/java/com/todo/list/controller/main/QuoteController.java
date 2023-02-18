@@ -3,7 +3,6 @@ package com.todo.list.controller.main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.ResponseStatus;
+import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.response.message.ResponseMessageEntity;
@@ -32,7 +31,7 @@ import com.todo.list.util.validation.group.QuoteAccessArgumentGroup;
  */
 @RestController
 @RequestMapping(value = "/user/quote", headers = HttpHeaders.AUTHORIZATION)
-public class QuoteController implements ResponseStatus {
+public class QuoteController implements ResponseStatusMessage {
 
 	@Autowired
 	private QuoteService userQuoteService;
@@ -56,7 +55,7 @@ public class QuoteController implements ResponseStatus {
 
 		userQuoteService.saveQuote(quoteDTO, tokenDTO);
 
-		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseMessageEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -78,7 +77,7 @@ public class QuoteController implements ResponseStatus {
 
 		userQuoteService.updateQuote(id, quoteDTO, tokenDTO);
 
-		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseMessageEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -89,11 +88,11 @@ public class QuoteController implements ResponseStatus {
 	 */
 
 	@DeleteMapping(value = "/post/{id}")
-	public ResponseEntity<?> deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
+	public ResponseMessageEntity<?> deleteUserQuote(@PathVariable Long id, @UserAuthToken UserTokenDTO tokenDTO) {
 
 		userQuoteService.deleteQuote(id);
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseMessageEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 }

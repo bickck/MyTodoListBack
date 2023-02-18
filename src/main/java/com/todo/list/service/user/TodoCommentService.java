@@ -14,9 +14,9 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.repository.TodoRepository;
-import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.todo.TodoCommentRepository;
+import com.todo.list.repository.todo.TodoRepository;
+import com.todo.list.repository.user.UserRepository;
 
 @Service
 public class TodoCommentService {

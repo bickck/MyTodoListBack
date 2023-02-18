@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.MessageEntity;
 import com.todo.list.message.EventMessage;
-import com.todo.list.repository.QuoteRepository;
+import com.todo.list.repository.quote.QuoteRepository;
 import com.todo.list.test.service.CustomAnnotationTestService;
 
 @RestController

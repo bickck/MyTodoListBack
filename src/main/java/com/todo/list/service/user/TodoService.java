@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
+import com.todo.list.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,248 +24,248 @@ import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
-import com.todo.list.entity.TodoCommentEntity;
-import com.todo.list.entity.TodoEntity;
-import com.todo.list.entity.TodoImageEntity;
-import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.message.EventMessage;
-import com.todo.list.repository.TodoRepository;
-import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.image.TodoImageRepository;
 import com.todo.list.repository.todo.TodoCommentRepository;
+import com.todo.list.repository.todo.TodoRepository;
+import com.todo.list.repository.user.UserRepository;
 import com.todo.list.service.image.ImageUploadService;
 import com.todo.list.service.image.upload.TodoImageUploadService;
 import com.todo.list.service.image.user.TodoImageService;
 
 /**
- * 
  * 해당 유저의 Todo 데이터를 저장,수정,삭제를 제공하는 클래스
- * 
  */
 
 @Service
 public class TodoService {
 
-	private EntityManager entityManager;
-	private CriteriaBuilder criteriaBuilder;
-	private UserRepository userRepository;
-	private TodoRepository todoRepository;
-	private HeartService heartService;
-	private TodoImageUploadService imageService;
+    private EntityManager entityManager;
+    private CriteriaBuilder criteriaBuilder;
+    private UserRepository userRepository;
+    private TodoRepository todoRepository;
+    private HeartService heartService;
+    private TodoImageUploadService imageService;
 
-	@Autowired
-	private TodoImageService todoImageService;
 
-	@Autowired
-	public TodoService(EntityManager entityManager, UserRepository userRepository, HeartService heartService,
-			TodoRepository todoRepository,TodoImageUploadService imageUploadService) {
-		this.entityManager = entityManager;
-		this.criteriaBuilder = entityManager.getCriteriaBuilder();
-		this.userRepository = userRepository;
-		this.heartService = heartService;
-		this.todoRepository = todoRepository;
-		this.imageService = imageUploadService;
-	}
+    @Autowired
+    private TodoImageTempService todoImageTempService;
 
-	/**
-	 * 
-	 * @param dto
-	 * @param todoDTO
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
+    @Autowired
+    private TodoImageService todoImageService;
 
-	@Transactional(rollbackFor = Exception.class)
-	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO) {
-		UserEntity user = userRepository.findByUsername(dto.getUsername());
+    @Autowired
+    public TodoService(EntityManager entityManager, UserRepository userRepository, HeartService heartService,
+                       TodoRepository todoRepository, TodoImageUploadService imageUploadService) {
+        this.entityManager = entityManager;
+        this.criteriaBuilder = entityManager.getCriteriaBuilder();
+        this.userRepository = userRepository;
+        this.heartService = heartService;
+        this.todoRepository = todoRepository;
+        this.imageService = imageUploadService;
+    }
 
-		long defaultHeartValue = 0;
-		Publish publish = Publish.PUBLISH;
+    /**
+     * @param dto
+     * @param todoDTO
+     * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+     */
 
-		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
-			publish = Publish.PRIVATE;
-		}
+    @Transactional(rollbackFor = Exception.class)
+    public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO) {
+        UserEntity user = userRepository.findByUsername(dto.getUsername());
 
-		TodoEntity entity = todoRepository
-				.save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
+        long defaultHeartValue = 0;
+        Publish publish = Publish.PUBLISH;
 
-		return entity;
-	}
+        if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
+            publish = Publish.PRIVATE;
+        }
 
-	/**
-	 * 
-	 * @param dto
-	 * @param todoDTO
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
+        TodoEntity entity = todoRepository
+                .save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
 
-	@EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 저장하였습니다.")
-	@Transactional(rollbackFor = Exception.class)
-	public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, MultipartFile[] todoImages) {
-		UserEntity user = userRepository.findById(dto.getId()).get();
+        return entity;
+    }
 
-		long defaultHeartValue = 0;
-		Publish publish = Publish.PUBLISH;
+    /**
+     * @param dto
+     * @param todoDTO
+     * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+     */
 
-		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
-			publish = Publish.PRIVATE;
-		}
+    @EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 저장하였습니다.")
+    @Transactional(rollbackFor = Exception.class)
+    public TodoEntity saveTodo(UserTokenDTO dto, TodoDTO todoDTO, MultipartFile[] todoImages) {
+        UserEntity user = userRepository.findById(dto.getId()).get();
 
-		TodoEntity entity = todoRepository
-				.save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
+        long defaultHeartValue = 0;
+        Publish publish = Publish.PUBLISH;
 
-		if (todoImages != null && todoImages.length != 0) {
+        if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
+            publish = Publish.PRIVATE;
+        }
 
-			for (int i = 0; i < todoImages.length; i++) {
-				MultipartFile data = todoImages[i];
-				ImageDTO imageDTO = imageService.saveImageInDir(data);
-				todoImageService.todoImageSave(entity, imageDTO);
-			}
-		}
+        TodoEntity entity = todoRepository
+                .save(new TodoEntity(user, todoDTO.getTitle(), todoDTO.getContent(), defaultHeartValue, publish));
 
-		return entity;
-	}
+        if (todoImages != null && todoImages.length != 0) {
 
-	/**
-	 * 
-	 * @param todo    id
-	 * @param todoDTO
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 * @throws Exception
-	 */
+            for (int i = 0; i < todoImages.length; i++) {
+                MultipartFile data = todoImages[i];
+                ImageDTO imageDTO = imageService.saveImageInDir(data);
+                todoImageService.todoImageSave(entity, imageDTO);
+            }
+        }
 
-	@EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 수정하였습니다.")
-	@Transactional(rollbackFor = Exception.class)
-	public TodoEntity updateTodo(Long id, TodoDTO todoDTO, MultipartFile[] todoImages) throws Exception {
-		TodoEntity entity = todoRepository.findTodoEntityById(id);
+        return entity;
+    }
 
-		String title = todoDTO.getTitle();
-		String content = todoDTO.getContent();
+    /**
+     * @param todo    id
+     * @param todoDTO
+     * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+     * @throws Exception
+     */
 
-		if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
-			entity.setIsPublish(Publish.PRIVATE);
-		}
+    @EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 수정하였습니다.")
+    @Transactional(rollbackFor = Exception.class)
+    public TodoEntity updateTodo(Long id, TodoDTO todoDTO) throws Exception {
+        TodoEntity entity = todoRepository.findTodoEntityById(id);
 
-		if (title != null) {
-			entity.setTitle(title);
-		}
+        String title = todoDTO.getTitle();
+        String content = todoDTO.getContent();
 
-		if (content != null) {
-			entity.setContent(content);
-		}
+        if (todoDTO.getIsPublish().equals("private") || todoDTO.getIsPublish().equals("PRIVATE")) {
+            entity.setIsPublish(Publish.PRIVATE);
+        }
 
-		// 새롭게 Todo Image를 추가하고자 한다면
-		if (todoImages != null && todoImages.length != 0) {
+        if (title != null) {
+            entity.setTitle(title);
+        }
 
-			boolean result = deleteFiles(entity);
+        if (content != null) {
+            entity.setContent(content);
+        }
 
-			for (int i = 0; i < todoImages.length; i++) {
-				MultipartFile data = todoImages[i];
-				ImageDTO imageDTO = imageService.saveImageInDir(data);
-				todoImageService.todoImageSave(entity, imageDTO);
-			}
+        // 새롭게 Todo Image를 추가하고자 한다면
 
-		} else {
-			boolean hasImage = todoImageService.existsImageById(entity);
-			// 현재 데이터베이스 상 이미지 파일 정보는 존재하지만 요청에서 이미지 파일이 전부 제거 했다면 모든 기록 삭제
-			if (hasImage) {
 
-				boolean result = deleteFiles(entity);
+        return todoRepository.save(entity);
+    }
 
-			}
-		}
+    /**
+     * @param id
+     * @throws Exception
+     */
 
-		return todoRepository.save(entity);
-	}
+    @EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 삭제하였습니다.")
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteTodo(Long id) throws Exception {
+        TodoEntity entity = todoRepository.findById(id).get();
 
-	/**
-	 * 
-	 * @param id
-	 * @throws Exception
-	 * 
-	 */
+        boolean isFileDelete = deleteFiles(entity);
 
-	@EventMessage(repositoryClass = TodoRepository.class, message = "Todo를 삭제하였습니다.")
-	@Transactional(rollbackFor = Exception.class)
-	public void deleteTodo(Long id) throws Exception {
-		TodoEntity entity = todoRepository.findById(id).get();
+        if (isFileDelete) {
 
-		boolean isFileDelete = deleteFiles(entity);
+            heartService.deleteHeartAllByTodoId(entity.getId());
+            deleteFiles(entity);
+            todoRepository.deleteById(id);
+        }
 
-		if (isFileDelete) {
+    }
 
-			heartService.deleteHeartAllByTodoId(entity.getId());
-			deleteFiles(entity);
-			todoRepository.deleteById(id);
-		}
+    /**
+     * @param id
+     * @param username
+     * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+     */
 
-	}
+    @Transactional
+    public void updateTodoPublished(Long id, String username) {
+        TodoEntity entity = todoRepository.findById(id).get();
 
-	/**
-	 * 
-	 * @param id
-	 * @param username
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
+        if (entity.getIsPublish().equals(Publish.PRIVATE)) {
+            entity.setIsPublish(Publish.PUBLISH);
+        } else {
+            entity.setIsPublish(Publish.PRIVATE);
+        }
 
-	@Transactional
-	public void updateTodoPublished(Long id, String username) {
-		TodoEntity entity = todoRepository.findById(id).get();
+        todoRepository.save(entity);
 
-		if (entity.getIsPublish().equals(Publish.PRIVATE)) {
-			entity.setIsPublish(Publish.PUBLISH);
-		} else {
-			entity.setIsPublish(Publish.PRIVATE);
-		}
+    }
 
-		todoRepository.save(entity);
+    /**
+     * UPDATE QUERY
+     *
+     * @param id : Todo Identify
+     * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
+     */
 
-	}
+    @Transactional
+    public int addTodoHeart(Long id) {
+        CriteriaUpdate<TodoEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(TodoEntity.class);
+        Root<TodoEntity> root = criteriaUpdate.from(TodoEntity.class);
 
-	/**
-	 * UPDATE QUERY
-	 * 
-	 * @param todo Id
-	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
-	 */
+        criteriaUpdate.set("HEART", criteriaBuilder.sum(root.get("HEART"), 1));
+        criteriaUpdate.where(criteriaBuilder.equal(root.get("TODO_ID"), id));
 
-	@Transactional
-	public int addTodoHeart(Long id) {
-		CriteriaUpdate<TodoEntity> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(TodoEntity.class);
-		Root<TodoEntity> root = criteriaUpdate.from(TodoEntity.class);
+        int result = entityManager.createQuery(criteriaUpdate).executeUpdate();
 
-		criteriaUpdate.set("HEART", criteriaBuilder.sum(root.get("HEART"), 1));
-		criteriaUpdate.where(criteriaBuilder.equal(root.get("TODO_ID"), id));
+        return result;
+    }
 
-		int result = entityManager.createQuery(criteriaUpdate).executeUpdate();
+    /**
+     * @param entity
+     * @throws Exception
+     */
 
-		return result;
-	}
+    private boolean deleteFiles(TodoEntity entity) throws Exception {
 
-	/**
-	 * 
-	 * @param entity
-	 * @throws Exception
-	 */
+        List<TodoImageEntity> imageEntities = todoImageService.todoImageListByTodoId(entity);
 
-	private boolean deleteFiles(TodoEntity entity) throws Exception {
+        for (int i = 0; i < imageEntities.size(); i++) {
 
-		List<TodoImageEntity> imageEntities = todoImageService.todoImageListByTodoId(entity);
+            String originalFileName = imageEntities.get(i).getOriginalFileName();
+            String filePath = imageEntities.get(i).getFilePath();
 
-		for (int i = 0; i < imageEntities.size(); i++) {
+            boolean deleteCheck = imageService.deleteImageInDirectory(originalFileName, filePath);
 
-			String originalFileName = imageEntities.get(i).getOriginalFileName();
-			String filePath = imageEntities.get(i).getFilePath();
+            if (deleteCheck) {
+                todoImageService.todoImageDelete(imageEntities.get(i));
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 
-			boolean deleteCheck = imageService.deleteImageInDirectory(originalFileName, filePath);
 
-			if (deleteCheck) {
-				todoImageService.todoImageDelete(imageEntities.get(i));
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
+    private void saveFiles(Long id) {
+
+
+        List<TodoImageTempEntity> lists = todoImageTempService.findTodoTempImageById(id);
+
+//        if (lists.isEmpty()) {
+//
+//            boolean result = deleteFiles(entity);
+//
+//            for (int i = 0; i < todoImages.length; i++) {
+//                MultipartFile data = todoImages[i];
+//                ImageDTO imageDTO = imageService.saveImageInDir(data);
+//                todoImageService.todoImageSave(entity, imageDTO);
+//            }
+//
+//        } else {
+//            boolean hasImage = todoImageService.existsImageById(entity);
+//            // 현재 데이터베이스 상 이미지 파일 정보는 존재하지만 요청에서 이미지 파일이 전부 제거 했다면 모든 기록 삭제
+//            if (hasImage) {
+//
+//                boolean result = deleteFiles(entity);
+//
+//            }
+//        }
+    }
 
 }

@@ -9,7 +9,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.redis.entity.LoginUserRedisEntity;
 import com.todo.list.redis.repository.LoginUserJwtRepository;
-import com.todo.list.repository.UserRepository;
+import com.todo.list.repository.user.UserRepository;
 import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 
 @Service

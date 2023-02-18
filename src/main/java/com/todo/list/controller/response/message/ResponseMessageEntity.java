@@ -2,7 +2,6 @@ package com.todo.list.controller.response.message;
 
 import org.springframework.http.HttpStatus;
 
-import com.todo.list.controller.ResponseStatus;
 import com.todo.list.controller.response.ResponseCode;
 
 public class ResponseMessageEntity<T> extends ResponseCode {

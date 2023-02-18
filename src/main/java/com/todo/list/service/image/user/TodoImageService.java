@@ -2,6 +2,7 @@ package com.todo.list.service.image.user;
 
 import java.util.List;
 
+import com.todo.list.repository.todo.TodoImageTempRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,8 @@ public class TodoImageService {
 
 		return todoImageRepository.save(todoImage);
 	}
-	
+
+	@Transactional
 	public TodoImageEntity todoImageUpdate(TodoEntity todoEntity, ImageDTO imageDTO) {
 
 		TodoImageEntity todoImage = new TodoImageEntity(todoEntity, imageDTO.getFileName(), imageDTO.getOriginName(),

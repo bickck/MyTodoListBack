@@ -10,11 +10,11 @@ import com.todo.list.entity.QuoteHeartEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoHeartEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.repository.QuoteRepository;
-import com.todo.list.repository.TodoRepository;
-import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.quote.QuoteHeartRepository;
+import com.todo.list.repository.quote.QuoteRepository;
 import com.todo.list.repository.todo.TodoHeartRepository;
+import com.todo.list.repository.todo.TodoRepository;
+import com.todo.list.repository.user.UserRepository;
 import com.todo.list.util.uuid.CommonUUID;
 
 /**

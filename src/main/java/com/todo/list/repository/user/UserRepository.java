@@ -1,4 +1,4 @@
-package com.todo.list.repository;
+package com.todo.list.repository.user;
 
 import java.util.List;
 import java.util.Optional;

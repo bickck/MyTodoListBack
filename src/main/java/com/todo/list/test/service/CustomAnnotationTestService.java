@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.MessageEntity;
 import com.todo.list.message.EventMessage;
-import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.event.EventMessageRepository;
+import com.todo.list.repository.quote.QuoteRepository;
 
 @Service
 public class CustomAnnotationTestService {

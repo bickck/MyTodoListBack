@@ -25,8 +25,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.entity.QuoteEntity;
-import com.todo.list.repository.QuoteRepository;
-import com.todo.list.repository.TodoRepository;
+import com.todo.list.repository.quote.QuoteRepository;
+import com.todo.list.repository.todo.TodoRepository;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

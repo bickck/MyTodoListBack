@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.ResponseStatus;
+import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.util.validation.group.QuoteAccessArgumentGroup;
@@ -32,7 +32,7 @@ public class ArgumentBindTestController {
 
 		System.out.println(quoteDTO.getIsPublish());
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/todo")
@@ -40,6 +40,6 @@ public class ArgumentBindTestController {
 
 		System.out.println(quoteDTO.getIsPublish());
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 }

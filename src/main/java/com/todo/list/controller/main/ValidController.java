@@ -14,18 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.ResponseStatus;
+import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.service.ValidService;
-import com.todo.list.util.UserUtil;
 
 @RestController
 @RequestMapping(value = "/valid")
-public class ValidController implements ResponseStatus {
+public class ValidController implements ResponseStatusMessage {
 
 	@Autowired
 	private ValidService validService;
@@ -35,14 +32,14 @@ public class ValidController implements ResponseStatus {
 		
 		String email = emailDuplication.getEmail();
 		if(email.equals("")) {
-			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseStatusMessage.FAILURE, HttpStatus.OK);
 		}
 		System.out.println(!validService.emailDuplicationCheck(email));
 		if (validService.emailDuplicationCheck(email)) {
-			return new ResponseEntity<String>(ResponseStatus.FAILURE, HttpStatus.OK);
+			return new ResponseEntity<String>(ResponseStatusMessage.FAILURE, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	@PostMapping("/valid/token")

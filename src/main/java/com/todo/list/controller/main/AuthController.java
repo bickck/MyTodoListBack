@@ -2,24 +2,21 @@ package com.todo.list.controller.main;
 
 import javax.security.sasl.AuthenticationException;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todo.list.controller.ResponseStatus;
+import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.controller.response.message.ResponseMessageEntity;
@@ -60,12 +57,6 @@ public class AuthController {
 	@Autowired
 	private EventMessageService eventMessageService;
 
-	@GetMapping("/test")
-	public ResponseTokenEntity test() {
-
-		return new ResponseTokenEntity();
-	}
-
 	/**
 	 * 
 	 * @param userDTO
@@ -73,7 +64,6 @@ public class AuthController {
 	 * @throws AuthenticationException
 	 */
 
-	@ResponseBody
 	@PostMapping(value = "/login")
 	public ResponseTokenEntity requestLogin(
 			@Validated(value = LoginAccessArgumentGroup.class) @RequestBody UserDTO userDTO,
@@ -88,7 +78,6 @@ public class AuthController {
 		return new ResponseTokenEntity(accessToken, HttpStatus.OK);
 	}
 
-	@ResponseBody
 	@PostMapping(value = "/kakao/login")
 	public ResponseTokenEntity requestKakaoLogin(@RequestBody UserDTO userDTO) throws Exception {
 
@@ -103,7 +92,6 @@ public class AuthController {
 	 * @return
 	 */
 
-	@ResponseBody
 	@PostMapping(value = "/register")
 	public synchronized ResponseMessageEntity<?> requestRegister(
 			@Validated(value = RegisterAccessArgumentGroup.class) @RequestBody UserDTO userDTO,
@@ -115,7 +103,7 @@ public class AuthController {
 
 		authService.register(userDTO);
 
-		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.CREATED);
+		return new ResponseMessageEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.CREATED);
 	}
 
 	/**
@@ -136,7 +124,7 @@ public class AuthController {
 		eventMessageService.deleteUserMessageById(userTokenDTO.getId());
 		messageChannelService.deleteUserChannelById(userTokenDTO.getId());
 
-		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseMessageEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 	/**
@@ -164,10 +152,10 @@ public class AuthController {
 			@UserAuthToken UserTokenDTO dto) {
 
 		if (!userDTO.getUsername().equals(dto.getUsername())) {
-			return new ResponseMessageEntity<String>(ResponseStatus.FAILURE, HttpStatus.ACCEPTED);
+			return new ResponseMessageEntity<String>(ResponseStatusMessage.FAILURE, HttpStatus.ACCEPTED);
 		}
 
-		return new ResponseMessageEntity<String>(ResponseStatus.SUCCESS, HttpStatus.ACCEPTED);
+		return new ResponseMessageEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.ACCEPTED);
 	}
 
 	/**
@@ -195,7 +183,7 @@ public class AuthController {
 
 		// userService.changeUserPassword(id, userDTO);
 
-		return new ResponseEntity<>(ResponseStatus.SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
 	}
 
 //	@PostMapping("/login")

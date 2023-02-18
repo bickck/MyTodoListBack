@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 public enum PlatForm {
 
-	KAKAO("KAKAO");
+	KAKAO("KAKAO"), DEFAULT("DEFAULT");
 
 	private final String code;
 

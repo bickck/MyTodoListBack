@@ -23,9 +23,9 @@ import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.TodoImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.repository.TodoRepository;
 import com.todo.list.repository.mapper.TodoMapper;
 import com.todo.list.repository.todo.TodoLikeRepository;
+import com.todo.list.repository.todo.TodoRepository;
 
 @Service
 public class TodoApiService {

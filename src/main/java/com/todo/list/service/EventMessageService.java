@@ -9,10 +9,10 @@ import com.todo.list.entity.MessageEntity;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.TodoEntity;
 import com.todo.list.entity.UserEntity;
-import com.todo.list.repository.QuoteRepository;
-import com.todo.list.repository.TodoRepository;
-import com.todo.list.repository.UserRepository;
 import com.todo.list.repository.event.EventMessageRepository;
+import com.todo.list.repository.quote.QuoteRepository;
+import com.todo.list.repository.todo.TodoRepository;
+import com.todo.list.repository.user.UserRepository;
 
 @Service
 public class EventMessageService {

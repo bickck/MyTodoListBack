@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.todo.list.entity.QuoteEntity;
 import com.todo.list.entity.base.Publish;
-import com.todo.list.repository.QuoteRepository;
 import com.todo.list.repository.mapper.QuoteMapper;
 import com.todo.list.repository.quote.QuoteLikeRepository;
+import com.todo.list.repository.quote.QuoteRepository;
 
 @Service
 public class QuoteApiService {
