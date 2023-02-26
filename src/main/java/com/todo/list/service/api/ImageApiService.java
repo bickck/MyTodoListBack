@@ -1,11 +1,9 @@
 package com.todo.list.service.api;
 
-import java.io.File;
 import java.util.List;
-import java.util.Optional;
 
+import com.todo.list.service.image.physical.ImageUploader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,31 +11,27 @@ import org.springframework.transaction.annotation.Transactional;
 import com.todo.list.repository.image.TodoImageRepository;
 import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.repository.mapper.ImageMapper;
-import com.todo.list.service.image.ImageUploadService;
-import com.todo.list.service.image.upload.TodoImageUploadService;
-import com.todo.list.service.image.upload.UserImageUploadService;
 
 @Service
 public class ImageApiService {
 
 	private TodoImageRepository todoImageRepository;
 	private UserImageRepository userImageRepository;
-	private TodoImageUploadService imageUploadService;
-	private UserImageUploadService userImageUploadService;
+
+	private ImageUploader imageUploader;
+
 
 	@Autowired
-	public ImageApiService(TodoImageRepository todoImageRepository, UserImageRepository userImageRepository,
-			TodoImageUploadService todoImageUploadService, UserImageUploadService userImageUploadService) {
+	public ImageApiService(TodoImageRepository todoImageRepository, UserImageRepository userImageRepository,ImageUploader imageUploader) {
 		this.todoImageRepository = todoImageRepository;
 		this.userImageRepository = userImageRepository;
-		this.imageUploadService = todoImageUploadService;
-		this.userImageUploadService = userImageUploadService;
+		this.imageUploader = imageUploader;
 	}
 
 	/**
 	 * Todo 이미지 가져오는 메소드
 	 * 
-	 * @param TodoId
+	 * @param id
 	 * @return
 	 */
 
@@ -50,7 +44,7 @@ public class ImageApiService {
 	/**
 	 * User 이미지 가져오는 메소드
 	 * 
-	 * @param UserId
+	 * @param id
 	 * @return
 	 */
 
@@ -63,7 +57,7 @@ public class ImageApiService {
 	/**
 	 * User 이미지 가져오는 메소드
 	 * 
-	 * @param UserId
+	 * @param uuid
 	 * @return
 	 */
 
@@ -88,7 +82,7 @@ public class ImageApiService {
 			return null;
 		}
 
-		return imageUploadService.findImageInDirectory(originalName, storageFilePath);
+		return imageUploader.findImageInDirectory(originalName, storageFilePath);
 	}
 
 	/**
@@ -102,7 +96,7 @@ public class ImageApiService {
 
 		String storageFilePath = userImageRepository.findFilePathByOriginalFileNameAndFileName(originalName, filePath);
 
-		return userImageUploadService.findImageInDirectory(originalName, storageFilePath);
+		return imageUploader.findImageInDirectory(originalName, storageFilePath);
 	}
 
 }

@@ -9,6 +9,11 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+
+/**
+ *
+ */
+
 @Entity(name = "MESSAGE_ENTITY")
 public class MessageEntity {
 

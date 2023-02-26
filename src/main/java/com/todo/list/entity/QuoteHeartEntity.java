@@ -20,7 +20,7 @@ public class QuoteHeartEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "QUOTE_UUID", nullable = false)
+	@Column(name = "QUOTE_HRART_UUID", nullable = false)
 	private String uuid;
 
 	@ManyToOne(fetch = FetchType.LAZY)

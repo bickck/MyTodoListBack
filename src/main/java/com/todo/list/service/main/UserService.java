@@ -1,10 +1,8 @@
-package com.todo.list.service.user;
+package com.todo.list.service.main;
 
-import javax.security.sasl.AuthenticationException;
-
+import com.todo.list.service.image.physical.ImageUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,14 +11,9 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.UserImageEntity;
-import com.todo.list.entity.base.PlatForm;
-import com.todo.list.redis.service.AuthRedisService;
 import com.todo.list.repository.image.UserImageRepository;
 import com.todo.list.repository.user.UserRepository;
-import com.todo.list.service.image.upload.UserImageUploadService;
-import com.todo.list.service.image.user.UserImageService;
-import com.todo.list.service.message.GeneratorChannel;
-import com.todo.list.util.UserUtil;
+import com.todo.list.service.image.logical.UserImageService;
 
 /**
  * @author DongHyeon_kim
@@ -34,20 +27,20 @@ public class UserService {
 	private UserImageService userImageService;
 	private UserRepository userRepository;
 	private UserImageRepository userImageRepository;
-	private UserImageUploadService imageUploadService;
+	private ImageUploader imageUploader;
 
 	@Autowired
 	public UserService(UserImageService userImageService, UserRepository userRepository,
-			UserImageRepository userImageRepository, UserImageUploadService imageUploadService) {
+			UserImageRepository userImageRepository, ImageUploader imageUploader) {
 		this.userImageService = userImageService;
 		this.userRepository = userRepository;
 		this.userImageRepository = userImageRepository;
-		this.imageUploadService = imageUploadService;
+		this.imageUploader = imageUploader;
 	}
 
 	/**
 	 * 
-	 * @param user
+	 * @param userDTO
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
 
@@ -71,7 +64,7 @@ public class UserService {
 
 	/**
 	 * 
-	 * @param userID and Email
+	 * @param userid
 	 */
 
 	@Transactional
@@ -82,7 +75,7 @@ public class UserService {
 
 	/**
 	 * 
-	 * @param id
+	 * @param comment
 	 * @param requestUserArg
 	 * @return result status 1 : SUCCESS, 0 : FAILURE or ENTITY INFO
 	 */
@@ -108,7 +101,7 @@ public class UserService {
 
 		UserImageEntity userIntroImage = userImageService.findUserImageByUserId(userId);
 
-		ImageDTO imageDTO = imageUploadService.saveImageInDir(userImage);
+		ImageDTO imageDTO = imageUploader.saveImageInDir(userImage);
 
 		userIntroImage.setFileName(imageDTO.getFileName());
 		userIntroImage.setFilePath(imageDTO.getFilePath());
@@ -138,8 +131,7 @@ public class UserService {
 		}
 
 		try {
-
-			imageUploadService.deleteImageInDirectory(userIntroImage.getOriginalFileName(),
+			imageUploader.deleteImageInDirectory(userIntroImage.getOriginalFileName(),
 					userIntroImage.getFilePath());
 
 			// 디폴트 유저 이미지는 저장되어있기 때문에 DB에만 정보를 저장함

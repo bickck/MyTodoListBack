@@ -1,4 +1,4 @@
-package com.todo.list.service.user;
+package com.todo.list.service.main;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.entity.base.Publish;
 import com.todo.list.message.EventMessage;
 import com.todo.list.entity.QuoteEntity;
-import com.todo.list.entity.TodoEntity;
 import com.todo.list.repository.quote.QuoteRepository;
 import com.todo.list.repository.user.UserRepository;
 

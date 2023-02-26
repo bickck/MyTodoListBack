@@ -1,4 +1,4 @@
-package com.todo.list.service.user;
+package com.todo.list.service.main;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

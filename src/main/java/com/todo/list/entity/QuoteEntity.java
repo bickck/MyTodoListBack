@@ -24,12 +24,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.entity.base.Publish;
 
+/**
+ *
+ *
+ */
+
 @Entity(name = "USER_QUOTE_ENTITY")
 public class QuoteEntity {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -50,10 +51,6 @@ public class QuoteEntity {
 	@Column(name = "ISAVAILABLEPUBLISH", nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private Publish isPublish;
-
-//	@ColumnDefault(value = "0")
-	@Column(name = "HEART")
-	private Long heart;
 
 	@CreationTimestamp
 	@Column(name = "CREATETIMESTAMP")
@@ -81,13 +78,12 @@ public class QuoteEntity {
 		this.author = quoteDTO.getAuthor();
 	}
 
-	public QuoteEntity(UserEntity user, String quote, String author, Publish isPublish, Long heart) {
+	public QuoteEntity(UserEntity user, String quote, String author, Publish isPublish) {
 		super();
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
 		this.isPublish = isPublish;
-		this.heart = heart;
 	}
 
 	public QuoteEntity(Long id, UserEntity user, String quote, String author, Long heart, Timestamp createTimestamp) {
@@ -96,11 +92,10 @@ public class QuoteEntity {
 		this.user = user;
 		this.quote = quote;
 		this.author = author;
-		this.heart = heart;
 		this.createTimestamp = createTimestamp;
 	}
 
-	public QuoteEntity(Long id, UserEntity user, String quote, String author, Publish isPublish, Long heart,
+	public QuoteEntity(Long id, UserEntity user, String quote, String author, Publish isPublish,
 			Timestamp createTimestamp, Timestamp updateTimestamp) {
 		super();
 		this.id = id;
@@ -108,7 +103,6 @@ public class QuoteEntity {
 		this.quote = quote;
 		this.author = author;
 		this.isPublish = isPublish;
-		this.heart = heart;
 		this.createTimestamp = createTimestamp;
 		this.updateTimestamp = updateTimestamp;
 	}
@@ -151,14 +145,6 @@ public class QuoteEntity {
 
 	public void setIsPublish(Publish isPublish) {
 		this.isPublish = isPublish;
-	}
-
-	public Long getHeart() {
-		return heart;
-	}
-
-	public void setHeart(Long heart) {
-		this.heart = heart;
 	}
 
 	public Timestamp getCreateTimestamp() {

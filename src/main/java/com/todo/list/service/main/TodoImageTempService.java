@@ -1,4 +1,4 @@
-package com.todo.list.service.user;
+package com.todo.list.service.main;
 
 import com.todo.list.entity.TodoImageTempEntity;
 import com.todo.list.repository.todo.TodoImageTempRepository;
@@ -16,7 +16,7 @@ public class TodoImageTempService {
     @Autowired
     private TodoImageTempRepository todoImageTempRepository;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveTodoTempImage(Long id, MultipartFile multipartFile) {
 
         TodoImageTempEntity todoImageTempEntity = new TodoImageTempEntity();

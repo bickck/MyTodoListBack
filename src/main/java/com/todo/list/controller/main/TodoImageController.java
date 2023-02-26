@@ -2,8 +2,8 @@ package com.todo.list.controller.main;
 
 
 import com.todo.list.controller.response.message.ResponseMessageEntity;
-import com.todo.list.service.image.user.TodoImageService;
-import com.todo.list.service.user.TodoImageTempService;
+import com.todo.list.service.image.logical.TodoImageService;
+import com.todo.list.service.main.TodoImageTempService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

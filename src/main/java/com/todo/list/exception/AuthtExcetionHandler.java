@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.todo.list.controller.main.AuthController;
 import com.todo.list.controller.response.message.ResponseErrorMessageEntity;
 import com.todo.list.exception.custom.ArgumentValidException;
-import com.todo.list.service.user.UserAuthService;
+import com.todo.list.service.main.UserAuthService;
 
 @RestControllerAdvice(basePackageClasses = { AuthController.class, UserAuthService.class })
 public class AuthtExcetionHandler {

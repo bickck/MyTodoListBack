@@ -30,19 +30,19 @@ public class UserImageEntity {
 	@JoinColumn(name = "USER_ID")
 	private UserEntity user;
 
-	@Column(name = "USER_IMAGE_UUID")
+	@Column(name = "USER_IMAGE_UUID", nullable = false)
 	private String imageUUID;
 
-	@Column(name = "FILENAME")
+	@Column(name = "FILENAME", nullable = false)
 	private String fileName;
 
-	@Column(name = "FILEPATH")
+	@Column(name = "FILEPATH", nullable = false)
 	private String filePath;
 
-	@Column(name = "ORIGINALFILENAME")
+	@Column(name = "ORIGINALFILENAME", nullable = false)
 	private String originalFileName;
 
-	@Column(name = "FILESIZE")
+	@Column(name = "FILESIZE", nullable = false)
 	private Long fileSize;
 
 	@CreationTimestamp

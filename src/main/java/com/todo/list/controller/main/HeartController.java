@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.message.MessageSender;
-import com.todo.list.service.user.HeartService;
+import com.todo.list.service.main.HeartService;
 import com.todo.list.util.auth.UserAuthToken;
 
 /**

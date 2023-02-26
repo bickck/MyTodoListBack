@@ -1,26 +1,22 @@
-package com.todo.list.service.image.user;
+package com.todo.list.service.image.logical;
 
-import java.io.File;
-import java.nio.file.Files;
-
+import com.todo.list.service.image.physical.ImageUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.todo.list.controller.dto.ImageDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.entity.UserEntity;
 import com.todo.list.repository.image.UserImageRepository;
-import com.todo.list.repository.user.UserRepository;
-import com.todo.list.service.image.ImageUploadService;
-import com.todo.list.service.image.upload.UserImageUploadService;
 import com.todo.list.util.uuid.CommonUUID;
 
 @Service
 public class UserImageService {
 
 	private UserImageRepository imageRepository;
+
+	@Autowired
+	private ImageUploader imageUploader;
 
 	@Autowired
 	public UserImageService(UserImageRepository imageRepository) {
@@ -30,7 +26,7 @@ public class UserImageService {
 
 	/**
 	 * 
-	 * @param userImageEntity
+	 * @param userEntity : User Info
 	 * @return
 	 */
 
@@ -45,7 +41,7 @@ public class UserImageService {
 
 	/**
 	 * 
-	 * @param userImageEntity
+	 * @param userImageEntity : User Info
 	 * @return
 	 */
 
@@ -78,9 +74,8 @@ public class UserImageService {
 
 	/**
 	 * 
-	 * @param user
-	 * @param fileName
-	 * @param filePath
+	 * @param userIntroImage
+	 *
 	 */
 
 	@Transactional(rollbackFor = Exception.class)

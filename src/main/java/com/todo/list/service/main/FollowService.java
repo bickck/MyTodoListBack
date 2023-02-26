@@ -1,6 +1,4 @@
-package com.todo.list.service.user;
-
-import java.util.function.Supplier;
+package com.todo.list.service.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

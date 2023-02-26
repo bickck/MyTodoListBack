@@ -18,7 +18,7 @@ import com.todo.list.controller.dto.QuoteDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.response.message.ResponseMessageEntity;
 import com.todo.list.exception.custom.ArgumentValidException;
-import com.todo.list.service.user.QuoteService;
+import com.todo.list.service.main.QuoteService;
 import com.todo.list.util.auth.UserAuthToken;
 import com.todo.list.util.validation.group.QuoteAccessArgumentGroup;
 

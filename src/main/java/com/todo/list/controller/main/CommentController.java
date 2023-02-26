@@ -17,7 +17,7 @@ import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.CommentDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.entity.TodoCommentEntity;
-import com.todo.list.service.user.TodoCommentService;
+import com.todo.list.service.main.TodoCommentService;
 import com.todo.list.util.auth.UserAuthToken;
 
 @RestController

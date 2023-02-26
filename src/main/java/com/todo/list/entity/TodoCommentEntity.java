@@ -24,8 +24,8 @@ public class TodoCommentEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	@Column(name = "COMMENT_UUID", unique = true)
-//	private String todoCommentUUID;
+	@Column(name = "TODO_COMMENT_UUID", unique = true)
+	private String todoCommentUUID;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TODO_ID")

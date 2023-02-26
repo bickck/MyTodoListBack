@@ -10,19 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.todo.list.controller.ResponseStatusMessage;
 import com.todo.list.controller.dto.TodoDTO;
 import com.todo.list.controller.dto.auth.UserTokenDTO;
 
-import com.todo.list.entity.base.Publish;
-
-import com.todo.list.service.user.TodoService;
+import com.todo.list.service.main.TodoService;
 
 import com.todo.list.util.auth.UserAuthToken;
 
@@ -74,7 +70,8 @@ public class TodoController {
     public ResponseEntity<?> requestUpdateUserTodoForMultipart(
             @PathVariable(value = "id") Long id, @RequestBody TodoDTO todoDTO, @UserAuthToken UserTokenDTO userTokenDTO) throws Exception {
 
-        userTodoService.updateTodo(id, todoDTO);
+
+        userTodoService.updateTodo(id,userTokenDTO ,todoDTO);
 
         return new ResponseEntity<String>(ResponseStatusMessage.SUCCESS, HttpStatus.OK);
     }

@@ -21,7 +21,7 @@ public class TodoHeartEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "TODO_UUID", nullable = false)
+	@Column(name = "TODO_HEART_UUID", nullable = false)
 	private String uuid;
 
 	@ManyToOne(fetch = FetchType.LAZY)

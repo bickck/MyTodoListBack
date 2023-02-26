@@ -10,52 +10,52 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity(name = "USER_FOLLOW_ENTITY")
 public class UserFollowEntity {
 
-	@Id
-	@Column(name = "USER_FOLLOW_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @Column(name = "USER_FOLLOW_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "USER_FOLLOW_UUID")
-	private UUID uuid;
+    @Column(name = "USER_FOLLOW_UUID", nullable = false)
+    private UUID uuid;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID", nullable = false)
-	private UserEntity userEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private UserEntity userEntity;
 
-	@CreationTimestamp
-	@Column(name = "CREATETIMESTAMP")
-	private Timestamp createTimestamp;
+    @CreationTimestamp
+    @Column(name = "CREATETIMESTAMP")
+    private Timestamp createTimestamp;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public UUID getUuid() {
-		return uuid;
-	}
+    public UUID getUuid() {
+        return uuid;
+    }
 
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
-	}
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
-	public UserEntity getUserEntity() {
-		return userEntity;
-	}
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
 
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
-	}
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
 
-	public Timestamp getCreateTimestamp() {
-		return createTimestamp;
-	}
+    public Timestamp getCreateTimestamp() {
+        return createTimestamp;
+    }
 
-	public void setCreateTimestamp(Timestamp createTimestamp) {
-		this.createTimestamp = createTimestamp;
-	}
+    public void setCreateTimestamp(Timestamp createTimestamp) {
+        this.createTimestamp = createTimestamp;
+    }
 
 }

@@ -1,15 +1,9 @@
 package com.todo.list.redis.service;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConfiguration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.todo.list.service.user.TodoService;
+import com.todo.list.service.main.TodoService;
 
 @Service
 public class TodoCacheService implements CacheStorageManager {

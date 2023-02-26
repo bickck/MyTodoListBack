@@ -1,6 +1,7 @@
 package com.todo.list.entity;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
@@ -18,114 +19,115 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity(name = "TODO_IMAGE_ENTITY")
 public class TodoImageEntity {
 
-	// todo id
+    @Id
+    @Column(name = "TODO_IMAGE_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Id
-	@Column(name = "TODO_IMAGE_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Column(name = "TODO_IMAGE_UUID")
+    private UUID uuid;
 
-//	@Column(name="TO")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TODO_ID", nullable = false)
-	private TodoEntity todoBoard;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TODO_ID", nullable = false)
+    private TodoEntity todoBoard;
 
-	@Column(name = "FILENAME")
-	private String fileName;
+    @Column(name = "FILEREALPATH", nullable = false)
+    private String fileRealPath;
 
-	@Column(name = "FILEPATH")
-	private String filePath;
+    @Column(name = "FILELOGICPATH", nullable = false)
+    private String fileLogicPath;
 
-	@Column(name = "ORIGINALFILENAME")
-	private String originalFileName;
+    @Column(name = "ORIGINALFILENAME", nullable = false)
+    private String originalFileName;
 
-	@Column(name = "FILESIZE")
-	private Long fileSize;
+    @Column(name = "FILESIZE", nullable = false)
+    private Long fileSize;
 
-	@CreationTimestamp
-	@Column(name = "CREATETIMESTAMP")
-	private Timestamp createTimestamp;
+    @CreationTimestamp
+    @Column(name = "CREATETIMESTAMP")
+    private Timestamp createTimestamp;
 
-	@UpdateTimestamp
-	@Column(name = "UPDATETIMESTAMP")
-	private Timestamp updateTimestamp;
+    @UpdateTimestamp
+    @Column(name = "UPDATETIMESTAMP")
+    private Timestamp updateTimestamp;
 
-	public TodoImageEntity() {
-		// TODO Auto-generated constructor stub
-	}
+    public TodoImageEntity() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public TodoImageEntity(TodoEntity todoBoard, String fileName, String originalFileName, String filePath,
-			Long fileSize) {
-		super();
-		this.todoBoard = todoBoard;
-		this.fileName = fileName;
-		this.originalFileName = originalFileName;
-		this.filePath = filePath;
-		this.fileSize = fileSize;
-	}
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public TodoImageEntity(TodoEntity todoBoard, String fileRealPath, String originalFileName, String fileLogicPath,
+                           Long fileSize) {
+        super();
+        this.todoBoard = todoBoard;
+        this.fileRealPath = fileRealPath;
+        this.originalFileName = originalFileName;
+        this.fileLogicPath = fileLogicPath;
+        this.fileSize = fileSize;
+    }
 
-	public TodoEntity getTodoBoard() {
-		return todoBoard;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setTodoBoard(TodoEntity todoBoard) {
-		this.todoBoard = todoBoard;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public TodoEntity getTodoBoard() {
+        return todoBoard;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setTodoBoard(TodoEntity todoBoard) {
+        this.todoBoard = todoBoard;
+    }
 
-	public String getOriginalFileName() {
-		return originalFileName;
-	}
+    public String getFileRealPath() {
+        return fileRealPath;
+    }
 
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
-	}
+    public void setFileRealPath(String fileRealPath) {
+        this.fileRealPath = fileRealPath;
+    }
 
-	public String getFilePath() {
-		return filePath;
-	}
+    public String getFileLogicPath() {
+        return fileLogicPath;
+    }
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
+    public void setFileLogicPath(String fileLogicPath) {
+        this.fileLogicPath = fileLogicPath;
+    }
 
-	public Long getFileSize() {
-		return fileSize;
-	}
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
 
-	public void setFileSize(Long fileSize) {
-		this.fileSize = fileSize;
-	}
+    public void setOriginalFileName(String originalFileName) {
+        this.originalFileName = originalFileName;
+    }
 
-	public Timestamp getCreateTimestamp() {
-		return createTimestamp;
-	}
+    public Long getFileSize() {
+        return fileSize;
+    }
 
-	public void setCreateTimestamp(Timestamp createTimestamp) {
-		this.createTimestamp = createTimestamp;
-	}
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
 
-	public Timestamp getUpdateTimestamp() {
-		return updateTimestamp;
-	}
+    public Timestamp getCreateTimestamp() {
+        return createTimestamp;
+    }
 
-	public void setUpdateTimestamp(Timestamp updateTimestamp) {
-		this.updateTimestamp = updateTimestamp;
-	}
+    public void setCreateTimestamp(Timestamp createTimestamp) {
+        this.createTimestamp = createTimestamp;
+    }
 
+    public Timestamp getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    public void setUpdateTimestamp(Timestamp updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
+    }
 }

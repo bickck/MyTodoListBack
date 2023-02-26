@@ -26,7 +26,7 @@ import com.todo.list.exception.custom.ArgumentValidException;
 import com.todo.list.redis.service.AuthRedisService;
 import com.todo.list.redis.service.MessageChannelService;
 import com.todo.list.service.EventMessageService;
-import com.todo.list.service.user.UserAuthService;
+import com.todo.list.service.main.UserAuthService;
 import com.todo.list.util.auth.UserAuthToken;
 import com.todo.list.util.auth.provider.AuthenticationJwtProvider;
 import com.todo.list.util.validation.group.LoginAccessArgumentGroup;
@@ -108,8 +108,7 @@ public class AuthController {
 
 	/**
 	 * 
-	 * @param userDTO
-	 * @param dto
+	 * @param accessToken
 	 * @return
 	 */
 

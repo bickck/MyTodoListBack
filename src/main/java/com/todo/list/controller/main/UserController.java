@@ -21,7 +21,7 @@ import com.todo.list.controller.dto.auth.UserTokenDTO;
 import com.todo.list.controller.dto.user.UserDTO;
 import com.todo.list.entity.UserImageEntity;
 import com.todo.list.exception.custom.ArgumentValidException;
-import com.todo.list.service.user.UserService;
+import com.todo.list.service.main.UserService;
 import com.todo.list.util.auth.UserAuthToken;
 import com.todo.list.util.validation.group.Comment;
 
